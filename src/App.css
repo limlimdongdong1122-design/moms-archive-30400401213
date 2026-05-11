@@ -1,0 +1,403 @@
+/* Mom's Archive — 화면 전용 스타일 (index.css의 색 변수 그대로 사용) */
+
+/* ── 헤더 ── */
+.ma-header {
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-color: var(--c-linen);
+  background: rgba(248, 245, 240, 0.82);
+}
+
+.ma-logo-ring {
+  border-color: var(--c-accent-lt);
+  color: var(--c-accent);
+}
+
+.ma-logo-text {
+  color: var(--c-charcoal);
+}
+
+/* ── 히어로 ── */
+.ma-hero {
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+
+.ma-hero-gradient {
+  position: absolute;
+  width: min(55vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 40%,
+    rgba(196, 168, 130, 0.26) 0%,
+    transparent 62%
+  );
+  filter: blur(3px);
+  pointer-events: none;
+  top: -6%;
+  right: -14%;
+  opacity: 0.9;
+}
+
+.ma-hero-mark {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--c-linen);
+  user-select: none;
+  pointer-events: none;
+}
+
+.ma-vol {
+  margin-bottom: var(--space-sm);
+}
+
+.ma-accent-line {
+  background: linear-gradient(90deg, var(--c-accent), transparent);
+}
+
+.ma-hero-title {
+  font-size: clamp(2.6rem, 7.5vw, 5.25rem);
+  max-width: 13ch;
+}
+
+.ma-hero-accent {
+  color: var(--c-accent);
+}
+
+.ma-hero-lead {
+  color: var(--c-muted);
+  font-size: 1.08rem;
+}
+
+.ma-scroll-hint {
+  color: var(--c-warm-gray);
+}
+
+/* 인용 */
+.ma-pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.35rem, 3vw, 1.95rem);
+  line-height: 1.55;
+  color: var(--c-charcoal);
+  border-left: 2px solid var(--c-accent);
+  padding-left: var(--space-md);
+  margin: 0;
+}
+
+/* 오른쪽 노트 카드 */
+.ma-editorial-frame {
+  position: relative;
+  border: 1px solid var(--c-linen);
+  background: linear-gradient(
+    155deg,
+    var(--c-paper) 0%,
+    var(--c-cream) 55%,
+    var(--c-paper) 100%
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 32px 80px rgba(44, 40, 37, 0.07);
+}
+
+.ma-editorial-frame::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(196, 168, 130, 0.3);
+  pointer-events: none;
+}
+
+.ma-note-label {
+  color: var(--c-muted);
+}
+
+.ma-note-title {
+  color: var(--c-ink);
+}
+
+.ma-note-italic {
+  color: var(--c-muted);
+  font-style: italic;
+}
+
+.ma-note-hr {
+  border-color: var(--c-linen);
+}
+
+.ma-note-footer {
+  font-size: 0.7rem;
+}
+
+.ma-dot-on {
+  background: var(--c-accent);
+}
+
+.ma-dot-off {
+  background: var(--c-linen);
+}
+
+.ma-feather {
+  color: var(--c-sage);
+}
+
+/* 마퀴 래퍼 */
+.ma-marquee {
+  border-color: var(--c-linen);
+  background: var(--c-cream);
+}
+
+.ma-marquee-item {
+  color: var(--c-muted);
+}
+
+/* Shelf */
+.ma-shelf {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-lg);
+}
+
+.ma-section-divider-wrap {
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+}
+
+.ma-card {
+  border-color: var(--c-linen);
+  background: var(--c-paper);
+  box-shadow: 0 20px 50px rgba(44, 40, 37, 0.05);
+}
+
+.ma-card-index {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--c-linen);
+  letter-spacing: -0.04em;
+}
+
+.ma-card-icon {
+  color: var(--c-accent);
+}
+
+.ma-card-title {
+  color: var(--c-ink);
+}
+
+.ma-card-body {
+  color: var(--c-muted);
+  font-size: 0.96rem;
+}
+
+/* Moments */
+.ma-moments {
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-xl);
+}
+
+.ma-moments-kicker {
+  color: var(--c-muted);
+}
+
+.ma-moments-title {
+  color: var(--c-ink);
+}
+
+.ma-moment-border {
+  border-color: var(--c-linen);
+}
+
+.ma-organic-blob {
+  border-radius: 42% 58% 62% 38% / 44% 36% 64% 56%;
+  background: linear-gradient(135deg, var(--c-sage-lt), var(--c-cream));
+  opacity: 0.85;
+  min-height: 200px;
+}
+
+.ma-moment-cap {
+  background: var(--c-paper);
+}
+
+.ma-moment-cap-title {
+  color: var(--c-ink);
+}
+
+.ma-gradient-block {
+  min-height: 200px;
+  background: linear-gradient(
+    118deg,
+    var(--c-cream) 0%,
+    var(--c-linen) 45%,
+    var(--c-accent-lt) 100%
+  );
+  opacity: 0.92;
+}
+
+/* CTA */
+.ma-cta-section {
+  padding-bottom: var(--space-2xl);
+}
+
+.ma-cta-box {
+  border-color: var(--c-linen);
+  background: linear-gradient(
+    180deg,
+    rgba(181, 196, 174, 0.2) 0%,
+    var(--c-cream) 55%,
+    var(--c-paper) 100%
+  );
+  box-shadow: 0 24px 60px rgba(44, 40, 37, 0.06);
+}
+
+.ma-cta-kicker {
+  color: var(--c-sage);
+}
+
+.ma-cta-heading {
+  color: var(--c-ink);
+}
+
+.ma-cta-text {
+  color: var(--c-muted);
+}
+
+.ma-cta-code {
+  color: var(--c-accent);
+}
+
+.ma-cta-foot {
+  color: var(--c-warm-gray);
+}
+
+/* 버튼 */
+.ma-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-paper);
+  background: var(--c-charcoal);
+  border: 1px solid var(--c-ink);
+  border-radius: 999px;
+  transition:
+    background 0.25s var(--ease-out-expo),
+    transform 0.25s var(--ease-out-expo),
+    box-shadow 0.25s var(--ease-out-expo);
+  box-shadow: 0 10px 28px rgba(26, 24, 21, 0.12);
+}
+
+.ma-btn:hover {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(44, 40, 37, 0.14);
+}
+
+/* 푸터 */
+.ma-footer {
+  border-color: var(--c-linen);
+  background: var(--c-cream);
+}
+
+.ma-footer-title {
+  color: var(--c-ink);
+}
+
+.ma-footer-sub {
+  color: var(--c-muted);
+}
+
+.ma-footer-note {
+  color: var(--c-warm-gray);
+}
+
+/* ── 소스 복사 패널 ── */
+.ma-copy-panel-title {
+  color: var(--c-ink);
+}
+
+.ma-copy-panel-desc {
+  color: var(--c-muted);
+}
+
+/* 채팅/문서 스타일 코드 블록 + 오른쪽 복사 */
+.ma-snippet-wrap {
+  border-radius: 10px;
+  border: 1px solid #e4e4e7;
+  background: #f4f4f5;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.ma-snippet-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid #e4e4e7;
+  background: #ececee;
+}
+
+.ma-snippet-fname {
+  font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.72rem;
+  color: #52525b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ma-snippet-copy {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #71717a;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ma-snippet-copy:hover {
+  background: #d4d4d8;
+  color: #18181b;
+}
+
+.ma-snippet-pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  max-height: min(50vh, 320px);
+  overflow: auto;
+  font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  color: #27272a;
+  background: #f4f4f5;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.ma-snippet-pre code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.ma-copy-toast {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--c-sage);
+}

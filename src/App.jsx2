@@ -1,0 +1,407 @@
+import './App.css'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  ArrowRight,
+  BookOpen,
+  Copy,
+  Feather,
+  Heart,
+  MapPin,
+  Sparkles,
+} from 'lucide-react'
+import indexCssRaw from './index.css?raw'
+import appCssRaw from './App.css?raw'
+import appJsxRaw from './App.jsx?raw'
+
+const marqueeItems = [
+  "Mom's Archive",
+  'Editorial',
+  'Places & days',
+  'Books she loved',
+  'Soft grain & paper',
+  'Memory kept gentle',
+  'Slow mornings',
+  'Handwritten notes',
+]
+
+export default function App() {
+  const [cursor, setCursor] = useState({ x: 0, y: 0 })
+  const [copyToast, setCopyToast] = useState('')
+
+  const copySource = useCallback(async (label, text) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopyToast(`${label} 복사됨`)
+    } catch {
+      try {
+        const ta = document.createElement('textarea')
+        ta.value = text
+        ta.setAttribute('readonly', '')
+        ta.style.position = 'fixed'
+        ta.style.left = '-9999px'
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+        setCopyToast(`${label} 복사됨`)
+      } catch {
+        setCopyToast('복사 실패 — 브라우저 권한을 확인해 주세요')
+      }
+    }
+    window.setTimeout(() => setCopyToast(''), 2200)
+  }, [])
+
+  useEffect(() => {
+    const onMove = (e) => setCursor({ x: e.clientX, y: e.clientY })
+    window.addEventListener('mousemove', onMove)
+    return () => window.removeEventListener('mousemove', onMove)
+  }, [])
+
+  useEffect(() => {
+    const nodes = document.querySelectorAll('.reveal')
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((ent) => {
+          if (ent.isIntersecting) ent.target.classList.add('visible')
+        })
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+    )
+    nodes.forEach((n) => io.observe(n))
+    return () => io.disconnect()
+  }, [])
+
+  const cards = [
+    {
+      title: '오늘 읽은 한 문장',
+      body: '잘린 페이지와 연필 자국까지, 손에 익은 책의 무게를 적어 두세요.',
+      icon: BookOpen,
+      tag: 'reading',
+    },
+    {
+      title: '함께 걷던 골목',
+      body: '지도 핀 대신 그날의 빛, 냄새, 소리를 짧게 남겨도 충분합니다.',
+      icon: MapPin,
+      tag: 'place',
+    },
+    {
+      title: '작은 의식',
+      body: '기념일이 아니어도 괜찮습니다. 평범한 하루를 골라 저장해 보세요.',
+      icon: Sparkles,
+      tag: 'ritual',
+    },
+  ]
+
+  return (
+    <>
+      <div
+        className="cursor-dot"
+        style={{ left: cursor.x, top: cursor.y }}
+        aria-hidden
+      />
+      <div
+        className="cursor-ring"
+        style={{ left: cursor.x, top: cursor.y }}
+        aria-hidden
+      />
+
+      <div className="min-h-screen flex flex-col font-body">
+        <header
+          className="ma-header reveal sticky top-0 z-50 flex items-center justify-between gap-6 border-b px-5 md:px-10 backdrop-blur-md"
+        >
+          <a href="#intro" className="flex items-center gap-3">
+            <span className="ma-logo-ring flex size-9 items-center justify-center rounded-full border">
+              <Heart size={16} strokeWidth={1.5} aria-hidden />
+            </span>
+            <span className="ma-logo-text text-label">Mom&apos;s Archive</span>
+          </a>
+          <nav className="flex flex-wrap gap-5 md:gap-9 justify-end">
+            <a className="nav-link" href="#intro">
+              Intro
+            </a>
+            <a className="nav-link" href="#shelf">
+              Shelf
+            </a>
+            <a className="nav-link" href="#moments">
+              Moments
+            </a>
+            <a className="nav-link" href="#places">
+              Next
+            </a>
+            <a className="nav-link" href="#source-copy">
+              Copy
+            </a>
+          </nav>
+        </header>
+
+        <main className="flex-1">
+          <section
+            id="intro"
+            className="ma-hero relative overflow-hidden px-5 md:px-10"
+          >
+            <div className="ma-hero-gradient" aria-hidden />
+            <div
+              className="ma-hero-mark absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[42%] text-[clamp(8rem,24vw,16rem)] md:left-auto md:right-[2%] md:translate-x-0 md:translate-y-[-48%]"
+              aria-hidden
+            >
+              01
+            </div>
+
+            <div className="relative mx-auto max-w-6xl">
+              <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
+                <div className="lg:col-span-7">
+                  <p className="ma-vol text-section-num reveal reveal-delay-1">
+                    Vol. 01 — spring light
+                  </p>
+                  <div
+                    className="ma-accent-line mb-6 h-px w-16 reveal reveal-delay-1"
+                    aria-hidden
+                  />
+                  <h1 className="ma-hero-title text-display text-[var(--c-ink)] reveal reveal-delay-2">
+                    엄마의 기록을,
+                    <br />
+                    <span className="ma-hero-accent">부드럽게</span> 남깁니다.
+                  </h1>
+                  <p className="ma-hero-lead reveal reveal-delay-3 mt-8 max-w-lg leading-relaxed">
+                    책 한 구절, 자주 가던 카페, 문득 떠오른 말 — 사라지기 쉬운
+                    조각들을 한곳에 모아 두는 작은 아카이브입니다.
+                  </p>
+                  <div className="reveal reveal-delay-4 mt-10 flex flex-wrap items-center gap-5">
+                    <a className="ma-btn" href="#shelf">
+                      기록 둘러보기
+                      <ArrowRight size={14} strokeWidth={2} aria-hidden />
+                    </a>
+                    <span className="ma-scroll-hint text-label">scroll to reveal</span>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <div className="ma-editorial-frame card-texture reveal reveal-delay-3 p-8 md:p-10">
+                    <div className="relative z-[1]">
+                      <Feather
+                        className="ma-feather mb-5"
+                        size={26}
+                        strokeWidth={1.2}
+                        aria-hidden
+                      />
+                      <p className="ma-note-label text-label mb-4">Note</p>
+                      <p className="ma-note-title font-display text-2xl md:text-3xl leading-snug">
+                        오래된 종이 냄새처럼,
+                        <br />
+                        <span className="ma-note-italic">
+                          조용히 쌓이는 시간
+                        </span>
+                      </p>
+                      <hr className="ma-note-hr hr-thin my-8" />
+                      <div className="flex items-baseline justify-between gap-4">
+                        <span className="ma-note-footer text-section-num">
+                          est. for memory
+                        </span>
+                        <div className="flex gap-1" aria-hidden>
+                          {[0, 1, 2].map((i) => (
+                            <span
+                              key={i}
+                              className={`size-1.5 rounded-full ${i === 1 ? 'ma-dot-on' : 'ma-dot-off'}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <blockquote className="ma-pull-quote reveal mx-auto mt-16 max-w-2xl md:mt-20">
+                “기억은 완벽할 필요가 없어요. 손끝에 남은 온기만으로도 충분하니까.”
+              </blockquote>
+            </div>
+          </section>
+
+          <div className="ma-marquee reveal overflow-hidden border-y">
+            <div className="marquee-track py-5">
+              {[0, 1].map((dup) => (
+                <div
+                  key={dup}
+                  className="flex shrink-0 items-center gap-12 pr-12"
+                >
+                  {marqueeItems.map((t) => (
+                    <span
+                      key={`${dup}-${t}`}
+                      className="ma-marquee-item text-label whitespace-nowrap"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <section id="shelf" className="ma-shelf px-5 md:px-10">
+            <div className="ma-section-divider-wrap section-divider reveal mx-auto max-w-6xl">
+              <span className="section-divider-line" />
+              <span className="section-divider-text">from the shelf</span>
+              <span className="section-divider-line" />
+            </div>
+
+            <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3 md:gap-7">
+              {cards.map((card, i) => {
+                const Icon = card.icon
+                return (
+                  <article
+                    key={card.title}
+                    className={`ma-card card-texture book-card-hover reveal reveal-delay-${i + 1} relative overflow-hidden rounded-md border p-7 md:p-8 ${i === 1 ? 'md:translate-y-8' : ''}`}
+                  >
+                    <span className="ma-card-index absolute right-5 top-4 opacity-90" aria-hidden>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <Icon
+                      className="ma-card-icon mb-5"
+                      size={30}
+                      strokeWidth={1.15}
+                      aria-hidden
+                    />
+                    <h3 className="ma-card-title font-display pr-14 text-xl md:text-2xl">
+                      {card.title}
+                    </h3>
+                    <p className="ma-card-body mt-3 leading-relaxed">{card.body}</p>
+                    <p className="mt-6">
+                      <span className="tag-chip">{card.tag}</span>
+                    </p>
+                  </article>
+                )
+              })}
+            </div>
+          </section>
+
+          <section id="moments" className="ma-moments px-5 md:px-10">
+            <div className="mx-auto max-w-6xl">
+              <p className="ma-moments-kicker text-label reveal mb-3">
+                Visual moments
+              </p>
+              <h2 className="ma-moments-title text-display reveal reveal-delay-1 mb-10 text-3xl md:text-5xl">
+                빛과 질감
+              </h2>
+              <div className="grid gap-6 md:grid-cols-2">
+                <article className="ma-moment-border place-card-hover reveal overflow-hidden rounded-md border">
+                  <div
+                    className="ma-organic-blob aspect-[5/3] w-full"
+                    aria-hidden
+                  />
+                  <div className="ma-moment-cap p-6">
+                    <p className="text-label mb-2">Morning</p>
+                    <p className="ma-moment-cap-title font-display text-xl">
+                      창가의 먼지 한 줄기
+                    </p>
+                  </div>
+                </article>
+                <article className="ma-moment-border place-card-hover reveal reveal-delay-1 overflow-hidden rounded-md border md:mt-12">
+                  <div className="ma-gradient-block aspect-[5/3] w-full" aria-hidden />
+                  <div className="ma-moment-cap p-6">
+                    <p className="text-label mb-2">Still life</p>
+                    <p className="ma-moment-cap-title font-display text-xl">
+                      차 한 잔의 무게
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="places" className="ma-cta-section px-5 md:px-10">
+            <div className="ma-cta-box reveal mx-auto max-w-6xl rounded-2xl border px-8 py-12 md:px-14 md:py-16">
+              <div className="grid gap-10 md:grid-cols-2 md:items-center">
+                <div>
+                  <p className="ma-cta-kicker text-label mb-3">Continue</p>
+                  <h2 className="ma-cta-heading text-display text-3xl md:text-5xl">
+                    여기부터
+                    <br />
+                    채워 넣어요
+                  </h2>
+                </div>
+                <p className="ma-cta-text leading-relaxed md:text-lg">
+                  사진과 글, 목록을 추가하면 이 레이아웃이 그대로 확장됩니다.
+                  색과 여백은{' '}
+                  <code className="ma-cta-code">index.css</code>의 변수로 통일해
+                  두었어요.
+                </p>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a className="ma-btn" href="#intro">
+                  맨 위로
+                  <ArrowRight size={14} strokeWidth={2} aria-hidden />
+                </a>
+                <span className="ma-cta-foot text-label self-center">
+                  thank you for visiting
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="source-copy"
+            className="px-5 md:px-10"
+            style={{ paddingBottom: 'var(--space-lg)' }}
+          >
+            <div className="reveal mx-auto max-w-6xl">
+              <p className="text-label mb-2" style={{ color: 'var(--c-muted)' }}>
+                Developer
+              </p>
+              <h2 className="ma-copy-panel-title font-display mb-2 text-2xl md:text-3xl">
+                소스 코드
+              </h2>
+              <p className="ma-copy-panel-desc mb-6 text-sm leading-relaxed">
+                각 박스 오른쪽 아이콘을 누르면 그 파일 전체가 복사됩니다.
+              </p>
+
+              {[
+                { label: 'src/index.css', text: indexCssRaw },
+                { label: 'src/App.css', text: appCssRaw },
+                { label: 'src/App.jsx', text: appJsxRaw },
+              ].map(({ label, text }) => (
+                <div key={label} className="ma-snippet-wrap">
+                  <div className="ma-snippet-toolbar">
+                    <span className="ma-snippet-fname">{label}</span>
+                    <button
+                      type="button"
+                      className="ma-snippet-copy"
+                      aria-label={`${label} 전체 복사`}
+                      onClick={() => copySource(label, text)}
+                    >
+                      <Copy size={18} strokeWidth={1.75} aria-hidden />
+                    </button>
+                  </div>
+                  <pre className="ma-snippet-pre">
+                    <code>{text}</code>
+                  </pre>
+                </div>
+              ))}
+
+              <p
+                className="ma-copy-toast mt-4 min-h-[1.25rem] text-label"
+                role="status"
+                aria-live="polite"
+              >
+                {copyToast}
+              </p>
+            </div>
+          </section>
+        </main>
+
+        <footer className="ma-footer border-t px-5 md:px-10 py-10">
+          <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left">
+            <div>
+              <p className="ma-footer-title font-display text-lg">Mom&apos;s Archive</p>
+              <p className="ma-footer-sub text-label mt-2">
+                editorial · organic · refined
+              </p>
+            </div>
+            <p className="ma-footer-note text-label max-w-xs">
+              Built with Vite & React — styled for slow reading.
+            </p>
+          </div>
+        </footer>
+      </div>
+    </>
+  )
+}

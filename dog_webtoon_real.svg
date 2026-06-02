@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750" font-family="'Pretendard',sans-serif">
+  <defs>
+    <!-- 배경 -->
+    <linearGradient id="wall" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#ded0b4"/>
+      <stop offset="100%" stop-color="#cdbb98"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e0aa6a"/>
+      <stop offset="100%" stop-color="#c68d49"/>
+    </linearGradient>
+    <!-- 털 명암 -->
+    <radialGradient id="furBody" cx="42%" cy="32%" r="75%">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#f3efe9"/>
+      <stop offset="85%" stop-color="#ddd6cb"/>
+      <stop offset="100%" stop-color="#c7bdae"/>
+    </radialGradient>
+    <radialGradient id="furHead" cx="46%" cy="38%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f1ece5"/>
+      <stop offset="100%" stop-color="#d6cdbf"/>
+    </radialGradient>
+    <radialGradient id="ear" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#efe7dc"/>
+      <stop offset="100%" stop-color="#cabfac"/>
+    </radialGradient>
+    <radialGradient id="eye" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#6b4a32"/>
+      <stop offset="60%" stop-color="#3a2719"/>
+      <stop offset="100%" stop-color="#1d130c"/>
+    </radialGradient>
+    <radialGradient id="nose" cx="38%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#4a4750"/>
+      <stop offset="55%" stop-color="#2a2830"/>
+      <stop offset="100%" stop-color="#15141a"/>
+    </radialGradient>
+    <!-- 털 텍스처용 노이즈 -->
+    <filter id="furtex" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.05" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0" result="na"/>
+      <feComponentTransfer in="na" result="nb"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feComposite in="nb" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="soft2"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <clipPath id="bodyClip"><path d="M 330 480 C 300 405 335 330 460 318 C 600 305 730 358 752 478 C 766 560 700 612 560 616 C 425 620 352 558 330 480 Z"/></clipPath>
+    <clipPath id="headClip"><path d="M 250 470 C 218 392 270 318 360 312 C 452 306 506 372 500 458 C 496 540 430 590 348 586 C 268 582 235 540 250 470 Z"/></clipPath>
+  </defs>
+
+  <!-- ===== 배경 ===== -->
+  <rect width="1000" height="750" fill="url(#wall)"/>
+  <!-- 박스 윗 뚜껑(좌상단 비스듬) -->
+  <path d="M 0 0 L 560 0 L 500 64 L 0 92 Z" fill="#d3c09c"/>
+  <path d="M 0 0 L 560 0 L 540 22 L 0 30 Z" fill="#c9b58e" opacity="0.6"/>
+  <line x1="0" y1="92" x2="500" y2="64" stroke="#b29c72" stroke-width="3"/>
+  <!-- 박스 골판지 결 -->
+  <g stroke="#c6b48f" stroke-width="2" opacity="0.5">
+    <line x1="0" y1="250" x2="1000" y2="230"/>
+    <line x1="0" y1="400" x2="700" y2="388"/>
+    <line x1="60" y1="120" x2="60" y2="540"/>
+  </g>
+  <!-- 원목 바닥 -->
+  <path d="M 0 558 L 1000 524 L 1000 750 L 0 750 Z" fill="url(#floor)"/>
+  <g stroke="#b0813c" stroke-width="2.5" opacity="0.5">
+    <line x1="0" y1="612" x2="1000" y2="578"/>
+    <line x1="0" y1="678" x2="1000" y2="644"/>
+    <line x1="0" y1="738" x2="1000" y2="706"/>
+  </g>
+  <g stroke="#a9acca" stroke-width="3" opacity="0.45"><line x1="0" y1="558" x2="1000" y2="524"/></g>
+
+  <!-- 매달린 크록스 -->
+  <g transform="translate(805,34) rotate(9)">
+    <path d="M 0 42 C -8 2 122 -6 150 26 C 166 46 160 92 118 102 C 58 116 -6 96 0 42 Z" fill="#85878e"/>
+    <path d="M 9 50 C 2 20 120 14 140 36 C 152 50 147 84 116 92 C 62 104 4 86 9 50 Z" fill="#999ba2"/>
+    <g fill="#74767d"><circle cx="52" cy="42" r="5"/><circle cx="78" cy="40" r="5"/><circle cx="104" cy="42" r="5"/><circle cx="65" cy="60" r="5"/><circle cx="91" cy="58" r="5"/></g>
+    <path d="M 150 26 C 176 22 180 62 158 72" fill="none" stroke="#74767d" stroke-width="10" stroke-linecap="round"/>
+    <path d="M -2 60 C -6 90 30 104 60 100" fill="none" stroke="#74767d" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 강아지 (사실 묘사) ===== -->
+  <g>
+    <!-- 바닥 그림자 -->
+    <ellipse cx="540" cy="632" rx="330" ry="42" fill="#9a6c34" opacity="0.3" filter="url(#soft)"/>
+
+    <!-- 길게 늘어진 꼬리털 -->
+    <path d="M 740 545 C 850 520 945 535 982 580 C 1000 604 985 642 938 648 C 885 654 845 612 792 600 C 760 592 730 575 740 545 Z" fill="url(#furBody)"/>
+    <g clip-path="url(#bodyClip)"></g>
+    <g stroke="#e9e3d8" stroke-width="2.4" fill="none" opacity="0.9" stroke-linecap="round">
+      <path d="M 770 560 C 850 540 920 552 960 588"/>
+      <path d="M 778 580 C 855 566 915 580 952 608"/>
+      <path d="M 800 600 C 860 592 905 606 935 626"/>
+    </g>
+
+    <!-- 뒷다리 (위로 뻗음, 크록스 쪽) -->
+    <path d="M 660 470 C 720 380 786 320 852 302 C 892 292 912 326 888 358 C 846 410 770 470 712 520 Z" fill="url(#furBody)"/>
+    <!-- 뒷발 발가락 -->
+    <path d="M 838 300 c -10 -16 4 -34 22 -30 c 8 2 12 8 12 16 c 6 -8 22 -6 24 6 c 2 12 -10 22 -26 22 c -16 0 -28 -6 -32 -14 Z" fill="url(#furHead)"/>
+    <ellipse cx="858" cy="312" rx="10" ry="7" fill="#e7c3b6"/>
+    <g stroke="#ddd5c8" stroke-width="2" fill="none" opacity="0.8"><path d="M 690 460 C 750 380 805 332 860 308"/><path d="M 710 478 C 762 408 815 360 862 332"/></g>
+
+    <!-- 두 번째 앞다리(살짝 보임, 위쪽) -->
+    <path d="M 560 360 C 548 300 565 262 600 256 C 628 251 638 284 626 318 C 616 346 600 372 590 398 Z" fill="url(#furBody)"/>
+    <ellipse cx="604" cy="262" rx="13" ry="10" fill="#e7c3b6" opacity="0.9"/>
+
+    <!-- 몸통 -->
+    <path d="M 330 480 C 300 405 335 330 460 318 C 600 305 730 358 752 478 C 766 560 700 612 560 616 C 425 620 352 558 330 480 Z" fill="url(#furBody)"/>
+    <!-- 몸통 텍스처 -->
+    <g clip-path="url(#bodyClip)">
+      <rect x="320" y="300" width="450" height="330" fill="#8a7d66" filter="url(#furtex)"/>
+      <!-- 배/가슴 음영 -->
+      <path d="M 470 330 C 430 420 440 530 540 560 C 470 500 470 410 520 340 Z" fill="#cdc4b5" opacity="0.55" filter="url(#soft2)"/>
+      <path d="M 700 420 C 720 500 670 575 560 600 C 660 560 690 490 680 430 Z" fill="#c6bcab" opacity="0.5" filter="url(#soft2)"/>
+      <!-- 하이라이트 -->
+      <ellipse cx="470" cy="380" rx="80" ry="55" fill="#ffffff" opacity="0.5" filter="url(#soft2)"/>
+    </g>
+    <!-- 몸통 털결 -->
+    <g stroke="#e6dfd3" stroke-width="2.2" fill="none" opacity="0.85" stroke-linecap="round">
+      <path d="M 470 360 q 14 40 -6 78"/>
+      <path d="M 530 348 q 16 44 -4 86"/>
+      <path d="M 600 360 q 16 42 -8 82"/>
+      <path d="M 668 400 q 14 36 -10 70"/>
+      <path d="M 410 430 q 10 34 -4 64"/>
+    </g>
+
+    <!-- 앞다리 (가슴 앞으로 모음) -->
+    <path d="M 452 470 C 414 392 414 344 458 330 C 490 320 506 356 494 396 C 486 426 488 462 498 498 Z" fill="url(#furBody)"/>
+    <path d="M 446 470 C 410 396 412 350 452 336" fill="none" stroke="#d9d1c3" stroke-width="2.2" opacity="0.8"/>
+    <!-- 앞발 -->
+    <path d="M 446 336 c -10 -16 6 -34 24 -29 c 8 2 11 9 11 17 c 7 -8 23 -4 24 8 c 1 12 -12 21 -28 20 c -16 -1 -27 -8 -31 -16 Z" fill="url(#furHead)"/>
+    <ellipse cx="468" cy="342" rx="10" ry="7" fill="#e7c3b6"/>
+
+    <!-- ===== 머리 ===== -->
+    <g>
+      <!-- 왼쪽 늘어진 귀(뒤) -->
+      <path d="M 268 372 C 200 360 168 440 198 506 C 224 560 270 540 280 470 C 286 424 296 388 268 372 Z" fill="url(#ear)"/>
+      <g clip-path="url(#headClip)"></g>
+      <!-- 머리 베이스 -->
+      <path d="M 250 470 C 218 392 270 318 360 312 C 452 306 506 372 500 458 C 496 540 430 590 348 586 C 268 582 235 540 250 470 Z" fill="url(#furHead)"/>
+      <!-- 머리 텍스처 -->
+      <g clip-path="url(#headClip)">
+        <rect x="240" y="300" width="280" height="300" fill="#8a7d66" filter="url(#furtex)"/>
+        <path d="M 300 360 C 270 440 290 530 370 560 C 320 500 320 420 350 360 Z" fill="#cfc6b6" opacity="0.4" filter="url(#soft2)"/>
+        <ellipse cx="360" cy="380" rx="70" ry="50" fill="#ffffff" opacity="0.45" filter="url(#soft2)"/>
+      </g>
+      <!-- 오른쪽 늘어진 귀(앞, 얼굴 옆 덮음) -->
+      <path d="M 470 388 C 540 372 566 452 532 518 C 504 570 458 552 452 482 C 448 436 442 404 470 388 Z" fill="url(#ear)"/>
+      <g stroke="#cfc4b1" stroke-width="2" fill="none" opacity="0.7">
+        <path d="M 486 410 C 520 446 522 500 500 528"/>
+        <path d="M 224 414 C 200 452 204 502 226 528"/>
+      </g>
+
+      <!-- 눈가 옅은 눈물자국 -->
+      <path d="M 300 442 c 14 -12 40 -12 56 2 c -18 6 -40 8 -56 -2 Z" fill="#e4cdb8" opacity="0.5" filter="url(#soft2)"/>
+      <path d="M 400 446 c 14 -12 36 -10 50 2 c -16 6 -36 8 -50 -2 Z" fill="#e4cdb8" opacity="0.45" filter="url(#soft2)"/>
+
+      <!-- 나른하게 반쯤 감긴 눈 (왼: 살짝 더 보임) -->
+      <g>
+        <!-- 왼눈 -->
+        <path d="M 296 452 C 312 438 344 438 360 452 C 350 466 320 470 304 462 Z" fill="url(#eye)"/>
+        <path d="M 296 452 C 312 438 344 438 360 452" fill="none" stroke="#2c241d" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="318" cy="450" r="4.5" fill="#fff" opacity="0.92"/>
+        <circle cx="334" cy="455" r="2.2" fill="#fff" opacity="0.6"/>
+        <!-- 오른눈 (귀에 살짝 가려 더 감김) -->
+        <path d="M 404 456 C 418 444 444 444 456 456 C 446 468 420 470 408 463 Z" fill="url(#eye)"/>
+        <path d="M 404 456 C 418 444 444 444 456 456" fill="none" stroke="#2c241d" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="424" cy="454" r="3.6" fill="#fff" opacity="0.9"/>
+      </g>
+
+      <!-- 주둥이 음영 -->
+      <ellipse cx="372" cy="510" rx="56" ry="42" fill="#efe8de" filter="url(#soft2)"/>
+      <!-- 코 -->
+      <path d="M 350 498 C 350 484 398 484 398 500 C 398 514 384 522 374 522 C 362 522 350 512 350 498 Z" fill="url(#nose)"/>
+      <ellipse cx="362" cy="497" rx="5" ry="3.4" fill="#7c7a86" opacity="0.85"/>
+      <path d="M 356 510 q 8 5 16 0" stroke="#0d0c12" stroke-width="2" fill="none" opacity="0.6"/>
+      <!-- 인중 + 살짝 벌어진 입 -->
+      <path d="M 374 522 L 374 536" stroke="#9b8c7a" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M 374 536 C 356 552 330 550 318 540" fill="none" stroke="#9b8c7a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 374 536 C 392 552 416 548 426 538" fill="none" stroke="#9b8c7a" stroke-width="3" stroke-linecap="round"/>
+      <!-- 살짝 보이는 분홍 혀 -->
+      <path d="M 360 540 C 352 562 388 564 384 540 C 378 548 368 548 360 540 Z" fill="#eb96a0"/>
+      <path d="M 372 544 L 372 558" stroke="#d77f8a" stroke-width="1.6" opacity="0.7"/>
+    </g>
+
+    <!-- 실루엣 털끝 (삐죽삐죽 결) -->
+    <g fill="url(#furHead)">
+      <path d="M 250 470 l -12 6 l 14 4 Z"/>
+      <path d="M 332 586 l -4 14 l 12 -8 Z"/>
+      <path d="M 420 584 l 4 14 l 10 -10 Z"/>
+    </g>
+    <g fill="url(#furBody)">
+      <path d="M 560 616 l -2 14 l 12 -8 Z"/>
+      <path d="M 470 318 l -6 -12 l 14 6 Z"/>
+      <path d="M 600 312 l 2 -12 l 12 8 Z"/>
+    </g>
+
+    <!-- ===== 입체감 강화: 코어 섀도(아랫면) ===== -->
+    <g clip-path="url(#bodyClip)">
+      <path d="M 350 560 C 430 622 660 618 740 540 C 760 600 690 626 560 628 C 420 630 350 600 330 520 Z"
+            fill="#a99e8a" opacity="0.55" filter="url(#soft2)"/>
+      <path d="M 740 460 C 758 540 700 600 600 612 C 690 560 712 500 700 450 Z"
+            fill="#9c907b" opacity="0.45" filter="url(#soft2)"/>
+    </g>
+    <g clip-path="url(#headClip)">
+      <path d="M 300 540 C 360 590 440 588 488 540 C 492 576 430 592 348 588 C 290 584 270 564 270 530 Z"
+            fill="#a99e8a" opacity="0.5" filter="url(#soft2)"/>
+    </g>
+
+    <!-- ===== 뚜렷한 외곽 윤곽선 ===== -->
+    <g fill="none" stroke="#b7ab97" stroke-width="3.2" stroke-linejoin="round" opacity="0.9">
+      <!-- 몸통 -->
+      <path d="M 330 480 C 300 405 335 330 460 318 C 600 305 730 358 752 478 C 766 560 700 612 560 616 C 425 620 352 558 330 480 Z"/>
+      <!-- 머리 -->
+      <path d="M 250 470 C 218 392 270 318 360 312 C 452 306 506 372 500 458 C 496 540 430 590 348 586 C 268 582 235 540 250 470 Z"/>
+      <!-- 뒷다리 -->
+      <path d="M 660 470 C 720 380 786 320 852 302 C 892 292 912 326 888 358 C 846 410 770 470 712 520"/>
+      <!-- 꼬리 -->
+      <path d="M 740 545 C 850 520 945 535 982 580 C 1000 604 985 642 938 648 C 885 654 845 612 792 600"/>
+      <!-- 귀 -->
+      <path d="M 470 388 C 540 372 566 452 532 518 C 504 570 458 552 452 482"/>
+      <path d="M 268 372 C 200 360 168 440 198 506 C 224 560 270 540 280 470"/>
+    </g>
+    <!-- 코/눈 또렷하게 한 번 더 강조 -->
+    <path d="M 350 498 C 350 484 398 484 398 500 C 398 514 384 522 374 522 C 362 522 350 512 350 498 Z"
+          fill="none" stroke="#0e0d13" stroke-width="1.6" opacity="0.5"/>
+
+    <!-- 상단 림 하이라이트(빛 위→) -->
+    <path d="M 360 318 C 470 306 600 312 700 360" fill="none" stroke="#ffffff" stroke-width="6" opacity="0.55" filter="url(#soft2)"/>
+    <path d="M 270 340 C 300 320 340 314 372 314" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.5" filter="url(#soft2)"/>
+
+    <!-- 부드러운 상단 광원 -->
+    <ellipse cx="430" cy="330" rx="320" ry="170" fill="#fff" opacity="0.08" filter="url(#soft)"/>
+  </g>
+</svg>

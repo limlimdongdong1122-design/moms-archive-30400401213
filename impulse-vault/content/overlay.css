@@ -568,3 +568,7 @@
 .iv-an-v-bar { height: 5px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.07); overflow: hidden; margin-top: 12px; }
 .iv-an-v-bar > i { display: block; height: 100%; border-radius: var(--r-pill); background: linear-gradient(90deg, var(--accent-calm), #a9cbff); transition: width 700ms var(--ease-calm); }
 .iv-an-v-hold .iv-an-v-bar > i { background: linear-gradient(90deg, var(--accent-warn), #e0c8a8); }
+
+/* AI-found alternatives (inline results) */
+.iv-an-altresults { margin-top: 12px; padding: 12px; border-radius: var(--r-sm); background: var(--glass-fill); border: 1px solid var(--glass-border); }
+.iv-an-alt-line { font-size: 12.5px; line-height: 1.55; color: var(--text-primary); padding: 3px 0; }

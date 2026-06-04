@@ -139,8 +139,14 @@ async function likelyOwnsSimilar(viewRec, key) {
 async function callAiProvider(settings, details) {
   // Web-search-augmented analysis when the user enabled web search + AI.
   const useWeb = !!settings.webSearchEnabled;
-  const prompt = IVAnalysis.buildAiPrompt(details, useWeb);
+  return callAi(settings, IVAnalysis.buildAiPrompt(details, useWeb), useWeb);
+}
 
+/**
+ * Low-level BYOK call shared by the scorecard analysis and the
+ * "find alternatives" feature. `useWeb` adds live web search.
+ */
+async function callAi(settings, prompt, useWeb) {
   // Helper: extract a short human-readable error from a failed API response.
   async function errText(res) {
     let body = '';
@@ -413,6 +419,22 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           }
           try {
             const text = await callAiProvider(settings, msg.details || {});
+            return sendResponse({ ok: true, text });
+          } catch (err) {
+            return sendResponse({ ok: false, error: String(err) });
+          }
+        }
+
+        // ---- AI finds real alternative products via live web search ----
+        case 'FIND_ALTERNATIVES': {
+          const settings = await IVStorage.getSettings();
+          if (!settings.aiEnabled || !settings.aiKey) {
+            return sendResponse({ ok: false, error: 'ai_disabled' });
+          }
+          try {
+            const prompt = IVAnalysis.buildAltPrompt(msg.details || {}, msg.kind || 'better');
+            // Force web search on so it returns REAL, current products.
+            const text = await callAi(settings, prompt, true);
             return sendResponse({ ok: true, text });
           } catch (err) {
             return sendResponse({ ok: false, error: String(err) });

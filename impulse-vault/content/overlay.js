@@ -456,35 +456,57 @@
       wrap.appendChild(ref);
     }
 
-    // Tools row: "is there a better/cheaper alternative?" search (if enabled)
-    if (payload.webSearchEnabled && payload.productName) {
+    // Tools: AI searches the web and finds REAL alternatives (not just a
+    // Google link). Falls back to a plain search only if AI is unavailable.
+    if ((payload.webSearchEnabled || payload.aiEnabled) && payload.productName) {
       const tools = el('div', 'iv-an-tools');
       const name = payload.productName;
       const altWord = (sc && sc.altWord) || '대안';
       const isProduct = !sc || sc.itemType === 'product' || !sc.itemType;
+      const results = el('div', 'iv-an-altresults');
+      results.style.display = 'none';
 
-      // Always: a general "better alternative" comparison search.
+      const runAlt = (kind, btn) => {
+        // No AI key → fall back to a normal search so the button still works.
+        if (!payload.aiEnabled || !payload.aiDetails) {
+          try {
+            const q = encodeURIComponent(name + (kind === 'cheaper' ? ' 최저가' : ' 대안 비교 추천 리뷰'));
+            const url = kind === 'cheaper'
+              ? 'https://search.shopping.naver.com/search/all?query=' + q
+              : 'https://www.google.com/search?q=' + q;
+            window.open(url, '_blank', 'noopener');
+          } catch (_) {}
+          return;
+        }
+        // AI web-search path: analyse + return real products inline.
+        tools.querySelectorAll('button').forEach((b) => (b.disabled = true));
+        results.style.display = 'block';
+        results.replaceChildren(el('div', 'iv-an-loading', 'AI가 인터넷에서 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + '을(를) 찾는 중…'));
+        ivSend({ type: 'FIND_ALTERNATIVES', kind, details: payload.aiDetails }).then((res) => {
+          tools.querySelectorAll('button').forEach((b) => (b.disabled = false));
+          results.replaceChildren();
+          results.appendChild(el('div', 'iv-an-subhead', 'AI 추천 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + ' · 참고용'));
+          if (res && res.ok && res.text) {
+            String(res.text).split('\n').forEach((line) => {
+              if (line.trim()) results.appendChild(el('div', 'iv-an-alt-line', line.trim()));
+            });
+          } else {
+            const msg = (res && res.error) ? String(res.error) : '키·권한·네트워크 확인';
+            results.appendChild(el('div', 'iv-an-ai-err', '대안 검색 실패: ' + msg));
+          }
+        });
+      };
+
       const better = el('button', 'iv-an-tool', '더 나은 ' + altWord + ' 찾기');
-      better.addEventListener('click', () => {
-        try {
-          const q = encodeURIComponent(name + ' 대안 비교 추천 리뷰');
-          window.open('https://www.google.com/search?q=' + q, '_blank', 'noopener');
-        } catch (_) {}
-      });
+      better.addEventListener('click', () => runAlt('better', better));
       tools.appendChild(better);
-
-      // Products also get a cheapest-price search.
       if (isProduct) {
         const cheaper = el('button', 'iv-an-tool', '더 싼 값 찾기');
-        cheaper.addEventListener('click', () => {
-          try {
-            const q = encodeURIComponent(name + ' 최저가');
-            window.open('https://search.shopping.naver.com/search/all?query=' + q, '_blank', 'noopener');
-          } catch (_) {}
-        });
+        cheaper.addEventListener('click', () => runAlt('cheaper', cheaper));
         tools.appendChild(cheaper);
       }
       wrap.appendChild(tools);
+      wrap.appendChild(results);
     }
 
     // Optional AI enrichment (BYOK) — instant card already shown; this fills in.

@@ -300,9 +300,27 @@
     return lines.join('\n');
   }
 
+  // Prompt for AI to SEARCH THE WEB and return real alternative products.
+  function buildAltPrompt(d, kind) {
+    const cheaper = kind === 'cheaper';
+    const ti = typeInfo(d.itemType || 'product');
+    const lines = [];
+    lines.push('You are a shopping research assistant with live web search. SEARCH THE WEB NOW and find REAL, currently-available ' + (cheaper ? 'CHEAPER' : 'BETTER (or better-value)') + ' alternatives to the item below. Base everything on what you actually find — do NOT invent products or prices.');
+    lines.push('Target ' + (d.itemType || 'product') + ' (' + ti.label + '):');
+    lines.push('- 이름: ' + (d.name || '(unknown)'));
+    if (d.brand) lines.push('- 브랜드: ' + d.brand);
+    if (d.price) lines.push('- 현재 가격: ' + fmtKRW(d.price));
+    if (d.specs && d.specs.length) lines.push('- 주요 스펙: ' + d.specs.slice(0, 6).join(' / '));
+    lines.push('Return 2~3 concrete alternatives in Korean, each as one block:');
+    lines.push('• 제품명 (브랜드) — 대략 가격 — 왜 ' + (cheaper ? '더 싼지/가성비 좋은지' : '더 좋은지') + ' 한 줄 — 출처(사이트명/링크)');
+    lines.push('Then ONE 한 줄 결론 comparing them to the original. If you genuinely cannot find solid alternatives, say so plainly. Keep it tight.');
+    return lines.join('\n');
+  }
+
   global.IVAnalysis = {
     buildScorecard: buildScorecard,
     buildAiPrompt: buildAiPrompt,
+    buildAltPrompt: buildAltPrompt,
     fmtKRW: fmtKRW,
   };
 })(typeof self !== 'undefined' ? self : this);

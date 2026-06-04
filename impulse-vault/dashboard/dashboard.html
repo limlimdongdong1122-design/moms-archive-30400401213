@@ -245,8 +245,17 @@
                 <input type="password" id="aiKey" placeholder="sk-... (내 기기에만 저장)" autocomplete="off" />
               </div>
             </div>
+            <div style="margin-top: var(--space-12)">
+              <label class="set-label" style="font-size: var(--fs-xs)">모델 (선택 · 비워두면 기본값)</label>
+              <input type="text" id="aiModel" placeholder="예: gpt-4o-mini / claude-3-5-sonnet-latest" autocomplete="off" />
+            </div>
+            <div class="domain-editor" style="margin-top: var(--space-12)">
+              <button class="btn-sm" id="aiTestBtn" type="button">AI 연결 테스트</button>
+              <span id="aiTestResult" class="set-hint" style="align-self:center; margin:0"></span>
+            </div>
             <p class="set-hint" style="margin-top: var(--space-12)">
               🔒 키는 <b>이 기기에만</b> 저장되고, 선택한 AI 제공자에게만 직접 전송돼요. 그 외 어디에도 보내지 않아요. AI 답변은 <b>참고용</b>이에요.
+              <br />키를 넣었는데 분석이 안 뜨면 위 <b>"AI 연결 테스트"</b>로 정확한 오류를 확인하세요.
             </p>
           </div>
         </div>

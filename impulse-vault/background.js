@@ -138,18 +138,27 @@ async function likelyOwnsSimilar(viewRec, key) {
  */
 async function callAiProvider(settings, details) {
   const prompt = IVAnalysis.buildAiPrompt(details);
+  // Helper: extract a short human-readable error from a failed API response.
+  async function errText(res) {
+    let body = '';
+    try { body = await res.text(); } catch (_) {}
+    let msg = body;
+    try { const j = JSON.parse(body); msg = (j.error && (j.error.message || j.error.type)) || body; } catch (_) {}
+    return 'HTTP ' + res.status + (msg ? ' · ' + String(msg).slice(0, 180) : '');
+  }
+
   if (settings.aiProvider === 'openai') {
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + settings.aiKey },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: settings.aiModel || 'gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 500,
         temperature: 0.3,
       }),
     });
-    if (!res.ok) throw new Error('OpenAI HTTP ' + res.status);
+    if (!res.ok) throw new Error('OpenAI ' + (await errText(res)));
     const data = await res.json();
     return (data.choices && data.choices[0] && data.choices[0].message.content) || '';
   }
@@ -163,12 +172,12 @@ async function callAiProvider(settings, details) {
       'anthropic-dangerous-direct-browser-access': 'true',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
+      model: settings.aiModel || 'claude-3-5-sonnet-latest',
       max_tokens: 600,
       messages: [{ role: 'user', content: prompt }],
     }),
   });
-  if (!res.ok) throw new Error('Anthropic HTTP ' + res.status);
+  if (!res.ok) throw new Error('Anthropic ' + (await errText(res)));
   const data = await res.json();
   return (data.content && data.content[0] && data.content[0].text) || '';
 }

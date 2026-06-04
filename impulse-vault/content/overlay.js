@@ -479,7 +479,8 @@
             if (line.trim()) body.appendChild(el('div', 'iv-an-ai-line', line.trim()));
           });
         } else {
-          body.appendChild(el('div', 'iv-an-ai-err', 'AI 분석을 불러오지 못했어요 (키·권한·네트워크 확인).'));
+          const msg = (res && res.error) ? String(res.error) : '키·권한·네트워크 확인';
+          body.appendChild(el('div', 'iv-an-ai-err', 'AI 분석 실패: ' + msg));
         }
       });
     } else {

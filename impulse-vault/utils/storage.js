@@ -66,6 +66,7 @@
     aiEnabled: false, // BYOK AI enrichment (off by default)
     aiProvider: 'claude', // 'claude' | 'openai'
     aiKey: '', // the user's OWN api key, stored locally only
+    aiModel: '', // optional model override (blank = provider default)
     webSearchEnabled: false, // "더 싼 대안 찾기" + review search
   };
 

@@ -276,6 +276,7 @@
     $('#aiToggle').checked = !!s.aiEnabled;
     $('#aiProvider').value = s.aiProvider || 'claude';
     $('#aiKey').value = s.aiKey || '';
+    $('#aiModel').value = s.aiModel || '';
     $('#aiKeyArea').hidden = !s.aiEnabled;
 
     renderDomainList(s.domains);
@@ -406,6 +407,48 @@
     });
     $('#aiProvider').addEventListener('change', (e) => saveField({ aiProvider: e.target.value }));
     $('#aiKey').addEventListener('change', (e) => saveField({ aiKey: e.target.value.trim() }));
+    $('#aiModel').addEventListener('change', (e) => saveField({ aiModel: e.target.value.trim() }));
+
+    // "AI 연결 테스트" — isolates the AI call so the exact error is visible.
+    $('#aiTestBtn').addEventListener('click', async () => {
+      const out = $('#aiTestResult');
+      // Make sure we have permission to reach the provider (user gesture).
+      const granted = await new Promise((resolve) => {
+        try {
+          chrome.permissions.request(
+            { origins: ['https://api.anthropic.com/*', 'https://api.openai.com/*'] },
+            (r) => { void chrome.runtime.lastError; resolve(!!r); }
+          );
+        } catch (_) { resolve(false); }
+      });
+      if (!granted) {
+        out.style.color = 'var(--accent-warn)';
+        out.textContent = '✗ 제공자 접근 권한이 필요해요.';
+        return;
+      }
+      // Persist current field values first so the worker uses them.
+      await saveField({
+        aiEnabled: true,
+        aiProvider: $('#aiProvider').value,
+        aiKey: $('#aiKey').value.trim(),
+        aiModel: $('#aiModel').value.trim(),
+      });
+      $('#aiToggle').checked = true;
+      $('#aiKeyArea').hidden = false;
+      out.style.color = 'var(--text-secondary)';
+      out.textContent = '테스트 중…';
+      const res = await sendMsg({
+        type: 'ANALYZE_AI',
+        details: { name: '테스트 상품', price: 50000, itemType: 'product', specs: ['예시 스펙'], reviews: [] },
+      });
+      if (res && res.ok && res.text) {
+        out.style.color = 'var(--accent-good)';
+        out.textContent = '✓ 연결 성공! AI 분석이 정상 작동해요.';
+      } else {
+        out.style.color = 'var(--accent-warn)';
+        out.textContent = '✗ 실패: ' + ((res && res.error) || '알 수 없는 오류');
+      }
+    });
     $('#aiToggle').addEventListener('change', async (e) => {
       const on = e.target.checked;
       $('#aiKeyArea').hidden = !on;

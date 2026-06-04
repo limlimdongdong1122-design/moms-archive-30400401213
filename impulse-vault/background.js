@@ -172,7 +172,7 @@ async function callAiProvider(settings, details) {
       'anthropic-dangerous-direct-browser-access': 'true',
     },
     body: JSON.stringify({
-      model: settings.aiModel || 'claude-3-5-sonnet-latest',
+      model: settings.aiModel || 'claude-sonnet-4-6',
       max_tokens: 600,
       messages: [{ role: 'user', content: prompt }],
     }),

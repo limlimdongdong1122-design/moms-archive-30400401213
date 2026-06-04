@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VELA — Claim your corner of the internet</title>
+    <meta
+      name="description"
+      content="VELA is a domain registrar for people who care how things feel. Find a name worthy of what you're building."
+    />
+
+    <!-- Fonts: Space Grotesk (display) + Inter (body). Single remote allowance
+         for a landing page; everything else is local/procedural. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Three.js (r160) + addons, GSAP + ScrollTrigger, Lenis — all via CDN
+         importmap so the page runs with no build step. The 3D uses procedural
+         geometry + a procedural environment map, so there are NO model/HDRI files. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+          "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js/+esm",
+          "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js/+esm",
+          "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.0.42/+esm"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Cinematic atmosphere behind everything -->
+    <div class="atmosphere" aria-hidden="true">
+      <span class="mesh mesh-violet"></span>
+      <span class="mesh mesh-blue"></span>
+      <span class="mesh mesh-warm"></span>
+      <span class="grain"></span>
+      <span class="vignette"></span>
+    </div>
+
+    <!-- The 3D hero renders into this fixed canvas, behind the content -->
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+      <a class="brand" href="#top" aria-label="VELA home">
+        <!-- Original logo mark: a four-point sail/star inside a soft ring -->
+        <svg class="brand-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+          <defs>
+            <linearGradient id="velaGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#aeb9ff" />
+              <stop offset="0.5" stop-color="#8ea2ff" />
+              <stop offset="1" stop-color="#c9b6ff" />
+            </linearGradient>
+          </defs>
+          <circle cx="16" cy="16" r="14" fill="none" stroke="url(#velaGrad)" stroke-width="1.2" opacity="0.5" />
+          <path d="M16 3 L19 16 L16 29 L13 16 Z" fill="url(#velaGrad)" />
+          <path d="M3 16 L16 13 L29 16 L16 19 Z" fill="url(#velaGrad)" opacity="0.65" />
+        </svg>
+        <span class="brand-name">VELA</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#search">Search</a>
+        <a href="#extensions">Extensions</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a href="#search" class="btn btn-primary magnetic" data-magnetic>Get started</a>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="hero">
+        <div class="hero-inner">
+          <span class="eyebrow reveal">The premium domain registrar</span>
+          <h1 class="hero-title reveal">
+            Claim your corner<br />of the internet.
+          </h1>
+          <p class="hero-sub reveal">
+            A name is the first thing anyone meets. VELA helps you find one worthy
+            of what you're building — calm, considered, and yours.
+          </p>
+
+          <!-- Premium glass search bar -->
+          <form class="search reveal" id="searchForm" autocomplete="off">
+            <div class="search-glass" id="searchGlass">
+              <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.6" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for a name…"
+                aria-label="Search for a domain name"
+                spellcheck="false"
+              />
+              <button type="submit" class="btn btn-primary search-btn magnetic" data-magnetic>
+                Search
+              </button>
+            </div>
+          </form>
+
+          <div class="tld-row reveal" id="tldRow" aria-label="Popular extensions">
+            <button class="tld-pill is-on" data-tld="com">.com</button>
+            <button class="tld-pill" data-tld="io">.io</button>
+            <button class="tld-pill" data-tld="ai">.ai</button>
+            <button class="tld-pill" data-tld="dev">.dev</button>
+            <button class="tld-pill" data-tld="studio">.studio</button>
+          </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><span></span></div>
+      </section>
+
+      <!-- ============ LIVE SEARCH RESULTS ============ -->
+      <section class="results-section" id="search">
+        <div class="container">
+          <div class="results-head">
+            <span class="label">Results</span>
+            <h2 class="section-title" id="resultsTitle">Type a name to begin</h2>
+            <p class="section-sub" id="resultsSub">
+              We'll check it across every extension, instantly.
+            </p>
+          </div>
+          <div class="results-grid" id="resultsGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ============ EXTENSIONS SHOWCASE ============ -->
+      <section class="extensions" id="extensions">
+        <div class="container">
+          <span class="label">Extensions</span>
+          <h2 class="section-title">Every ending, fairly priced.</h2>
+          <p class="section-sub">No upsells, no first-year tricks. The price you see renews at the same.</p>
+          <div class="ext-grid" id="extGrid"></div>
+        </div>
+      </section>
+
+      <!-- ============ HOW IT WORKS ============ -->
+      <section class="how" id="how">
+        <div class="container">
+          <span class="label">How it works</span>
+          <h2 class="section-title">Three calm steps.</h2>
+          <div class="steps">
+            <article class="step reveal glass">
+              <div class="step-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Search</h3>
+              <p>Type an idea. We check availability across every extension in real time.</p>
+            </article>
+            <article class="step reveal glass">
+              <div class="step-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12l4 4 10-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Claim</h3>
+              <p>Reserve your favourite in a single click. It's yours before someone else blinks.</p>
+            </article>
+            <article class="step reveal glass">
+              <div class="step-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Build</h3>
+              <p>Point it anywhere in seconds with one-click DNS presets for the tools you love.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CTA BAND ============ -->
+      <section class="cta">
+        <div class="container">
+          <div class="cta-panel glass reveal">
+            <h2>Your name is waiting.</h2>
+            <p>Find it now — it takes about thirty seconds.</p>
+            <a href="#search" class="btn btn-primary btn-lg magnetic" data-magnetic>Find your domain</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="faq" id="faq">
+        <div class="container container-narrow">
+          <span class="label">FAQ</span>
+          <h2 class="section-title">Good questions.</h2>
+          <div class="accordion" id="accordion">
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">
+                <span>Are renewal prices the same as the first year?</span>
+                <span class="acc-plus" aria-hidden="true"></span>
+              </button>
+              <div class="acc-body"><p>Yes. The price you see is the price it renews at — no first-year bait, ever.</p></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">
+                <span>Is WHOIS privacy included?</span>
+                <span class="acc-plus" aria-hidden="true"></span>
+              </button>
+              <div class="acc-body"><p>Always, and free. Your personal details stay private by default on every domain.</p></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">
+                <span>Can I move a domain I already own?</span>
+                <span class="acc-plus" aria-hidden="true"></span>
+              </button>
+              <div class="acc-body"><p>Transfers take a few minutes and add a year to your registration at no extra cost.</p></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">
+                <span>What if I change my mind?</span>
+                <span class="acc-plus" aria-hidden="true"></span>
+              </button>
+              <div class="acc-body"><p>Cancel within five days of registration for a full refund. No forms, no friction.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="VELA home">
+            <svg class="brand-mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+              <circle cx="16" cy="16" r="14" fill="none" stroke="#8ea2ff" stroke-width="1.2" opacity="0.5" />
+              <path d="M16 3 L19 16 L16 29 L13 16 Z" fill="#8ea2ff" />
+              <path d="M3 16 L16 13 L29 16 L16 19 Z" fill="#8ea2ff" opacity="0.65" />
+            </svg>
+            <span class="brand-name">VELA</span>
+          </a>
+          <p class="footer-tag">A name worthy of what you're building.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#search">Search</a>
+          <a href="#extensions">Extensions</a>
+          <a href="#how">How it works</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Manifesto</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#faq">FAQ</a>
+          <a href="#">Status</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 VELA Registry. An imaginary brand, lovingly made.</span>
+        <div class="socials" aria-label="Social links">
+          <a href="#" aria-label="X">𝕏</a>
+          <a href="#" aria-label="GitHub">⌥</a>
+          <a href="#" aria-label="Dribbble">◐</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

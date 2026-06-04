@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Strict CSP: only local resources. The board talks to Supabase via
+         the MAIN process (Node), and donation links open in the external
+         browser via main — so the renderer itself never needs remote access. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMPULSE VAULT</title>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="iv-atmosphere" aria-hidden="true">
+      <span class="iv-aurora iv-aurora--teal"></span>
+      <span class="iv-aurora iv-aurora--peri"></span>
+      <span class="iv-grain"></span>
+      <span class="iv-vignette"></span>
+    </div>
+
+    <nav class="sidebar">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-name">IMPULSE&nbsp;VAULT</span>
+      </div>
+      <button class="nav-link active" data-view="home">홈</button>
+      <button class="nav-link" data-view="vault">금고</button>
+      <button class="nav-link" data-view="dashboard">충동 프로필</button>
+      <button class="nav-link" data-view="support">후원</button>
+      <button class="nav-link" data-view="settings">설정</button>
+
+      <div class="sidebar-foot">
+        <div class="bridge-chip" id="bridgeChip" data-connected="false">
+          <span class="bridge-dot"></span>
+          <span id="bridgeText">센서 연결 확인 중…</span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="content">
+      <!-- ============ HOME ============ -->
+      <section class="view" data-view="home">
+        <div class="overview-grid">
+          <div class="vault-stage glass">
+            <canvas id="vaultCanvas"></canvas>
+            <div id="vaultFallback" class="vault-fallback" hidden>
+              <div class="fb-dome"></div>
+              <div class="fb-coin">₩</div>
+              <p class="fb-note">3D 장면을 보려면 <code>three.min.js</code>를 넣어주세요.</p>
+            </div>
+            <div class="stage-caption"><span id="stageItem">금고는 비어 있어요</span></div>
+          </div>
+
+          <div class="stat-stack">
+            <div class="glass stat-big">
+              <div class="stat-label">지금까지 아낀 돈</div>
+              <div class="stat-value mint iv-stat-number" id="totalSaved">₩0</div>
+            </div>
+            <div class="stat-row">
+              <div class="glass stat-sm">
+                <div class="stat-label">참은 횟수</div>
+                <div class="stat-value" id="resisted">0</div>
+              </div>
+              <div class="glass stat-sm">
+                <div class="stat-label">저항률</div>
+                <div class="stat-value teal" id="resistRate">0%</div>
+              </div>
+            </div>
+            <div class="glass stat-sm" id="bridgeBanner" hidden>
+              <div class="stat-label">센서(확장) 연결 안 됨</div>
+              <p class="muted-line">
+                쇼핑 페이지를 감지하려면 IMPULSE VAULT 브라우저 확장이 필요해요.
+              </p>
+              <button class="btn-ghost" id="installExt">확장 설치/켜는 법 보기</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="activity glass">
+          <div class="section-head"><h3 class="iv-label">최근 활동</h3></div>
+          <div id="activityList" class="activity-list"></div>
+          <p class="empty-note" id="activityEmpty">아직 활동이 없어요. 쇼핑을 시작하면 여기 나타나요.</p>
+        </section>
+      </section>
+
+      <!-- ============ VAULT ============ -->
+      <section class="view" data-view="vault" hidden>
+        <h2 class="panel-title">금고</h2>
+        <p class="panel-sub">식히는 중인 항목과 지난 결정들이에요.</p>
+        <div id="vaultGrid" class="vault-grid"></div>
+        <p class="empty-note" id="vaultEmptyNote">
+          금고가 고요해요. 충동이 올 때 여기 넣어두면 천천히 식혀줄게요.
+        </p>
+      </section>
+
+      <!-- ============ DASHBOARD ============ -->
+      <section class="view" data-view="dashboard" hidden>
+        <h2 class="panel-title">충동 프로필</h2>
+        <p class="panel-sub">전부 이 기기 안에서 계산돼요. 데이터가 쌓일수록 정확해집니다.</p>
+        <div class="cards-2">
+          <div class="glass chart-card">
+            <h3>시간대별 패턴</h3>
+            <div id="hourHeatmap" class="heatmap"></div>
+            <div class="heatmap-axis"><span>0시</span><span>6시</span><span>12시</span><span>18시</span><span>23시</span></div>
+            <p class="insight-line" id="hourInsight"></p>
+          </div>
+          <div class="glass chart-card">
+            <h3>요일별 패턴</h3>
+            <div id="weekdayBars" class="bars"></div>
+          </div>
+        </div>
+        <div class="cards-2">
+          <div class="glass chart-card">
+            <h3>가장 끌린 키워드</h3>
+            <div id="topKeywords" class="taglist"></div>
+          </div>
+          <div class="glass chart-card">
+            <h3>충동을 가장 부른 사이트</h3>
+            <div id="topSites" class="ranklist"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SUPPORT ============ -->
+      <section class="view" data-view="support" hidden>
+        <h2 class="panel-title">후원 · 응원</h2>
+        <p class="panel-sub">
+          후원은 100% 선택이에요. 앱은 늘 무료이고, 어떤 기능도 막지 않아요.
+        </p>
+
+        <div class="glass support-hero">
+          <div class="support-emoji">☕</div>
+          <p>이 앱이 충동구매를 막아줬다면, 커피 한 잔으로 응원해줘. 큰 힘이 돼요.</p>
+        </div>
+
+        <div id="tierGrid" class="tier-grid"></div>
+
+        <!-- 응원 게시판 -->
+        <div class="board">
+          <div class="section-head board-head">
+            <h3 class="iv-label">응원 게시판</h3>
+            <span class="board-mode" id="boardMode"></span>
+          </div>
+
+          <div class="glass compose">
+            <div class="compose-row">
+              <input type="text" id="composeName" maxlength="40" placeholder="이름 (선택)" />
+              <select id="composeBadge" aria-label="배지">
+                <option value="">배지 없음</option>
+                <option value="coffee">☕ 커피</option>
+                <option value="cup">🧋 한 잔</option>
+                <option value="star">🌟 응원</option>
+                <option value="heart">💝 후원</option>
+              </select>
+            </div>
+            <textarea id="composeMsg" maxlength="200" rows="2" placeholder="따뜻한 한마디 남겨줘 (최대 200자)"></textarea>
+            <div class="compose-foot">
+              <span class="char-count" id="charCount">0 / 200</span>
+              <button class="btn-primary" id="postBtn">응원 남기기</button>
+            </div>
+            <p class="compose-note" id="composeNote" hidden></p>
+          </div>
+
+          <div id="boardList" class="board-list"></div>
+        </div>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section class="view" data-view="settings" hidden>
+        <h2 class="panel-title">설정</h2>
+
+        <div class="glass setting-block">
+          <label class="set-label">강도</label>
+          <div class="seg" id="strictnessSeg">
+            <button data-val="gentle">순하게</button>
+            <button data-val="balanced">균형</button>
+            <button data-val="strict">엄격하게</button>
+          </div>
+        </div>
+
+        <div class="cards-2">
+          <div class="glass setting-block">
+            <label class="set-label">시급 (원)</label>
+            <input type="number" id="hourlyWage" min="0" step="500" />
+          </div>
+          <div class="glass setting-block">
+            <label class="set-label">아끼는 것의 가격 (원)</label>
+            <input type="number" id="gamePrice" min="0" step="1000" />
+          </div>
+        </div>
+
+        <div class="glass setting-block">
+          <label class="set-label">금고 기본 식히기 시간</label>
+          <select id="coolingHours">
+            <option value="6">6시간</option>
+            <option value="12">12시간</option>
+            <option value="24">24시간</option>
+            <option value="48">48시간</option>
+            <option value="72">72시간</option>
+          </select>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">전체 일시정지</label>
+            <p class="set-hint">켜면 어떤 개입도 하지 않아요.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="pauseToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">시작 시 자동 실행</label>
+            <p class="set-hint">컴퓨터를 켜면 백그라운드(트레이)에서 자동으로 켜져요.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="startupToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass privacy-hero">
+          <div class="privacy-badge">🔒 100% 로컬</div>
+          <p>모든 데이터는 이 기기에만 저장돼요. 후원 게시판/링크 외에는 어떤 네트워크 통신도 하지 않아요.</p>
+        </div>
+
+        <div class="glass danger-card">
+          <div>
+            <h3>모든 데이터 삭제</h3>
+            <p>검색·조회·금고·통계·프로필을 전부 지워요. 되돌릴 수 없어요.</p>
+          </div>
+          <button class="btn-danger" id="deleteAll">전부 삭제</button>
+        </div>
+
+        <p class="save-toast" id="saveToast" hidden>저장됨 ✓</p>
+      </section>
+    </main>
+
+    <script src="three.min.js"></script>
+    <script src="vault3d.js"></script>
+    <script src="support.js"></script>
+    <script src="renderer.js"></script>
+  </body>
+</html>

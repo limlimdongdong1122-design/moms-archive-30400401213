@@ -113,6 +113,24 @@
     }
     if (cheapNecessity && cons.length > 1) cons.length = 1; // keep it light
 
+    // ---- Extra grounded signals from the richer page scrape ----
+    if (d.freeShipping) pros.push({ text: '무료 배송', source: '상품정보' });
+    if (typeof d.discountPct === 'number' && d.discountPct >= 5) {
+      pros.push({ text: `표시 할인 ${d.discountPct}%`, source: '상품정보' });
+    }
+    if (d.returnInfo && /불가/.test(d.returnInfo)) {
+      cons.push({ text: '반품·환불이 제한될 수 있어요: ' + d.returnInfo, source: '상품정보' });
+    }
+
+    // Review sentiment (count grounded pos vs neg cues across snippets).
+    let posN = 0, negN = 0;
+    (d.reviews || []).forEach((r) => {
+      if (snippetHasAny(r, NEG_CUES)) negN++;
+      else if (snippetHasAny(r, POS_CUES)) posN++;
+    });
+    const sentN = posN + negN;
+    const posRatio = sentN >= 3 ? posN / sentN : null; // null = not enough data
+
     // ---- Objective summary (neutral, grounded) ----
     const summary = buildSummary({ d, ratio, highPrice, cheapNecessity, repeat });
 
@@ -150,6 +168,46 @@
       });
     }
 
+    // Persuasion-tactic awareness (grounded in what the page shows).
+    if (d.lowStock) {
+      reflections.push({ point: "'품절 임박'·'마감 임박' 표시를 봤나요?", why: '재고/시간 압박은 급하게 사게 만드는 흔한 장치예요. 진짜 마지막 기회인 경우는 드물어요.' });
+    }
+    if (typeof d.discountPct === 'number' && d.discountPct >= 20) {
+      reflections.push({ point: `'${d.discountPct}% 할인'은 정말 싼 걸까, 원래 비싼 걸까?`, why: '할인율은 정가를 높여 만든 착시인 경우가 많아요. 할인폭이 아니라 최종 가격을 다른 곳과 비교해요.' });
+    }
+
+    // ---- Evidence-backed verdict (persuasive, but grounded + transparent) ----
+    // Score the case 0..100 where higher = more reason it's a sound buy.
+    let caseScore = 50;
+    if (typeof d.rating === 'number') caseScore += (d.rating - 3.8) * 18; // ~ -14..+22
+    if (posRatio !== null) caseScore += (posRatio - 0.5) * 40;            // review consensus
+    caseScore -= clamp((ratio - 1) * 18, -10, 30);                       // price vs value
+    if (repeat) caseScore -= 12;                                         // impulse signal
+    if (s.ownsSimilar) caseScore -= 10;                                  // duplicate risk
+    if (d.freeShipping) caseScore += 3;
+    if (cheapNecessity) caseScore += 10;
+    caseScore = Math.round(clamp(caseScore, 0, 100));
+
+    let level, line;
+    if (caseScore >= 66) {
+      level = 'worth';
+      line = '모은 근거상, 이건 합리적인 선택에 가까워요. 평가·가격 측면이 대체로 우호적이에요.';
+    } else if (caseScore >= 45) {
+      level = 'consider';
+      line = '나쁘진 않지만 결정적이진 않아요. 핵심 한두 가지(가격·대안)를 5분만 더 확인하고 사도 늦지 않아요.';
+    } else {
+      level = 'hold';
+      line = '근거상 지금 바로 사기엔 신중할 이유가 더 많아요. 대안을 한 번 비교한 뒤 결정하길 권해요.';
+    }
+    // Persuasive reasons = the strongest 2 grounded points behind the verdict.
+    const reasons = [];
+    if (typeof d.rating === 'number') reasons.push(`평점 ${d.rating.toFixed(1)}${d.reviewCount ? ' (' + d.reviewCount.toLocaleString('ko-KR') + '개)' : ''}`);
+    if (posRatio !== null) reasons.push(`리뷰 ${Math.round(posRatio * 100)}%가 긍정적`);
+    if (ratio > 0) reasons.push(price > 0 ? `가격은 아끼는 것 약 ${ratio.toFixed(1)}개 값` : '');
+    if (repeat) reasons.push(`${Math.max(views, sims)}번 반복 조회(충동 신호)`);
+    if (s.ownsSimilar) reasons.push('비슷한 품목 보유 가능성');
+    const verdict = { level, line, strength: caseScore, reasons: reasons.filter(Boolean).slice(0, 3) };
+
     // ---- Neutral consideration meter (NOT a verdict) ----
     let meterVal = 0;
     meterVal += clamp(ratio * 34, 0, 50);
@@ -165,8 +223,9 @@
       itemType: itemType,
       typeLabel: ti.label,
       altWord: ti.altWord,
-      pros: pros.slice(0, 5),
-      cons: cons.slice(0, 5),
+      verdict: verdict,
+      pros: pros.slice(0, 6),
+      cons: cons.slice(0, 6),
       summary,
       reflections,
       meter: { value: meterVal, label: meterLabel },
@@ -192,16 +251,23 @@
   function buildAiPrompt(d) {
     const ti = typeInfo(d.itemType || 'product');
     const lines = [];
-    lines.push('You are a neutral purchase-analysis assistant. Judge fairly; do NOT bias toward discouraging the purchase.');
-    lines.push('Use ONLY the data below for specific claims. Do NOT invent specs, prices, ratings, or defects. If data is insufficient, say so plainly.');
-    lines.push('This is a ' + (d.itemType || 'product') + ' (' + ti.label + '). Assess: (1) is it a GOOD CHOICE for a typical buyer, (2) are there clearly BETTER or CHEAPER alternatives worth comparing (name general categories/well-known options only — do NOT fabricate specific prices).');
-    lines.push('Answer in Korean, concise. Return exactly these sections: 장점 (3 bullets), 단점 (3 bullets, mark review-based as "리뷰 기반"), 더 나은 대안 (1-2 lines), 냉정한 요약 (2-3 lines).');
-    lines.push('---DATA---');
+    lines.push('You are a sharp, persuasive purchase-analyst. Build a COMPELLING, evidence-grounded case and give a clear recommendation — but base every specific claim ONLY on the data below. Do NOT invent specs, prices, ratings, or defects. If data is thin, say so and lower your confidence rather than guessing.');
+    lines.push('This is a ' + (d.itemType || 'product') + ' (' + ti.label + '). Weigh ALL the gathered data (specs, ratings, real review snippets, price/discount, shipping/return, stock) and decide if it is genuinely worth buying for a typical buyer, and whether a clearly BETTER or CHEAPER option exists (name well-known categories/options only; do NOT fabricate specific competitor prices).');
+    lines.push('Answer in Korean, tight and convincing. Return EXACTLY these sections:');
+    lines.push('① 결론: 한 문장 추천 + 확신도(낮음/보통/높음). ② 가장 강력한 근거 3가지 (데이터 인용). ③ 단점/리스크 2가지 (리뷰 기반은 "리뷰 기반" 표시). ④ 더 나은/더 싼 대안 1~2개. ⑤ 한 줄 냉정한 요약.');
+    lines.push('Persuade through evidence, not pressure. End nothing with hype.');
+    lines.push('---DATA (everything scraped from the page) ---');
     lines.push('이름: ' + (d.name || '(unknown)'));
+    if (d.brand) lines.push('브랜드: ' + d.brand);
     if (d.price) lines.push('가격: ' + fmtKRW(d.price));
+    if (d.originalPrice) lines.push('정가(표시): ' + fmtKRW(d.originalPrice));
+    if (typeof d.discountPct === 'number') lines.push('표시 할인율: ' + d.discountPct + '%');
     if (typeof d.rating === 'number') lines.push('평점: ' + d.rating + ' (리뷰 ' + (d.reviewCount || 0) + '개)');
-    if (d.specs && d.specs.length) lines.push('스펙/특징:\n- ' + d.specs.slice(0, 8).join('\n- '));
-    if (d.reviews && d.reviews.length) lines.push('리뷰 발췌:\n- ' + d.reviews.slice(0, 6).join('\n- '));
+    if (d.freeShipping) lines.push('배송: 무료배송 표기');
+    if (d.returnInfo) lines.push('반품/환불: ' + d.returnInfo);
+    if (d.lowStock) lines.push('재고: 품절/마감 임박 표기 있음');
+    if (d.specs && d.specs.length) lines.push('스펙/특징 (' + d.specs.length + '개):\n- ' + d.specs.slice(0, 14).join('\n- '));
+    if (d.reviews && d.reviews.length) lines.push('실제 리뷰 발췌 (' + d.reviews.length + '개):\n- ' + d.reviews.slice(0, 12).join('\n- '));
     lines.push('---END---');
     return lines.join('\n');
   }

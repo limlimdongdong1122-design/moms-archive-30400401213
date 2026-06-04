@@ -551,3 +551,20 @@
   background: var(--glass-fill); border: 1px solid var(--glass-border);
 }
 .iv-an-aihint-b { color: var(--accent-calm); font-weight: 600; }
+
+/* Evidence-backed verdict (persuasive centerpiece) */
+.iv-an-verdict {
+  margin-bottom: 14px; padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(110, 168, 255, 0.06); border: 1px solid var(--accent-good-glow);
+}
+.iv-an-v-hold { background: rgba(194, 169, 142, 0.07); border-color: var(--accent-warn-glow); }
+.iv-an-v-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.iv-an-v-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-calm); }
+.iv-an-v-hold .iv-an-v-label { color: var(--accent-warn); }
+.iv-an-v-conf { font-size: 11px; color: var(--text-tertiary); }
+.iv-an-v-line { font-size: 14.5px; font-weight: 600; line-height: 1.5; color: var(--text-primary); }
+.iv-an-v-reasons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.iv-an-v-pill { font-size: 11px; color: var(--text-secondary); background: var(--glass-fill); border: 1px solid var(--glass-border); border-radius: var(--r-pill); padding: 3px 9px; }
+.iv-an-v-bar { height: 5px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.07); overflow: hidden; margin-top: 12px; }
+.iv-an-v-bar > i { display: block; height: 100%; border-radius: var(--r-pill); background: linear-gradient(90deg, var(--accent-calm), #a9cbff); transition: width 700ms var(--ease-calm); }
+.iv-an-v-hold .iv-an-v-bar > i { background: linear-gradient(90deg, var(--accent-warn), #e0c8a8); }

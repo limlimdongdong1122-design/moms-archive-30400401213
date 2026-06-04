@@ -349,6 +349,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 reviewCount: details.reviewCount,
                 specs: details.specs || [],
                 reviews: details.reviews || [],
+                brand: details.brand,
+                originalPrice: details.originalPrice,
+                discountPct: details.discountPct,
+                freeShipping: details.freeShipping,
+                returnInfo: details.returnInfo,
+                lowStock: details.lowStock,
                 signals: {
                   viewCount: (viewRec && viewRec.count) || 1,
                   similarSearches: similar,
@@ -369,15 +375,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             // Grounded data the overlay passes back for optional AI enrichment.
             if (payload.aiEnabled) {
               const det = msg.details || {};
-              payload.aiDetails = {
+              // Pass EVERYTHING scraped from the page to the model.
+              payload.aiDetails = Object.assign({}, det, {
                 name: msg.name,
                 price: msg.price || (viewRec && viewRec.price) || 0,
                 itemType: det.itemType || 'product',
-                rating: det.rating,
-                reviewCount: det.reviewCount,
-                specs: det.specs || [],
-                reviews: det.reviews || [],
-              };
+              });
             }
           }
 

@@ -494,22 +494,60 @@
       out.specs = out.specs.slice(0, 6);
     });
 
-    // 3) a few review snippets (best-effort; many sites lazy-load these)
+    // 2b) spec TABLES as key:value pairs (richest structured data on a page)
     safe(() => {
-      const sels = ['[data-hook="review-body"]', '.review-body', '.review_cont', '[class*="review" i] p'];
+      const rows = document.querySelectorAll(
+        'table tr, .spec_tbl tr, [class*="spec" i] tr, dl > div, .product-info tr'
+      );
       const seen = new Set();
+      rows.forEach((row) => {
+        let k = '', v = '';
+        const th = row.querySelector('th, dt, .key, td:first-child');
+        const td = row.querySelector('td:last-child, dd, .value');
+        if (th && td && th !== td) {
+          k = safe(() => th.innerText.trim().replace(/\s+/g, ' '), '');
+          v = safe(() => td.innerText.trim().replace(/\s+/g, ' '), '');
+        }
+        if (k && v && k.length <= 24 && v.length <= 60) {
+          const line = k + ': ' + v;
+          if (!seen.has(line)) { seen.add(line); out.specs.push(line); }
+        }
+      });
+      out.specs = out.specs.slice(0, 14);
+    });
+
+    // 2c) brand / origin / shipping / return / stock hints
+    safe(() => {
+      const txt = (document.body.innerText || '').replace(/\s+/g, ' ');
+      out.brand = safe(() => {
+        const b = document.querySelector('[itemprop="brand"], .brand, a[href*="brand" i]');
+        return b ? b.innerText.trim().slice(0, 40) : '';
+      }, '');
+      const orig = txt.match(/정상가|정가|원가/) ? (txt.match(/(?:정상가|정가|원가)\D{0,3}([\d,]{4,})/) || [])[1] : '';
+      if (orig) out.originalPrice = parsePrice(orig);
+      const disc = (txt.match(/(\d{1,2})\s?%/) || [])[1];
+      if (disc) out.discountPct = parseInt(disc, 10);
+      out.freeShipping = /무료\s?배송|free shipping/i.test(txt);
+      out.returnInfo = /(무료\s?반품|반품 ?불가|교환\/반품|return policy|환불 ?불가)/i.test(txt)
+        ? (txt.match(/[^.]{0,30}(무료\s?반품|반품 ?불가|환불 ?불가)[^.]{0,20}/) || [''])[0].trim().slice(0, 50)
+        : '';
+      out.lowStock = /품절 ?임박|마감 ?임박|few left|only \d+ left|재고 ?\d+개/i.test(txt);
+    });
+
+    // 3) review snippets — gather more, classify positive vs negative
+    safe(() => {
+      const sels = ['[data-hook="review-body"]', '.review-body', '.review_cont', '.sdp-review__article__list__review__content', '[class*="review" i] p', '[class*="comment" i] p'];
+      const seen = new Set();
+      const all = [];
       for (const sel of sels) {
         const els = safe(() => document.querySelectorAll(sel), []);
         els.forEach((el) => {
           const t = safe(() => (el.innerText || '').trim().replace(/\s+/g, ' '), '');
-          if (t && t.length >= 12 && t.length <= 160 && !seen.has(t)) {
-            seen.add(t);
-            out.reviews.push(t);
-          }
+          if (t && t.length >= 10 && t.length <= 180 && !seen.has(t)) { seen.add(t); all.push(t); }
         });
-        if (out.reviews.length >= 6) break;
+        if (all.length >= 16) break;
       }
-      out.reviews = out.reviews.slice(0, 6);
+      out.reviews = all.slice(0, 12);
     });
 
     return out;

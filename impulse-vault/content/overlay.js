@@ -394,6 +394,30 @@
     head.appendChild(chip);
     wrap.appendChild(head);
 
+    // Evidence-backed verdict (the persuasive centerpiece)
+    if (sc.verdict) {
+      const v = sc.verdict;
+      const box = el('div', 'iv-an-verdict iv-an-v-' + (v.level || 'consider'));
+      const top = el('div', 'iv-an-v-top');
+      top.appendChild(el('span', 'iv-an-v-label', '결론'));
+      const conf = v.strength >= 66 ? '확신도 높음' : v.strength >= 45 ? '확신도 보통' : '확신도 낮음';
+      top.appendChild(el('span', 'iv-an-v-conf', conf));
+      box.appendChild(top);
+      box.appendChild(el('div', 'iv-an-v-line', v.line || ''));
+      if (Array.isArray(v.reasons) && v.reasons.length) {
+        const rs = el('div', 'iv-an-v-reasons');
+        v.reasons.forEach((r) => rs.appendChild(el('span', 'iv-an-v-pill', r)));
+        box.appendChild(rs);
+      }
+      // confidence strength bar
+      const bar = el('div', 'iv-an-v-bar');
+      const fill = el('i');
+      fill.style.width = (v.strength || 0) + '%';
+      bar.appendChild(fill);
+      box.appendChild(bar);
+      wrap.appendChild(box);
+    }
+
     // Objective summary
     if (sc.summary) wrap.appendChild(el('div', 'iv-an-summary', sc.summary));
 

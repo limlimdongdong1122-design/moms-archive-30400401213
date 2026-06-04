@@ -137,7 +137,7 @@
     const wrap = $('#topKeywords');
     wrap.innerHTML = '';
     if (!top || top.length === 0) {
-      wrap.innerHTML = '<span class="empty-note">아직 데이터가 없어요.</span>';
+      wrap.innerHTML = '<span class="empty-note">아직 끌린 게 없어요 — 고요하네요. 🌙</span>';
       return;
     }
     top.forEach((k) => {
@@ -152,7 +152,7 @@
     const wrap = $('#topSites');
     wrap.innerHTML = '';
     if (!top || top.length === 0) {
-      wrap.innerHTML = '<span class="empty-note">아직 데이터가 없어요.</span>';
+      wrap.innerHTML = '<span class="empty-note">아직 패턴이 없어요. 며칠 쓰면 여기에 보여줄게요.</span>';
       return;
     }
     const max = Math.max(...top.map((t) => t.value), 1);

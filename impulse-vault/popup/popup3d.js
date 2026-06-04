@@ -29,7 +29,7 @@
       renderer.setSize(w, h, false);
 
       scene = new THREE.Scene();
-      scene.environment = IV3D.proceduralEnv(renderer, '#9fe9dd');
+      scene.environment = IV3D.proceduralEnv(renderer, '#a9cbff');
 
       camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 50);
       camera.position.set(0, 0, 3.4);
@@ -41,7 +41,7 @@
         new THREE.CylinderGeometry(1.0, 1.0, 0.22, 64),
         IV3D.glassMaterial({
           thickness: 1.1,
-          attenuationColor: new THREE.Color(0x5eead4),
+          attenuationColor: new THREE.Color(0x6ea8ff),
           attenuationDistance: 2.4,
           iridescenceThicknessRange: [140, 480],
         })
@@ -50,8 +50,8 @@
       scene.add(coin);
 
       glow = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: IV3D.radialTexture('rgba(94,234,212,0.9)'),
-        color: 0x5eead4, transparent: true, opacity: 0.4,
+        map: IV3D.radialTexture('rgba(110,168,255,0.9)'),
+        color: 0x6ea8ff, transparent: true, opacity: 0.4,
         blending: THREE.AdditiveBlending, depthWrite: false,
       }));
       glow.scale.set(3.4, 3.4, 1);

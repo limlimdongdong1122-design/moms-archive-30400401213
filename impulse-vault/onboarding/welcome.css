@@ -254,7 +254,7 @@ code {
   transition: all var(--dur-standard) var(--ease-soft);
 }
 .seg button.on {
-  background: linear-gradient(135deg, rgba(94, 234, 212, 0.16), rgba(124, 156, 255, 0.12));
+  background: linear-gradient(135deg, rgba(110, 168, 255, 0.16), rgba(110, 168, 255, 0.12));
   border-color: var(--accent-good);
   color: var(--text-primary);
   font-weight: 600;
@@ -269,7 +269,7 @@ code {
   font-family: var(--font-display);
   font-size: var(--fs-md);
   font-weight: 600;
-  color: #04150d;
+  color: #06101f;
   background: linear-gradient(135deg, var(--accent-good), var(--accent-calm));
   cursor: pointer;
   box-shadow: 0 10px 30px var(--accent-good-glow);
@@ -337,8 +337,8 @@ code {
 .welcome-fallback { position: absolute; inset: 0; display: grid; place-items: center; }
 .welcome-fallback::after {
   content: ''; width: 128px; height: 128px; border-radius: 50%;
-  background: radial-gradient(circle at 40% 34%, rgba(124,156,255,0.4), rgba(13,17,23,0.5) 70%);
-  border: 1px solid var(--accent-calm); box-shadow: 0 0 70px rgba(124,156,255,0.4);
+  background: radial-gradient(circle at 40% 34%, rgba(110,168,255,0.4), rgba(13,17,23,0.5) 70%);
+  border: 1px solid var(--accent-calm); box-shadow: 0 0 70px rgba(110,168,255,0.4);
   animation: wOrb 4s var(--ease-soft) infinite;
 }
 @keyframes wOrb { 0%,100% { transform: scale(1); opacity: 0.85; } 50% { transform: scale(1.05); opacity: 1; } }

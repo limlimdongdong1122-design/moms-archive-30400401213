@@ -74,33 +74,32 @@
  * 2. DESIGN TOKENS
  * ───────────────────────────────────────────── */
 :root {
-  /* ---- Color: dark, layered, restrained ---- */
-  --bg-base: #0a0e14;      /* near-black, slightly blue — the night canvas */
-  --bg-elev-1: #0e141d;    /* raised surface */
-  --bg-elev-2: #131b26;    /* higher surface */
+  /* ---- Color: MONO PLATINUM — near-monochrome + one ice-blue accent ---- */
+  --bg-base: #0a0a0c;      /* near-black, neutral */
+  --bg-elev-1: #141519;    /* raised surface */
+  --bg-elev-2: #1b1d22;    /* higher surface */
 
-  --glass-fill: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-highlight: rgba(255, 255, 255, 0.12); /* top inner highlight */
+  --glass-fill: rgba(255, 255, 255, 0.045);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-highlight: rgba(255, 255, 255, 0.14); /* top inner highlight */
 
-  /* Text — tuned for readability on the dark canvas (WCAG AA).
-     secondary/tertiary were lightened so muted copy stays legible. */
-  --text-primary: #f0f3f8;
-  --text-secondary: #aeb6c4; /* was #8a93a3 — higher contrast */
-  --text-tertiary: #8b94a6;  /* was #5a6473 — now passes AA for small text */
+  /* Text — platinum/silver scale, WCAG AA on the dark canvas */
+  --text-primary: #eceef3;
+  --text-secondary: #a6acb8;
+  --text-tertiary: #868d99;
 
-  /* Accents — used on only ~5–10% of the UI. ONE accent per context:
-     teal = positive/savings, peach-amber = temptation/cost,
-     periwinkle = neutral interactive. Never rainbow it. */
-  --accent-calm: #7c9cff;  /* soft periwinkle — neutral actions */
-  --accent-good: #5eead4;  /* aurora teal — saved / resisted / good */
-  --accent-warn: #ffb07c;  /* warm peach-amber — temptation / spending */
-  --accent-good-glow: rgba(94, 234, 212, 0.35);
-  --accent-warn-glow: rgba(255, 176, 124, 0.35);
-  --accent-calm-glow: rgba(124, 156, 255, 0.35);
+  /* ONE accent: ice-blue. Used for interactive + "saved/good/available".
+     'warn' is a muted warm bronze used VERY sparingly for temptation/cost,
+     so the scheme stays essentially monochrome. Never rainbow it. */
+  --accent-calm: #6ea8ff;  /* ice blue — neutral interactive (the accent) */
+  --accent-good: #6ea8ff;  /* same ice blue — saved / resisted / good */
+  --accent-warn: #c2a98e;  /* muted bronze — temptation / spending (whisper of warm) */
+  --accent-good-glow: rgba(110, 168, 255, 0.35);
+  --accent-warn-glow: rgba(194, 169, 142, 0.3);
+  --accent-calm-glow: rgba(110, 168, 255, 0.35);
 
-  /* Danger (kept muted, used only for destructive "delete all") */
-  --accent-danger: #ff8080;
+  /* Danger (muted, only for destructive "delete all") */
+  --accent-danger: #e0786f;
 
   /* ---- Typography ---- */
   --font-display: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI',
@@ -267,7 +266,7 @@
   letter-spacing: var(--tracking-tight);
   font-variant-numeric: tabular-nums;
   line-height: var(--lh-tight);
-  background: linear-gradient(180deg, #eafff9 0%, #9af0e0 48%, var(--accent-good) 100%);
+  background: linear-gradient(180deg, #f4f8ff 0%, #b9d4ff 48%, var(--accent-good) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -16,7 +16,7 @@ body {
   position: relative;
   overflow: hidden;
   /* a whisper of light along the very top edge */
-  background-image: radial-gradient(120% 60% at 50% -10%, rgba(94, 234, 212, 0.06), transparent 60%);
+  background-image: radial-gradient(120% 60% at 50% -10%, rgba(110, 168, 255, 0.06), transparent 60%);
 }
 .wrap { position: relative; z-index: 1; padding: var(--space-24) var(--space-24) var(--space-16); }
 
@@ -144,7 +144,7 @@ body {
 .vc-actions button:active { transform: scale(0.97); }
 .vc-buy { background: var(--glass-fill); border-color: var(--glass-border); color: var(--text-secondary); }
 .vc-buy:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.07); }
-.vc-let { background: linear-gradient(180deg, #8af3e4, var(--accent-good)); color: #04150d; box-shadow: 0 4px 16px var(--accent-good-glow); }
+.vc-let { background: linear-gradient(180deg, #a9cbff, var(--accent-good)); color: #06101f; box-shadow: 0 4px 16px var(--accent-good-glow); }
 .vc-let:hover { box-shadow: 0 8px 24px var(--accent-good-glow); }
 .vc-letting { animation: vc-release var(--dur-major) var(--ease-calm) forwards; }
 @keyframes vc-release { 0% { transform: scale(1); opacity: 1; } 35% { transform: scale(1.03); } 100% { transform: scale(0.78); opacity: 0; filter: blur(8px); } }
@@ -173,8 +173,8 @@ body {
 
 .btn-primary {
   padding: var(--space-12) var(--space-24); border: none; border-radius: var(--r-md);
-  font-family: var(--font-display); font-weight: 600; font-size: var(--fs-sm); color: #04150d;
-  background: linear-gradient(180deg, #9af3e5, var(--accent-good));
+  font-family: var(--font-display); font-weight: 600; font-size: var(--fs-sm); color: #06101f;
+  background: linear-gradient(180deg, #a9cbff, var(--accent-good));
   cursor: pointer; box-shadow: 0 8px 24px var(--accent-good-glow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   transition: transform var(--dur-micro) var(--ease-calm), box-shadow var(--dur-standard) var(--ease-soft);
 }
@@ -196,7 +196,7 @@ body {
 .coin-disc {
   position: relative; width: 80px; height: 80px; border-radius: 50%; display: grid; place-items: center;
   font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--accent-good);
-  background: linear-gradient(160deg, rgba(94, 234, 212, 0.2), rgba(13, 17, 23, 0.55));
+  background: linear-gradient(160deg, rgba(110, 168, 255, 0.2), rgba(13, 17, 23, 0.55));
   border: 1px solid var(--accent-good); box-shadow: 0 0 34px var(--accent-good-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   animation: coinBob 3.5s var(--ease-soft) infinite;
 }

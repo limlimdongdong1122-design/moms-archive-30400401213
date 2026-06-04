@@ -52,7 +52,7 @@
       scene.add(pedestal);
 
       // base bloom-ish glow
-      glow = sprite(IV3D.radialTexture('rgba(94,234,212,0.9)'), 0x5eead4, 3.4, 0.35);
+      glow = sprite(IV3D.radialTexture('rgba(110,168,255,0.9)'), 0x6ea8ff, 3.4, 0.35);
       glow.position.set(0, -0.1, 0);
       scene.add(glow);
 
@@ -61,7 +61,7 @@
         new THREE.IcosahedronGeometry(0.6, 0),
         IV3D.glassMaterial({
           transmission: 0.2, thickness: 0.8, roughness: 0.12,
-          color: 0xffd9b0, attenuationColor: new THREE.Color(0xffb07c),
+          color: 0xffd9b0, attenuationColor: new THREE.Color(0xc2a98e),
           iridescenceThicknessRange: [200, 560], flatShading: true,
         })
       );
@@ -69,7 +69,7 @@
       gem.visible = hasItem;
       scene.add(gem);
 
-      halo = sprite(IV3D.radialTexture('rgba(255,176,124,0.9)'), 0xffb07c, 2.0, 0.45);
+      halo = sprite(IV3D.radialTexture('rgba(194,169,142,0.9)'), 0xc2a98e, 2.0, 0.45);
       halo.position.set(0, 0.72, -0.2);
       halo.visible = hasItem;
       scene.add(halo);
@@ -140,7 +140,7 @@
       vel.push(dir.multiplyScalar(0.016 + Math.random() * 0.022));
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0x5eead4, size: 0.085, map: IV3D.radialTexture('rgba(255,255,255,1)'), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+    particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0x6ea8ff, size: 0.085, map: IV3D.radialTexture('rgba(255,255,255,1)'), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
     particles.userData.vel = vel;
     scene.add(particles);
   }

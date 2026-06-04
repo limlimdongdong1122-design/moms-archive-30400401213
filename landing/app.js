@@ -5,9 +5,11 @@
 'use strict';
 
 var CONFIG = {
-  // Where "시작하기 / 브라우저에 추가하기" sends people. Paste your Chrome
-  // Web Store listing URL once published; until then, your GitHub release/zip.
-  INSTALL_URL: 'PASTE_INSTALL_URL_HERE',
+  // Where "시작하기 / 브라우저에 추가하기" sends people. Until the Chrome Web
+  // Store listing is live, this points at the bundled install guide page
+  // (install.html), which has the .zip download + load-unpacked steps.
+  // Swap it for your Web Store URL once published.
+  INSTALL_URL: 'install.html',
 
   // Desktop app installer (.exe). Build it with `npm run dist:win` inside
   // desktop/, then upload the generated .exe to a GitHub Release and paste the

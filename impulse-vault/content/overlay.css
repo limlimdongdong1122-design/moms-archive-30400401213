@@ -1,0 +1,415 @@
+/* ============================================================
+ * IMPULSE VAULT — content/overlay.css
+ * ------------------------------------------------------------
+ * Styles for the injected intervention UI. Loaded INTO the
+ * overlay's Shadow DOM, so these selectors never touch the host
+ * page. Pure-CSS animations only (CSP-safe, no libraries).
+ *
+ * Color language:
+ *   bg slate   #0d1117   teal/violet gradients
+ *   mint       #3ddc97   (saved / good)
+ *   amber      #ffb547   (temptation)
+ * ============================================================ */
+
+:host,
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  --iv-bg: #0d1117;
+  --iv-mint: #3ddc97;
+  --iv-amber: #ffb547;
+  --iv-violet: #8b7bf0;
+  --iv-teal: #2fd8c8;
+  --iv-text: #e8edf4;
+  --iv-muted: #9aa6b8;
+  --iv-font: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+/* ---------------- Gentle toast ---------------- */
+.iv-toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  max-width: 300px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  font-family: var(--iv-font);
+  color: var(--iv-text);
+  background: linear-gradient(135deg, rgba(20, 27, 38, 0.86), rgba(13, 17, 23, 0.92));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 181, 71, 0.32);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  cursor: pointer;
+  animation: iv-toast-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.iv-toast-q {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.iv-toast-sub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--iv-muted);
+}
+.iv-toast-out {
+  animation: iv-toast-out 0.4s ease forwards;
+}
+@keyframes iv-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes iv-toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+
+/* ---------------- Blocking modal ---------------- */
+.iv-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: radial-gradient(
+      1200px 700px at 70% -10%,
+      rgba(139, 123, 240, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(900px 600px at 0% 110%, rgba(47, 216, 200, 0.14), transparent 55%),
+    rgba(6, 9, 13, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: var(--iv-font);
+  animation: iv-fade-in 0.28s ease both;
+}
+.iv-backdrop-out {
+  animation: iv-fade-out 0.3s ease forwards;
+}
+@keyframes iv-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes iv-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.iv-card {
+  position: relative;
+  width: min(440px, 100%);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 26px 26px 20px;
+  border-radius: 24px;
+  color: var(--iv-text);
+  background: linear-gradient(160deg, rgba(22, 29, 41, 0.92), rgba(13, 17, 23, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 70px rgba(47, 216, 200, 0.08);
+  animation: iv-card-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.iv-card-high {
+  border-color: rgba(255, 181, 71, 0.4);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.66), 0 0 70px rgba(255, 181, 71, 0.12);
+}
+@keyframes iv-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.iv-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: var(--iv-amber);
+  background: rgba(255, 181, 71, 0.12);
+  border: 1px solid rgba(255, 181, 71, 0.3);
+}
+.iv-title {
+  margin: 14px 0 4px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.iv-item {
+  font-size: 14px;
+  color: var(--iv-muted);
+  margin-bottom: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iv-reframe {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(47, 216, 200, 0.07);
+  border: 1px solid rgba(47, 216, 200, 0.18);
+  margin-bottom: 14px;
+}
+.iv-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--iv-text);
+}
+.iv-reframe-sub {
+  font-size: 13px;
+  color: var(--iv-teal);
+  font-weight: 500;
+}
+
+.iv-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: rgba(255, 181, 71, 0.08);
+  border: 1px solid rgba(255, 181, 71, 0.22);
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.iv-insight-dot {
+  color: var(--iv-amber);
+  font-size: 9px;
+  margin-top: 5px;
+  animation: iv-pulse 1.8s ease-in-out infinite;
+}
+@keyframes iv-pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.iv-questions {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.iv-questions li {
+  position: relative;
+  padding: 9px 0 9px 22px;
+  font-size: 14.5px;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.iv-questions li:last-child {
+  border-bottom: none;
+}
+.iv-questions li::before {
+  content: '?';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--iv-violet);
+  background: rgba(139, 123, 240, 0.16);
+}
+
+.iv-future {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--iv-muted);
+  padding: 12px 14px;
+  border-left: 2px solid var(--iv-mint);
+  background: rgba(61, 220, 151, 0.05);
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* ---------------- Actions ---------------- */
+.iv-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 6px;
+}
+.iv-btn {
+  font-family: var(--iv-font);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, opacity 0.2s ease,
+    background 0.2s ease;
+}
+.iv-btn:active {
+  transform: scale(0.985);
+}
+.iv-btn-primary {
+  color: #04150d;
+  background: linear-gradient(135deg, var(--iv-mint), #2fd8c8);
+  box-shadow: 0 8px 24px rgba(61, 220, 151, 0.28);
+}
+.iv-btn-primary:hover {
+  box-shadow: 0 10px 30px rgba(61, 220, 151, 0.4);
+}
+.iv-btn-ghost {
+  color: var(--iv-text);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.iv-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.iv-btn-proceed {
+  color: var(--iv-muted);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+}
+.iv-btn-proceed:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.iv-btn-proceed:not(:disabled):hover {
+  color: var(--iv-text);
+  border-color: rgba(255, 181, 71, 0.4);
+}
+
+.iv-snooze {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  background: none;
+  border: none;
+  color: var(--iv-muted);
+  font-family: var(--iv-font);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.iv-snooze:hover {
+  opacity: 1;
+}
+
+/* ---------------- Celebration ---------------- */
+.iv-celebrate {
+  text-align: center;
+  padding: 18px 6px 8px;
+  position: relative;
+}
+.iv-celebrate-emoji {
+  font-size: 52px;
+  animation: iv-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.iv-celebrate-title {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--iv-mint);
+}
+.iv-celebrate-sub {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--iv-muted);
+}
+@keyframes iv-pop {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.iv-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.iv-conf-dot {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--iv-mint);
+  opacity: 0;
+  animation: iv-conf 1.5s ease-out forwards;
+  animation-delay: calc(var(--i) * 0.03s);
+}
+.iv-conf-dot:nth-child(3n) {
+  background: var(--iv-amber);
+}
+.iv-conf-dot:nth-child(3n + 1) {
+  background: var(--iv-violet);
+}
+@keyframes iv-conf {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc((var(--i) - 7) * 26px), calc((var(--i) % 5) * 36px + 60px))
+      rotate(360deg) scale(0.4);
+  }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  .iv-toast,
+  .iv-backdrop,
+  .iv-card,
+  .iv-celebrate-emoji,
+  .iv-conf-dot,
+  .iv-insight-dot {
+    animation-duration: 0.001s !important;
+  }
+}

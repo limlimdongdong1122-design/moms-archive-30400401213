@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMPULSE VAULT — 시작하기</title>
+    <link rel="stylesheet" href="welcome.css" />
+  </head>
+  <body>
+    <div class="bg-orbs" aria-hidden="true">
+      <span class="orb orb-teal"></span>
+      <span class="orb orb-violet"></span>
+    </div>
+
+    <main class="shell">
+      <!-- ============ STEP 1 — Intro + privacy ============ -->
+      <section class="step" id="step-intro" data-active="true">
+        <div class="logo">
+          <span class="logo-mark">◆</span>
+          <span class="logo-name">IMPULSE&nbsp;VAULT</span>
+        </div>
+
+        <h1 class="headline">사기 전에, 딱 한 번 더 생각하게.</h1>
+        <p class="lede">
+          충동구매가 일어나는 바로 그 순간 — 결제 버튼을 누를 때 —
+          부드럽게 멈춰주는 나만의 자기조절 도구예요. 막지 않아요. 잠깐
+          생각할 틈만 만들어줘요.
+        </p>
+
+        <div class="privacy-card">
+          <h2>🔒 100% 내 기기 안에서만</h2>
+          <ul>
+            <li>검색어·상품·통계는 <b>절대 서버로 전송되지 않아요.</b></li>
+            <li>이 확장은 사용자 데이터를 담은 네트워크 요청을 <b>전혀 하지 않습니다.</b></li>
+            <li>모든 기록은 <code>chrome.storage.local</code>에만 저장돼요.</li>
+            <li>언제든 설정에서 <b>모든 데이터를 한 번에 삭제</b>할 수 있어요.</li>
+          </ul>
+        </div>
+
+        <div class="watch-card">
+          <h2>이 사이트들에서만 동작해요</h2>
+          <p class="watch-sub">권한을 승인하기 전까지 확장은 <b>아무것도 하지 않습니다.</b></p>
+          <div class="domain-chips" id="domainChips"></div>
+        </div>
+
+        <div class="what-card">
+          <h2>무엇을 보나요?</h2>
+          <ul>
+            <li>검색 결과 페이지의 <b>검색어</b> (반복·유사 검색 감지용)</li>
+            <li>상품 상세 페이지의 <b>상품명·가격</b> (가능할 때만, 추정 기반)</li>
+            <li>같은 상품을 <b>여러 번 봤는지</b></li>
+            <li><b>구매 버튼 클릭</b> — 진짜 결심하는 그 순간</li>
+          </ul>
+        </div>
+
+        <button class="btn-primary" id="toGrant">계속하기</button>
+      </section>
+
+      <!-- ============ STEP 2 — Permission grant ============ -->
+      <section class="step" id="step-grant">
+        <h1 class="headline">권한을 직접 승인해 주세요</h1>
+        <p class="lede">
+          아래 버튼을 누르면 브라우저가 권한 요청 창을 띄워요. 여기서
+          <b>승인</b>해야만 확장이 동작하기 시작합니다. 원치 않으면 언제든
+          거절하거나 나중에 끌 수 있어요.
+        </p>
+
+        <div class="perm-list">
+          <div class="perm-row">
+            <span class="perm-ico">🌐</span>
+            <div>
+              <b>지정한 쇼핑·검색 사이트 접근</b>
+              <span>위에 나열된 도메인에서만 페이지를 읽어요.</span>
+            </div>
+          </div>
+          <div class="perm-row">
+            <span class="perm-ico">🧭</span>
+            <div>
+              <b>탐색 / 히스토리 (선택)</b>
+              <span>반복 방문 패턴을 더 잘 파악하기 위함이에요.</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="grantBtn">권한 승인하기</button>
+        <button class="btn-ghost" id="skipGrant">나중에 할게요</button>
+        <p class="grant-status" id="grantStatus"></p>
+      </section>
+
+      <!-- ============ STEP 3 — Setup ============ -->
+      <section class="step" id="step-setup">
+        <h1 class="headline">나에게 맞게 맞춰볼까요?</h1>
+        <p class="lede">나중에 대시보드에서 언제든 바꿀 수 있어요.</p>
+
+        <div class="field">
+          <label>강도</label>
+          <div class="seg" id="strictnessSeg">
+            <button data-val="gentle">순하게</button>
+            <button data-val="balanced" class="on">균형</button>
+            <button data-val="strict">엄격하게</button>
+          </div>
+          <p class="hint">엄격할수록 더 일찍, 더 오래 멈춰요.</p>
+        </div>
+
+        <div class="field">
+          <label>시급 (원) — 비용을 '노동 시간'으로 환산해요</label>
+          <input type="number" id="hourlyWage" value="12000" min="0" step="500" />
+        </div>
+
+        <div class="field">
+          <label>내가 아끼는 것의 가격 (원) — 예: 게임 한 개</label>
+          <input type="number" id="gamePrice" value="60000" min="0" step="1000" />
+        </div>
+
+        <div class="field">
+          <label>금고 식히기 기본 시간</label>
+          <select id="coolingHours">
+            <option value="6">6시간</option>
+            <option value="12">12시간</option>
+            <option value="24" selected>24시간 (추천)</option>
+            <option value="48">48시간</option>
+            <option value="72">72시간</option>
+          </select>
+        </div>
+
+        <button class="btn-primary" id="finishBtn">시작하기 ✨</button>
+      </section>
+
+      <!-- ============ STEP 4 — Done ============ -->
+      <section class="step" id="step-done">
+        <div class="done-emoji">🛡️</div>
+        <h1 class="headline">준비 완료!</h1>
+        <p class="lede">
+          이제 쇼핑하다 결제 버튼을 누르는 순간, IMPULSE VAULT가
+          살며시 끼어들어요. 툴바의 아이콘으로 언제든 잠시 멈춤·금고·통계를
+          볼 수 있어요.
+        </p>
+        <button class="btn-primary" id="openDash">대시보드 열기</button>
+        <button class="btn-ghost" id="closeTab">창 닫기</button>
+      </section>
+    </main>
+
+    <script src="../utils/storage.js"></script>
+    <script src="welcome.js"></script>
+  </body>
+</html>

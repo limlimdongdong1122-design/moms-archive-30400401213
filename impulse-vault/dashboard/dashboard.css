@@ -98,14 +98,23 @@ body {
   margin-bottom: var(--space-24);
 }
 
-/* Glass panel base (extends the shared .glass primitive) */
+/* Glass panel base — premium top-lit gradient fill + layered depth
+   (matches the shared .glass primitive in tokens.css). */
 .glass {
-  background: var(--glass-fill);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.065),
+    rgba(255, 255, 255, 0.015) 60%,
+    rgba(255, 255, 255, 0.03)
+  );
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-soft), var(--glass-inset);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-highlight),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 14px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* ---- Overview: bento ---- */
@@ -732,3 +741,51 @@ body {
 .panel {
   animation: iv-fade-up var(--dur-major) var(--ease-calm) both;
 }
+
+/* ============================================================
+ * PREMIUM POLISH (additive overrides — craft pass)
+ * ============================================================ */
+
+/* Sidebar: refined active state with a soft inner glow + accent edge */
+.sidebar { background: linear-gradient(180deg, rgba(14,20,29,0.78), rgba(10,14,20,0.55)); }
+.nav-link { letter-spacing: 0.01em; }
+.nav-link.active {
+  background: linear-gradient(135deg, rgba(94,234,212,0.16), rgba(124,156,255,0.07));
+  border-color: var(--accent-good-glow);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 0 20px rgba(94,234,212,0.10);
+}
+
+/* Section titles: a touch more presence */
+.panel-title { font-weight: 700; }
+.panel-sub { max-width: 56ch; }
+
+/* Hero stat: stronger glow + a hairline under the big number */
+.stat-big { position: relative; overflow: hidden; }
+.stat-big::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(80% 120% at 50% 0%, rgba(94,234,212,0.10), transparent 60%);
+}
+
+/* Glass panels: a calm lift on hover (gallery feel) */
+.glass.stat-sm, .glass.chart-card, .glass.setting-block, .glass.data-table-card {
+  transition: transform var(--dur-standard) var(--ease-calm),
+    border-color var(--dur-standard) var(--ease-soft), box-shadow var(--dur-standard) var(--ease-soft);
+}
+.glass.stat-sm:hover, .glass.chart-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--glass-highlight);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 14px 40px rgba(0,0,0,0.45);
+}
+
+/* Chart headings: uppercase micro-label treatment for consistency */
+.chart-card h3 { letter-spacing: 0.01em; }
+
+/* Heatmap cells: subtle rounded + inner hairline for crispness */
+.heatmap .cell { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); }
+
+/* Buttons: premium primary with a top highlight */
+.btn-primary, .btn-sm {
+  background: linear-gradient(180deg, #9af3e5, var(--accent-good));
+  box-shadow: 0 8px 24px var(--accent-good-glow), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.btn-primary:hover { transform: scale(1.02); box-shadow: 0 12px 32px var(--accent-good-glow), inset 0 1px 0 rgba(255,255,255,0.6); }

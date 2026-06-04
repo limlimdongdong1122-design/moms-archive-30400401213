@@ -49,10 +49,17 @@
           </div>
           <div class="saved-label iv-label">지금까지 아낀 돈</div>
           <div class="saved-amount iv-stat-number" id="totalSaved">₩0</div>
+          <div class="hairline" aria-hidden="true"></div>
           <div class="saved-meta">
-            <span><b id="resisted">0</b> 번 참았어요</span>
-            <span class="dot" aria-hidden="true"></span>
-            <span>저항률 <b id="resistRate">0%</b></span>
+            <div class="meta-cell">
+              <b id="resisted">0</b>
+              <span>번 참았어요</span>
+            </div>
+            <span class="meta-sep" aria-hidden="true"></span>
+            <div class="meta-cell">
+              <b id="resistRate">0%</b>
+              <span>저항률</span>
+            </div>
           </div>
         </section>
 
@@ -70,14 +77,29 @@
           </div>
           <div id="vaultList" class="vault-list"></div>
           <div class="empty glass" id="vaultEmpty">
-            <span class="empty-ico" aria-hidden="true"></span>
+            <span class="empty-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="10" width="16" height="10" rx="2.5" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+            </span>
             <p>금고가 고요해요.<br />충동이 올 때 여기 넣어두면 천천히 식혀줄게요.</p>
           </div>
         </section>
 
         <footer class="foot iv-enter" style="--iv-delay: 180ms">
-          <button class="btn-ghost" id="openDash">대시보드 · 통계</button>
-          <button class="btn-ghost small" id="openSettings" title="설정">설정</button>
+          <button class="btn-ghost" id="openDash">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19V5M4 19h16M8 16v-5M12 16V8M16 16v-3" />
+            </svg>
+            <span>대시보드 · 통계</span>
+          </button>
+          <button class="btn-ghost icon-only" id="openSettings" title="설정" aria-label="설정">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 2.5v2.2M12 19.3v2.2M21.5 12h-2.2M4.7 12H2.5M18.4 5.6l-1.5 1.5M7.1 16.9l-1.5 1.5M18.4 18.4l-1.5-1.5M7.1 7.1 5.6 5.6" />
+            </svg>
+          </button>
         </footer>
       </main>
     </div>

@@ -326,7 +326,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           );
 
           // ---- Cold Purchase Analysis scorecard (grounded, free) ----
-          if (settings.coldAnalysis && (tier === 'medium' || tier === 'high')) {
+          // Built for EVERY intervention tier (incl. low) so the supporting
+          // evidence is always available — the low toast exposes a "근거 보기".
+          if (settings.coldAnalysis) {
             try {
               const details = msg.details || {};
               const ownsSimilar = await likelyOwnsSimilar(viewRec, msg.key);

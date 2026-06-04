@@ -90,18 +90,60 @@
       );
       wrap.appendChild(q);
       wrap.appendChild(sub);
-      shadow.appendChild(wrap);
 
       // Auto-dismiss with a CSS exit animation.
       const remove = () => {
         wrap.classList.add('iv-toast-out');
         setTimeout(() => wrap.remove(), 400);
       };
-      wrap.addEventListener('click', remove);
-      setTimeout(remove, 4200);
+
+      // If we have grounded analysis, expose a "근거 보기" action so the
+      // supporting evidence is reachable even for low-signal nudges.
+      if (payload && payload.scorecard) {
+        const more = el('button', 'iv-toast-more', '근거 보기 →');
+        more.addEventListener('click', (e) => {
+          e.stopPropagation();
+          remove();
+          analysisModal(payload);
+        });
+        wrap.appendChild(more);
+        // Don't dismiss on body click (would swallow the button); give more time.
+        setTimeout(remove, 9000);
+      } else {
+        wrap.addEventListener('click', remove);
+        setTimeout(remove, 4200);
+      }
+      shadow.appendChild(wrap);
     } catch (_) {
       /* never throw into host */
     }
+  }
+
+  // ---------------------------------------------------------
+  // ANALYSIS-ONLY modal (info, non-blocking) — opened from the toast.
+  // ---------------------------------------------------------
+  async function analysisModal(payload) {
+    try {
+      await ensureRoot();
+      if (!shadow || !payload || !payload.scorecard) return;
+      const backdrop = el('div', 'iv-backdrop');
+      backdrop.style.pointerEvents = 'auto';
+      const card = el('div', 'iv-card');
+      card.appendChild(el('div', 'iv-badge', '구매 분석'));
+      card.appendChild(el('h2', 'iv-title', '냉정한 분석'));
+      if (payload.name) card.appendChild(el('div', 'iv-item', payload.name));
+      try { card.appendChild(buildScorecard(payload)); } catch (_) {}
+      const close = el('button', 'iv-btn iv-btn-ghost', '닫기');
+      const doClose = () => {
+        backdrop.classList.add('iv-backdrop-out');
+        setTimeout(() => backdrop.remove(), 320);
+      };
+      close.addEventListener('click', doClose);
+      backdrop.addEventListener('click', (e) => { if (e.target === backdrop) doClose(); });
+      card.appendChild(close);
+      backdrop.appendChild(card);
+      shadow.appendChild(backdrop);
+    } catch (_) {}
   }
 
   // ---------------------------------------------------------
@@ -440,6 +482,14 @@
           body.appendChild(el('div', 'iv-an-ai-err', 'AI 분석을 불러오지 못했어요 (키·권한·네트워크 확인).'));
         }
       });
+    } else {
+      // AI off → tell the user how to get the deeper AI-backed reasoning.
+      const hint = el('div', 'iv-an-aihint');
+      hint.appendChild(el('span', null, '🔒 더 깊은 AI 근거를 원하면 '));
+      const b = el('span', 'iv-an-aihint-b', '대시보드 → 설정 → "AI 분석"');
+      hint.appendChild(b);
+      hint.appendChild(el('span', null, '을 켜고 내 API 키를 넣으세요. (위 분석은 키 없이 무료로 작동해요.)'));
+      wrap.appendChild(hint);
     }
 
     return wrap;

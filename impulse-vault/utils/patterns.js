@@ -247,6 +247,10 @@
     '검색', 'search', '취소', 'cancel', '닫기', 'close', '뒤로', 'back', '더보기',
     '찜', '관심', 'wishlist', '공유', 'share', '문의', '고객센터', '메뉴', 'menu',
     '필터', 'filter', '정렬', 'sort', '쿠폰', '적립',
+    // downloads / file & save actions — never a purchase
+    // (fixes "downloading a file was mistaken for buying")
+    '다운로드', '다운받기', '내려받기', '받기', 'download', '설치', 'install',
+    '저장', 'save', '내보내기', 'export', '첨부', 'attachment', 'pdf', 'csv',
   ];
 
   // Returns 'strong' | 'weak' | 'none' for a button's text.

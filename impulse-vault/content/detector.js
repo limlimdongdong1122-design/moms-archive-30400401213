@@ -142,6 +142,23 @@
     }
     return 'none';
   }
+  // A genuine file download must NEVER be mistaken for a purchase. This is the
+  // most reliable signal: browsers download via <a download> or links whose URL
+  // ends in a file extension (or blob:/data: URLs). If we see that, bail out.
+  const DOWNLOAD_EXT = /\.(zip|rar|7z|tar|gz|tgz|exe|msi|dmg|pkg|apk|deb|appimage|pdf|hwp|hwpx|doc|docx|xls|xlsx|ppt|pptx|csv|txt|rtf|json|xml|png|jpe?g|gif|webp|svg|bmp|tiff?|heic|mp3|wav|flac|aac|mp4|m4v|mov|avi|mkv|webm|iso|dwg|psd|ai|eps)$/i;
+  function isDownloadLink(el) {
+    return safe(() => {
+      if (el.hasAttribute && el.hasAttribute('download')) return true;
+      const a = el.tagName === 'A' ? el : el.closest && el.closest('a');
+      if (!a) return false;
+      if (a.hasAttribute('download')) return true;
+      const href = (a.getAttribute && a.getAttribute('href')) || '';
+      if (!href) return false;
+      if (/^(blob:|data:)/i.test(href)) return true;
+      return DOWNLOAD_EXT.test(href.split(/[?#]/)[0]);
+    }, false);
+  }
+
   // Only STRONG buttons get pre-tagged (weak buttons are decided at click
   // time, where we can also check for a visible price).
   function looksLikeBuyButton(el) {
@@ -415,6 +432,8 @@
             const cand = e.target.closest(
               'button, a, input[type="submit"], input[type="button"], [role="button"]'
             );
+            // A real file download is never a purchase — let it through.
+            if (cand && isDownloadLink(cand)) return;
             if (cand) {
               const kind = classifyButton(cand);
               // STRONG → always a purchase. WEAK → only treat as a purchase
@@ -431,6 +450,9 @@
           return;
         }
         if (!btn) return;
+        // Final safety net: even a pre-tagged element that turns out to be a
+        // file download must not be gated.
+        if (isDownloadLink(btn)) return;
 
         // Previously approved → let this genuine click sail through.
         if (allowed.has(btn)) {

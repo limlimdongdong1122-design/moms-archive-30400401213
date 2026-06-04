@@ -32,6 +32,8 @@ var WEAK_KEYWORDS = [
 var EXCLUDE_KEYWORDS = [
   '로그인', '로그아웃', 'login', 'log in', 'sign in', 'sign up', 'signup',
   '회원가입', 'register', '아이디', '비밀번호', 'password',
+  // downloads / file actions — not a purchase
+  '다운로드', '내려받기', 'download', '설치', 'install', '저장', 'save',
 ];
 
 window.ivwatch.onStart(async function (cfg) {

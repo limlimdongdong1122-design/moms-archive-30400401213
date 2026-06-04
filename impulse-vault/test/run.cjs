@@ -54,8 +54,17 @@ ok("'회원가입' -> none", P.classifyBuyText('회원가입') === 'none');
 ok("'Sign up' -> none", P.classifyBuyText('Sign up') === 'none');
 ok("'검색' -> none", P.classifyBuyText('검색') === 'none');
 ok("'취소' -> none", P.classifyBuyText('취소') === 'none');
+// Downloads / file & save actions must NEVER be a purchase (the bug).
+ok("'다운로드' -> none", P.classifyBuyText('다운로드') === 'none');
+ok("'Download' -> none", P.classifyBuyText('Download') === 'none');
+ok("'무료 다운로드' -> none", P.classifyBuyText('무료 다운로드') === 'none');
+ok("'다운받기' -> none", P.classifyBuyText('다운받기') === 'none');
+ok("'PDF 저장' -> none", P.classifyBuyText('PDF 저장') === 'none');
+ok("'Install' -> none", P.classifyBuyText('Install') === 'none');
 // STRONG beats EXCLUDE when both present ("로그인 후 결제").
 ok("'로그인 후 결제' -> strong", P.classifyBuyText('로그인 후 결제') === 'strong');
+// A paid download still counts (결제 wins over 다운로드).
+ok("'결제 후 다운로드' -> strong", P.classifyBuyText('결제 후 다운로드') === 'strong');
 // WEAK: ambiguous → caller gates on a visible price.
 ok("'구독하기' -> weak", P.classifyBuyText('구독하기') === 'weak');
 ok("'Subscribe' -> weak", P.classifyBuyText('Subscribe') === 'weak');

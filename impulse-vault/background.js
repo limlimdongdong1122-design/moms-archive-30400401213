@@ -147,6 +147,27 @@ async function callAiProvider(settings, details) {
  * "find alternatives" feature. `useWeb` adds live web search.
  */
 async function callAi(settings, prompt, useWeb) {
+  // ---- Shared proxy mode: no user key needed; the proxy holds the key ----
+  if (settings.aiProxyUrl) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (settings.aiProxySecret) headers['x-iv-secret'] = settings.aiProxySecret;
+    const res = await fetch(settings.aiProxyUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ prompt, useWeb: !!useWeb }),
+    });
+    if (!res.ok) {
+      let body = '';
+      try { body = await res.text(); } catch (_) {}
+      let msg = body;
+      try { const j = JSON.parse(body); msg = j.error || body; } catch (_) {}
+      throw new Error('프록시 ' + 'HTTP ' + res.status + (msg ? ' · ' + String(msg).slice(0, 160) : ''));
+    }
+    const data = await res.json();
+    if (data && data.ok && data.text) return data.text;
+    throw new Error('프록시 응답 오류' + (data && data.error ? ' · ' + data.error : ''));
+  }
+
   // Helper: extract a short human-readable error from a failed API response.
   async function errText(res) {
     let body = '';
@@ -388,7 +409,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               console.warn('[IMPULSE VAULT] scorecard build failed:', err);
             }
             // Flags so the overlay knows whether to offer AI / web-search.
-            payload.aiEnabled = !!(settings.aiEnabled && settings.aiKey);
+            payload.aiEnabled = !!(settings.aiEnabled && (settings.aiKey || settings.aiProxyUrl));
             payload.webSearchEnabled = !!settings.webSearchEnabled;
             payload.productName = msg.name;
             // Grounded data the overlay passes back for optional AI enrichment.
@@ -414,7 +435,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         // ---- Optional BYOK AI enrichment for the scorecard ----
         case 'ANALYZE_AI': {
           const settings = await IVStorage.getSettings();
-          if (!settings.aiEnabled || !settings.aiKey) {
+          if (!settings.aiEnabled || (!settings.aiKey && !settings.aiProxyUrl)) {
             return sendResponse({ ok: false, error: 'ai_disabled' });
           }
           try {
@@ -428,7 +449,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         // ---- AI finds real alternative products via live web search ----
         case 'FIND_ALTERNATIVES': {
           const settings = await IVStorage.getSettings();
-          if (!settings.aiEnabled || !settings.aiKey) {
+          if (!settings.aiEnabled || (!settings.aiKey && !settings.aiProxyUrl)) {
             return sendResponse({ ok: false, error: 'ai_disabled' });
           }
           try {

@@ -147,9 +147,14 @@ to the provider you chose, never hardcoded, never anywhere else. AI output is
 clearly labelled **"AI 분석 · 참고용"** and the model is instructed to stay
 grounded and balanced.
 
-> ⚠️ **Distribution note:** BYOK is fine for personal use. If you ever
-> distribute this to other people, do NOT ask them for keys — route AI calls
-> through a small backend proxy that holds a single key server-side instead.
+### Sharing it with others (no per-user keys)
+
+BYOK is fine for personal use. To share publicly **without** asking each user
+for a key, run the included **proxy** (`../proxy/`, a free Cloudflare Worker that
+holds one key + daily limits) and paste its URL into **설정 → AI 분석 → 공용
+분석 서버(프록시) URL**. When a proxy URL is set, the extension uses it and users
+need no key. There's also a ready-to-host **landing page** in `../landing/`
+(persuasion + install CTA + donation tiers). See each folder's README.
 
 > On-page extraction (specs/rating/reviews) is **best-effort** and may need
 > per-site tuning; if a page can't be parsed, the scorecard gracefully falls

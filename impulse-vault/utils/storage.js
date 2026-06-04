@@ -67,6 +67,8 @@
     aiProvider: 'claude', // 'claude' | 'openai'
     aiKey: '', // the user's OWN api key, stored locally only
     aiModel: '', // optional model override (blank = provider default)
+    aiProxyUrl: '', // optional shared proxy (users need NO key when set)
+    aiProxySecret: '', // optional x-iv-secret header for the proxy
     webSearchEnabled: false, // "더 싼 대안 찾기" + review search
   };
 

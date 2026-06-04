@@ -277,6 +277,8 @@
     $('#aiProvider').value = s.aiProvider || 'claude';
     $('#aiKey').value = s.aiKey || '';
     $('#aiModel').value = s.aiModel || '';
+    $('#aiProxyUrl').value = s.aiProxyUrl || '';
+    $('#aiProxySecret').value = s.aiProxySecret || '';
     $('#aiKeyArea').hidden = !s.aiEnabled;
 
     renderDomainList(s.domains);
@@ -408,6 +410,17 @@
     $('#aiProvider').addEventListener('change', (e) => saveField({ aiProvider: e.target.value }));
     $('#aiKey').addEventListener('change', (e) => saveField({ aiKey: e.target.value.trim() }));
     $('#aiModel').addEventListener('change', (e) => saveField({ aiModel: e.target.value.trim() }));
+    $('#aiProxySecret').addEventListener('change', (e) => saveField({ aiProxySecret: e.target.value.trim() }));
+    $('#aiProxyUrl').addEventListener('change', async (e) => {
+      const url = e.target.value.trim();
+      await saveField({ aiProxyUrl: url });
+      // Need host permission to fetch the proxy origin from the worker.
+      if (/^https?:\/\//i.test(url)) {
+        let origin = url;
+        try { origin = new URL(url).origin + '/*'; } catch (_) {}
+        chrome.permissions.request({ origins: [origin] }, (r) => { void chrome.runtime.lastError; });
+      }
+    });
 
     // "AI 연결 테스트" — isolates the AI call so the exact error is visible.
     $('#aiTestBtn').addEventListener('click', async () => {

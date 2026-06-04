@@ -1,11 +1,41 @@
-# IMPULSE VAULT — AI proxy (so users don't need their own key)
+# IMPULSE VAULT — Worker (landing page + AI proxy on one domain)
 
-A tiny Cloudflare Worker that holds **one** API key (yours) and forwards
-analysis requests from the extension. End users get AI analysis with **no key**.
+A single Cloudflare Worker that does **two** jobs on the same domain:
 
-> You pay for everyone's usage, so this ships with **hard limits** (per-IP/day,
+- **`GET /`  → serves the public landing page** (so `impursivevault.com` actually
+  shows your website in a browser).
+- **`POST /` → the keyless AI proxy** — holds **one** API key (yours) and
+  forwards analysis requests from the extension, so end users get AI with **no
+  key of their own**.
+
+> You pay for everyone's AI usage, so this ships with **hard limits** (per-IP/day,
 > global/day, max tokens). Tune them in `wrangler.toml`. Fund it with the
 > donations on your landing page.
+
+## ❗ Why your site "doesn't open" in a browser
+
+A Worker that only handled `POST` would answer a normal browser visit (a `GET`)
+with `{"error":"POST only"}` (HTTP 405) — so the page never shows. That's the
+**combined worker fixes**: it serves the website on `GET` and keeps the proxy on
+`POST`. Point your custom domain at this one Worker and both work — **no separate
+Cloudflare Pages setup needed.**
+
+> The `observability` block in the dashboard's `wrangler.jsonc` is only *logging*
+> config — it never blocks visitors. If it errors, replace that block with the
+> minimal `"observability": { "enabled": true }` (drop unknown keys like
+> `persist`/`traces`). It's unrelated to whether the page loads.
+
+## Build the deployable worker
+
+`worker.js` is **generated**: it's `worker.template.js` (the logic) with the
+landing page (`../landing/`) inlined into it. Whenever you change the landing
+page or the template, regenerate it:
+
+```bash
+node proxy/build.cjs          # → writes proxy/worker.js (ready to deploy/paste)
+```
+
+The committed `proxy/worker.js` is already built, so you can deploy right away.
 
 ## Deploy (≈10 minutes, free tier)
 
@@ -26,11 +56,28 @@ analysis requests from the extension. End users get AI analysis with **no key**.
    # optional bot deterrent:
    # wrangler secret put SHARED_SECRET
    ```
-4. Deploy:
+4. Build + deploy:
    ```bash
+   node build.cjs       # regenerate worker.js (landing page + proxy)
    wrangler deploy
    ```
    You'll get a URL like `https://impulse-vault-proxy.<you>.workers.dev`.
+
+   **Prefer the dashboard?** Open the Worker in the Cloudflare dashboard editor
+   and paste the full contents of `proxy/worker.js` (it's self-contained), then
+   **Save & deploy**.
+
+## Connect your custom domain (so the site shows at impursivevault.com)
+
+In the Cloudflare dashboard: **Workers & Pages → your Worker → Settings →
+Domains & Routes → Add → Custom Domain →** enter `impursivevault.com` (and add
+`www.impursivevault.com` too if you want). Cloudflare creates the DNS records
+automatically. After it goes green, visiting the domain shows the landing page,
+and the extension can POST to the same URL for AI.
+
+> If the domain was previously attached to this Worker as a *route* with only
+> `POST` handling, no change is needed — the new combined worker now answers
+> browser `GET`s with the page.
 
 ## Point the extension at it
 
@@ -55,5 +102,6 @@ installed users get free AI out of the box, capped by your limits.
 
 ## API
 
-`POST /` JSON `{ "prompt": "...", "useWeb": true }` → `{ "ok": true, "text": "..." }`
-(429 when a daily limit is hit; 401 if the shared secret is wrong.)
+- `GET /` → the landing page (HTML). `GET /favicon.ico` → 204.
+- `POST /` JSON `{ "prompt": "...", "useWeb": true }` → `{ "ok": true, "text": "..." }`
+  (429 when a daily limit is hit; 401 if the shared secret is wrong.)

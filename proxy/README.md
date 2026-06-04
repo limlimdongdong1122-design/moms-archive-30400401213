@@ -9,8 +9,8 @@ A single Cloudflare Worker that does **two** jobs on the same domain:
   key of their own**.
 
 > You pay for everyone's AI usage, so this ships with **hard limits** (per-IP/day,
-> global/day, max tokens). Tune them in `wrangler.toml`. Fund it with the
-> donations on your landing page.
+> global/day, max tokens). The code has safe defaults; tune them with dashboard
+> **Variables** if you want. Fund it with the donations on your landing page.
 
 ## ❗ Why your site "doesn't open" in a browser
 
@@ -37,35 +37,28 @@ node proxy/build.cjs          # → writes proxy/worker.js (ready to deploy/past
 
 The committed `proxy/worker.js` is already built, so you can deploy right away.
 
-## Deploy (≈10 minutes, free tier)
+## Deploy from the Cloudflare dashboard (no wrangler/CLI needed)
 
-1. Install + log in:
-   ```bash
-   npm install -g wrangler
-   wrangler login
-   ```
-2. Create the rate-limit store and paste its id into `wrangler.toml` (`IV_KV`):
-   ```bash
-   wrangler kv:namespace create IV_KV
-   ```
-3. Add your key as a secret (never committed):
-   ```bash
-   wrangler secret put ANTHROPIC_API_KEY      # paste your Claude key
-   # or, if PROVIDER="openai" in wrangler.toml:
-   # wrangler secret put OPENAI_API_KEY
-   # optional bot deterrent:
-   # wrangler secret put SHARED_SECRET
-   ```
-4. Build + deploy:
-   ```bash
-   node build.cjs       # regenerate worker.js (landing page + proxy)
-   wrangler deploy
-   ```
-   You'll get a URL like `https://impulse-vault-proxy.<you>.workers.dev`.
+There is intentionally **no `wrangler.toml`** here — you deploy by pasting the
+single self-contained `worker.js` into the dashboard. The site (`GET /`) works
+with zero extra config; only the optional AI proxy (`POST /`) needs an API key.
 
-   **Prefer the dashboard?** Open the Worker in the Cloudflare dashboard editor
-   and paste the full contents of `proxy/worker.js` (it's self-contained), then
-   **Save & deploy**.
+1. **Create / open the Worker:** Cloudflare dashboard → **Workers & Pages** →
+   your Worker → **Edit code**. Delete what's there and paste the full contents
+   of `proxy/worker.js`. Click **Deploy**.
+2. **(Only for AI) add your key:** Worker → **Settings → Variables and Secrets**
+   → add a **Secret** named `ANTHROPIC_API_KEY` with your Claude key.
+   (For OpenAI instead: add `OPENAI_API_KEY` and a **Variable** `PROVIDER` =
+   `openai`. Optional bot deterrent: a secret `SHARED_SECRET`.)
+3. **(Optional) rate-limit store:** Worker → **Settings → Bindings → Add → KV
+   namespace**, create one, and bind it as `IV_KV`. Without it the worker still
+   runs (limits are just skipped).
+4. **(Optional) tune limits:** add **Variables** `DAILY_PER_IP` (default 20),
+   `DAILY_GLOBAL` (default 2000), `MODEL`, `ALLOW_ORIGIN`. All have safe defaults
+   in code, so you can skip this.
+
+> Changed the landing page? Re-run `node proxy/build.cjs` to regenerate
+> `proxy/worker.js`, then paste it again and Deploy.
 
 ## Connect your custom domain (so the site shows at impursivevault.com)
 

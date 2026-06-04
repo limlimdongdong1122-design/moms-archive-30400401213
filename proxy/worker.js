@@ -23,10 +23,12 @@
  *   - optional shared secret header (x-iv-secret)
  *   - only forwards a single user prompt (no arbitrary model/system)
  *
- * Secrets (set via `wrangler secret put`):
+ * Deploy by pasting this file into the Cloudflare dashboard Worker editor.
+ * Secrets (Settings → Variables and Secrets → Secret):
  *   ANTHROPIC_API_KEY  and/or  OPENAI_API_KEY,  optional SHARED_SECRET
- * Vars (wrangler.toml): PROVIDER, MODEL, DAILY_PER_IP, DAILY_GLOBAL, ALLOW_ORIGIN
- * KV binding: IV_KV (optional but strongly recommended for limits)
+ * Variables (optional — code has safe defaults):
+ *   PROVIDER, MODEL, DAILY_PER_IP, DAILY_GLOBAL, ALLOW_ORIGIN
+ * KV binding: IV_KV (optional; bind in Settings → Bindings for rate limits)
  * ============================================================ */
 
 // The full landing page (HTML with inlined CSS + JS). Injected by build.cjs.

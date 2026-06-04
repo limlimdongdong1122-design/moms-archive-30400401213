@@ -8,8 +8,8 @@
  *   3) injecting that HTML into worker.template.js.
  *
  * Run:  node proxy/build.cjs
- * Then deploy proxy/worker.js (wrangler deploy) OR paste its
- * contents into the Cloudflare dashboard's Worker editor.
+ * Then paste the contents of proxy/worker.js into the Cloudflare
+ * dashboard's Worker editor and click Deploy.
  *
  * No dependencies — plain Node. Safe to run anytime.
  * ============================================================ */
@@ -62,5 +62,4 @@ fs.writeFileSync(dest, out);
 
 const kb = (Buffer.byteLength(out, 'utf8') / 1024).toFixed(1);
 console.log('✓ wrote ' + path.relative(ROOT, dest) + ' (' + kb + ' KB)');
-console.log('  Deploy it:  cd proxy && wrangler deploy');
-console.log('  …or paste proxy/worker.js into the Cloudflare dashboard Worker editor.');
+console.log('  Paste proxy/worker.js into the Cloudflare dashboard Worker editor → Deploy.');

@@ -622,6 +622,8 @@ function roundRect(ctx, x, y, w, h, r) {
  * Boot
  * ============================================================ */
 function boot() {
+  // Signal to the inline safety-net that the module loaded successfully.
+  window.__VELA_BOOTED = true;
   initCore(); // always
   // Enhancements, chained so GSAP can sync with Lenis.
   initLenis().then((lenis) => initGsap(lenis));

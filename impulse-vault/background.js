@@ -18,7 +18,7 @@ importScripts('utils/storage.js', 'utils/patterns.js', 'utils/analysis.js');
 
 const CONTENT_SCRIPT_ID = 'iv-dynamic-content';
 const CONTENT_FILES = {
-  js: ['utils/storage.js', 'content/detector.js', 'content/overlay.js'],
+  js: ['utils/storage.js', 'utils/patterns.js', 'content/detector.js', 'content/overlay.js'],
   // No page-level CSS: the overlay renders in a Shadow DOM and pulls
   // overlay.css into the shadow root (declared web_accessible_resource),
   // so nothing leaks into — or breaks from — the host page.

@@ -59,7 +59,34 @@ npm run dist:mac    # macOS    → .dmg
 npm run dist:linux  # Linux    → AppImage + .deb
 ```
 
-Output lands in `desktop/dist/`.
+Output lands in `desktop/dist/`. The Windows build produces
+**`IMPULSE-VAULT-Setup.exe`** (a fixed name set via `build.win.artifactName`, so
+the download link below never changes between versions).
+
+### Publish the .exe so the landing page can download it
+
+The landing page (`../landing/`) has a **"데스크탑 앱"** section with a
+**Windows용 다운로드 (.exe)** button. To make it live:
+
+1. Build the installer: `cd desktop && npm install && npm run dist:win`.
+2. On GitHub, create a **Release** (Releases → *Draft a new release* → pick a tag
+   like `v1.0.0`) and **upload `desktop/dist/IMPULSE-VAULT-Setup.exe`** as a
+   release asset, then publish.
+3. In **`../landing/app.js`**, set the download URL. The easiest is the
+   "latest release" permalink, which always points at the newest upload:
+
+   ```js
+   DESKTOP_WIN_URL: 'https://github.com/<owner>/<repo>/releases/latest/download/IMPULSE-VAULT-Setup.exe',
+   RELEASES_URL:    'https://github.com/<owner>/<repo>/releases',   // optional "all versions" link
+   ```
+
+   While `DESKTOP_WIN_URL` is still the `PASTE…` placeholder, the button falls
+   back to `RELEASES_URL` (if set) or shows a friendly "곧 공개돼요" message.
+4. For future updates, just upload a new `IMPULSE-VAULT-Setup.exe` to a new
+   release — the landing page link keeps working unchanged.
+
+> GitHub Releases is free and serves the file over HTTPS, so it works perfectly
+> as the download host for your `impursivevault.com` landing page.
 
 ### ⚠️ Unsigned-app warning (important, and normal)
 

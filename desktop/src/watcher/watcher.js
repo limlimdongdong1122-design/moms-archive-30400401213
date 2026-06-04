@@ -12,11 +12,26 @@ var timer = null;
 var busy = false;
 var lastSig = '';
 
-// Purchase cues across apps (Korean + English).
-var KEYWORDS = [
-  '결제', '구매', '주문', '장바구니', '구독', '바로구매', '결제하기', '주문하기',
-  'checkout', 'buy now', 'place order', 'pay now', 'add to cart', 'subscribe',
-  'complete purchase', 'proceed to payment', 'confirm order',
+// Purchase cues across apps (Korean + English). Split the same way the
+// browser extension classifies button text, so the desktop watcher does NOT
+// fire on a login / signup screen (the bug we fixed in the extension):
+//   STRONG → clearly spending money → report on sight.
+//   WEAK   → ambiguous (구독/subscribe) → report ONLY if a price is visible.
+// Login / signup / search words are deliberately absent (never reported).
+var STRONG_KEYWORDS = [
+  '결제', '결제하기', '구매', '구매하기', '바로구매', '주문', '주문하기', '장바구니',
+  'checkout', 'buy now', 'place order', 'pay now', 'add to cart',
+  'complete purchase', 'proceed to payment', 'confirm order', 'order now',
+];
+var WEAK_KEYWORDS = [
+  '구독', '구독하기', '멤버십', '업그레이드', '플랜',
+  'subscribe', 'upgrade', 'choose plan', 'select plan', 'membership',
+];
+// Words that mean the screen is NOT a purchase moment. If one of these is the
+// only cue around, suppress (extra guard against login/account screens).
+var EXCLUDE_KEYWORDS = [
+  '로그인', '로그아웃', 'login', 'log in', 'sign in', 'sign up', 'signup',
+  '회원가입', 'register', '아이디', '비밀번호', 'password',
 ];
 
 window.ivwatch.onStart(async function (cfg) {
@@ -61,17 +76,32 @@ async function tick() {
   busy = false;
 }
 
+function hasAny(low, list) {
+  for (var i = 0; i < list.length; i++) {
+    if (low.indexOf(list[i].toLowerCase()) !== -1) return list[i];
+  }
+  return null;
+}
+
 function scan(text) {
   if (!text) return;
   var low = text.toLowerCase();
-  var hit = null;
-  for (var i = 0; i < KEYWORDS.length; i++) {
-    if (low.indexOf(KEYWORDS[i].toLowerCase()) !== -1) { hit = KEYWORDS[i]; break; }
-  }
-  if (!hit) return;
-  // best-effort price near the cue
+
+  // best-effort price somewhere on screen
   var m = text.match(/[₩$]\s?[\d,]{3,}|[\d,]{4,}\s?원/);
   var price = m ? parseInt(m[0].replace(/[^\d]/g, ''), 10) || 0 : 0;
+
+  // STRONG cue → purchase moment. WEAK cue → only when a price is visible.
+  var hit = hasAny(low, STRONG_KEYWORDS);
+  if (!hit && price > 0) hit = hasAny(low, WEAK_KEYWORDS);
+  if (!hit) return;
+
+  // If the only thing on screen is a login/account cue with no strong spend
+  // word, don't treat it as a purchase (defensive double-check).
+  if (!hasAny(low, STRONG_KEYWORDS) && hasAny(low, EXCLUDE_KEYWORDS) && price === 0) {
+    return;
+  }
+
   var sig = hit + '|' + price;
   if (sig === lastSig) return; // same screen as last time → don't repeat
   lastSig = sig;

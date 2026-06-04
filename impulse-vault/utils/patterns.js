@@ -222,6 +222,43 @@
     return Math.round(base * mult);
   }
 
+  // ---- Buy-button classification (distinguish purchase vs login/free) ----
+  // STRONG: clearly spending money → always counts as a purchase.
+  // WEAK:   ambiguous (subscribe/start/plan) → only a purchase if a price is
+  //         visible on the page (avoids newsletters, free trials).
+  // EXCLUDE: login / signup / search / nav → NEVER a purchase.
+  const STRONG_BUY = [
+    '결제', '결제하기', '결제 진행', '바로결제', '구매', '구매하기', '바로구매', '바로 구매',
+    '주문', '주문하기', '장바구니', '담기', '카트',
+    'buy now', 'buy it now', 'checkout', 'check out', 'place order', 'order now',
+    'proceed to checkout', 'proceed to payment', 'continue to payment',
+    'complete purchase', 'complete order', 'confirm order', 'pay now', 'pay ',
+    'add to cart', 'add to bag', 'add to basket',
+  ];
+  const WEAK_BUY = [
+    '구독', '구독하기', '멤버십', '업그레이드', '플랜', '예약', '대여',
+    'subscribe', 'upgrade', 'choose plan', 'select plan', 'get plan', 'buy plan',
+    'membership', 'start free', 'get started', 'start now', 'book now', 'reserve',
+    'enroll', '시작하기', '무료로 시작', '신청하기',
+  ];
+  const EXCLUDE_BUY = [
+    '로그인', '로그인하기', 'login', 'log in', 'sign in', 'signin', '로그아웃', 'logout',
+    '회원가입', 'sign up', 'signup', 'register', '가입', '아이디', '비밀번호', 'password',
+    '검색', 'search', '취소', 'cancel', '닫기', 'close', '뒤로', 'back', '더보기',
+    '찜', '관심', 'wishlist', '공유', 'share', '문의', '고객센터', '메뉴', 'menu',
+    '필터', 'filter', '정렬', 'sort', '쿠폰', '적립',
+  ];
+
+  // Returns 'strong' | 'weak' | 'none' for a button's text.
+  function classifyBuyText(text) {
+    const t = (text || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    if (!t || t.length > 40) return 'none';
+    for (const k of STRONG_BUY) if (t.indexOf(k) !== -1) return 'strong';
+    for (const k of EXCLUDE_BUY) if (t.indexOf(k) !== -1) return 'none';
+    for (const k of WEAK_BUY) if (t.indexOf(k) !== -1) return 'weak';
+    return 'none';
+  }
+
   // Decide the FINAL intervention tier from the raw score tier + options.
   //  - alwaysAsk: force at least a blocking modal on every buy click.
   //  - otherwise apply the frequency cap (downgrade to a passive toast).
@@ -243,6 +280,7 @@
     scoreSignal,
     thinkingSeconds,
     finalizeTier,
+    classifyBuyText,
   };
 
   global.IVPatterns = API;

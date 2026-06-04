@@ -118,24 +118,34 @@
     return out;
   }
 
-  // Generic buy-button finder by visible text + roles.
-  // Covers physical goods AND services / subscriptions / software.
-  const BUY_TEXTS = [
-    // ---- goods ----
-    '장바구니', '구매하기', '바로구매', '바로 구매', '구매', '결제', '주문하기',
-    'add to cart', 'add to bag', 'buy now', 'buy it now', 'checkout',
-    'place order', 'proceed to checkout',
-    // ---- services / subscriptions / software ----
-    '결제하기', '구독', '구독하기', '신청하기', '가입하기', '결제 진행', '업그레이드',
-    '플랜 선택', '시작하기', '무료로 시작', '멤버십', '예약하기', '등록하기',
-    'subscribe', 'get started', 'start free', 'start now', 'upgrade', 'choose plan',
-    'select plan', 'sign up', 'join now', 'continue to payment', 'pay now', 'enroll',
-    'book now', 'reserve', 'purchase', 'get plan', 'buy plan',
-  ];
+  // ---- Buy-button classification ----
+  // We delegate the actual text→intent decision to IVPatterns.classifyBuyText
+  // (shared, tested logic). It returns 'strong' | 'weak' | 'none':
+  //   strong → clearly spending money (결제/구매/checkout/장바구니) → intervene.
+  //   weak   → ambiguous (구독/시작하기/subscribe/plan) → intervene ONLY if a
+  //            price is visible on the page (skips free trials, newsletters).
+  //   none   → login / signup / search / nav (로그인/login/가입/검색) → ignore.
+  // This is the core fix for "the prompt pops up when I'm just logging in".
+  function classifyButton(el) {
+    const txt = safe(() => (el.innerText || el.textContent || '').trim(), '');
+    if (!txt) return 'none';
+    try {
+      if (window.IVPatterns && IVPatterns.classifyBuyText) {
+        return IVPatterns.classifyBuyText(txt);
+      }
+    } catch (_) {}
+    // Fallback if patterns.js somehow didn't load: be conservative, treat a
+    // couple of unmistakable spend words as strong, everything else as none.
+    const low = txt.toLowerCase();
+    if (low.length <= 40 && /(결제|구매|장바구니|checkout|add to cart|buy now)/.test(low)) {
+      return 'strong';
+    }
+    return 'none';
+  }
+  // Only STRONG buttons get pre-tagged (weak buttons are decided at click
+  // time, where we can also check for a visible price).
   function looksLikeBuyButton(el) {
-    const txt = safe(() => (el.innerText || el.textContent || '').trim().toLowerCase(), '');
-    if (!txt || txt.length > 40) return false;
-    return BUY_TEXTS.some((t) => txt.includes(t));
+    return classifyButton(el) === 'strong';
   }
   function genericFindBuyButtons() {
     const candidates = safe(
@@ -405,9 +415,16 @@
             const cand = e.target.closest(
               'button, a, input[type="submit"], input[type="button"], [role="button"]'
             );
-            if (cand && looksLikeBuyButton(cand)) {
-              cand.setAttribute('data-iv-buy', '1');
-              btn = cand;
+            if (cand) {
+              const kind = classifyButton(cand);
+              // STRONG → always a purchase. WEAK → only treat as a purchase
+              // if there's a real price on the page (avoids firing on
+              // "시작하기"/"subscribe" for free things). NONE (login, signup,
+              // search, nav…) → never intercept. This is the login fix.
+              if (kind === 'strong' || (kind === 'weak' && guessPriceOnPage() > 0)) {
+                cand.setAttribute('data-iv-buy', '1');
+                btn = cand;
+              }
             }
           }
         } catch (_) {

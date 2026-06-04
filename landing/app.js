@@ -9,6 +9,15 @@ var CONFIG = {
   // Web Store listing URL once published; until then, your GitHub release/zip.
   INSTALL_URL: 'PASTE_INSTALL_URL_HERE',
 
+  // Desktop app installer (.exe). Build it with `npm run dist:win` inside
+  // desktop/, then upload the generated .exe to a GitHub Release and paste the
+  // direct asset URL here. Tip: a permalink like
+  //   https://github.com/<owner>/<repo>/releases/latest/download/IMPULSE-VAULT-Setup.exe
+  // always points at the newest release, so you never have to edit this again.
+  DESKTOP_WIN_URL: 'PASTE_DESKTOP_EXE_URL_HERE',
+  // Where the "all releases" / source link points (optional, shown as fallback).
+  RELEASES_URL: 'PASTE_RELEASES_URL_HERE',
+
   // Donation links (hosted platforms — no secrets here). Blank = "준비 중".
   DONATION_LINKS: {
     toss: 'PASTE_URL_HERE', // Korean
@@ -37,6 +46,29 @@ var CONFIG = {
         e.preventDefault();
         alert('설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)');
       });
+    }
+  });
+
+  // ---- Desktop (.exe) download wiring ----
+  function ready(v) { return v && v.indexOf('PASTE') !== 0; }
+  var desktopUrl = ready(CONFIG.DESKTOP_WIN_URL) ? CONFIG.DESKTOP_WIN_URL : null;
+  var releasesUrl = ready(CONFIG.RELEASES_URL) ? CONFIG.RELEASES_URL : null;
+  document.querySelectorAll('[data-download-desktop]').forEach(function (a) {
+    if (desktopUrl) {
+      a.href = desktopUrl;
+      a.setAttribute('download', '');
+      a.rel = 'noopener';
+    } else {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (releasesUrl) { window.open(releasesUrl, '_blank', 'noopener'); return; }
+        alert('데스크탑 앱은 곧 공개돼요.\n(app.js의 CONFIG.DESKTOP_WIN_URL에 GitHub Release의 .exe 주소를 넣으세요.)');
+      });
+    }
+  });
+  document.querySelectorAll('[data-download-note]').forEach(function (p) {
+    if (releasesUrl) {
+      p.innerHTML = '모든 버전은 <a href="' + releasesUrl + '" target="_blank" rel="noopener">GitHub Releases</a>에서 받을 수 있어요.';
     }
   });
 

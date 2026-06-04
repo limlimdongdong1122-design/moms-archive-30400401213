@@ -37,6 +37,33 @@ ok('no alwaysAsk: low stays low', P.finalizeTier('low', { alwaysAsk: false, rece
 ok('freq cap downgrades medium -> low', P.finalizeTier('medium', { alwaysAsk: false, recentCount: 5, freqCap: 3 }) === 'low');
 ok('under cap keeps medium', P.finalizeTier('medium', { alwaysAsk: false, recentCount: 1, freqCap: 3 }) === 'medium');
 
+console.log('\nclassifyBuyText (login false-positive fix):');
+// STRONG: clearly spending money.
+ok("'결제하기' -> strong", P.classifyBuyText('결제하기') === 'strong');
+ok("'구매' -> strong", P.classifyBuyText('구매') === 'strong');
+ok("'장바구니 담기' -> strong", P.classifyBuyText('장바구니 담기') === 'strong');
+ok("'Buy now' -> strong", P.classifyBuyText('Buy now') === 'strong');
+ok("'Add to cart' -> strong", P.classifyBuyText('Add to cart') === 'strong');
+ok("'Proceed to checkout' -> strong", P.classifyBuyText('Proceed to checkout') === 'strong');
+// EXCLUDE: login / signup / search / nav must NEVER intervene (the bug).
+ok("'로그인' -> none", P.classifyBuyText('로그인') === 'none');
+ok("'로그인하기' -> none", P.classifyBuyText('로그인하기') === 'none');
+ok("'Log in' -> none", P.classifyBuyText('Log in') === 'none');
+ok("'Sign in' -> none", P.classifyBuyText('Sign in') === 'none');
+ok("'회원가입' -> none", P.classifyBuyText('회원가입') === 'none');
+ok("'Sign up' -> none", P.classifyBuyText('Sign up') === 'none');
+ok("'검색' -> none", P.classifyBuyText('검색') === 'none');
+ok("'취소' -> none", P.classifyBuyText('취소') === 'none');
+// STRONG beats EXCLUDE when both present ("로그인 후 결제").
+ok("'로그인 후 결제' -> strong", P.classifyBuyText('로그인 후 결제') === 'strong');
+// WEAK: ambiguous → caller gates on a visible price.
+ok("'구독하기' -> weak", P.classifyBuyText('구독하기') === 'weak');
+ok("'Subscribe' -> weak", P.classifyBuyText('Subscribe') === 'weak');
+ok("'시작하기' -> weak", P.classifyBuyText('시작하기') === 'weak');
+// Empty / overly long blobs → none.
+ok("'' -> none", P.classifyBuyText('') === 'none');
+ok('long blob -> none', P.classifyBuyText('가'.repeat(60)) === 'none');
+
 console.log('\nbuildScorecard (balanced pros/cons + verdict):');
 const sc = A.buildScorecard({
   name: 'Test Headphones', price: 120000, itemType: 'product',

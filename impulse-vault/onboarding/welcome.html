@@ -23,6 +23,13 @@
           <span class="logo-name">IMPULSE&nbsp;VAULT</span>
         </div>
 
+        <!-- Onboarding's distinct 3D: a serene refractive crystal knot.
+             Falls back to a CSS orb if three.min.js isn't present. -->
+        <div class="welcome-stage">
+          <canvas id="welcomeCanvas"></canvas>
+          <div class="welcome-fallback" id="welcomeFallback"></div>
+        </div>
+
         <h1 class="headline">사기 전에, 딱 한 번 더 생각하게.</h1>
         <p class="lede">
           충동구매가 일어나는 바로 그 순간 — 결제 버튼을 누를 때 —
@@ -143,7 +150,10 @@
       </section>
     </main>
 
+    <script src="../lib/three.min.js"></script>
+    <script src="../utils/iv3d.js"></script>
     <script src="../utils/storage.js"></script>
+    <script src="welcome3d.js"></script>
     <script src="welcome.js"></script>
   </body>
 </html>

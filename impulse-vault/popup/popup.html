@@ -38,6 +38,15 @@
       <main id="main" hidden>
         <!-- Hero: Total Saved is the emotional anchor -->
         <section class="hero iv-enter" style="--iv-delay: 60ms">
+          <!-- Popup's distinct 3D: a small iridescent spinning coin.
+               Falls back to the CSS coin if three.min.js isn't present. -->
+          <div class="coin-stage">
+            <canvas id="coinCanvas"></canvas>
+            <div class="coin-fallback" id="coinFallback">
+              <div class="coin-glow"></div>
+              <div class="coin-disc">₩</div>
+            </div>
+          </div>
           <div class="saved-label iv-label">지금까지 아낀 돈</div>
           <div class="saved-amount iv-stat-number" id="totalSaved">₩0</div>
           <div class="saved-meta">
@@ -73,8 +82,11 @@
       </main>
     </div>
 
+    <script src="../lib/three.min.js"></script>
+    <script src="../utils/iv3d.js"></script>
     <script src="../utils/storage.js"></script>
     <script src="../utils/patterns.js"></script>
+    <script src="popup3d.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

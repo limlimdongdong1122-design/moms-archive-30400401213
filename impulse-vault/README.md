@@ -50,10 +50,18 @@ shopping site, IMPULSE VAULT steps in.
 
 ## 🧊 Enable the 3D vault (optional but pretty)
 
-The dashboard ships with a Three.js 3D scene (a glowing item behind a frosted
-dome that clears as the cooling-off timer runs, shattering into particles when
-you let an item go). Three.js must be bundled **locally** because MV3's CSP
-blocks remote scripts.
+Every surface now has its OWN distinct refractive-glass / iridescent 3D object,
+all sharing `utils/iv3d.js` (refractive-glass material + procedural PMREM studio
+environment — no HDRI files):
+
+- **Dashboard** — a glowing gem under a frosted **dome** that clears as the
+  cooling-off timer runs, shattering into particles when you let an item go.
+- **Popup** — a small iridescent **coin** that slowly spins.
+- **Onboarding** — a serene refractive **torus-knot crystal** that follows the cursor.
+
+Three.js must be bundled **locally** (one file, `lib/three.min.js`, shared by all
+three pages) because MV3's CSP blocks remote scripts. Until you add it, each page
+falls back to a tasteful CSS visual.
 
 1. Download the minified UMD build, e.g.
    `https://unpkg.com/three@0.160.0/build/three.min.js`

@@ -119,21 +119,18 @@
   }
 
   // Generic buy-button finder by visible text + roles.
+  // Covers physical goods AND services / subscriptions / software.
   const BUY_TEXTS = [
-    '장바구니',
-    '구매하기',
-    '바로구매',
-    '바로 구매',
-    '구매',
-    '결제',
-    '주문하기',
-    'add to cart',
-    'add to bag',
-    'buy now',
-    'buy it now',
-    'checkout',
-    'place order',
-    'proceed to checkout',
+    // ---- goods ----
+    '장바구니', '구매하기', '바로구매', '바로 구매', '구매', '결제', '주문하기',
+    'add to cart', 'add to bag', 'buy now', 'buy it now', 'checkout',
+    'place order', 'proceed to checkout',
+    // ---- services / subscriptions / software ----
+    '결제하기', '구독', '구독하기', '신청하기', '가입하기', '결제 진행', '업그레이드',
+    '플랜 선택', '시작하기', '무료로 시작', '멤버십', '예약하기', '등록하기',
+    'subscribe', 'get started', 'start free', 'start now', 'upgrade', 'choose plan',
+    'select plan', 'sign up', 'join now', 'continue to payment', 'pay now', 'enroll',
+    'book now', 'reserve', 'purchase', 'get plan', 'buy plan',
   ];
   function looksLikeBuyButton(el) {
     const txt = safe(() => (el.innerText || el.textContent || '').trim().toLowerCase(), '');
@@ -438,9 +435,9 @@
    * partial data. On-page extraction is heuristic and may need per-site tuning.
    */
   function extractDetails() {
-    const out = { rating: null, reviewCount: null, specs: [], reviews: [] };
+    const out = { rating: null, reviewCount: null, specs: [], reviews: [], itemType: 'product' };
 
-    // 1) schema.org JSON-LD aggregateRating (most reliable when present)
+    // 1) schema.org JSON-LD aggregateRating + @type (product/service/software)
     safe(() => {
       const nodes = document.querySelectorAll('script[type="application/ld+json"]');
       nodes.forEach((n) => {
@@ -448,15 +445,31 @@
         if (!data) return;
         const arr = Array.isArray(data) ? data : data['@graph'] || [data];
         arr.forEach((e) => {
-          const ar = e && e.aggregateRating;
+          if (!e) return;
+          const ar = e.aggregateRating;
           if (ar) {
             const r = parseFloat(ar.ratingValue);
             if (Number.isFinite(r)) out.rating = r;
             const c = parseInt(ar.reviewCount || ar.ratingCount, 10);
             if (Number.isFinite(c)) out.reviewCount = c;
           }
+          const type = String(e['@type'] || (Array.isArray(e['@type']) ? e['@type'].join(' ') : '')).toLowerCase();
+          if (type.indexOf('softwareapplication') !== -1 || type.indexOf('webapplication') !== -1) out.itemType = 'software';
+          else if (type.indexOf('service') !== -1) out.itemType = 'service';
         });
       });
+    });
+
+    // Fallback item-type guess from page signals (subscription/SaaS cues).
+    safe(() => {
+      if (out.itemType === 'product') {
+        const body = (document.body.innerText || '').toLowerCase().slice(0, 4000);
+        const t = (document.title || '').toLowerCase();
+        const subCue = /구독|월 ?\d|\/(month|mo|월)|per month|monthly|연 ?결제|무료 체험|free trial|플랜|plan|멤버십|membership/.test(body + ' ' + t);
+        const swCue = /다운로드|설치|라이선스|license|download|소프트웨어|software|app|앱/.test(t);
+        if (subCue) out.itemType = 'service';
+        else if (swCue) out.itemType = 'software';
+      }
     });
 
     // 2) specs / feature bullets — common list patterns, kept short & clean

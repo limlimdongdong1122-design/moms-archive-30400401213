@@ -127,6 +127,19 @@ scorecard** above the buttons — to force clear thinking, not to shame. It is
   necessities. Optional **"더 싼 대안 찾기"** button searches for cheaper
   alternatives.
 
+**Works for products, services, subscriptions, and software.** Detection now
+covers buy/subscribe/upgrade/get-started/checkout buttons, infers the item type
+(상품 / 서비스·구독 / 프로그램), and tailors the analysis — e.g. for subscriptions
+it flags forgotten-cancellation cost and free alternatives; for software it asks
+whether a free/open-source/existing tool would do. The scorecard always asks
+**"is this actually the best option?"** with a **"더 나은 대안 찾기"** search
+(plus a cheapest-price search for goods).
+
+**Optional "all sites" mode.** By default the extension only acts on the domains
+you granted. Settings has an opt-in **"모든 사이트에서 감지·분석"** toggle that
+requests broad host access at runtime (explicit consent) so it can analyze a
+purchase on *any* website. Analysis stays 100% local either way.
+
 **AI is optional and BYOK (bring-your-own-key).** Default is 100% free,
 rule-based, offline. In Settings you can enable AI and paste your **own** Claude
 or OpenAI key — stored **locally only** (`chrome.storage.local`), sent **only**

@@ -62,6 +62,7 @@
 
     // ---- Cold Purchase Analysis ----
     coldAnalysis: true, // show the rules-based scorecard in interventions
+    allSites: false, // analyze purchases on ALL sites (opt-in, broad permission)
     aiEnabled: false, // BYOK AI enrichment (off by default)
     aiProvider: 'claude', // 'claude' | 'openai'
     aiKey: '', // the user's OWN api key, stored locally only

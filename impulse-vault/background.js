@@ -56,7 +56,18 @@ async function grantedMatches(settings) {
 async function syncContentScripts() {
   try {
     const settings = await IVStorage.getSettings();
-    const matches = await grantedMatches(settings);
+
+    // "All sites" mode (opt-in): if the user enabled it AND granted broad
+    // host access, watch every site. Otherwise, only the listed domains.
+    let matches;
+    if (settings.allSites) {
+      const allOk = await new Promise((resolve) =>
+        chrome.permissions.contains({ origins: ['*://*/*'] }, (r) => resolve(!!r))
+      );
+      matches = allOk ? ['*://*/*'] : await grantedMatches(settings);
+    } else {
+      matches = await grantedMatches(settings);
+    }
 
     // Always clear the old registration first.
     const existing = await chrome.scripting.getRegisteredContentScripts({
@@ -322,6 +333,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               payload.scorecard = IVAnalysis.buildScorecard({
                 name: msg.name,
                 price: msg.price || (viewRec && viewRec.price) || 0,
+                itemType: details.itemType || 'product',
                 rating: details.rating,
                 reviewCount: details.reviewCount,
                 specs: details.specs || [],
@@ -349,6 +361,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               payload.aiDetails = {
                 name: msg.name,
                 price: msg.price || (viewRec && viewRec.price) || 0,
+                itemType: det.itemType || 'product',
                 rating: det.rating,
                 reviewCount: det.reviewCount,
                 specs: det.specs || [],

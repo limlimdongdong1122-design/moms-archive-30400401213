@@ -50,9 +50,18 @@
    *              hourlyWage, gamePrice, weeklyAllowance }
    * }
    */
+  // Human label + alternative-search hint per item type.
+  function typeInfo(itemType) {
+    if (itemType === 'service') return { label: '서비스/구독', altWord: '대체 서비스' };
+    if (itemType === 'software') return { label: '프로그램/소프트웨어', altWord: '대체 프로그램' };
+    return { label: '상품', altWord: '대체 상품' };
+  }
+
   function buildScorecard(input) {
     const d = input || {};
     const s = d.signals || {};
+    const itemType = d.itemType || 'product';
+    const ti = typeInfo(itemType);
     const price = Number(d.price) || 0;
     const gamePrice = Number(s.gamePrice) || 60000;
     const wage = Number(s.hourlyWage) || 0;
@@ -121,8 +130,19 @@
     if (s.ownsSimilar) {
       reflections.push({ point: '이미 비슷한 걸 갖고 있지 않아?', why: `'${s.category || '같은 종류'}'를 최근에 봤어요. 중복 구매는 만족도가 낮아요.` });
     }
-    reflections.push({ point: '반품·환불 조건을 확인했나요?', why: '막상 반품은 절차가 번거롭고 배송비가 들 때가 많아요. 미리 알면 후회가 줄어요.' });
-    reflections.push({ point: '지금의 설렘은 보통 며칠이면 사라져요.', why: '새 물건의 만족감은 빠르게 평범해져요 — 쾌락 적응(hedonic adaptation).' });
+    // "Is this actually the best option?" — the core "better alternative" check.
+    reflections.push({
+      point: `이게 정말 최선이야? ${ti.altWord}을(를) 1~2개라도 비교했어?`,
+      why: '비슷한 기능을 더 싸게/더 좋게 주는 선택지가 있는 경우가 많아요. 5분 비교가 후회를 막아요.',
+    });
+    if (itemType === 'service') {
+      reflections.push({ point: '구독은 해지 전까지 계속 빠져나가요. 해지 방법·날짜를 정했나?', why: '안 쓰면서 내는 구독료가 가장 흔한 새는 돈이에요. 무료 대안이 충분한 경우도 많아요.' });
+    } else if (itemType === 'software') {
+      reflections.push({ point: '무료·오픈소스·기존에 가진 도구로 대체되진 않아?', why: '많은 유료 프로그램은 무료 대안으로 80%는 해결돼요. 정말 그 차이가 필요한지 확인해요.' });
+    } else {
+      reflections.push({ point: '반품·환불 조건을 확인했나요?', why: '막상 반품은 절차가 번거롭고 배송비가 들 때가 많아요. 미리 알면 후회가 줄어요.' });
+    }
+    reflections.push({ point: '지금의 설렘은 보통 며칠이면 사라져요.', why: '새것의 만족감은 빠르게 평범해져요 — 쾌락 적응(hedonic adaptation).' });
     if (repeat || highPrice) {
       reflections.push({
         point: `이번 달 예산·목표에 주는 영향을 봤나요?`,
@@ -142,6 +162,9 @@
 
     return {
       note: '참고용',
+      itemType: itemType,
+      typeLabel: ti.label,
+      altWord: ti.altWord,
       pros: pros.slice(0, 5),
       cons: cons.slice(0, 5),
       summary,
@@ -167,12 +190,14 @@
 
   // ---- The prompt sent to a BYOK model (grounded, balanced, safe) ----
   function buildAiPrompt(d) {
+    const ti = typeInfo(d.itemType || 'product');
     const lines = [];
     lines.push('You are a neutral purchase-analysis assistant. Judge fairly; do NOT bias toward discouraging the purchase.');
-    lines.push('Use ONLY the data below. Do NOT invent specs, prices, ratings, or defects. If data is insufficient, say so plainly.');
-    lines.push('Answer in Korean, concise. Return: 장점 (3 bullets), 단점 (3 bullets), 냉정한 요약 (2-3 lines). Mark review-based cons as "리뷰 기반".');
+    lines.push('Use ONLY the data below for specific claims. Do NOT invent specs, prices, ratings, or defects. If data is insufficient, say so plainly.');
+    lines.push('This is a ' + (d.itemType || 'product') + ' (' + ti.label + '). Assess: (1) is it a GOOD CHOICE for a typical buyer, (2) are there clearly BETTER or CHEAPER alternatives worth comparing (name general categories/well-known options only — do NOT fabricate specific prices).');
+    lines.push('Answer in Korean, concise. Return exactly these sections: 장점 (3 bullets), 단점 (3 bullets, mark review-based as "리뷰 기반"), 더 나은 대안 (1-2 lines), 냉정한 요약 (2-3 lines).');
     lines.push('---DATA---');
-    lines.push('상품명: ' + (d.name || '(unknown)'));
+    lines.push('이름: ' + (d.name || '(unknown)'));
     if (d.price) lines.push('가격: ' + fmtKRW(d.price));
     if (typeof d.rating === 'number') lines.push('평점: ' + d.rating + ' (리뷰 ' + (d.reviewCount || 0) + '개)');
     if (d.specs && d.specs.length) lines.push('스펙/특징:\n- ' + d.specs.slice(0, 8).join('\n- '));

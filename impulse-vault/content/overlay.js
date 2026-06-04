@@ -343,7 +343,10 @@
 
     // Header: title + "참고용" chip + neutral consideration meter
     const head = el('div', 'iv-an-head');
-    const title = el('div', 'iv-an-title', '냉정한 구매 분석');
+    const titleText = sc.typeLabel && sc.itemType !== 'product'
+      ? '냉정한 분석 · ' + sc.typeLabel
+      : '냉정한 구매 분석';
+    const title = el('div', 'iv-an-title', titleText);
     const chip = el('span', 'iv-an-chip', sc.note || '참고용');
     head.appendChild(title);
     head.appendChild(chip);
@@ -387,17 +390,34 @@
       wrap.appendChild(ref);
     }
 
-    // Tools row: cheaper-alternative search (if enabled)
+    // Tools row: "is there a better/cheaper alternative?" search (if enabled)
     if (payload.webSearchEnabled && payload.productName) {
       const tools = el('div', 'iv-an-tools');
-      const alt = el('button', 'iv-an-tool', '더 싼 대안 찾기');
-      alt.addEventListener('click', () => {
+      const name = payload.productName;
+      const altWord = (sc && sc.altWord) || '대안';
+      const isProduct = !sc || sc.itemType === 'product' || !sc.itemType;
+
+      // Always: a general "better alternative" comparison search.
+      const better = el('button', 'iv-an-tool', '더 나은 ' + altWord + ' 찾기');
+      better.addEventListener('click', () => {
         try {
-          const q = encodeURIComponent(payload.productName + ' 최저가');
-          window.open('https://search.shopping.naver.com/search/all?query=' + q, '_blank', 'noopener');
+          const q = encodeURIComponent(name + ' 대안 비교 추천 리뷰');
+          window.open('https://www.google.com/search?q=' + q, '_blank', 'noopener');
         } catch (_) {}
       });
-      tools.appendChild(alt);
+      tools.appendChild(better);
+
+      // Products also get a cheapest-price search.
+      if (isProduct) {
+        const cheaper = el('button', 'iv-an-tool', '더 싼 값 찾기');
+        cheaper.addEventListener('click', () => {
+          try {
+            const q = encodeURIComponent(name + ' 최저가');
+            window.open('https://search.shopping.naver.com/search/all?query=' + q, '_blank', 'noopener');
+          } catch (_) {}
+        });
+        tools.appendChild(cheaper);
+      }
       wrap.appendChild(tools);
     }
 

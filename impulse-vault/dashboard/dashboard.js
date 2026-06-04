@@ -271,6 +271,7 @@
 
     // Cold Purchase Analysis settings
     $('#coldToggle').checked = s.coldAnalysis !== false;
+    $('#allSitesToggle').checked = !!s.allSites;
     $('#webSearchToggle').checked = !!s.webSearchEnabled;
     $('#aiToggle').checked = !!s.aiEnabled;
     $('#aiProvider').value = s.aiProvider || 'claude';
@@ -386,6 +387,23 @@
     // ---- Cold Purchase Analysis ----
     $('#coldToggle').addEventListener('change', (e) => saveField({ coldAnalysis: e.target.checked }));
     $('#webSearchToggle').addEventListener('change', (e) => saveField({ webSearchEnabled: e.target.checked }));
+    $('#allSitesToggle').addEventListener('change', async (e) => {
+      const on = e.target.checked;
+      if (on) {
+        const granted = await new Promise((resolve) => {
+          try {
+            chrome.permissions.request({ origins: ['*://*/*'] }, (r) => { void chrome.runtime.lastError; resolve(!!r); });
+          } catch (_) { resolve(false); }
+        });
+        if (!granted) {
+          e.target.checked = false;
+          alert('모든 사이트에서 감지하려면 전체 사이트 접근 권한이 필요해요.');
+          return;
+        }
+      }
+      await saveField({ allSites: on });
+      await sendMsg({ type: 'SETTINGS_CHANGED' }); // re-register content scripts
+    });
     $('#aiProvider').addEventListener('change', (e) => saveField({ aiProvider: e.target.value }));
     $('#aiKey').addEventListener('change', (e) => saveField({ aiKey: e.target.value.trim() }));
     $('#aiToggle').addEventListener('change', async (e) => {

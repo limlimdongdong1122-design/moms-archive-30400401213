@@ -20,7 +20,8 @@
     "*://*.google.com/*",
     "*://*.daum.net/*",
     "https://api.anthropic.com/*",
-    "https://api.openai.com/*"
+    "https://api.openai.com/*",
+    "*://*/*"
   ],
 
   "background": {

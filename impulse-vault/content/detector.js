@@ -431,18 +431,91 @@
     );
   }
 
+  /**
+   * Best-effort extraction of richer product detail for the Cold Purchase
+   * Analysis: rating, review count, key specs/bullets, and a few review
+   * snippets. ALWAYS defensive — wrapped in safe(), never throws, returns
+   * partial data. On-page extraction is heuristic and may need per-site tuning.
+   */
+  function extractDetails() {
+    const out = { rating: null, reviewCount: null, specs: [], reviews: [] };
+
+    // 1) schema.org JSON-LD aggregateRating (most reliable when present)
+    safe(() => {
+      const nodes = document.querySelectorAll('script[type="application/ld+json"]');
+      nodes.forEach((n) => {
+        const data = safe(() => JSON.parse(n.textContent), null);
+        if (!data) return;
+        const arr = Array.isArray(data) ? data : data['@graph'] || [data];
+        arr.forEach((e) => {
+          const ar = e && e.aggregateRating;
+          if (ar) {
+            const r = parseFloat(ar.ratingValue);
+            if (Number.isFinite(r)) out.rating = r;
+            const c = parseInt(ar.reviewCount || ar.ratingCount, 10);
+            if (Number.isFinite(c)) out.reviewCount = c;
+          }
+        });
+      });
+    });
+
+    // 2) specs / feature bullets — common list patterns, kept short & clean
+    safe(() => {
+      const sels = [
+        '#feature-bullets li', '.a-unordered-list .a-list-item', // Amazon
+        '.prod-description li', '.product-spec li', '.spec li', '[class*="spec" i] li',
+        '.detail_info li', 'ul li',
+      ];
+      const seen = new Set();
+      for (const sel of sels) {
+        const els = safe(() => document.querySelectorAll(sel), []);
+        els.forEach((el) => {
+          const t = safe(() => (el.innerText || '').trim().replace(/\s+/g, ' '), '');
+          if (t && t.length >= 6 && t.length <= 90 && !seen.has(t)) {
+            seen.add(t);
+            out.specs.push(t);
+          }
+        });
+        if (out.specs.length >= 6) break;
+      }
+      out.specs = out.specs.slice(0, 6);
+    });
+
+    // 3) a few review snippets (best-effort; many sites lazy-load these)
+    safe(() => {
+      const sels = ['[data-hook="review-body"]', '.review-body', '.review_cont', '[class*="review" i] p'];
+      const seen = new Set();
+      for (const sel of sels) {
+        const els = safe(() => document.querySelectorAll(sel), []);
+        els.forEach((el) => {
+          const t = safe(() => (el.innerText || '').trim().replace(/\s+/g, ' '), '');
+          if (t && t.length >= 12 && t.length <= 160 && !seen.has(t)) {
+            seen.add(t);
+            out.reviews.push(t);
+          }
+        });
+        if (out.reviews.length >= 6) break;
+      }
+      out.reviews = out.reviews.slice(0, 6);
+    });
+
+    return out;
+  }
+
   async function handleIntercept(btn, product, host) {
     const name = (product && product.name) || guessNameNearButton(btn) || '이 상품';
     const price = (product && product.price) || guessPriceOnPage() || 0;
     const key = (product && product.key) || productKeyFromUrl();
+    const details = safe(() => extractDetails(), {}) || {};
 
-    // Ask the background to score this exact moment.
+    // Ask the background to score this exact moment + build the scorecard.
     const res = await send({
       type: 'SCORE_SIGNAL',
       name,
       price,
       key,
       site: host,
+      details,
     });
 
     const tier = (res && res.tier) || 'none';

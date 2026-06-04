@@ -14,7 +14,7 @@
  * memory and always read/write through IVStorage.
  * ============================================================ */
 
-importScripts('utils/storage.js', 'utils/patterns.js');
+importScripts('utils/storage.js', 'utils/patterns.js', 'utils/analysis.js');
 
 const CONTENT_SCRIPT_ID = 'iv-dynamic-content';
 const CONTENT_FILES = {
@@ -103,6 +103,63 @@ if (chrome.permissions && chrome.permissions.onAdded) {
 }
 if (chrome.permissions && chrome.permissions.onRemoved) {
   chrome.permissions.onRemoved.addListener(syncContentScripts);
+}
+
+// Heuristic: does the user likely already own/consider something similar?
+// True if another DIFFERENT product in the same category was viewed before.
+async function likelyOwnsSimilar(viewRec, key) {
+  try {
+    if (!viewRec || !viewRec.category) return false;
+    const views = await IVStorage.getViews();
+    for (const k of Object.keys(views)) {
+      if (k === key) continue;
+      if (views[k] && views[k].category === viewRec.category) return true;
+    }
+  } catch (_) {}
+  return false;
+}
+
+/**
+ * Call the user's OWN AI provider (BYOK). The key is read from local
+ * settings and sent ONLY to the chosen provider — never anywhere else,
+ * never hardcoded. Requires host permission for the provider origin
+ * (requested when the user enables AI in settings).
+ */
+async function callAiProvider(settings, details) {
+  const prompt = IVAnalysis.buildAiPrompt(details);
+  if (settings.aiProvider === 'openai') {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + settings.aiKey },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 500,
+        temperature: 0.3,
+      }),
+    });
+    if (!res.ok) throw new Error('OpenAI HTTP ' + res.status);
+    const data = await res.json();
+    return (data.choices && data.choices[0] && data.choices[0].message.content) || '';
+  }
+  // default: Claude (Anthropic)
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': settings.aiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 600,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+  });
+  if (!res.ok) throw new Error('Anthropic HTTP ' + res.status);
+  const data = await res.json();
+  return (data.content && data.content[0] && data.content[0].text) || '';
 }
 
 // ---- Rebuild the impulse profile from raw events (debounced-ish) ----
@@ -257,12 +314,69 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             msg
           );
 
+          // ---- Cold Purchase Analysis scorecard (grounded, free) ----
+          if (settings.coldAnalysis && (tier === 'medium' || tier === 'high')) {
+            try {
+              const details = msg.details || {};
+              const ownsSimilar = await likelyOwnsSimilar(viewRec, msg.key);
+              payload.scorecard = IVAnalysis.buildScorecard({
+                name: msg.name,
+                price: msg.price || (viewRec && viewRec.price) || 0,
+                rating: details.rating,
+                reviewCount: details.reviewCount,
+                specs: details.specs || [],
+                reviews: details.reviews || [],
+                signals: {
+                  viewCount: (viewRec && viewRec.count) || 1,
+                  similarSearches: similar,
+                  category: (viewRec && viewRec.category) || '',
+                  ownsSimilar,
+                  hourlyWage: settings.hourlyWage,
+                  gamePrice: settings.gamePrice,
+                  weeklyAllowance: settings.weeklyAllowance,
+                },
+              });
+            } catch (err) {
+              console.warn('[IMPULSE VAULT] scorecard build failed:', err);
+            }
+            // Flags so the overlay knows whether to offer AI / web-search.
+            payload.aiEnabled = !!(settings.aiEnabled && settings.aiKey);
+            payload.webSearchEnabled = !!settings.webSearchEnabled;
+            payload.productName = msg.name;
+            // Grounded data the overlay passes back for optional AI enrichment.
+            if (payload.aiEnabled) {
+              const det = msg.details || {};
+              payload.aiDetails = {
+                name: msg.name,
+                price: msg.price || (viewRec && viewRec.price) || 0,
+                rating: det.rating,
+                reviewCount: det.reviewCount,
+                specs: det.specs || [],
+                reviews: det.reviews || [],
+              };
+            }
+          }
+
           if (tier === 'medium' || tier === 'high') {
             await IVStorage.logIntervention(now);
             await IVStorage.bumpStats({ interventions: 1 });
           }
 
           return sendResponse({ ok: true, tier, payload, score: result.score });
+        }
+
+        // ---- Optional BYOK AI enrichment for the scorecard ----
+        case 'ANALYZE_AI': {
+          const settings = await IVStorage.getSettings();
+          if (!settings.aiEnabled || !settings.aiKey) {
+            return sendResponse({ ok: false, error: 'ai_disabled' });
+          }
+          try {
+            const text = await callAiProvider(settings, msg.details || {});
+            return sendResponse({ ok: true, text });
+          } catch (err) {
+            return sendResponse({ ok: false, error: String(err) });
+          }
         }
 
         // ---- User decided after an intervention ----

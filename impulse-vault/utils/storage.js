@@ -59,6 +59,13 @@
     paused: false, // global pause toggle
     snoozeUntil: 0, // epoch ms; while now < this, stay quiet
     domains: DEFAULT_DOMAINS.slice(),
+
+    // ---- Cold Purchase Analysis ----
+    coldAnalysis: true, // show the rules-based scorecard in interventions
+    aiEnabled: false, // BYOK AI enrichment (off by default)
+    aiProvider: 'claude', // 'claude' | 'openai'
+    aiKey: '', // the user's OWN api key, stored locally only
+    webSearchEnabled: false, // "더 싼 대안 찾기" + review search
   };
 
   const DEFAULT_STATS = {

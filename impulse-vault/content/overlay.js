@@ -165,6 +165,15 @@
         card.appendChild(el('div', 'iv-future', payload.futureMessage));
       }
 
+      // ---- Cold Purchase Analysis scorecard (above the buttons) ----
+      if (payload.scorecard) {
+        try {
+          card.appendChild(buildScorecard(payload));
+        } catch (_) {
+          /* never block on the scorecard */
+        }
+      }
+
       // Escape hatch: proceed anyway, gated by the thinking timer.
       const seconds = Math.max(0, payload.thinkingSeconds || 0);
 
@@ -310,6 +319,133 @@
         handlers && handlers.onProceed && handlers.onProceed();
       } catch (__) {}
     }
+  }
+
+  // ---------------------------------------------------------
+  // Cold Purchase Analysis scorecard (neutral, grounded)
+  // ---------------------------------------------------------
+  function ivSend(msg) {
+    return new Promise((resolve) => {
+      try {
+        chrome.runtime.sendMessage(msg, (res) => {
+          void chrome.runtime.lastError;
+          resolve(res || null);
+        });
+      } catch (_) {
+        resolve(null);
+      }
+    });
+  }
+
+  function buildScorecard(payload) {
+    const sc = payload.scorecard;
+    const wrap = el('div', 'iv-analysis');
+
+    // Header: title + "참고용" chip + neutral consideration meter
+    const head = el('div', 'iv-an-head');
+    const title = el('div', 'iv-an-title', '냉정한 구매 분석');
+    const chip = el('span', 'iv-an-chip', sc.note || '참고용');
+    head.appendChild(title);
+    head.appendChild(chip);
+    wrap.appendChild(head);
+
+    // Objective summary
+    if (sc.summary) wrap.appendChild(el('div', 'iv-an-summary', sc.summary));
+
+    // Two columns: 장점 | 단점
+    const cols = el('div', 'iv-an-cols');
+    cols.appendChild(buildColumn('장점', sc.pros, 'pro'));
+    cols.appendChild(buildColumn('단점', sc.cons, 'con'));
+    wrap.appendChild(cols);
+
+    // Consideration meter (NOT a verdict)
+    if (sc.meter) {
+      const meter = el('div', 'iv-an-meter');
+      const mlabel = el('div', 'iv-an-meter-label');
+      mlabel.appendChild(el('span', null, '고려도'));
+      mlabel.appendChild(el('span', 'iv-an-meter-val', sc.meter.label));
+      const bar = el('div', 'iv-an-meter-bar');
+      const fill = el('i');
+      fill.style.width = (sc.meter.value || 0) + '%';
+      bar.appendChild(fill);
+      meter.appendChild(mlabel);
+      meter.appendChild(bar);
+      meter.appendChild(el('div', 'iv-an-meter-note', '※ 사라/사지마 판정이 아니라, 얼마나 신중할지에 대한 참고예요.'));
+      wrap.appendChild(meter);
+    }
+
+    // Reflection points (point + "why this matters")
+    if (Array.isArray(sc.reflections) && sc.reflections.length) {
+      const ref = el('div', 'iv-an-reflect');
+      ref.appendChild(el('div', 'iv-an-subhead', '합리적 판단 포인트'));
+      sc.reflections.forEach((r) => {
+        const item = el('div', 'iv-an-ref-item');
+        item.appendChild(el('div', 'iv-an-ref-point', r.point));
+        if (r.why) item.appendChild(el('div', 'iv-an-ref-why', r.why));
+        ref.appendChild(item);
+      });
+      wrap.appendChild(ref);
+    }
+
+    // Tools row: cheaper-alternative search (if enabled)
+    if (payload.webSearchEnabled && payload.productName) {
+      const tools = el('div', 'iv-an-tools');
+      const alt = el('button', 'iv-an-tool', '더 싼 대안 찾기');
+      alt.addEventListener('click', () => {
+        try {
+          const q = encodeURIComponent(payload.productName + ' 최저가');
+          window.open('https://search.shopping.naver.com/search/all?query=' + q, '_blank', 'noopener');
+        } catch (_) {}
+      });
+      tools.appendChild(alt);
+      wrap.appendChild(tools);
+    }
+
+    // Optional AI enrichment (BYOK) — instant card already shown; this fills in.
+    if (payload.aiEnabled && payload.aiDetails) {
+      const ai = el('div', 'iv-an-ai');
+      ai.appendChild(el('div', 'iv-an-subhead', 'AI 분석 · 참고용'));
+      const body = el('div', 'iv-an-ai-body');
+      body.appendChild(el('div', 'iv-an-loading', '불러오는 중…'));
+      ai.appendChild(body);
+      wrap.appendChild(ai);
+      ivSend({ type: 'ANALYZE_AI', details: payload.aiDetails }).then((res) => {
+        body.replaceChildren();
+        if (res && res.ok && res.text) {
+          // Render as plain text lines (never inject HTML).
+          String(res.text).split('\n').forEach((line) => {
+            if (line.trim()) body.appendChild(el('div', 'iv-an-ai-line', line.trim()));
+          });
+        } else {
+          body.appendChild(el('div', 'iv-an-ai-err', 'AI 분석을 불러오지 못했어요 (키·권한·네트워크 확인).'));
+        }
+      });
+    }
+
+    return wrap;
+  }
+
+  function buildColumn(label, items, kind) {
+    const col = el('div', 'iv-an-col iv-an-col-' + kind);
+    col.appendChild(el('div', 'iv-an-col-head', label));
+    const ul = el('ul', 'iv-an-list');
+    if (!items || !items.length) {
+      ul.appendChild(el('li', 'iv-an-empty', kind === 'pro' ? '뚜렷한 장점 정보가 적어요' : '뚜렷한 단점 정보가 적어요'));
+    } else {
+      items.forEach((it) => {
+        const li = el('li');
+        li.appendChild(el('span', 'iv-an-dot', null));
+        const txt = el('span', 'iv-an-text', it.text);
+        if (it.source) {
+          const src = el('span', 'iv-an-src', it.source);
+          txt.appendChild(src);
+        }
+        li.appendChild(txt);
+        ul.appendChild(li);
+      });
+    }
+    col.appendChild(ul);
+    return col;
   }
 
   window.IVOverlay = { toast, modal };

@@ -110,6 +110,38 @@ the host page**; if it can't find something, it silently does nothing.
 specific adapters for **Coupang, Naver, and Amazon**. Adding a new adapter is
 just pushing one object into the `ADAPTERS` array in `content/detector.js`.
 
+## 🧊 Cold Purchase Analysis (냉정한 구매 분석)
+
+At a medium/high intervention the modal now shows a **fair, neutral pros/cons
+scorecard** above the buttons — to force clear thinking, not to shame. It is
+**grounded** (never invents facts):
+
+- **장점 | 단점** — pulled from the product page (specs, rating/review count,
+  review snippets) and your own signals (repeat views, budget, owning something
+  similar). Review-based cons are labelled "리뷰에서 자주 지적된 점".
+- **냉정한 요약** + **합리적 판단 포인트** (opportunity cost, 30-day test,
+  return-policy check, hedonic adaptation, budget impact) — each with a short
+  "why this matters" line. Always shown; needs no AI.
+- A neutral **고려도(consideration) meter** — *not* a buy/don't-buy verdict.
+- Cons are stricter for high-price/repeat-viewed items and lighter for cheap
+  necessities. Optional **"더 싼 대안 찾기"** button searches for cheaper
+  alternatives.
+
+**AI is optional and BYOK (bring-your-own-key).** Default is 100% free,
+rule-based, offline. In Settings you can enable AI and paste your **own** Claude
+or OpenAI key — stored **locally only** (`chrome.storage.local`), sent **only**
+to the provider you chose, never hardcoded, never anywhere else. AI output is
+clearly labelled **"AI 분석 · 참고용"** and the model is instructed to stay
+grounded and balanced.
+
+> ⚠️ **Distribution note:** BYOK is fine for personal use. If you ever
+> distribute this to other people, do NOT ask them for keys — route AI calls
+> through a small backend proxy that holds a single key server-side instead.
+
+> On-page extraction (specs/rating/reviews) is **best-effort** and may need
+> per-site tuning; if a page can't be parsed, the scorecard gracefully falls
+> back to just the reflection points.
+
 ## 🎚️ The intervention (friction, not prohibition)
 
 It escalates with strictness + signal strength (price, repeat-views, known

@@ -183,6 +183,60 @@
           </label>
         </div>
 
+        <!-- ---- Cold Purchase Analysis ---- -->
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">냉정한 구매 분석</label>
+            <p class="set-hint">개입할 때 장단점·합리적 판단 포인트를 보여줘요. (무료, AI 불필요)</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="coldToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">'더 싼 대안 찾기' 버튼</label>
+            <p class="set-hint">분석 카드에서 비슷한 더 싼 상품을 검색하는 버튼을 보여줘요.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="webSearchToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block">
+          <div class="toggle-block" style="margin-bottom: var(--space-12)">
+            <div>
+              <label class="set-label">AI 분석 (선택 · 내 키 사용)</label>
+              <p class="set-hint">켜면 아래 내 API 키로 더 자세한 장단점을 받아요.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="aiToggle" />
+              <span class="switch-track"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div id="aiKeyArea" hidden>
+            <div class="cards-2">
+              <div>
+                <label class="set-label" style="font-size: var(--fs-xs)">제공자</label>
+                <select id="aiProvider">
+                  <option value="claude">Claude (Anthropic)</option>
+                  <option value="openai">OpenAI</option>
+                </select>
+              </div>
+              <div>
+                <label class="set-label" style="font-size: var(--fs-xs)">내 API 키</label>
+                <input type="password" id="aiKey" placeholder="sk-... (내 기기에만 저장)" autocomplete="off" />
+              </div>
+            </div>
+            <p class="set-hint" style="margin-top: var(--space-12)">
+              🔒 키는 <b>이 기기에만</b> 저장되고, 선택한 AI 제공자에게만 직접 전송돼요. 그 외 어디에도 보내지 않아요. AI 답변은 <b>참고용</b>이에요.
+            </p>
+          </div>
+        </div>
+
         <p class="save-toast" id="saveToast" hidden>저장됨 ✓</p>
       </section>
 

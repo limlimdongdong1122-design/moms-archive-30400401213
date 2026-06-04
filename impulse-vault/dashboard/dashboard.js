@@ -268,6 +268,15 @@
     $('#gamePrice').value = s.gamePrice || 0;
     $('#coolingHours').value = String(s.coolingHours || 24);
     $('#pauseToggle').checked = !!s.paused;
+
+    // Cold Purchase Analysis settings
+    $('#coldToggle').checked = s.coldAnalysis !== false;
+    $('#webSearchToggle').checked = !!s.webSearchEnabled;
+    $('#aiToggle').checked = !!s.aiEnabled;
+    $('#aiProvider').value = s.aiProvider || 'claude';
+    $('#aiKey').value = s.aiKey || '';
+    $('#aiKeyArea').hidden = !s.aiEnabled;
+
     renderDomainList(s.domains);
   }
 
@@ -372,6 +381,32 @@
     $('#addDomain').addEventListener('click', addDomain);
     $('#newDomain').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') addDomain();
+    });
+
+    // ---- Cold Purchase Analysis ----
+    $('#coldToggle').addEventListener('change', (e) => saveField({ coldAnalysis: e.target.checked }));
+    $('#webSearchToggle').addEventListener('change', (e) => saveField({ webSearchEnabled: e.target.checked }));
+    $('#aiProvider').addEventListener('change', (e) => saveField({ aiProvider: e.target.value }));
+    $('#aiKey').addEventListener('change', (e) => saveField({ aiKey: e.target.value.trim() }));
+    $('#aiToggle').addEventListener('change', async (e) => {
+      const on = e.target.checked;
+      $('#aiKeyArea').hidden = !on;
+      if (on) {
+        // Request host permission for the chosen AI provider (runtime grant).
+        const origins = ['https://api.anthropic.com/*', 'https://api.openai.com/*'];
+        const granted = await new Promise((resolve) => {
+          try {
+            chrome.permissions.request({ origins }, (r) => { void chrome.runtime.lastError; resolve(!!r); });
+          } catch (_) { resolve(false); }
+        });
+        if (!granted) {
+          e.target.checked = false;
+          $('#aiKeyArea').hidden = true;
+          alert('AI 분석을 쓰려면 제공자(api.anthropic.com / api.openai.com) 접근 권한이 필요해요.');
+          return;
+        }
+      }
+      await saveField({ aiEnabled: on });
     });
   }
 

@@ -449,3 +449,87 @@
     animation-duration: 0.001ms !important;
   }
 }
+
+/* ============================================================
+ * Cold Purchase Analysis scorecard (neutral, grounded)
+ * ============================================================ */
+.iv-analysis {
+  margin: 4px 0 18px;
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight);
+}
+.iv-an-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.iv-an-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text-primary); }
+.iv-an-chip {
+  font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-tertiary); border: 1px solid var(--glass-border);
+  background: var(--glass-fill); border-radius: var(--r-pill); padding: 2px 8px;
+}
+.iv-an-summary { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 14px; }
+
+/* two columns */
+.iv-an-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 380px) { .iv-an-cols { grid-template-columns: 1fr; } }
+.iv-an-col {
+  padding: 12px; border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
+}
+.iv-an-col-head { font-size: 12px; font-weight: 600; margin-bottom: 9px; letter-spacing: 0.02em; }
+.iv-an-col-pro .iv-an-col-head { color: var(--accent-good); }
+.iv-an-col-con .iv-an-col-head { color: var(--accent-warn); }
+.iv-an-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.iv-an-list li { display: flex; gap: 8px; align-items: flex-start; }
+.iv-an-dot { flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; }
+.iv-an-col-pro .iv-an-dot { background: var(--accent-good); box-shadow: 0 0 6px var(--accent-good-glow); }
+.iv-an-col-con .iv-an-dot { background: var(--accent-warn); box-shadow: 0 0 6px var(--accent-warn-glow); }
+.iv-an-text { font-size: 12.5px; line-height: 1.45; color: var(--text-primary); }
+.iv-an-src {
+  display: inline-block; margin-left: 6px; font-size: 10px; vertical-align: middle;
+  color: var(--text-tertiary); border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill); padding: 0 6px;
+}
+.iv-an-empty { font-size: 12px; color: var(--text-tertiary); }
+
+/* consideration meter (neutral) */
+.iv-an-meter { margin-top: 14px; }
+.iv-an-meter-label { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.04em; }
+.iv-an-meter-val { color: var(--text-primary); font-weight: 600; }
+.iv-an-meter-bar { height: 6px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.iv-an-meter-bar > i { display: block; height: 100%; border-radius: var(--r-pill); background: linear-gradient(90deg, var(--accent-calm), #a9cbff); transition: width 700ms var(--ease-calm); }
+.iv-an-meter-note { font-size: 10.5px; color: var(--text-tertiary); margin-top: 6px; line-height: 1.4; }
+
+/* reflections */
+.iv-an-subhead { font-size: 12px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.04em; margin: 16px 0 10px; }
+.iv-an-reflect { display: block; }
+.iv-an-ref-item { padding: 9px 0; border-bottom: 1px solid var(--glass-border); }
+.iv-an-ref-item:last-child { border-bottom: none; }
+.iv-an-ref-point { font-size: 13px; color: var(--text-primary); line-height: 1.45; }
+.iv-an-ref-why { font-size: 11.5px; color: var(--text-tertiary); line-height: 1.45; margin-top: 3px; }
+
+/* tools */
+.iv-an-tools { display: flex; gap: 8px; margin-top: 14px; }
+.iv-an-tool {
+  flex: 1; padding: 10px; border-radius: var(--r-sm); cursor: pointer;
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 600;
+  color: var(--accent-calm); background: rgba(110, 168, 255, 0.08);
+  border: 1px solid var(--accent-good-glow);
+  transition: background var(--dur-standard) var(--ease-soft);
+}
+.iv-an-tool:hover { background: rgba(110, 168, 255, 0.16); }
+
+/* AI section */
+.iv-an-ai { margin-top: 8px; }
+.iv-an-ai-body { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+.iv-an-ai-line { padding: 2px 0; }
+.iv-an-ai-err { color: var(--accent-warn); font-size: 12px; }
+.iv-an-loading {
+  color: var(--text-tertiary); font-size: 12px; position: relative;
+  background: linear-gradient(90deg, var(--text-tertiary), var(--text-primary), var(--text-tertiary));
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; animation: iv-an-shimmer 1.4s linear infinite;
+}
+@keyframes iv-an-shimmer { 0% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+@media (prefers-reduced-motion: reduce) { .iv-an-loading { animation: none; -webkit-text-fill-color: var(--text-tertiary); } }

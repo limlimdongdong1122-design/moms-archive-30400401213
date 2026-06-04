@@ -30,6 +30,8 @@ const DEFAULTS = {
     paused: false,
     snoozeUntil: 0,
     launchAtStartup: false,
+    screenWatch: false, // EXPERIMENTAL: OCR the screen to catch purchases in any app
+    screenWatchIntervalMs: 5000,
     domains: DEFAULT_DOMAINS.slice(),
   },
   stats: { totalSaved: 0, resisted: 0, proceeded: 0, interventions: 0 },

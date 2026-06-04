@@ -306,6 +306,7 @@
     $('#coolingHours').value = String(s.coolingHours || 24);
     $('#pauseToggle').checked = !!s.paused;
     $('#startupToggle').checked = !!s.launchAtStartup;
+    if ($('#screenWatchToggle')) $('#screenWatchToggle').checked = !!s.screenWatch;
   }
   function flashSaved() {
     const t = $('#saveToast');
@@ -330,6 +331,14 @@
     $('#coolingHours').addEventListener('change', (e) => save({ coolingHours: parseInt(e.target.value, 10) || 24 }));
     $('#pauseToggle').addEventListener('change', (e) => save({ paused: e.target.checked }));
     $('#startupToggle').addEventListener('change', (e) => save({ launchAtStartup: e.target.checked }));
+    if ($('#screenWatchToggle')) {
+      $('#screenWatchToggle').addEventListener('change', (e) => {
+        if (e.target.checked) {
+          alert('화면 감시를 켜요 (실험적).\n\n- 화면을 주기적으로 읽어(OCR) 결제 화면을 감지해요.\n- OCR은 기기 안에서만 동작하고, 화면 내용은 밖으로 나가지 않아요.\n- 처음엔 화면 녹화 권한을 물어볼 수 있어요(허용 필요).\n- 클릭을 막진 못하고 알림으로 멈춰 세워요.');
+        }
+        save({ screenWatch: e.target.checked });
+      });
+    }
     $('#deleteAll').addEventListener('click', async () => {
       if (!confirm('정말 모든 데이터를 삭제할까요? 되돌릴 수 없어요.')) return;
       state = await window.iv.deleteAll();
@@ -346,6 +355,13 @@
     window.iv.on('intervention', () => refresh());
     window.iv.on('settings-changed', () => refresh());
     window.iv.on('navigate', (p) => showView(p.view || 'home'));
+    window.iv.on('screen-intervention', (p) => {
+      // A purchase screen was detected in some app → reflect it in the hub.
+      const d = (p && p.detect) || {};
+      const el = document.getElementById('stageItem');
+      if (el) el.textContent = '🛑 결제 화면 감지' + (d.price ? ' · 약 ₩' + Number(d.price).toLocaleString('ko-KR') : '');
+      showView('home');
+    });
   }
 
   // ---------- Boot ----------

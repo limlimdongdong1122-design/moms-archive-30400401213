@@ -234,3 +234,20 @@ desktop/
   Electron now for simplicity; the renderer UI would port to Tauri with a
   different main/preload layer.
 ```
+
+## 🖥️ Screen watch (EXPERIMENTAL — computer-wide detection)
+
+Settings → **화면 감시 (실험적)** lets the app catch purchases **outside the
+browser** (Steam, app stores, native apps). A hidden window captures the screen
+and runs **local OCR** (Tesseract.js); when checkout/buy keywords + a price are
+seen, you get a system notification + nudge.
+
+- **Local:** OCR runs on your machine; screen pixels never leave it. (Only the
+  Tesseract library + language data is fetched once from a CDN, then cached —
+  so the first run needs internet.)
+- **Permission:** the OS asks for Screen Recording the first time (macOS:
+  System Settings → Privacy → Screen Recording → enable the app).
+- **Limits:** it can only NOTICE and nudge — the OS sandbox makes blocking
+  another app's click impossible. OCR is throttled (every ~5s, downscaled) with
+  an 8-minute cooldown to avoid spam and keep CPU low. Toggle it off anytime.
+- Tune the interval via `screenWatchIntervalMs` in the local data file.

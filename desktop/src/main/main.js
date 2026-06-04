@@ -26,6 +26,7 @@ const { Store } = require('./store');
 const { Bridge } = require('./bridge');
 const analysis = require('./analysis');
 const board = require('./board');
+const screenwatch = require('./screenwatch');
 
 let store = null;
 let bridge = null;
@@ -52,6 +53,7 @@ function init() {
   createTray();
   startBridge();
   registerIpc();
+  updateScreenWatch();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -183,6 +185,34 @@ function nativeNotify(payload) {
 }
 
 // ============================================================
+// Screen watch (EXPERIMENTAL, computer-wide OCR detection)
+// ============================================================
+function updateScreenWatch() {
+  const s = store.getSettings();
+  const shouldRun = !!s.screenWatch && !s.paused;
+  if (shouldRun && !screenwatch.isRunning()) {
+    screenwatch.start({ intervalMs: s.screenWatchIntervalMs || 5000, onDetect: handleScreenDetect });
+  } else if (!shouldRun && screenwatch.isRunning()) {
+    screenwatch.stop();
+  }
+}
+
+function handleScreenDetect(d) {
+  // d: { keyword, price, snippet }
+  if (Notification.isSupported()) {
+    const n = new Notification({
+      title: '잠깐 — 이거 진짜 필요해?',
+      body: d.price ? `결제 화면 감지 · 약 ₩${Number(d.price).toLocaleString('ko-KR')} · 한 번 더 생각해보자`
+                    : '결제/구매 화면이 보여요 · 천천히 한 번 더 생각해보자',
+      silent: false,
+    });
+    n.on('click', () => { showWindow(); notifyRenderer({ type: 'navigate', view: 'home' }); });
+    n.show();
+  }
+  notifyRenderer({ type: 'screen-intervention', detect: d });
+}
+
+// ============================================================
 // Renderer messaging
 // ============================================================
 function notifyRenderer(payload) {
@@ -253,6 +283,10 @@ function registerIpc() {
     const next = store.saveSettings(patch || {});
     if (patch && 'launchAtStartup' in patch && patch.launchAtStartup !== before.launchAtStartup) {
       applyLoginItem(next.launchAtStartup);
+    }
+    // React to screen-watch / pause changes.
+    if (patch && ('screenWatch' in patch || 'paused' in patch || 'screenWatchIntervalMs' in patch)) {
+      updateScreenWatch();
     }
     bridge && bridge.pushConfig();
     refreshTrayMenu();
@@ -341,4 +375,5 @@ app.on('window-all-closed', () => {
 app.on('before-quit', () => {
   isQuitting = true;
   if (bridge) bridge.stop();
+  screenwatch.stop();
 });

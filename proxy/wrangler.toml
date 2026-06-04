@@ -4,6 +4,10 @@ name = "impulse-vault-proxy"
 main = "worker.js"
 compatibility_date = "2024-11-01"
 
+# Worker logs (matches Cloudflare's dashboard suggestion; harmless to keep).
+[observability]
+enabled = true
+
 # Tunable limits + provider selection (safe to commit — NOT secrets).
 [vars]
 PROVIDER = "claude"        # "claude" | "openai"

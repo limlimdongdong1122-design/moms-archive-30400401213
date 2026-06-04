@@ -353,15 +353,16 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             gamePrice: settings.gamePrice,
           });
 
-          // Frequency cap: if we've already shown too many blocking modals
-          // this hour, downgrade to a passive toast instead.
+          // Final tier: "always ask" forces a modal; otherwise the frequency
+          // cap can downgrade a blocking modal to a passive toast.
           const FREQ_CAP = settings.strictness === 'strict' ? 6 : 3;
           const recentCount = await IVStorage.interventionsInLastHour();
-          let tier = result.tier;
-          if ((tier === 'medium' || tier === 'high') && recentCount >= FREQ_CAP) {
-            tier = 'low';
-            result.reasons.push('freq_capped');
-          }
+          let tier = IVPatterns.finalizeTier(result.tier, {
+            alwaysAsk: settings.alwaysAsk !== false, // default ON per user request
+            recentCount,
+            freqCap: FREQ_CAP,
+          });
+          if (tier !== result.tier && tier === 'low') result.reasons.push('freq_capped');
 
           // Build the cost-reframing + personalized insight payload.
           const payload = buildInterventionPayload(

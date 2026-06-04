@@ -396,7 +396,20 @@
       function (e) {
         let btn = null;
         try {
+          // 1) a pre-tagged buy button (from the adapter / MutationObserver)…
           btn = e.target && e.target.closest && e.target.closest('[data-iv-buy="1"]');
+          // 2) …or detect one AT CLICK TIME by its text/role. This catches
+          //    buttons the tagger missed (SPA timing, lazy DOM, new sites),
+          //    which is the main reason the prompt "sometimes didn't appear".
+          if (!btn && e.target && e.target.closest) {
+            const cand = e.target.closest(
+              'button, a, input[type="submit"], input[type="button"], [role="button"]'
+            );
+            if (cand && looksLikeBuyButton(cand)) {
+              cand.setAttribute('data-iv-buy', '1');
+              btn = cand;
+            }
+          }
         } catch (_) {
           return;
         }

@@ -222,6 +222,18 @@
     return Math.round(base * mult);
   }
 
+  // Decide the FINAL intervention tier from the raw score tier + options.
+  //  - alwaysAsk: force at least a blocking modal on every buy click.
+  //  - otherwise apply the frequency cap (downgrade to a passive toast).
+  function finalizeTier(tier, opts) {
+    const o = opts || {};
+    if (o.alwaysAsk) return tier === 'high' ? 'high' : 'medium';
+    if ((tier === 'medium' || tier === 'high') && (o.recentCount || 0) >= (o.freqCap || 3)) {
+      return 'low';
+    }
+    return tier;
+  }
+
   const API = {
     normalize,
     similarity,
@@ -230,6 +242,7 @@
     isLateNight,
     scoreSignal,
     thinkingSeconds,
+    finalizeTier,
   };
 
   global.IVPatterns = API;

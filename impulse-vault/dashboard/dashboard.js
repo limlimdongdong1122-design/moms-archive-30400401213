@@ -269,6 +269,8 @@
     $('#coolingHours').value = String(s.coolingHours || 24);
     $('#pauseToggle').checked = !!s.paused;
 
+    $('#alwaysAskToggle').checked = s.alwaysAsk !== false;
+
     // Cold Purchase Analysis settings
     $('#coldToggle').checked = s.coldAnalysis !== false;
     $('#allSitesToggle').checked = !!s.allSites;
@@ -385,6 +387,11 @@
     $('#addDomain').addEventListener('click', addDomain);
     $('#newDomain').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') addDomain();
+    });
+
+    $('#alwaysAskToggle').addEventListener('change', async (e) => {
+      await saveField({ alwaysAsk: e.target.checked });
+      await sendMsg({ type: 'SETTINGS_CHANGED' });
     });
 
     // ---- Cold Purchase Analysis ----

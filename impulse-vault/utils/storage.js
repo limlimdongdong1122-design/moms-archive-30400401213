@@ -60,6 +60,8 @@
     snoozeUntil: 0, // epoch ms; while now < this, stay quiet
     domains: DEFAULT_DOMAINS.slice(),
 
+    alwaysAsk: true, // force a blocking modal on EVERY detected buy click (no freq-cap downgrade)
+
     // ---- Cold Purchase Analysis ----
     coldAnalysis: true, // show the rules-based scorecard in interventions
     allSites: false, // analyze purchases on ALL sites (opt-in, broad permission)

@@ -10,8 +10,8 @@
   --bg: #070708;                 /* near-black canvas */
   --bg-soft: #0d0e12;
   --text: #f2f4f8;               /* crisp off-white */
-  --text-dim: #8a93a3;           /* muted secondary */
-  --text-faint: #5b6270;
+  --text-dim: #aeb6c4;           /* muted secondary — lightened for readability */
+  --text-faint: #838d9f;         /* lightened so small labels stay legible */
   --accent: #8ea2ff;             /* electric periwinkle — used sparingly */
   --accent-soft: rgba(142, 162, 255, 0.16);
   --accent-glow: rgba(142, 162, 255, 0.45);

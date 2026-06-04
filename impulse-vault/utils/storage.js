@@ -65,11 +65,14 @@
     // ---- Cold Purchase Analysis ----
     coldAnalysis: true, // show the rules-based scorecard in interventions
     allSites: false, // analyze purchases on ALL sites (opt-in, broad permission)
-    aiEnabled: false, // BYOK AI enrichment (off by default)
+    // AI is ON by default and routed through the shared proxy, so users get
+    // the analysis with NO key of their own. If a user pastes their OWN key in
+    // settings, that takes priority (BYOK) and the proxy is bypassed.
+    aiEnabled: true, // AI enrichment on by default (uses the proxy below)
     aiProvider: 'claude', // 'claude' | 'openai'
-    aiKey: '', // the user's OWN api key, stored locally only
+    aiKey: '', // the user's OWN api key (optional; overrides the proxy)
     aiModel: '', // optional model override (blank = provider default)
-    aiProxyUrl: '', // optional shared proxy (users need NO key when set)
+    aiProxyUrl: 'https://impursivevault.com/api', // shared proxy: users need NO key
     aiProxySecret: '', // optional x-iv-secret header for the proxy
     webSearchEnabled: false, // "더 싼 대안 찾기" + review search
   };

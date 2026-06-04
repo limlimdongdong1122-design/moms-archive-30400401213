@@ -148,7 +148,9 @@ async function callAiProvider(settings, details) {
  */
 async function callAi(settings, prompt, useWeb) {
   // ---- Shared proxy mode: no user key needed; the proxy holds the key ----
-  if (settings.aiProxyUrl) {
+  // Hybrid rule: if the user supplied their OWN key, honor it (BYOK) and skip
+  // the proxy; otherwise fall back to the shared proxy (owner pays).
+  if (settings.aiProxyUrl && !settings.aiKey) {
     const headers = { 'Content-Type': 'application/json' };
     if (settings.aiProxySecret) headers['x-iv-secret'] = settings.aiProxySecret;
     const res = await fetch(settings.aiProxyUrl, {

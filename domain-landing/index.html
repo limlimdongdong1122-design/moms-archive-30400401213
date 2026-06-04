@@ -20,20 +20,17 @@
 
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Three.js (r160) + addons, GSAP + ScrollTrigger, Lenis — all via CDN
-         importmap so the page runs with no build step. The 3D uses procedural
-         geometry + a procedural environment map, so there are NO model/HDRI files. -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-          "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js/+esm",
-          "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js/+esm",
-          "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.0.42/+esm"
-        }
-      }
-    </script>
+    <!-- Libraries loaded as CLASSIC scripts (UMD globals) so the page works by
+         simply double-clicking index.html — no server, no build, no account.
+         (ES modules are blocked on file://, which is why we avoid them here.)
+         Three.js r149 UMD exposes a global THREE; GSAP/ScrollTrigger/Lenis too.
+         The 3D still uses procedural geometry + a procedural environment map —
+         no model or HDRI files. Needs internet to fetch these CDN libs. -->
+    <script defer src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script defer src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script defer src="script.js"></script>
   </head>
   <body>
     <!-- Intro preloader (fades out once ready — no blank flash) -->
@@ -294,38 +291,17 @@
       </div>
     </footer>
 
-    <!-- How-to notice shown only if the module fails to boot (e.g. opened
-         directly as a file:// URL, where browsers block ES modules). -->
+    <!-- Fallback notice: only shown if the CDN libraries can't be reached
+         (e.g. no internet). The page's text/search still work below it. -->
     <div class="serve-notice" id="serveNotice" hidden>
       <div class="serve-card">
-        <h3>거의 다 됐어요 — 작은 서버로 열어주세요</h3>
+        <h3>3D를 불러오지 못했어요</h3>
         <p>
-          이 페이지는 3D 때문에 <b>로컬 서버</b>로 열어야 동작해요.
-          (그냥 더블클릭하면 브라우저가 막아요.) 가장 쉬운 방법:
+          인터넷 연결을 확인하고 새로고침(F5) 해주세요. 3D 라이브러리를
+          인터넷에서 받아오기 때문에 연결이 필요해요. 글자·검색은 아래에서
+          그대로 보여요.
         </p>
-        <ol>
-          <li><b>VS Code</b>에서 <b>Live Server</b> 확장을 설치 → <code>index.html</code> 우클릭 → <b>Open with Live Server</b></li>
-          <li>또는 폴더에서 터미널 열고: <code>python -m http.server</code> 입력 → 브라우저에서 <code>http://localhost:8000</code> 접속</li>
-        </ol>
-        <p class="serve-small">그 외 글자·검색은 아래에서 미리 볼 수 있어요.</p>
       </div>
     </div>
-
-    <!-- Safety net (classic script, always runs): if the module didn't boot,
-         unstick the preloader and surface the how-to notice. -->
-    <script>
-      window.addEventListener('load', function () {
-        setTimeout(function () {
-          if (!window.__VELA_BOOTED) {
-            var pre = document.getElementById('preloader');
-            if (pre) { pre.classList.add('hide'); setTimeout(function(){ pre.remove(); }, 900); }
-            var n = document.getElementById('serveNotice');
-            if (n) n.hidden = false;
-          }
-        }, 2600);
-      });
-    </script>
-
-    <script type="module" src="script.js"></script>
   </body>
 </html>

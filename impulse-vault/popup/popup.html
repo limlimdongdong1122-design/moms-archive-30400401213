@@ -4,64 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IMPULSE VAULT</title>
+    <link rel="stylesheet" href="../tokens.css" />
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <header class="top">
-      <div class="logo">
-        <span class="logo-mark">◆</span>
-        <span class="logo-name">IMPULSE&nbsp;VAULT</span>
-      </div>
-      <label class="pause" title="잠시 멈춤">
-        <input type="checkbox" id="pauseToggle" />
-        <span class="pause-track"><span class="pause-thumb"></span></span>
-      </label>
-    </header>
+    <!-- Cinematic atmosphere: slow aurora drift + grain + vignette -->
+    <div class="iv-atmosphere" aria-hidden="true">
+      <span class="iv-aurora iv-aurora--teal"></span>
+      <span class="iv-aurora iv-aurora--peri"></span>
+      <span class="iv-grain"></span>
+      <span class="iv-vignette"></span>
+    </div>
 
-    <!-- Not-yet-onboarded notice -->
-    <section id="needSetup" class="need-setup" hidden>
-      <div class="vault-mini">🔒</div>
-      <p>아직 설정이 끝나지 않았어요.</p>
-      <button class="btn-primary" id="openOnboard">설정 시작하기</button>
-    </section>
+    <div class="wrap">
+      <header class="top iv-enter">
+        <div class="logo">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span class="logo-name">IMPULSE&nbsp;VAULT</span>
+        </div>
+        <label class="pause" title="잠시 멈춤">
+          <input type="checkbox" id="pauseToggle" />
+          <span class="pause-track"><span class="pause-thumb"></span></span>
+        </label>
+      </header>
 
-    <main id="main" hidden>
-      <!-- Hero: Total Saved with the mini CSS vault -->
-      <section class="hero">
-        <div class="vault-visual" aria-hidden="true">
-          <div class="vault-glow"></div>
-          <div class="vault-dome"></div>
-          <div class="vault-coin">₩</div>
-        </div>
-        <div class="saved-label">지금까지 아낀 돈</div>
-        <div class="saved-amount" id="totalSaved">₩0</div>
-        <div class="saved-meta">
-          <span><b id="resisted">0</b> 번 참았어요</span>
-          <span class="dot">·</span>
-          <span>저항률 <b id="resistRate">0%</b></span>
-        </div>
+      <!-- Not-yet-onboarded notice -->
+      <section id="needSetup" class="need-setup" hidden>
+        <div class="ns-orb" aria-hidden="true"></div>
+        <p>아직 설정이 끝나지 않았어요.</p>
+        <button class="btn-primary" id="openOnboard">설정 시작하기</button>
       </section>
 
-      <!-- Snooze banner (only when snoozed) -->
-      <div class="snooze-banner" id="snoozeBanner" hidden>
-        오늘은 그만 묻는 중 — <button id="unsnooze">다시 켜기</button>
-      </div>
+      <main id="main" hidden>
+        <!-- Hero: Total Saved is the emotional anchor -->
+        <section class="hero iv-enter" style="--iv-delay: 60ms">
+          <div class="saved-label iv-label">지금까지 아낀 돈</div>
+          <div class="saved-amount iv-stat-number" id="totalSaved">₩0</div>
+          <div class="saved-meta">
+            <span><b id="resisted">0</b> 번 참았어요</span>
+            <span class="dot" aria-hidden="true"></span>
+            <span>저항률 <b id="resistRate">0%</b></span>
+          </div>
+        </section>
 
-      <!-- Vault items -->
-      <section class="vault-list-section">
-        <div class="section-head">
-          <h2>금고</h2>
-          <span class="count" id="vaultCount">0</span>
+        <!-- Snooze banner (only when snoozed) -->
+        <div class="snooze-banner glass" id="snoozeBanner" hidden>
+          <span>오늘은 그만 묻는 중</span>
+          <button id="unsnooze">다시 켜기</button>
         </div>
-        <div id="vaultList" class="vault-list"></div>
-        <p class="empty" id="vaultEmpty">금고가 비어 있어요. 충동이 올 때 여기에 넣어두면 식혀줄게요. 🧊</p>
-      </section>
 
-      <footer class="foot">
-        <button class="btn-ghost" id="openDash">대시보드 · 통계</button>
-        <button class="btn-ghost small" id="openSettings">설정</button>
-      </footer>
-    </main>
+        <!-- Vault items -->
+        <section class="vault-list-section iv-enter" style="--iv-delay: 120ms">
+          <div class="section-head">
+            <h2 class="iv-label">금고</h2>
+            <span class="count" id="vaultCount">0</span>
+          </div>
+          <div id="vaultList" class="vault-list"></div>
+          <div class="empty glass" id="vaultEmpty">
+            <span class="empty-ico" aria-hidden="true"></span>
+            <p>금고가 고요해요.<br />충동이 올 때 여기 넣어두면 천천히 식혀줄게요.</p>
+          </div>
+        </section>
+
+        <footer class="foot iv-enter" style="--iv-delay: 180ms">
+          <button class="btn-ghost" id="openDash">대시보드 · 통계</button>
+          <button class="btn-ghost small" id="openSettings" title="설정">설정</button>
+        </footer>
+      </main>
+    </div>
 
     <script src="../utils/storage.js"></script>
     <script src="../utils/patterns.js"></script>

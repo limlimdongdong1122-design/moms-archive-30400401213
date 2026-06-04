@@ -134,6 +134,7 @@ satisfying shatter animation).
 ```
 impulse-vault/
 ├── manifest.json            # MV3 manifest (storage required; rest optional/runtime)
+├── tokens.css              # 🎨 single design-token source + shared primitives
 ├── background.js            # service worker: events, dynamic CS registration, profile
 ├── content/
 │   ├── detector.js         # search/product/button detection + per-site adapters
@@ -148,8 +149,24 @@ impulse-vault/
 │   ├── storage.js          # the single source of truth (chrome.storage.local)
 │   └── patterns.js         # pure analysis + signal scoring (no storage/network)
 ├── lib/three.min.js        # LOCAL Three.js — placeholder; download & replace
+├── fonts/                  # LOCAL Space Grotesk + Inter — placeholder; see fonts/README.md
 └── icons/                  # generated placeholder icons
 ```
+
+## 🎨 Design system
+
+All styling flows from **`tokens.css`** — a single set of CSS custom properties
+(color, type scale, spacing, radius, elevation, motion easings/durations) plus a
+few shared primitives (`.glass`, the drifting aurora + film-grain + vignette
+atmosphere, focus rings, reduced-motion). Every stylesheet imports it; there are
+no stray hardcoded colors or sizes. The design thesis is "the antidote to
+impulse": calm, dark, spacious, slow — one quiet accent at a time (teal = good,
+peach-amber = temptation, periwinkle = neutral). All motion is gated behind
+`prefers-reduced-motion`.
+
+Fonts (Space Grotesk + Inter) are bundled **locally** via `@font-face` (no CDN —
+CSP-safe) and fall back gracefully to system fonts until you add the files; see
+`fonts/README.md`.
 
 ## ⚠️ Notes & limitations
 

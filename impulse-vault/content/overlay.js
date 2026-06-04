@@ -165,10 +165,61 @@
         card.appendChild(el('div', 'iv-future', payload.futureMessage));
       }
 
+      // Escape hatch: proceed anyway, gated by the thinking timer.
+      const seconds = Math.max(0, payload.thinkingSeconds || 0);
+
+      // Thinking timer — a thin circular ring that fills slowly. While it
+      // fills, the "buy anyway" button stays disabled. Building a deliberate
+      // pause is the whole point, so the ring is the visual focus here.
+      let timer = null;
+      let remaining = seconds;
+      if (seconds > 0) {
+        const R = 20;
+        const C = 2 * Math.PI * R;
+        const thinking = el('div', 'iv-thinking');
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('class', 'iv-ring');
+        svg.setAttribute('viewBox', '0 0 46 46');
+        const bg = document.createElementNS(svgNS, 'circle');
+        bg.setAttribute('class', 'iv-ring-bg');
+        bg.setAttribute('cx', '23');
+        bg.setAttribute('cy', '23');
+        bg.setAttribute('r', String(R));
+        const fg = document.createElementNS(svgNS, 'circle');
+        fg.setAttribute('class', 'iv-ring-fg');
+        fg.setAttribute('cx', '23');
+        fg.setAttribute('cy', '23');
+        fg.setAttribute('r', String(R));
+        fg.setAttribute('stroke-dasharray', String(C));
+        fg.setAttribute('stroke-dashoffset', String(C));
+        fg.style.setProperty('--iv-secs', seconds + 's');
+        svg.appendChild(bg);
+        svg.appendChild(fg);
+        const label = el('div');
+        const num = el('span', 'iv-thinking-num', String(remaining) + 's');
+        label.appendChild(document.createTextNode('잠깐만 — 천천히 생각해보자 '));
+        label.appendChild(num);
+        thinking.appendChild(svg);
+        thinking.appendChild(label);
+        card.appendChild(thinking);
+
+        timer = setInterval(() => {
+          remaining -= 1;
+          num.textContent = Math.max(0, remaining) + 's';
+          if (remaining <= 0 && timer) {
+            clearInterval(timer);
+            timer = null;
+            proceedBtn.disabled = false;
+            thinking.style.opacity = '0.6';
+          }
+        }, 1000);
+      }
+
       // Actions
       const actions = el('div', 'iv-actions');
 
-      // Primary good action: lock in the Vault.
+      // Primary good action: lock in the Vault (the gentle teal accent).
       const vaultBtn = el(
         'button',
         'iv-btn iv-btn-primary',
@@ -178,32 +229,11 @@
       // Secondary: walk away (also good — celebrated).
       const resistBtn = el('button', 'iv-btn iv-btn-ghost', '안 살래');
 
-      // Escape hatch: proceed anyway, gated by the thinking timer.
-      const seconds = Math.max(0, payload.thinkingSeconds || 0);
+      // Understated escape hatch (not a tempting CTA).
       const proceedBtn = el('button', 'iv-btn iv-btn-proceed');
       const proceedLabel = high ? '그래도 살게요' : '그래도 살래요';
-      let remaining = seconds;
-      function paintProceed() {
-        if (remaining > 0) {
-          proceedBtn.disabled = true;
-          proceedBtn.textContent = `${proceedLabel} (${remaining}s)`;
-        } else {
-          proceedBtn.disabled = false;
-          proceedBtn.textContent = proceedLabel;
-        }
-      }
-      paintProceed();
-      let timer = null;
-      if (seconds > 0) {
-        timer = setInterval(() => {
-          remaining -= 1;
-          if (remaining <= 0 && timer) {
-            clearInterval(timer);
-            timer = null;
-          }
-          paintProceed();
-        }, 1000);
-      }
+      proceedBtn.textContent = proceedLabel;
+      proceedBtn.disabled = seconds > 0;
 
       const close = () => {
         if (timer) clearInterval(timer);

@@ -19,13 +19,21 @@
     }
   }
 
-  // Animate a number from 0 → target over ~700ms.
+  // Calm count-up: numbers ease up to their value, they never snap.
+  // Honors prefers-reduced-motion (jumps straight to the value).
   function animateCount(elm, target) {
+    const reduce =
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !target) {
+      elm.textContent = fmtKRW(target || 0);
+      return;
+    }
     const start = performance.now();
-    const dur = 700;
+    const dur = 1100; // slower = more deliberate
     function frame(now) {
       const t = Math.min(1, (now - start) / dur);
-      const eased = 1 - Math.pow(1 - t, 3);
+      const eased = 1 - Math.pow(1 - t, 4); // quart-out, gentle settle
       elm.textContent = fmtKRW(Math.round(target * eased));
       if (t < 1) requestAnimationFrame(frame);
     }
@@ -101,30 +109,38 @@
     card.dataset.url = item.url || '';
     card.dataset.price = String(item.price || 0);
 
+    // Thin circular countdown ring (conic-gradient driven by --p).
+    const ringwrap = document.createElement('div');
+    ringwrap.className = 'vc-ringwrap';
+    const ring = document.createElement('div');
+    ring.className = 'vc-ring';
+    ring.dataset.role = 'ring';
+    const core = document.createElement('div');
+    core.className = 'vc-ring-core';
+    core.dataset.role = 'core';
+    ringwrap.appendChild(ring);
+    ringwrap.appendChild(core);
+
+    const body = document.createElement('div');
+    body.className = 'vc-body';
     const name = document.createElement('div');
     name.className = 'vc-name';
     name.textContent = item.item || '이름 없는 항목';
-
-    const row = document.createElement('div');
-    row.className = 'vc-row';
+    const sub = document.createElement('div');
+    sub.className = 'vc-sub';
     const price = document.createElement('span');
     price.className = 'vc-price';
     price.textContent = fmtKRW(item.price);
     const timer = document.createElement('span');
     timer.className = 'vc-timer';
     timer.dataset.role = 'timer';
-    row.appendChild(price);
-    row.appendChild(timer);
+    sub.appendChild(price);
+    sub.appendChild(timer);
+    body.appendChild(name);
+    body.appendChild(sub);
 
-    const prog = document.createElement('div');
-    prog.className = 'vc-progress';
-    const bar = document.createElement('i');
-    bar.dataset.role = 'bar';
-    prog.appendChild(bar);
-
-    card.appendChild(name);
-    card.appendChild(row);
-    card.appendChild(prog);
+    card.appendChild(ringwrap);
+    card.appendChild(body);
 
     // Actions appear once cooled off.
     const actions = document.createElement('div');
@@ -160,14 +176,21 @@
       const pct = total > 0 ? Math.round((elapsed / total) * 100) : 100;
 
       const timer = card.querySelector('[data-role="timer"]');
-      const bar = card.querySelector('[data-role="bar"]');
+      const ring = card.querySelector('[data-role="ring"]');
+      const core = card.querySelector('[data-role="core"]');
       const actions = card.querySelector('[data-role="actions"]');
       if (timer) timer.textContent = fmtRemaining(remaining);
-      if (bar) bar.style.width = pct + '%';
+      // The ring fills as the cooling-off elapses.
+      if (ring) ring.style.setProperty('--p', String(pct));
 
       if (remaining <= 0) {
         card.classList.add('ready');
+        if (core) core.textContent = '✓';
         if (actions) actions.style.display = 'flex';
+      } else if (core) {
+        // Show the hour/minute headline inside the ring.
+        const mins = Math.ceil(remaining / 60000);
+        core.textContent = mins >= 60 ? Math.ceil(mins / 60) + 'h' : mins + 'm';
       }
     });
   }

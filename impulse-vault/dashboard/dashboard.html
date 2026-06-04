@@ -4,17 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IMPULSE VAULT — 대시보드</title>
+    <link rel="stylesheet" href="../tokens.css" />
     <link rel="stylesheet" href="dashboard.css" />
   </head>
   <body>
-    <div class="bg-orbs" aria-hidden="true">
-      <span class="orb orb-teal"></span>
-      <span class="orb orb-violet"></span>
+    <div class="iv-atmosphere" aria-hidden="true">
+      <span class="iv-aurora iv-aurora--teal"></span>
+      <span class="iv-aurora iv-aurora--peri"></span>
+      <span class="iv-grain"></span>
+      <span class="iv-vignette"></span>
     </div>
 
     <nav class="sidebar">
       <div class="logo">
-        <span class="logo-mark">◆</span>
+        <span class="logo-mark" aria-hidden="true"></span>
         <span class="logo-name">IMPULSE&nbsp;VAULT</span>
       </div>
       <a href="#overview" class="nav-link active">개요</a>
@@ -111,7 +114,9 @@
         <h2 class="panel-title">금고</h2>
         <p class="panel-sub">식히는 중인 항목과 지난 결정들이에요.</p>
         <div id="vaultGrid" class="vault-grid"></div>
-        <p class="empty-note" id="vaultEmptyNote">아직 금고에 넣은 게 없어요.</p>
+        <p class="empty-note" id="vaultEmptyNote">
+          금고가 고요해요. 충동이 올 때 여기 넣어두면 천천히 식혀줄게요.
+        </p>
       </section>
 
       <!-- ============ SETTINGS ============ -->

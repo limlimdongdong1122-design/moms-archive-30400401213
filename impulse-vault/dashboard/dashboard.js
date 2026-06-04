@@ -104,12 +104,10 @@
     for (let h = 0; h < 24; h++) {
       const cell = document.createElement('div');
       cell.className = 'cell';
-      const v = byHour[h] / max;
-      // Amber intensity scales with activity.
-      cell.style.background =
-        v > 0
-          ? `rgba(255, 181, 71, ${0.12 + v * 0.78})`
-          : 'rgba(255,255,255,0.05)';
+      // --v (0..100) drives a token-based color-mix in CSS:
+      // bg-elev-2 → accent-warn. More temptation = warmer.
+      const v = byHour[h] > 0 ? 12 + (byHour[h] / max) * 78 : 0;
+      cell.style.setProperty('--v', String(Math.round(v)));
       cell.title = `${h}시 · ${byHour[h]}회`;
       wrap.appendChild(cell);
     }

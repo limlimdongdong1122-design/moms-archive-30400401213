@@ -36,6 +36,21 @@
     </script>
   </head>
   <body>
+    <!-- Intro preloader (fades out once ready — no blank flash) -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="pre-mark">
+        <svg viewBox="0 0 32 32" width="34" height="34">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="#8ea2ff" stroke-width="1.2" opacity="0.5" />
+          <path d="M16 3 L19 16 L16 29 L13 16 Z" fill="#8ea2ff" />
+          <path d="M3 16 L16 13 L29 16 L16 19 Z" fill="#8ea2ff" opacity="0.65" />
+        </svg>
+        <span>VELA</span>
+      </div>
+    </div>
+
+    <!-- Soft spotlight that follows the cursor (very subtle) -->
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
     <!-- Cinematic atmosphere behind everything -->
     <div class="atmosphere" aria-hidden="true">
       <span class="mesh mesh-violet"></span>
@@ -116,6 +131,15 @@
             <button class="tld-pill" data-tld="ai">.ai</button>
             <button class="tld-pill" data-tld="dev">.dev</button>
             <button class="tld-pill" data-tld="studio">.studio</button>
+          </div>
+
+          <!-- Quiet trust row with eased counters -->
+          <div class="trust reveal" aria-label="At a glance">
+            <div class="trust-item"><b class="count" data-to="350">0</b><span>extensions</span></div>
+            <span class="trust-dot" aria-hidden="true"></span>
+            <div class="trust-item"><b class="count" data-to="40" data-suffix="k+">0</b><span>names claimed</span></div>
+            <span class="trust-dot" aria-hidden="true"></span>
+            <div class="trust-item"><b class="count" data-to="99" data-suffix=".99%">0</b><span>uptime</span></div>
           </div>
         </div>
 

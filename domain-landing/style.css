@@ -281,3 +281,94 @@ button { font-family: inherit; cursor: pointer; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ============================================================
+ * POLISH PASS — luxurious finishing touches (kept restrained)
+ * ============================================================ */
+
+/* ---- Intro preloader (no blank flash; calm fade-out) ---- */
+.preloader {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  background: var(--bg);
+  transition: opacity 0.8s var(--ease), visibility 0.8s var(--ease);
+}
+.preloader.hide { opacity: 0; visibility: hidden; }
+.pre-mark { display: flex; align-items: center; gap: 12px; opacity: 0; animation: preIn 0.9s var(--ease) forwards; }
+.pre-mark span { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.2em; font-size: 20px; }
+.pre-mark svg { animation: preSpin 2.4s var(--ease-soft) infinite; }
+@keyframes preIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 0.9; transform: none; } }
+@keyframes preSpin { 0%,100% { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.08); } }
+
+/* ---- Cursor spotlight (soft, additive, very subtle) ---- */
+.cursor-glow {
+  position: fixed; top: 0; left: 0; z-index: 0; width: 480px; height: 480px;
+  margin: -240px 0 0 -240px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(142,162,255,0.10), transparent 65%);
+  mix-blend-mode: screen; opacity: 0;
+  transform: translate3d(var(--mx, -9999px), var(--my, -9999px), 0);
+  transition: opacity 0.6s var(--ease-soft);
+}
+body.cursor-on .cursor-glow { opacity: 1; }
+
+/* ---- Iridescent hero headline (slow thin-film sheen, stays legible) ---- */
+.hero-title {
+  background: linear-gradient(100deg, #f2f4f8 0%, #f2f4f8 36%, #c2cdff 50%, #d8c9ff 58%, #f2f4f8 72%, #f2f4f8 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: sheen 9s var(--ease-soft) infinite;
+}
+@keyframes sheen { 0% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+
+/* ---- Shine sweep on primary buttons (on hover) ---- */
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: skewX(-18deg); transition: left 0.7s var(--ease); pointer-events: none;
+}
+.btn-primary:hover::after { left: 140%; }
+
+/* ---- Search bar: slow sheen while focused ---- */
+.search-glass { position: relative; overflow: hidden; }
+.search-glass::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(100deg, transparent 40%, rgba(142,162,255,0.10) 50%, transparent 60%);
+  background-size: 250% 100%; transition: opacity 0.5s var(--ease-soft);
+}
+.search-glass.is-focused::before { opacity: 1; animation: sheen 3.5s linear infinite; }
+
+/* ---- Trust row with eased counters ---- */
+.trust { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: var(--sp-8); color: var(--text-dim); }
+.trust-item { display: flex; align-items: baseline; gap: 7px; font-size: 14px; }
+.trust-item b { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.trust-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-faint); }
+@media (max-width: 520px) { .trust { flex-wrap: wrap; gap: 10px 14px; } }
+
+/* ---- Result + extension cards: refined hover lift & glow ---- */
+.result-card { transition: transform 0.5s var(--ease), border-color 0.4s var(--ease-soft), box-shadow 0.5s var(--ease); }
+.result-card:hover { transform: translateY(-3px); border-color: var(--glass-hi); box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 1px 0 0 var(--glass-hi); }
+.ext-card { position: relative; }
+.ext-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(120% 80% at 50% 0%, var(--accent-soft), transparent 60%);
+  transition: opacity 0.45s var(--ease-soft);
+}
+.ext-card:hover::before { opacity: 1; }
+
+/* ---- Refined custom scrollbar ---- */
+* { scrollbar-width: thin; scrollbar-color: rgba(142,162,255,0.35) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(142,162,255,0.28); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgba(142,162,255,0.45); background-clip: padding-box; }
+::-webkit-scrollbar-track { background: transparent; }
+::selection { background: rgba(142,162,255,0.3); color: #fff; }
+
+/* Reduced-motion: kill the decorative loops */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title { animation: none; }
+  .pre-mark svg { animation: none; }
+  .search-glass.is-focused::before { animation: none; }
+  .cursor-glow { display: none; }
+}

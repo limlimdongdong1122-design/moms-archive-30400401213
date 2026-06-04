@@ -258,6 +258,59 @@ function initNav() {
   );
 }
 
+// ---- Cursor spotlight (soft glow that follows the pointer) ----
+function initCursorGlow() {
+  if (prefersReduced || isMobile) return;
+  const glow = document.getElementById('cursorGlow');
+  if (!glow) return;
+  let x = 0, y = 0, raf = null;
+  window.addEventListener('pointermove', (e) => {
+    x = e.clientX; y = e.clientY;
+    document.body.classList.add('cursor-on');
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      glow.style.setProperty('--mx', x + 'px');
+      glow.style.setProperty('--my', y + 'px');
+      raf = null;
+    });
+  });
+  window.addEventListener('pointerleave', () => document.body.classList.remove('cursor-on'));
+}
+
+// ---- Eased counters (numbers settle, never snap) ----
+function initCounters() {
+  const els = document.querySelectorAll('.count');
+  if (!els.length) return;
+  const run = (el) => {
+    const to = parseFloat(el.dataset.to) || 0;
+    const suffix = el.dataset.suffix || '';
+    if (prefersReduced) { el.textContent = to + suffix; return; }
+    const dur = 1400;
+    const start = performance.now();
+    (function frame(now) {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 4); // quart-out settle
+      el.textContent = Math.round(to * eased) + suffix;
+      if (t < 1) requestAnimationFrame(frame);
+    })(performance.now());
+  };
+  if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  els.forEach((el) => io.observe(el));
+}
+
+// ---- Preloader fade-out (no blank flash) ----
+function hidePreloader() {
+  const pre = document.getElementById('preloader');
+  if (!pre) return;
+  pre.classList.add('hide');
+  setTimeout(() => pre.remove(), 900);
+}
+
 function initCore() {
   initReveal();
   initMagnetic();
@@ -266,6 +319,8 @@ function initCore() {
   initExtensions();
   initFaq();
   initNav();
+  initCursorGlow();
+  initCounters();
   // Seed the results area with a friendly empty state.
   runSearch('');
 }
@@ -574,3 +629,8 @@ function boot() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 else boot();
+
+// Fade the preloader once the page (and ideally the 3D) is ready.
+// Hard cap at 2s so a slow CDN never leaves the loader hanging.
+window.addEventListener('load', () => setTimeout(hidePreloader, 350));
+setTimeout(hidePreloader, 2000);

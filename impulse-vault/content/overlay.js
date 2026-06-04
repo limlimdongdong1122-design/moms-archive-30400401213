@@ -490,7 +490,7 @@
     // Optional AI enrichment (BYOK) — instant card already shown; this fills in.
     if (payload.aiEnabled && payload.aiDetails) {
       const ai = el('div', 'iv-an-ai');
-      ai.appendChild(el('div', 'iv-an-subhead', 'AI 분석 · 참고용'));
+      ai.appendChild(el('div', 'iv-an-subhead', (payload.webSearchEnabled ? 'AI 웹검색 분석 · 참고용' : 'AI 분석 · 참고용')));
       const body = el('div', 'iv-an-ai-body');
       body.appendChild(el('div', 'iv-an-loading', '불러오는 중…'));
       ai.appendChild(body);

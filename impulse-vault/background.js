@@ -137,7 +137,10 @@ async function likelyOwnsSimilar(viewRec, key) {
  * (requested when the user enables AI in settings).
  */
 async function callAiProvider(settings, details) {
-  const prompt = IVAnalysis.buildAiPrompt(details);
+  // Web-search-augmented analysis when the user enabled web search + AI.
+  const useWeb = !!settings.webSearchEnabled;
+  const prompt = IVAnalysis.buildAiPrompt(details, useWeb);
+
   // Helper: extract a short human-readable error from a failed API response.
   async function errText(res) {
     let body = '';
@@ -148,21 +151,29 @@ async function callAiProvider(settings, details) {
   }
 
   if (settings.aiProvider === 'openai') {
+    // gpt-4o-search-preview performs live web search; otherwise the chosen model.
+    const model = useWeb ? 'gpt-4o-search-preview' : (settings.aiModel || 'gpt-4o-mini');
+    const body = { model, messages: [{ role: 'user', content: prompt }], max_tokens: 800 };
+    if (!useWeb) body.temperature = 0.3; // search-preview rejects temperature
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + settings.aiKey },
-      body: JSON.stringify({
-        model: settings.aiModel || 'gpt-4o-mini',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 500,
-        temperature: 0.3,
-      }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) throw new Error('OpenAI ' + (await errText(res)));
     const data = await res.json();
     return (data.choices && data.choices[0] && data.choices[0].message.content) || '';
   }
-  // default: Claude (Anthropic)
+
+  // default: Claude (Anthropic) — add the server-side web_search tool.
+  const body = {
+    model: settings.aiModel || 'claude-sonnet-4-6',
+    max_tokens: 1000,
+    messages: [{ role: 'user', content: prompt }],
+  };
+  if (useWeb) {
+    body.tools = [{ type: 'web_search_20250305', name: 'web_search', max_uses: 5 }];
+  }
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -171,15 +182,17 @@ async function callAiProvider(settings, details) {
       'anthropic-version': '2023-06-01',
       'anthropic-dangerous-direct-browser-access': 'true',
     },
-    body: JSON.stringify({
-      model: settings.aiModel || 'claude-sonnet-4-6',
-      max_tokens: 600,
-      messages: [{ role: 'user', content: prompt }],
-    }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error('Anthropic ' + (await errText(res)));
   const data = await res.json();
-  return (data.content && data.content[0] && data.content[0].text) || '';
+  // With tools, content is an array of blocks; collect all text blocks.
+  const text = (data.content || [])
+    .filter((b) => b && b.type === 'text')
+    .map((b) => b.text)
+    .join('\n')
+    .trim();
+  return text || (data.content && data.content[0] && data.content[0].text) || '';
 }
 
 // ---- Rebuild the impulse profile from raw events (debounced-ish) ----

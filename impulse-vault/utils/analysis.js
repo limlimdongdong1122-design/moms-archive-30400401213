@@ -218,14 +218,39 @@
     meterVal = Math.round(clamp(meterVal, 5, 100));
     const meterLabel = meterVal >= 70 ? '높음' : meterVal >= 45 ? '보통' : '낮음';
 
+    // ---- Balance: make 단점 oppose 장점 evenly (equal counts) ----
+    // Pad the lighter side with honest DECISION considerations (not invented
+    // product facts) so the user always sees a fair, two-sided picture.
+    const conPool = [
+      '같은 돈으로 살 수 있는 다른 선택지를 아직 비교하지 않았어요',
+      '지금 사지 않아도 당장 큰 문제는 없는 항목일 수 있어요',
+      '반품·교환에는 시간과 비용(배송비)이 들 수 있어요',
+      '새것의 만족감은 며칠이면 익숙해져요 (쾌락 적응)',
+      '이 지출이 이번 달 예산·저축 목표를 갉아먹을 수 있어요',
+    ];
+    const proPool = [
+      '정말 필요한 물건이라면 미루는 것도 비용이에요 (필요한 건 빨리 쓸수록 이득)',
+      '평가·정보가 충분하다면 검증된 선택일 수 있어요',
+      '지금 가격·조건이 나중보다 나을 수도 있어요',
+    ];
+    let ci = 0;
+    while (cons.length < pros.length && ci < conPool.length) cons.push({ text: conPool[ci++], source: '판단' });
+    let pj = 0;
+    while (pros.length < cons.length && pj < proPool.length) pros.push({ text: proPool[pj++], source: '판단' });
+    // Trim both to the same final length (max 5) so they stay visually balanced.
+    const n = Math.min(5, Math.max(pros.length, cons.length));
+    while (cons.length < n && ci < conPool.length) cons.push({ text: conPool[ci++], source: '판단' });
+    while (pros.length < n && pj < proPool.length) pros.push({ text: proPool[pj++], source: '판단' });
+    const finalN = Math.min(pros.length, cons.length, 5);
+
     return {
       note: '참고용',
       itemType: itemType,
       typeLabel: ti.label,
       altWord: ti.altWord,
       verdict: verdict,
-      pros: pros.slice(0, 6),
-      cons: cons.slice(0, 6),
+      pros: pros.slice(0, finalN),
+      cons: cons.slice(0, finalN),
       summary,
       reflections,
       meter: { value: meterVal, label: meterLabel },
@@ -248,15 +273,18 @@
   }
 
   // ---- The prompt sent to a BYOK model (grounded, balanced, safe) ----
-  function buildAiPrompt(d) {
+  function buildAiPrompt(d, useWeb) {
     const ti = typeInfo(d.itemType || 'product');
     const lines = [];
-    lines.push('You are a sharp, persuasive purchase-analyst. Build a COMPELLING, evidence-grounded case and give a clear recommendation — but base every specific claim ONLY on the data below. Do NOT invent specs, prices, ratings, or defects. If data is thin, say so and lower your confidence rather than guessing.');
-    lines.push('This is a ' + (d.itemType || 'product') + ' (' + ti.label + '). Weigh ALL the gathered data (specs, ratings, real review snippets, price/discount, shipping/return, stock) and decide if it is genuinely worth buying for a typical buyer, and whether a clearly BETTER or CHEAPER option exists (name well-known categories/options only; do NOT fabricate specific competitor prices).');
-    lines.push('Answer in Korean, tight and convincing. Return EXACTLY these sections:');
-    lines.push('① 결론: 한 문장 추천 + 확신도(낮음/보통/높음). ② 가장 강력한 근거 3가지 (데이터 인용). ③ 단점/리스크 2가지 (리뷰 기반은 "리뷰 기반" 표시). ④ 더 나은/더 싼 대안 1~2개. ⑤ 한 줄 냉정한 요약.');
-    lines.push('Persuade through evidence, not pressure. End nothing with hype.');
-    lines.push('---DATA (everything scraped from the page) ---');
+    lines.push('You are a sharp, balanced purchase-analyst. Build a COMPELLING, evidence-grounded evaluation and a clear recommendation. Ground specific claims in the page data below AND in what you find by searching. Do NOT invent specs, prices, or defects; if unsure, say so and lower confidence.');
+    if (useWeb) {
+      lines.push('FIRST, SEARCH THE WEB for this exact item: external expert/user reviews, common complaints, reliability/defect reports, and better or cheaper alternatives. Pull in everything relevant and cite sources briefly (site name). Prefer recent, credible sources.');
+    }
+    lines.push('This is a ' + (d.itemType || 'product') + ' (' + ti.label + '). Decide if it is genuinely worth buying for a typical buyer, and whether a clearly BETTER or CHEAPER option exists (name real, well-known options).');
+    lines.push('CRITICAL BALANCE RULE: give EXACTLY 4 장점 and EXACTLY 4 단점 — equal in number AND comparable in weight/specificity. Do NOT stack one side. Make the 단점 as strong and concrete as the 장점 (real risks, common complaints, overspend, better alternatives). Mark review/web-based points with their source.');
+    lines.push('Answer in Korean, tight. Return EXACTLY: ① 결론 (한 문장 추천 + 확신도: 낮음/보통/높음) ② 장점 4개 ③ 단점 4개 ④ 더 나은/더 싼 대안 1~2개 (출처) ⑤ 한 줄 냉정한 요약.');
+    lines.push('Persuade through evidence, not pressure.');
+    lines.push('---DATA (scraped from the page) ---');
     lines.push('이름: ' + (d.name || '(unknown)'));
     if (d.brand) lines.push('브랜드: ' + d.brand);
     if (d.price) lines.push('가격: ' + fmtKRW(d.price));

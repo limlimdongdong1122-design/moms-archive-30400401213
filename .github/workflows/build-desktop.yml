@@ -8,6 +8,7 @@ on:
   push:
     tags:
       - 'v*'
+      - 'V*'
 
 permissions:
   contents: write   # lets the tag build attach the .exe to a GitHub Release

@@ -239,3 +239,37 @@ body.cursor-on .cursor-glow, body.cursor-on .cursor-dot { opacity: 1; }
   .feat:hover, .step:hover, .tier:hover, .desktop-card:hover,
   .tier button:hover, .desktop-card .btn:hover { transform: none; }
 }
+
+/* ============================================================
+ * Illustrative icons + intervention preview mockup
+ * ============================================================ */
+/* feature / step icon chips */
+.feat-ico, .step-ico { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; margin-bottom: 14px; color: var(--accent); background: rgba(110,168,255,0.10); border: 1px solid var(--glass-bd); box-shadow: inset 0 1px 0 0 var(--glass-hi); }
+.feat-ico svg, .step-ico svg { width: 24px; height: 24px; }
+.step-ico { margin-bottom: 12px; }
+
+/* preview mockup of the real intervention modal */
+.showcase { text-align: center; }
+.showcase-sub { color: var(--dim); max-width: 52ch; margin: 0 auto 36px; font-size: 16px; }
+.preview-stage { display: flex; justify-content: center; perspective: 1200px; }
+.preview-modal { width: min(440px, 94%); text-align: left; padding: 26px 26px 22px; border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(19,27,38,0.92), rgba(10,14,20,0.96)); border: 1px solid var(--glass-bd); box-shadow: 0 30px 80px rgba(0,0,0,0.55), inset 0 1px 0 0 var(--glass-hi), 0 0 70px rgba(110,168,255,0.12); transform: rotateX(3deg); }
+.pv-badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--r-pill); color: var(--warn); background: rgba(194,169,142,0.12); border: 1px solid rgba(194,169,142,0.3); }
+.pv-title { font-family: var(--fdisp); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 16px 0 4px; }
+.pv-item { color: var(--dim); font-size: 14px; margin-bottom: 16px; }
+.pv-reframe { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 14px; border-radius: var(--r-md); background: var(--glass); border: 1px solid var(--glass-bd); margin-bottom: 16px; }
+.pv-price { font-family: var(--fdisp); font-size: 20px; font-weight: 700; color: var(--text); }
+.pv-sub { color: var(--faint); font-size: 12.5px; }
+.pv-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.pv-col-h { font-size: 12px; font-weight: 700; margin-bottom: 9px; letter-spacing: 0.02em; }
+.pv-pro { color: var(--accent); }
+.pv-con { color: var(--warn); }
+.pv-line { display: flex; align-items: flex-start; gap: 7px; font-size: 13px; color: var(--dim); margin-bottom: 7px; line-height: 1.4; }
+.pv-line i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex: 0 0 auto; }
+.pv-line i.con { background: var(--warn); }
+.pv-verdict { font-size: 13px; color: var(--dim); padding: 10px 13px; border-radius: var(--r-md); background: rgba(110,168,255,0.08); border: 1px solid var(--glass-bd); margin-bottom: 16px; }
+.pv-verdict b { color: var(--accent); }
+.pv-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.pv-btn { padding: 11px 16px; border-radius: var(--r-pill); font-size: 13.5px; font-weight: 600; }
+.pv-primary { color: #06101f; background: linear-gradient(180deg, #a9cbff, var(--accent)); box-shadow: 0 8px 24px var(--accent-glow); }
+.pv-ghost { color: var(--text); background: var(--glass); border: 1px solid var(--glass-bd); }
+@media (max-width: 480px) { .pv-cols { grid-template-columns: 1fr; } }

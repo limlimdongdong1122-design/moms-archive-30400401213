@@ -436,11 +436,11 @@
             if (cand && isDownloadLink(cand)) return;
             if (cand) {
               const kind = classifyButton(cand);
-              // STRONG → always a purchase. WEAK → only treat as a purchase
-              // if there's a real price on the page (avoids firing on
-              // "시작하기"/"subscribe" for free things). NONE (login, signup,
-              // search, nav…) → never intercept. This is the login fix.
-              if (kind === 'strong' || (kind === 'weak' && guessPriceOnPage() > 0)) {
+              // STRONG or WEAK buy text → a candidate. Whether we actually
+              // intervene is decided below by the product-evidence gate
+              // (needs a price or a product image). NONE (login/search/
+              // download/nav…) → never intercept.
+              if (kind === 'strong' || kind === 'weak') {
                 cand.setAttribute('data-iv-buy', '1');
                 btn = cand;
               }
@@ -453,6 +453,12 @@
         // Final safety net: even a pre-tagged element that turns out to be a
         // file download must not be gated.
         if (isDownloadLink(btn)) return;
+
+        // Product-evidence gate: only intervene when this really looks like a
+        // product/checkout — i.e. there's a visible PRICE or a product IMAGE.
+        // If there's neither, a "구매"/"buy" word alone isn't enough (it's
+        // probably not a genuine purchase), so let the click through.
+        if (!(guessPriceOnPage() > 0 || hasProductImage())) return;
 
         // Previously approved → let this genuine click sail through.
         if (allowed.has(btn)) {
@@ -702,6 +708,40 @@
       const m = document.body.innerText.match(/[₩$]\s?[\d.,]{3,}/);
       return m ? parsePrice(m[0]) : 0;
     }, 0);
+  }
+
+  // Is there a real PRODUCT IMAGE on the page? Used (together with price) to
+  // confirm we're on an actual product/checkout before intervening. We look
+  // for structured product images and for a sizeable, genuinely-rendered image
+  // — small logos/icons on a login page won't qualify (≥ 160×160, on-screen).
+  function hasProductImage() {
+    return safe(() => {
+      // 1) schema.org product image (strongest signal).
+      const nodes = document.querySelectorAll('script[type="application/ld+json"]');
+      for (const n of nodes) {
+        const data = safe(() => JSON.parse(n.textContent), null);
+        if (!data) continue;
+        const arr = Array.isArray(data) ? data : data['@graph'] || [data];
+        for (const e of arr) {
+          if (!e || typeof e !== 'object') continue;
+          const type = e['@type'];
+          const isProduct = type === 'Product' || (Array.isArray(type) && type.includes('Product'));
+          if (isProduct && e.image) return true;
+        }
+      }
+      // 2) a large, actually-rendered <img> (product photos are big).
+      const imgs = document.querySelectorAll('img');
+      let checked = 0;
+      for (const im of imgs) {
+        if (checked++ > 200) break; // stay cheap on huge pages
+        const r = safe(() => im.getBoundingClientRect(), null);
+        const w = Math.max(im.naturalWidth || 0, (r && r.width) || 0);
+        const h = Math.max(im.naturalHeight || 0, (r && r.height) || 0);
+        const onScreen = r && r.width > 0 && r.height > 0;
+        if (onScreen && w >= 160 && h >= 160) return true;
+      }
+      return false;
+    }, false);
   }
 
   // Defer to idle so we never compete with the host page's own load.

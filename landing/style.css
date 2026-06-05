@@ -150,4 +150,24 @@ code { background: var(--glass); border: 1px solid var(--glass-bd); border-radiu
 /* reveal */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+
+/* ---- hover "lift & grow" — elements gently scale up when the cursor lands ---- */
+.btn:hover { transform: translateY(-2px) scale(1.05); }
+.btn-ghost:hover { transform: translateY(-2px) scale(1.04); background: var(--glass-hi); }
+.nav-links a { transition: color .3s, transform .3s var(--ease); display: inline-block; }
+.nav-links a:hover { transform: scale(1.09); }
+.brand { transition: transform .3s var(--ease); }
+.brand:hover { transform: scale(1.05); }
+.step, .tier, .desktop-card { transition: transform .35s var(--ease), border-color .35s, box-shadow .35s; }
+.feat:hover, .step:hover, .tier:hover, .desktop-card:hover {
+  transform: translateY(-4px) scale(1.025);
+  border-color: var(--glass-hi);
+  box-shadow: inset 0 1px 0 0 var(--glass-hi), 0 22px 54px rgba(0,0,0,0.5);
+}
+.tier button:hover, .desktop-card .btn:hover { transform: translateY(-2px) scale(1.05); }
+
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; }
+  .btn:hover, .btn-ghost:hover, .nav-links a:hover, .brand:hover,
+  .feat:hover, .step:hover, .tier:hover, .desktop-card:hover,
+  .tier button:hover, .desktop-card .btn:hover { transform: none; }
+}

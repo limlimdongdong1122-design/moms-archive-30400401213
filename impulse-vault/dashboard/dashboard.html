@@ -24,6 +24,7 @@
       <a href="#profile" class="nav-link">충동 프로필</a>
       <a href="#vault" class="nav-link">금고</a>
       <a href="#settings" class="nav-link">설정</a>
+      <a href="#membership" class="nav-link">Pro 멤버십</a>
       <a href="#data" class="nav-link">내 데이터 · 개인정보</a>
     </nav>
 
@@ -237,13 +238,22 @@
         <div class="glass setting-block">
           <div class="toggle-block" style="margin-bottom: var(--space-12)">
             <div>
-              <label class="set-label">AI 분석 (선택 · 내 키 사용)</label>
-              <p class="set-hint">켜면 아래 내 API 키로 더 자세한 장단점을 받아요.</p>
+              <label class="set-label">AI 분석 (선택)</label>
+              <p class="set-hint">상품의 장단점·합리적 판단 포인트를 AI가 분석해줘요.</p>
             </div>
             <label class="switch">
               <input type="checkbox" id="aiToggle" />
               <span class="switch-track"><span class="switch-thumb"></span></span>
             </label>
+          </div>
+          <!-- Shown to Free users: managed AI (no key needed) is a Pro perk -->
+          <div class="ai-pro-note" id="aiProNote" hidden>
+            <span class="aipn-spark" aria-hidden="true">✦</span>
+            <div>
+              <b>키 없이 바로 쓰는 AI 분석은 <span class="aipn-pro">Pro</span> 기능이에요.</b>
+              <p>무료로 쓰려면 아래에 <b>내 API 키</b>를 직접 넣으면 돼요. 또는 Pro로 업그레이드하면 키 없이 켜집니다.</p>
+              <button class="btn-sm" id="aiNoteUpgrade" type="button">Pro 보기 →</button>
+            </div>
           </div>
           <div id="aiKeyArea" hidden>
             <div class="cards-2">
@@ -285,14 +295,68 @@
         <p class="save-toast" id="saveToast" hidden>저장됨 ✓</p>
       </section>
 
+      <!-- ============ MEMBERSHIP / PRO ============ -->
+      <section id="membership" class="panel">
+        <h2 class="panel-title">Pro 멤버십</h2>
+        <p class="panel-sub">
+          IMPULSE VAULT는 무료로도 충분히 강력해요. <b>Pro</b>는 가장 똑똑한 무기 — <b>키 없이 켜지는 AI 분석</b>을 더해줍니다.
+        </p>
+
+        <div class="glass pro-hero" id="proHero">
+          <div class="pro-glow" aria-hidden="true"></div>
+          <div class="pro-top">
+            <span class="pro-badge" id="proBadge">FREE</span>
+            <div class="pro-pricing">
+              <span class="pro-price" id="proPriceMain">₩3,900</span><span class="pro-period">/월</span>
+              <span class="pro-annual">또는 연 ₩29,000 · 7일 무료체험</span>
+            </div>
+          </div>
+
+          <p class="pro-tagline">“한 번만 충동구매를 참아도 본전이에요.”</p>
+
+          <ul class="pro-feats">
+            <li><span class="pf-ico">⚡</span><div><b>AI 냉정한 구매 분석 — 키 없이 바로</b><span>무료에선 본인 API 키가 필요해요. Pro는 그냥 켜집니다.</span></div></li>
+            <li><span class="pf-ico">🔎</span><div><b>웹검색으로 더 싼 대안·리뷰·known issue 찾기</b><span>실제 인터넷을 뒤져 더 현명한 결정을 도와요.</span></div></li>
+            <li><span class="pf-ico">🧠</span><div><b>그라운드 데이터 기반 더 똑똑한 개입</b><span>페이지에서 읽은 정보로 더 정확한 분석.</span></div></li>
+            <li><span class="pf-ico">💞</span><div><b>앞으로 추가될 Pro 기능 모두 포함</b><span>월간 절약 리포트·목표 저축·금고 가격추적 등.</span></div></li>
+          </ul>
+
+          <div class="pro-actions">
+            <button class="btn-primary" id="proUpgrade">Pro 시작하기</button>
+            <button class="btn-ghost" id="proManage" hidden>구독 관리</button>
+          </div>
+          <p class="pro-status" id="proStatus"></p>
+
+          <!-- Demo: preview Pro features before real billing is wired (stub mode only) -->
+          <div class="pro-demo" id="proDemo" hidden>
+            <div class="toggle-block">
+              <div>
+                <label class="set-label">데모 — Pro 기능 미리보기</label>
+                <p class="set-hint">결제 연동(ExtPay) 전, Pro 잠금 기능을 직접 체험하는 <b>로컬 토글</b>이에요. 실제 결제가 아니며 이 기기에서만 적용돼요.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="devProToggle" />
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <p class="pro-finenote">
+          🔒 결제·구독 관리는 <b>ExtensionPay(Stripe)</b>로 안전하게 처리돼요. 카드 정보는 IMPULSE VAULT에 저장되지 않습니다.
+          언제든 해지할 수 있고, 해지해도 무료 기능은 그대로 쓸 수 있어요.
+        </p>
+      </section>
+
       <!-- ============ MY DATA / PRIVACY ============ -->
       <section id="data" class="panel">
         <h2 class="panel-title">내 데이터 · 개인정보</h2>
         <div class="glass privacy-hero">
           <div class="privacy-badge">🔒 100% 로컬</div>
           <p>
-            IMPULSE VAULT는 사용자 데이터를 담은 네트워크 요청을 <b>전혀 하지 않습니다.</b>
-            아래는 지금 이 기기에 저장된 내용 전부예요.
+            기본적으로 IMPULSE VAULT는 사용자 데이터를 담은 네트워크 요청을 <b>하지 않습니다.</b>
+            예외는 단 두 가지 — <b>① AI 분석</b>을 켰을 때(상품 정보만 AI에 전송)와
+            <b>② Pro 결제 확인</b>(ExtensionPay)뿐이에요. 검색·조회·금고·패턴 기록은 <b>항상 이 기기에만</b> 남습니다.
           </p>
         </div>
 
@@ -315,9 +379,11 @@
 
     <!-- LOCAL Three.js — see lib/three.min.js note. Loads only if present. -->
     <script src="../lib/three.min.js"></script>
+    <script src="../lib/ExtPay.js"></script>
     <script src="../utils/iv3d.js"></script>
     <script src="../utils/storage.js"></script>
     <script src="../utils/patterns.js"></script>
+    <script src="../utils/pro.js"></script>
     <script src="vault3d.js"></script>
     <script src="dashboard.js"></script>
   </body>

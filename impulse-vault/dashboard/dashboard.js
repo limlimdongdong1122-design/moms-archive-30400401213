@@ -16,6 +16,10 @@
   // 'pending' until we try once, then 'ready' (WebGL) or 'fallback' (CSS).
   let vault3dState = 'pending';
 
+  // Cached Pro status (from the background worker / IVPro).
+  let proStatus = { isPro: false, paid: false, trialActive: false, devOverride: false };
+  let proIsStub = true;
+
   function fmtKRW(n) {
     try {
       return '₩' + Number(n || 0).toLocaleString('ko-KR');
@@ -283,6 +287,11 @@
     $('#aiProxySecret').value = s.aiProxySecret || '';
     $('#aiKeyArea').hidden = !s.aiEnabled;
 
+    // Managed AI (no key) is a Pro perk — show the note to Free users who
+    // haven't supplied their own key.
+    const note = $('#aiProNote');
+    if (note) note.hidden = !!(proStatus && proStatus.isPro) || !!(s.aiKey && s.aiKey.trim());
+
     renderDomainList(s.domains);
   }
 
@@ -492,6 +501,103 @@
   }
 
   // ===================================================
+  // MEMBERSHIP / PRO
+  // ===================================================
+  async function loadPro() {
+    const res = await sendMsg({ type: 'GET_PRO' });
+    if (res && res.status) proStatus = res.status;
+    proIsStub = !!(res && res.stub);
+    return proStatus;
+  }
+
+  function trialDaysLeft() {
+    if (!proStatus.trialStartedAt) return 0;
+    const days = (window.IVPro ? IVPro.TRIAL_DAYS : 7);
+    const end = proStatus.trialStartedAt + days * 24 * 3600 * 1000;
+    return Math.max(0, Math.ceil((end - Date.now()) / (24 * 3600 * 1000)));
+  }
+
+  function renderMembership() {
+    const s = proStatus || {};
+    const badge = $('#proBadge');
+    const upgrade = $('#proUpgrade');
+    const manage = $('#proManage');
+    const status = $('#proStatus');
+    const demo = $('#proDemo');
+    const devToggle = $('#devProToggle');
+
+    badge.classList.remove('is-pro', 'is-trial');
+    status.classList.remove('good', 'warn');
+
+    if (s.paid) {
+      badge.textContent = 'PRO'; badge.classList.add('is-pro');
+      upgrade.hidden = true; manage.hidden = false;
+      status.textContent = '💙 Pro 구독 중이에요. 함께해줘서 고마워요.'; status.classList.add('good');
+    } else if (s.trialActive) {
+      badge.textContent = '체험 중'; badge.classList.add('is-trial');
+      upgrade.hidden = false; upgrade.textContent = '지금 구독하기'; manage.hidden = false;
+      status.textContent = `무료 체험 중 — 남은 ${trialDaysLeft()}일`; status.classList.add('warn');
+    } else if (s.devOverride) {
+      badge.textContent = 'PRO · 데모'; badge.classList.add('is-pro');
+      upgrade.hidden = false; upgrade.textContent = 'Pro 시작하기'; manage.hidden = true;
+      status.textContent = '🧪 데모로 Pro 기능을 미리 보는 중이에요 (실제 결제 아님).'; status.classList.add('good');
+    } else {
+      badge.textContent = 'FREE';
+      upgrade.hidden = false; upgrade.textContent = 'Pro 시작하기'; manage.hidden = true;
+      status.textContent = proIsStub
+        ? '※ 결제 연동(ExtPay) 전이라 데모 모드예요. 아래 토글로 Pro 기능을 미리 볼 수 있어요.'
+        : '';
+    }
+
+    // The local preview toggle only makes sense before real billing is wired.
+    demo.hidden = !proIsStub;
+    devToggle.checked = !!s.devOverride;
+  }
+
+  function initProHandlers() {
+    $('#proUpgrade').addEventListener('click', async () => {
+      if (proIsStub) {
+        const st = $('#proStatus');
+        st.classList.remove('good'); st.classList.add('warn');
+        st.textContent = '결제는 실제 ExtPay 연동 후 활성화돼요. 지금은 아래 “데모” 토글로 Pro를 미리 체험해보세요. (lib/ExtPay.js 안내 참고)';
+        $('#proDemo').hidden = false;
+        return;
+      }
+      await sendMsg({ type: 'OPEN_PAYMENT' });
+    });
+
+    $('#proManage').addEventListener('click', async () => {
+      await sendMsg({ type: 'OPEN_PAYMENT' }); // ExtPay's page handles manage/cancel
+    });
+
+    $('#devProToggle').addEventListener('change', async (e) => {
+      const res = await sendMsg({ type: 'SET_DEV_PRO', on: e.target.checked });
+      if (res && res.status) proStatus = res.status;
+      renderMembership();
+      await renderSettings(); // reflect the AI Pro-lock note immediately
+      flashSaved();
+    });
+
+    const noteBtn = $('#aiNoteUpgrade');
+    if (noteBtn) {
+      noteBtn.addEventListener('click', () => {
+        const target = document.querySelector('#membership');
+        $$('.nav-link').forEach((l) => l.classList.toggle('active', l.getAttribute('href') === '#membership'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // When returning from the hosted checkout tab, refresh status.
+    window.addEventListener('focus', async () => {
+      if (proIsStub) return;
+      await sendMsg({ type: 'REFRESH_PRO' });
+      await loadPro();
+      renderMembership();
+      await renderSettings();
+    });
+  }
+
+  // ===================================================
   // MY DATA / PRIVACY
   // ===================================================
   async function renderDataTable() {
@@ -581,10 +687,12 @@
   }
 
   async function refreshAll() {
+    await loadPro(); // load Pro status first so settings/membership reflect it
     await renderOverview();
     await renderProfile();
     await renderVault();
     await renderSettings();
+    renderMembership();
     await renderDataTable();
   }
 
@@ -592,6 +700,7 @@
   function boot() {
     initNav();
     initSettingsHandlers();
+    initProHandlers();
     initDataHandlers();
     refreshAll();
   }

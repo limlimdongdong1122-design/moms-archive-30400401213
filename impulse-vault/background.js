@@ -325,6 +325,9 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 // Returns true from the listener to keep the channel open for async.
 // ============================================================
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  // ExtPay uses plain STRING messages ("extpay-*"). Let ExtPay's own
+  // background listener handle those — don't intercept or respond here.
+  if (typeof msg === 'string') return false;
   (async () => {
     try {
       switch (msg && msg.type) {

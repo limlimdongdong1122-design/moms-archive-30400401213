@@ -127,6 +127,17 @@ code { background: var(--glass); border: 1px solid var(--glass-bd); border-radiu
 /* support / donation */
 .support { text-align: center; }
 .support-sub { color: var(--dim); max-width: 56ch; margin: 0 auto 32px; font-size: 16px; }
+
+/* donation account card */
+.donate-account { max-width: 470px; margin: 0 auto; padding: 32px 28px; text-align: center; border-color: var(--accent-glow); }
+.da-badge { display: inline-block; font-size: 13px; color: var(--accent); background: rgba(110,168,255,0.1); border: 1px solid var(--glass-bd); padding: 5px 13px; border-radius: var(--r-pill); margin-bottom: 18px; }
+.da-bank { font-family: var(--fdisp); font-size: 15px; color: var(--dim); letter-spacing: 0.02em; }
+.da-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 18px; flex-wrap: wrap; }
+.da-number { font-family: var(--fdisp); font-size: clamp(22px, 5vw, 30px); font-weight: 700; letter-spacing: 0.04em; color: var(--text); }
+.da-copy { padding: 9px 18px; border-radius: var(--r-pill); border: 1px solid var(--glass-bd); background: var(--glass); color: var(--text); font-family: var(--fbody); font-weight: 600; font-size: 13px; cursor: pointer; transition: background .3s, transform .3s var(--ease), color .3s; white-space: nowrap; }
+.da-copy:hover { background: var(--glass-hi); transform: scale(1.05); }
+.da-copy.copied { background: linear-gradient(180deg, #a9cbff, var(--accent)); color: #06101f; border-color: transparent; }
+.da-msg { color: var(--faint); font-size: 14px; line-height: 1.6; }
 .donate-tiers { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .tier { width: 180px; padding: 24px; text-align: center; }
 .tier-emoji { font-size: 30px; }

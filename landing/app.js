@@ -17,21 +17,9 @@ var CONFIG = {
   // Where the "all releases" / source link points.
   RELEASES_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases',
 
-  // Donation links (hosted platforms — no secrets here). Blank = "준비 중".
-  // KakaoPay is active; the others stay blank until you add them.
-  DONATION_LINKS: {
-    kakaoPay: 'https://qr.kakaopay.com/FJdGwoyyy', // ✅ 카카오페이 후원 (활성)
-    toss: '',
-    buyMeACoffee: '',
-    paypal: '',
-  },
-  CURRENCY: '₩',
-  // Suggested amounts — all open KakaoPay, where the supporter sets the amount.
-  TIERS: [
-    { amount: 1000, link: 'kakaoPay', emoji: '☕', label: '커피 한 모금' },
-    { amount: 5000, link: 'kakaoPay', emoji: '🧋', label: '커피 한 잔' },
-    { amount: 10000, link: 'kakaoPay', emoji: '🌟', label: '든든한 응원' },
-  ],
+  // 후원 계좌 (소개 페이지에 표시 + 복사 버튼). 계좌번호는 index.html의
+  // #bankAccount 에도 들어 있어요. 바꾸려면 둘 다 같은 값으로 두면 돼요.
+  BANK: { name: '신한은행', account: '110-522-199471' },
 };
 
 (function () {
@@ -73,29 +61,30 @@ var CONFIG = {
     }
   });
 
-  // ---- Donation tiers ----
-  var grid = document.getElementById('donateTiers');
-  if (grid) {
-    CONFIG.TIERS.forEach(function (t) {
-      var url = CONFIG.DONATION_LINKS[t.link];
-      var ready = url && url.indexOf('PASTE') !== 0;
-      var card = document.createElement('div');
-      card.className = 'tier card';
-      card.innerHTML =
-        '<div class="tier-emoji">' + t.emoji + '</div>' +
-        '<div class="tier-amt">' + CONFIG.CURRENCY + t.amount.toLocaleString('ko-KR') + '</div>' +
-        '<div class="tier-label">' + t.label + '</div>';
-      var btn = document.createElement('button');
-      if (ready) {
-        btn.textContent = '후원하기';
-        btn.addEventListener('click', function () { window.open(url, '_blank', 'noopener'); });
+  // ---- Donation account: one-tap copy of the bank account number ----
+  var copyBtn = document.getElementById('copyAccount');
+  var acct = document.getElementById('bankAccount');
+  if (copyBtn && acct) {
+    var fallbackCopy = function (text) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      } catch (_) {}
+    };
+    copyBtn.addEventListener('click', function () {
+      var num = (acct.textContent || '').trim();
+      var done = function () {
+        copyBtn.textContent = '복사됨!';
+        copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.textContent = '복사'; copyBtn.classList.remove('copied'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(num).then(done, function () { fallbackCopy(num); done(); });
       } else {
-        btn.textContent = '준비 중';
-        btn.className = 'pending';
-        btn.disabled = true;
+        fallbackCopy(num); done();
       }
-      card.appendChild(btn);
-      grid.appendChild(card);
     });
   }
 

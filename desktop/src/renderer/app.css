@@ -230,3 +230,43 @@ body {
 .btn-primary:hover { transform: scale(1.02); box-shadow: 0 10px 30px var(--accent-good-glow); }
 .btn-ghost { padding: 11px var(--space-16); border-radius: var(--r-md); border: 1px solid var(--glass-border); background: var(--glass-fill); color: var(--text-primary); font-family: var(--font-body); font-size: var(--fs-sm); cursor: pointer; transition: background var(--dur-standard) var(--ease-soft); }
 .btn-ghost:hover { background: var(--glass-highlight); }
+
+/* ============================================================
+ * PREMIUM LAYER — cursor light, glass tilt/sheen, magnetic, shimmer
+ * (mirrors the landing site; degrades under reduced motion)
+ * ============================================================ */
+
+/* premium cursor */
+.cursor-glow { position: fixed; top: 0; left: 0; width: 440px; height: 440px; border-radius: 50%; pointer-events: none; z-index: 90; transform: translate3d(-50%,-50%,0); background: radial-gradient(circle, rgba(110,168,255,0.10), transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity .5s; will-change: transform; }
+.cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; z-index: 91; transform: translate3d(-50%,-50%,0); background: var(--accent-calm); box-shadow: 0 0 10px var(--accent-calm-glow); opacity: 0; transition: opacity .4s, width .2s var(--ease-calm), height .2s var(--ease-calm), background .2s; will-change: transform; }
+.cursor-dot.hot { width: 16px; height: 16px; background: #fff; }
+body.cursor-on .cursor-glow, body.cursor-on .cursor-dot { opacity: 1; }
+
+/* glass cards — lift, tilt-ready, and a cursor-following inner sheen */
+.glass { transition: transform .3s var(--ease-calm), box-shadow .35s var(--ease-calm), border-color .35s; will-change: transform; }
+.glass:not(.vault-stage) { position: relative; }
+.glass:not(.vault-stage)::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; opacity: 0; transition: opacity .45s var(--ease-calm); pointer-events: none; background: radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgba(110,168,255,0.16), transparent 60%); }
+.glass:not(.vault-stage):hover::after { opacity: 1; }
+.glass:not(.vault-stage):hover { border-color: var(--glass-highlight); box-shadow: 0 22px 54px rgba(0,0,0,0.45); }
+.glass > * { position: relative; z-index: 1; }
+
+/* nav + logo micro-interactions */
+.nav-link { transition: background var(--dur-standard) var(--ease-soft), color var(--dur-standard), transform .25s var(--ease-calm); }
+.nav-link:hover { transform: translateX(3px) scale(1.02); }
+.logo { transition: transform .3s var(--ease-calm); }
+.logo:hover { transform: scale(1.03); }
+
+/* primary buttons — glossy light sweep on hover */
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after { content: ''; position: absolute; top: 0; left: -130%; width: 65%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent); transform: skewX(-18deg); transition: left .6s var(--ease-calm); z-index: 1; }
+.btn-primary:hover::after { left: 150%; }
+
+/* headline shimmer on the logo wordmark + big stat */
+.logo-name { background: linear-gradient(110deg, #cdd7ea 0%, #ffffff 22%, #cdd7ea 44%, #aab4c6 60%, #eef2fb 82%, #cdd7ea 100%); background-size: 240% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: ivShine 9s linear infinite; }
+@keyframes ivShine { to { background-position: -240% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow, .cursor-dot { display: none; }
+  .logo-name { animation: none; }
+  .glass, .nav-link, .logo, .btn-primary { transition: none; }
+}

@@ -11,9 +11,9 @@ var CONFIG = {
   // Swap it for your Web Store URL once published.
   INSTALL_URL: 'install.html',
 
-  // 후원 계좌 (소개 페이지에 표시 + 복사 버튼). 계좌번호는 index.html의
-  // #bankAccount 에도 들어 있어요. 바꾸려면 둘 다 같은 값으로 두면 돼요.
-  BANK: { name: '신한은행', account: '110-522-199471' },
+  // 후원 계좌 — 판매/인수 시 구매자가 본인 계좌로 교체하세요.
+  // (index.html 의 #bankAccount 텍스트도 같은 값으로 바꾸면 끝)
+  BANK: { name: '은행명', account: '000-0000-000000' },
 };
 
 (function () {

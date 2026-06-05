@@ -1,0 +1,51 @@
+{
+  "name": "impulse-vault-desktop",
+  "productName": "IMPULSE VAULT",
+  "version": "1.0.0",
+  "description": "IMPULSE VAULT desktop hub — a calm self-control tool that pairs with the IMPULSE VAULT browser extension (the sensor) to add gentle friction to impulse buying. 100% local.",
+  "main": "src/main/main.js",
+  "author": "IMPULSE VAULT",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "app.impulsevault.desktop",
+    "productName": "IMPULSE VAULT",
+    "files": ["src/**/*", "assets/**/*", "package.json"],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.png",
+      "artifactName": "IMPULSE-VAULT-Setup.${ext}"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "assets/icon.png",
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

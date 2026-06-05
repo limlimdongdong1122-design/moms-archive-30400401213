@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cloudflare-vite-get-started",
+  // Set this to today's date
+  "compatibility_date": "2026-06-04",
+  "main": "./src/index.ts"
+}

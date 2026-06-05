@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "IMPULSE VAULT",
+  "version": "1.0.0",
+  "description": "Detects your own online-shopping intent and adds gentle, smart friction at the moment of purchase. 100% local, privacy-first.",
+
+  "permissions": ["storage", "scripting", "alarms"],
+
+  "optional_permissions": ["history", "tabs", "webNavigation", "activeTab"],
+
+  "optional_host_permissions": [
+    "*://*.coupang.com/*",
+    "*://*.naver.com/*",
+    "*://*.gmarket.co.kr/*",
+    "*://*.11st.co.kr/*",
+    "*://*.auction.co.kr/*",
+    "*://*.musinsa.com/*",
+    "*://*.aliexpress.com/*",
+    "*://*.amazon.com/*",
+    "*://*.google.com/*",
+    "*://*.daum.net/*",
+    "https://api.anthropic.com/*",
+    "https://api.openai.com/*",
+    "*://*/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "IMPULSE VAULT",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "options_page": "dashboard/dashboard.html",
+
+  "web_accessible_resources": [
+    {
+      "resources": ["content/overlay.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Internal hidden window. Relaxed CSP so Tesseract.js (OCR) can load its
+         WASM core + language data from CDN. OCR itself runs locally; screen
+         pixels never leave the machine. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' 'unsafe-eval'; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://tessdata.projectnaptha.com blob: data:; worker-src 'self' blob:; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'"
+    />
+    <title>IV watcher</title>
+  </head>
+  <body>
+    <video id="v" autoplay muted playsinline style="display:none"></video>
+    <canvas id="c" style="display:none"></canvas>
+    <!-- Tesseract.js OCR (fetched once from CDN, then cached) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="watcher.js"></script>
+  </body>
+</html>

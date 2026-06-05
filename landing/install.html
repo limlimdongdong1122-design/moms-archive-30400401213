@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMPULSE VAULT — 설치하기</title>
+    <meta name="description" content="IMPULSE VAULT 브라우저 확장 설치 방법 — 30초면 끝나요." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* page-specific tweaks, reusing the site's design tokens */
+      .install-wrap { width: min(720px, 92%); margin: 0 auto; padding: 56px 0 88px; }
+      .install-card { padding: 40px 32px; }
+      .install-card h1 { font-family: var(--fdisp); font-size: clamp(24px, 4vw, 34px); letter-spacing: -0.02em; margin-bottom: 10px; }
+      .install-card .sub { color: var(--dim); margin-bottom: 26px; }
+      .dl-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 30px; }
+      .dl-hint { color: var(--faint); font-size: 13px; }
+      ol.steps2 { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 14px; }
+      ol.steps2 li { counter-increment: s; position: relative; padding: 14px 16px 14px 56px; background: var(--glass); border: 1px solid var(--glass-bd); border-radius: var(--r-md); color: var(--dim); }
+      ol.steps2 li b { color: var(--text); }
+      ol.steps2 li::before { content: counter(s); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(180deg, #a9cbff, var(--accent)); color: #06101f; font-family: var(--fdisp); font-weight: 700; font-size: 14px; }
+      code.kbd { background: var(--glass); border: 1px solid var(--glass-bd); border-radius: 6px; padding: 1px 7px; font-size: 13px; color: var(--accent); }
+      .note-box { margin-top: 26px; padding: 16px 18px; border-radius: var(--r-md); background: var(--glass); border: 1px solid var(--glass-bd); color: var(--faint); font-size: 13px; line-height: 1.7; }
+      .back-link { display: inline-block; margin-top: 26px; color: var(--accent); font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <span class="aurora a1"></span><span class="aurora a2"></span>
+      <span class="grain"></span><span class="vignette"></span>
+    </div>
+
+    <header class="nav">
+      <a class="brand" href="index.html"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
+      <a class="btn btn-ghost" href="index.html">← 홈으로</a>
+    </header>
+
+    <main class="install-wrap">
+      <article class="card install-card">
+        <span class="label">설치하기</span>
+        <h1>브라우저에 추가하기</h1>
+        <p class="sub">
+          아직 크롬 웹스토어 심사 전이라, 지금은 파일을 받아서 직접 추가해요.
+          크롬·엣지·웨일·브레이브 등 크로미움 계열 브라우저에서 동작해요. (30초면 끝!)
+        </p>
+
+        <div class="dl-row">
+          <a class="btn btn-primary btn-lg" href="impulse-vault.zip" download>확장 프로그램 다운로드 (.zip)</a>
+          <span class="dl-hint">받은 zip은 꼭 <b>압축을 풀어</b> 주세요.</span>
+        </div>
+
+        <ol class="steps2">
+          <li>위 버튼으로 받은 zip을 <b>압축 해제</b>해요. (<code class="kbd">impulse-vault</code> 폴더가 나와요)</li>
+          <li>브라우저 주소창에 <code class="kbd">chrome://extensions</code> 입력 → 엔터. (엣지는 <code class="kbd">edge://extensions</code>)</li>
+          <li>오른쪽 위 <b>개발자 모드</b>를 켜요.</li>
+          <li><b>압축해제된 확장 프로그램을 로드</b> 버튼 → 방금 푼 <code class="kbd">impulse-vault</code> 폴더 선택.</li>
+          <li>설치 완료! 처음 한 번 <b>온보딩 화면</b>에서 감시할 사이트와 권한을 허용하면 끝이에요.</li>
+        </ol>
+
+        <div class="note-box">
+          <b>안심하세요 🔒</b> — IMPULSE VAULT는 검색·상품·구매 기록을 어떤 서버로도 보내지 않아요.
+          모든 분석은 브라우저 안(로컬)에서만 이뤄져요. "개발자 모드" 경고는 웹스토어 정식 등록 전이라 뜨는 일반적인 안내예요.
+        </div>
+
+        <a class="back-link" href="index.html">← 소개 페이지로 돌아가기</a>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <div class="foot-row">
+        <a class="brand" href="index.html"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
+        <span class="copy">© 2026 IMPULSE VAULT · 100% 로컬 · 충동구매에 맞서는 작은 도구</span>
+      </div>
+    </footer>
+  </body>
+</html>

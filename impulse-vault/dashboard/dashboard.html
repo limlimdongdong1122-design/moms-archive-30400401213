@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMPULSE VAULT — 대시보드</title>
+    <link rel="stylesheet" href="../tokens.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <div class="iv-atmosphere" aria-hidden="true">
+      <span class="iv-aurora iv-aurora--teal"></span>
+      <span class="iv-aurora iv-aurora--peri"></span>
+      <span class="iv-grain"></span>
+      <span class="iv-vignette"></span>
+    </div>
+
+    <nav class="sidebar">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-name">IMPULSE&nbsp;VAULT</span>
+      </div>
+      <a href="#overview" class="nav-link active">개요</a>
+      <a href="#profile" class="nav-link">충동 프로필</a>
+      <a href="#vault" class="nav-link">금고</a>
+      <a href="#settings" class="nav-link">설정</a>
+      <a href="#data" class="nav-link">내 데이터 · 개인정보</a>
+    </nav>
+
+    <main class="content">
+      <!-- ============ OVERVIEW ============ -->
+      <section id="overview" class="panel">
+        <div class="overview-grid">
+          <!-- 3D vault scene -->
+          <div class="vault-stage glass">
+            <canvas id="vaultCanvas"></canvas>
+            <div id="vaultFallback" class="vault-fallback" hidden>
+              <div class="fb-dome"></div>
+              <div class="fb-coin">₩</div>
+              <p class="fb-note">
+                3D 장면을 보려면 <code>lib/three.min.js</code>를 넣어주세요.
+              </p>
+            </div>
+            <div class="stage-caption">
+              <span id="stageItem">금고는 비어 있어요</span>
+            </div>
+          </div>
+
+          <!-- headline stats -->
+          <div class="stat-stack">
+            <div class="glass stat-big">
+              <div class="stat-label">지금까지 아낀 돈</div>
+              <div class="stat-value mint" id="totalSaved">₩0</div>
+            </div>
+            <div class="stat-row">
+              <div class="glass stat-sm">
+                <div class="stat-label">참은 횟수</div>
+                <div class="stat-value" id="resisted">0</div>
+              </div>
+              <div class="glass stat-sm">
+                <div class="stat-label">저항률</div>
+                <div class="stat-value teal" id="resistRate">0%</div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="glass stat-sm">
+                <div class="stat-label">멈춘 순간</div>
+                <div class="stat-value" id="interventions">0</div>
+              </div>
+              <div class="glass stat-sm">
+                <div class="stat-label">평균 가격</div>
+                <div class="stat-value amber" id="avgSpend">₩0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROFILE ============ -->
+      <section id="profile" class="panel">
+        <h2 class="panel-title">충동 프로필</h2>
+        <p class="panel-sub">전부 이 기기 안에서 계산돼요. 데이터가 쌓일수록 정확해집니다.</p>
+
+        <div class="cards-2">
+          <div class="glass chart-card">
+            <h3>시간대별 패턴</h3>
+            <div id="hourHeatmap" class="heatmap"></div>
+            <div class="heatmap-axis">
+              <span>0시</span><span>6시</span><span>12시</span><span>18시</span><span>23시</span>
+            </div>
+            <p class="insight-line" id="hourInsight"></p>
+          </div>
+
+          <div class="glass chart-card">
+            <h3>요일별 패턴</h3>
+            <div id="weekdayBars" class="bars"></div>
+          </div>
+        </div>
+
+        <div class="cards-2">
+          <div class="glass chart-card">
+            <h3>가장 끌린 키워드</h3>
+            <div id="topKeywords" class="taglist"></div>
+          </div>
+          <div class="glass chart-card">
+            <h3>충동을 가장 부른 사이트</h3>
+            <div id="topSites" class="ranklist"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VAULT ============ -->
+      <section id="vault" class="panel">
+        <h2 class="panel-title">금고</h2>
+        <p class="panel-sub">식히는 중인 항목과 지난 결정들이에요.</p>
+        <div id="vaultGrid" class="vault-grid"></div>
+        <p class="empty-note" id="vaultEmptyNote">
+          금고가 고요해요. 충동이 올 때 여기 넣어두면 천천히 식혀줄게요.
+        </p>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section id="settings" class="panel">
+        <h2 class="panel-title">설정</h2>
+
+        <div class="glass setting-block">
+          <label class="set-label">강도</label>
+          <div class="seg" id="strictnessSeg">
+            <button data-val="gentle">순하게</button>
+            <button data-val="balanced">균형</button>
+            <button data-val="strict">엄격하게</button>
+          </div>
+        </div>
+
+        <div class="cards-2">
+          <div class="glass setting-block">
+            <label class="set-label">시급 (원)</label>
+            <input type="number" id="hourlyWage" min="0" step="500" />
+          </div>
+          <div class="glass setting-block">
+            <label class="set-label">주간 용돈 (원, 선택)</label>
+            <input type="number" id="weeklyAllowance" min="0" step="1000" />
+          </div>
+        </div>
+
+        <div class="cards-2">
+          <div class="glass setting-block">
+            <label class="set-label">아끼는 것의 가격 (원)</label>
+            <input type="number" id="gamePrice" min="0" step="1000" />
+          </div>
+          <div class="glass setting-block">
+            <label class="set-label">금고 기본 식히기 시간</label>
+            <select id="coolingHours">
+              <option value="6">6시간</option>
+              <option value="12">12시간</option>
+              <option value="24">24시간</option>
+              <option value="48">48시간</option>
+              <option value="72">72시간</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="glass setting-block">
+          <label class="set-label">감시할 사이트</label>
+          <p class="set-hint">
+            도메인을 추가하면 권한 창이 떠요(승인 필요). 빼면 해당 사이트에선 더 이상 동작하지 않아요.
+          </p>
+          <div class="domain-editor">
+            <input type="text" id="newDomain" placeholder="예: ssg.com" />
+            <button class="btn-sm" id="addDomain">추가</button>
+          </div>
+          <div id="domainList" class="domain-list"></div>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">전체 일시정지</label>
+            <p class="set-hint">켜면 어떤 개입도 하지 않아요.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="pauseToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">항상 묻기 (강력 추천)</label>
+            <p class="set-hint">구매 버튼을 누를 때마다 <b>매번</b> 개입창을 띄워요. 끄면 자주 사면 점점 약하게(작은 알림) 바뀌어요.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="alwaysAskToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <!-- ---- Cold Purchase Analysis ---- -->
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">냉정한 구매 분석</label>
+            <p class="set-hint">개입할 때 장단점·합리적 판단 포인트를 보여줘요. (무료, AI 불필요)</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="coldToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">모든 사이트에서 감지·분석</label>
+            <p class="set-hint">
+              지정 도메인뿐 아니라 <b>모든 웹사이트</b>에서 상품·서비스·구독·프로그램 구매를
+              감지해요. 켜면 <b>모든 사이트 접근 권한</b>을 요청해요. 분석은 그대로 100% 로컬이에요.
+            </p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="allSitesToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block toggle-block">
+          <div>
+            <label class="set-label">웹검색 분석 + '더 나은 대안 찾기'</label>
+            <p class="set-hint">
+              켜면 분석 카드에 대안 검색 버튼이 생기고, <b>AI 분석을 켠 경우 AI가 직접
+              인터넷을 검색</b>해 외부 리뷰·비교·알려진 문제까지 끌어와 평가해요. (검색 비용이 조금 더 들 수 있어요)
+            </p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="webSearchToggle" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="glass setting-block">
+          <div class="toggle-block" style="margin-bottom: var(--space-12)">
+            <div>
+              <label class="set-label">AI 분석 (선택 · 내 키 사용)</label>
+              <p class="set-hint">켜면 아래 내 API 키로 더 자세한 장단점을 받아요.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="aiToggle" />
+              <span class="switch-track"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div id="aiKeyArea" hidden>
+            <div class="cards-2">
+              <div>
+                <label class="set-label" style="font-size: var(--fs-xs)">제공자</label>
+                <select id="aiProvider">
+                  <option value="claude">Claude (Anthropic)</option>
+                  <option value="openai">OpenAI</option>
+                </select>
+              </div>
+              <div>
+                <label class="set-label" style="font-size: var(--fs-xs)">내 API 키</label>
+                <input type="password" id="aiKey" placeholder="sk-... (내 기기에만 저장)" autocomplete="off" />
+              </div>
+            </div>
+            <div style="margin-top: var(--space-12)">
+              <label class="set-label" style="font-size: var(--fs-xs)">모델 (선택 · 비워두면 기본값)</label>
+              <input type="text" id="aiModel" placeholder="예: claude-sonnet-4-6 / claude-haiku-4-5-20251001 / gpt-4o-mini" autocomplete="off" />
+            </div>
+            <div style="margin-top: var(--space-12)">
+              <label class="set-label" style="font-size: var(--fs-xs)">공용 분석 서버(프록시) URL — 선택</label>
+              <input type="text" id="aiProxyUrl" placeholder="https://...workers.dev (넣으면 키 없이 AI 사용)" autocomplete="off" />
+              <input type="password" id="aiProxySecret" placeholder="프록시 비밀키 (설정했다면)" autocomplete="off" style="margin-top: var(--space-8)" />
+              <p class="set-hint" style="margin-top: var(--space-8)">
+                프록시 URL을 넣으면 <b>개인 키 없이</b> 공용 서버로 AI 분석을 써요. (서버 운영자가 비용·한도를 관리)
+              </p>
+            </div>
+            <div class="domain-editor" style="margin-top: var(--space-12)">
+              <button class="btn-sm" id="aiTestBtn" type="button">AI 연결 테스트</button>
+              <span id="aiTestResult" class="set-hint" style="align-self:center; margin:0"></span>
+            </div>
+            <p class="set-hint" style="margin-top: var(--space-12)">
+              🔒 키는 <b>이 기기에만</b> 저장되고, 선택한 AI 제공자에게만 직접 전송돼요. 그 외 어디에도 보내지 않아요. AI 답변은 <b>참고용</b>이에요.
+              <br />키를 넣었는데 분석이 안 뜨면 위 <b>"AI 연결 테스트"</b>로 정확한 오류를 확인하세요.
+            </p>
+          </div>
+        </div>
+
+        <p class="save-toast" id="saveToast" hidden>저장됨 ✓</p>
+      </section>
+
+      <!-- ============ MY DATA / PRIVACY ============ -->
+      <section id="data" class="panel">
+        <h2 class="panel-title">내 데이터 · 개인정보</h2>
+        <div class="glass privacy-hero">
+          <div class="privacy-badge">🔒 100% 로컬</div>
+          <p>
+            IMPULSE VAULT는 사용자 데이터를 담은 네트워크 요청을 <b>전혀 하지 않습니다.</b>
+            아래는 지금 이 기기에 저장된 내용 전부예요.
+          </p>
+        </div>
+
+        <div class="glass data-table-card">
+          <h3>저장된 데이터</h3>
+          <div id="dataTable" class="data-table"></div>
+        </div>
+
+        <div class="glass danger-card">
+          <div>
+            <h3>모든 데이터 삭제</h3>
+            <p>검색 기록, 조회 기록, 금고, 통계, 프로필을 전부 지워요. 되돌릴 수 없어요.</p>
+          </div>
+          <button class="btn-danger" id="deleteAll">전부 삭제</button>
+        </div>
+
+        <button class="btn-ghost wide" id="exportData">내 데이터 내보내기 (JSON)</button>
+      </section>
+    </main>
+
+    <!-- LOCAL Three.js — see lib/three.min.js note. Loads only if present. -->
+    <script src="../lib/three.min.js"></script>
+    <script src="../utils/iv3d.js"></script>
+    <script src="../utils/storage.js"></script>
+    <script src="../utils/patterns.js"></script>
+    <script src="vault3d.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

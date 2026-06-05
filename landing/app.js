@@ -6,16 +6,10 @@
 
 var CONFIG = {
   // Where "시작하기 / 브라우저에 추가하기" sends people. Until the Chrome Web
-  // Store listing is live, this points at the bundled install guide page
-  // (install.html), which has the .zip download + load-unpacked steps.
+  // Store / Edge Add-ons listings are live, this points at the bundled install
+  // guide page (install.html) with per-browser load-unpacked steps.
   // Swap it for your Web Store URL once published.
   INSTALL_URL: 'install.html',
-
-  // Desktop app installer (.exe). The "latest/download" permalink always
-  // points at the newest release asset, so new versions work without edits.
-  DESKTOP_WIN_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases/latest/download/IMPULSE-VAULT-Setup.exe',
-  // Where the "all releases" / source link points.
-  RELEASES_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases',
 
   // 후원 계좌 (소개 페이지에 표시 + 복사 버튼). 계좌번호는 index.html의
   // #bankAccount 에도 들어 있어요. 바꾸려면 둘 다 같은 값으로 두면 돼요.
@@ -35,29 +29,6 @@ var CONFIG = {
         e.preventDefault();
         alert('설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)');
       });
-    }
-  });
-
-  // ---- Desktop (.exe) download wiring ----
-  function ready(v) { return v && v.indexOf('PASTE') !== 0; }
-  var desktopUrl = ready(CONFIG.DESKTOP_WIN_URL) ? CONFIG.DESKTOP_WIN_URL : null;
-  var releasesUrl = ready(CONFIG.RELEASES_URL) ? CONFIG.RELEASES_URL : null;
-  document.querySelectorAll('[data-download-desktop]').forEach(function (a) {
-    if (desktopUrl) {
-      a.href = desktopUrl;
-      a.setAttribute('download', '');
-      a.rel = 'noopener';
-    } else {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (releasesUrl) { window.open(releasesUrl, '_blank', 'noopener'); return; }
-        alert('데스크탑 앱은 곧 공개돼요.\n(app.js의 CONFIG.DESKTOP_WIN_URL에 GitHub Release의 .exe 주소를 넣으세요.)');
-      });
-    }
-  });
-  document.querySelectorAll('[data-download-note]').forEach(function (p) {
-    if (releasesUrl) {
-      p.innerHTML = '모든 버전은 <a href="' + releasesUrl + '" target="_blank" rel="noopener">GitHub Releases</a>에서 받을 수 있어요.';
     }
   });
 

@@ -36,7 +36,6 @@
       <nav class="nav-links">
         <a href="#how">작동 방식</a>
         <a href="#features">기능</a>
-        <a href="#desktop">데스크탑 앱</a>
         <a href="#privacy">프라이버시</a>
         <a href="#support">후원</a>
       </nav>
@@ -130,56 +129,24 @@
         </div>
       </section>
 
-      <!-- DESKTOP APP -->
-      <section id="desktop" class="section desktop">
-        <span class="label">데스크탑 앱</span>
-        <h2>브라우저 밖에서도, 컴퓨터 전체를 지켜요.</h2>
-        <p class="desktop-sub">
-          확장 프로그램은 브라우저 안에서 동작해요. 데스크탑 앱은 여기에 더해
-          <b>화면 감시(OCR)</b>로 다른 앱·게임 런처·스토어의 결제 화면까지 알아채고
-          조용히 한 번 더 멈춰 세워줘요. 모든 처리는 <b>내 컴퓨터 안에서만</b> 일어나요.
+      <!-- BROWSERS -->
+      <section id="browsers" class="section browsers">
+        <span class="label">지원 브라우저</span>
+        <h2>쓰던 브라우저에 그대로.</h2>
+        <p class="browsers-sub">
+          크로미움 계열 브라우저는 <b>같은 확장 하나</b>로 전부 동작해요.
+          설치는 30초, 권한은 당신이 허용한 사이트에만 적용돼요.
         </p>
-        <div class="card desktop-card">
-          <div class="desktop-os">
-            <span class="os-mark">⊞</span>
-            <div>
-              <b>Windows</b>
-              <small>설치 파일 (.exe) · Windows 10/11</small>
-            </div>
-          </div>
-          <a class="btn btn-primary btn-lg" data-download-desktop href="#">Windows용 다운로드 (.exe)</a>
-          <p class="desktop-note" data-download-note>
-            최신 버전은 GitHub Releases에서 받을 수 있어요.
-          </p>
+        <div class="browser-grid">
+          <div class="card browser-chip"><span class="bc-ico">🌐</span><b>Chrome</b></div>
+          <div class="card browser-chip"><span class="bc-ico">🟦</span><b>Edge</b></div>
+          <div class="card browser-chip"><span class="bc-ico">🦁</span><b>Brave</b></div>
+          <div class="card browser-chip"><span class="bc-ico">🟢</span><b>Whale</b></div>
+          <div class="card browser-chip"><span class="bc-ico">🔴</span><b>Opera</b></div>
+          <div class="card browser-chip"><span class="bc-ico">💎</span><b>Vivaldi</b></div>
         </div>
-
-        <!-- Windows Defender / SmartScreen reassurance + how to run -->
-        <div class="install-guide">
-          <div class="ig-head">
-            <span class="ig-ico">🛡️</span>
-            <h3>설치할 때 파란 경고창이 떠도 <span class="ig-hl">놀라지 마세요</span></h3>
-          </div>
-          <p class="ig-lead">
-            <b>"Windows의 PC를 보호했습니다"</b> 라는 파란 창이 뜰 수 있어요.
-            이건 바이러스 경고가 아니라, 아직 <b>유료 코드 서명 전</b>이라 Windows가
-            처음 보는 앱에 띄우는 <b>일반 안내</b>예요. 아래 2번만 누르면 바로 설치돼요. 👇
-          </p>
-          <ol class="ig-steps">
-            <li>받은 <code>IMPULSE-VAULT-Setup.exe</code> 를 <b>두 번 클릭</b>해요.</li>
-            <li>파란 창이 뜨면 → 가운데의 <b>“추가 정보(More info)”</b> 글씨를 클릭.</li>
-            <li>아래에 나타나는 <b>“실행(Run anyway)”</b> 버튼을 클릭.</li>
-            <li>설치 마법사가 열리면 <b>다음 → 설치</b> 로 진행하면 끝! 🎉</li>
-          </ol>
-          <p class="ig-safe">
-            🔒 IMPULSE VAULT는 <b>오픈소스(코드 공개)</b>이고 <b>100% 로컬</b>이에요.
-            화면·구매 기록은 어떤 서버로도 나가지 않아요. 다운로드가 쌓이면 이 경고는 저절로 사라져요.
-          </p>
-        </div>
-
-        <p class="support-note">
-          macOS·Linux 빌드도 같은 코드로 만들 수 있어요. 앱은 무료이며, 화면 감시는
-          언제든 끌 수 있고 켰을 때만 동작해요.
-        </p>
+        <a class="btn btn-primary btn-lg" data-install href="#">브라우저에 추가하기</a>
+        <p class="support-note">설치 방법은 브라우저별로 안내 페이지에서 단계별로 확인할 수 있어요.</p>
       </section>
 
       <!-- PRIVACY -->

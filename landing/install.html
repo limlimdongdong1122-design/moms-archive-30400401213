@@ -22,6 +22,10 @@
       ol.steps2 li { counter-increment: s; position: relative; padding: 14px 16px 14px 56px; background: var(--glass); border: 1px solid var(--glass-bd); border-radius: var(--r-md); color: var(--dim); }
       ol.steps2 li b { color: var(--text); }
       ol.steps2 li::before { content: counter(s); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(180deg, #a9cbff, var(--accent)); color: #06101f; font-family: var(--fdisp); font-weight: 700; font-size: 14px; }
+      .addr-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin-top: 12px; }
+      .addr-list span { font-size: 13px; color: var(--dim); display: flex; align-items: center; gap: 8px; }
+      .addr-list b { min-width: 52px; display: inline-block; }
+      @media (max-width: 480px) { .addr-list { grid-template-columns: 1fr; } }
       code.kbd { background: var(--glass); border: 1px solid var(--glass-bd); border-radius: 6px; padding: 1px 7px; font-size: 13px; color: var(--accent); }
       .note-box { margin-top: 26px; padding: 16px 18px; border-radius: var(--r-md); background: var(--glass); border: 1px solid var(--glass-bd); color: var(--faint); font-size: 13px; line-height: 1.7; }
       .back-link { display: inline-block; margin-top: 26px; color: var(--accent); font-size: 14px; }
@@ -54,9 +58,18 @@
 
         <ol class="steps2">
           <li>위 버튼으로 받은 zip을 <b>압축 해제</b>해요. (<code class="kbd">impulse-vault</code> 폴더가 나와요)</li>
-          <li>브라우저 주소창에 <code class="kbd">chrome://extensions</code> 입력 → 엔터. (엣지는 <code class="kbd">edge://extensions</code>)</li>
-          <li>오른쪽 위 <b>개발자 모드</b>를 켜요.</li>
-          <li><b>압축해제된 확장 프로그램을 로드</b> 버튼 → 방금 푼 <code class="kbd">impulse-vault</code> 폴더 선택.</li>
+          <li><b>확장 관리 페이지</b>를 열어요 — 주소창에 <b>본인 브라우저</b>의 주소를 입력 → 엔터:
+            <div class="addr-list">
+              <span><b>Chrome</b> <code class="kbd">chrome://extensions</code></span>
+              <span><b>Edge</b> <code class="kbd">edge://extensions</code></span>
+              <span><b>Brave</b> <code class="kbd">brave://extensions</code></span>
+              <span><b>Whale</b> <code class="kbd">whale://extensions</code></span>
+              <span><b>Opera</b> <code class="kbd">opera://extensions</code></span>
+              <span><b>Vivaldi</b> <code class="kbd">vivaldi://extensions</code></span>
+            </div>
+          </li>
+          <li><b>개발자 모드</b>를 켜요. (Chrome·Brave·Whale·Vivaldi는 오른쪽 위, <b>Edge·Opera는 왼쪽</b> 토글)</li>
+          <li><b>압축해제된 확장 프로그램을 로드</b>(Load unpacked) 버튼 → 방금 푼 <code class="kbd">impulse-vault</code> 폴더 선택.</li>
           <li>설치 완료! 처음 한 번 <b>온보딩 화면</b>에서 감시할 사이트와 권한을 허용하면 끝이에요.</li>
         </ol>
 

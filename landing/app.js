@@ -18,17 +18,19 @@ var CONFIG = {
   RELEASES_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases',
 
   // Donation links (hosted platforms — no secrets here). Blank = "준비 중".
+  // KakaoPay is active; the others stay blank until you add them.
   DONATION_LINKS: {
-    toss: 'PASTE_URL_HERE', // Korean
-    kakaoPay: 'PASTE_URL_HERE', // Korean
-    buyMeACoffee: 'PASTE_URL_HERE',
-    paypal: 'PASTE_URL_HERE',
+    kakaoPay: 'https://qr.kakaopay.com/FJdGwoyyy', // ✅ 카카오페이 후원 (활성)
+    toss: '',
+    buyMeACoffee: '',
+    paypal: '',
   },
   CURRENCY: '₩',
+  // Suggested amounts — all open KakaoPay, where the supporter sets the amount.
   TIERS: [
-    { amount: 1000, link: 'toss', emoji: '☕', label: '커피 한 모금' },
+    { amount: 1000, link: 'kakaoPay', emoji: '☕', label: '커피 한 모금' },
     { amount: 5000, link: 'kakaoPay', emoji: '🧋', label: '커피 한 잔' },
-    { amount: 10000, link: 'buyMeACoffee', emoji: '🌟', label: '든든한 응원' },
+    { amount: 10000, link: 'kakaoPay', emoji: '🌟', label: '든든한 응원' },
   ],
 };
 

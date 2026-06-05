@@ -1,0 +1,51 @@
+name: Build desktop app (Windows .exe)
+
+# Two ways to trigger:
+#  1) Actions tab → "Build desktop app" → Run workflow   (manual, anytime)
+#  2) push a version tag like v1.0.0                      (also makes a Release)
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write   # lets the tag build attach the .exe to a GitHub Release
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: desktop
+        run: npm install
+
+      - name: Build Windows installer (.exe)
+        working-directory: desktop
+        run: npm run dist:win
+
+      # Always available: download the .exe from this run's "Artifacts".
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: IMPULSE-VAULT-Setup-exe
+          path: desktop/dist/*.exe
+          if-no-files-found: error
+
+      # On a version tag (v1.0.0…): publish a Release with the .exe attached,
+      # so the landing page's "latest/download" link works automatically.
+      - name: Attach to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: desktop/dist/*.exe
+          draft: false
+          generate_release_notes: true

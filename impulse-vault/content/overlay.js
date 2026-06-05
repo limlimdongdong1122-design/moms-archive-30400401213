@@ -23,6 +23,17 @@
   let shadow = null; // the shadow root
   let stylesReady = false;
 
+  // Remembered "fullscreen / 크게 보기" preference for the intervention modal.
+  let fullscreenPref = false;
+  try {
+    if (chrome && chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get('ivFullscreen', (r) => {
+        void chrome.runtime.lastError;
+        fullscreenPref = !!(r && r.ivFullscreen);
+      });
+    }
+  } catch (_) {}
+
   // Lazily create the shadow host + load overlay.css into it.
   function ensureRoot() {
     if (hostEl && shadow) return Promise.resolve();
@@ -174,6 +185,26 @@
       card.appendChild(badge);
       card.appendChild(title);
       card.appendChild(item);
+
+      // Fullscreen / "크게 보기" toggle (remembered across modals). Lets the
+      // user blow the window up to fill the screen for comfortable reading.
+      if (fullscreenPref) backdrop.classList.add('iv-fullscreen');
+      const fsBtn = el('button', 'iv-fs-toggle');
+      const setFsLabel = () => {
+        const on = backdrop.classList.contains('iv-fullscreen');
+        fsBtn.textContent = on ? '⤡ 작게' : '⤢ 전체화면';
+        fsBtn.setAttribute('aria-label', on ? '작은 창으로' : '전체화면으로');
+      };
+      setFsLabel();
+      fsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const on = !backdrop.classList.contains('iv-fullscreen');
+        backdrop.classList.toggle('iv-fullscreen', on);
+        fullscreenPref = on;
+        setFsLabel();
+        try { chrome.storage && chrome.storage.local.set({ ivFullscreen: on }); } catch (_) {}
+      });
+      card.appendChild(fsBtn);
 
       // Cost reframing
       const rf = payload.reframing || {};

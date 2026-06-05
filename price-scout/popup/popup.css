@@ -1,0 +1,205 @@
+/* ============================================================
+ * PRICE SCOUT — popup/popup.css
+ * The everyday glance: a calm radar scope, a commanding watch count,
+ * and a clean ledger of the competitor moves that matter. Built only
+ * from tokens.css — no stray colors. Same premium glass system as our
+ * sister product; the hue is mint instead of ice-blue.
+ * ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 360px;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+  position: relative;
+  overflow: hidden;
+  /* a whisper of mint light along the very top edge */
+  background-image: radial-gradient(120% 60% at 50% -10%, rgba(47, 224, 166, 0.06), transparent 60%);
+}
+.wrap { position: relative; z-index: 1; padding: var(--space-24) var(--space-24) var(--space-16); }
+
+/* ---- Header ---- */
+.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-24); }
+.logo { display: flex; align-items: center; gap: var(--space-12); }
+.logo-mark {
+  width: 22px; height: 22px; display: grid; place-items: center;
+  color: var(--accent-good);
+  filter: drop-shadow(0 0 10px var(--accent-good-glow));
+}
+.logo-mark svg { width: 22px; height: 22px; }
+.logo-name { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.16em; font-size: var(--fs-xs); }
+
+/* Scan-now button — discreet, precise */
+.scan-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: var(--r-pill);
+  background: var(--glass-fill); border: 1px solid var(--glass-border);
+  color: var(--text-secondary); font-family: var(--font-body); font-size: var(--fs-2xs);
+  font-weight: 600; cursor: pointer;
+  transition: transform var(--dur-micro) var(--ease-calm), background var(--dur-standard) var(--ease-soft),
+    color var(--dur-standard) var(--ease-soft), border-color var(--dur-standard) var(--ease-soft);
+}
+.scan-btn .scan-ico { color: var(--accent-good); transition: transform var(--dur-standard) var(--ease-soft); }
+.scan-btn:hover { color: var(--text-primary); border-color: var(--accent-good-glow); background: rgba(47, 224, 166, 0.08); }
+.scan-btn:active { transform: scale(0.97); }
+.scan-btn.scanning { pointer-events: none; color: var(--accent-good); border-color: var(--accent-good-glow); }
+.scan-btn.scanning .scan-ico { animation: scan-spin 0.9s linear infinite; }
+@keyframes scan-spin { to { transform: rotate(360deg); } }
+
+/* ---- Hero ---- */
+.hero { text-align: center; padding: var(--space-8) 0 var(--space-24); position: relative; }
+
+/* Radar scope — the signature illustration (sibling of the IV coin) */
+.radar-stage {
+  position: relative; width: 132px; height: 132px; margin: 0 auto var(--space-16);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(47, 224, 166, 0.12), transparent 62%),
+    radial-gradient(circle at 50% 50%, rgba(13, 17, 19, 0.6), rgba(8, 10, 11, 0.85));
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-highlight),
+    inset 0 0 40px rgba(47, 224, 166, 0.08),
+    0 0 44px var(--accent-good-glow);
+  overflow: hidden;
+}
+.radar-rings {
+  position: absolute; inset: 0; border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 25%, rgba(47, 224, 166, 0.16) 25.4% 26%, transparent 26.4%),
+    radial-gradient(circle, transparent 0 50%, rgba(47, 224, 166, 0.13) 50.4% 51%, transparent 51.4%),
+    radial-gradient(circle, transparent 0 74%, rgba(47, 224, 166, 0.10) 74.4% 75%, transparent 75.4%);
+}
+.radar-rings::before, .radar-rings::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(47, 224, 166, 0.12) 50%, transparent calc(50% + 0.5px));
+}
+.radar-rings::after { transform: rotate(90deg); }
+.radar-sweep {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(47, 224, 166, 0.34), rgba(47, 224, 166, 0.04) 38%, transparent 52%, transparent 100%);
+  animation: radar-spin 3.6s linear infinite;
+  -webkit-mask: radial-gradient(circle 8px at center, transparent 98%, #000 100%);
+  mask: radial-gradient(circle 8px at center, transparent 98%, #000 100%);
+}
+@keyframes radar-spin { to { transform: rotate(360deg); } }
+.radar-core {
+  position: absolute; top: 50%; left: 50%; width: 9px; height: 9px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #eafff7, var(--accent-good));
+  box-shadow: 0 0 12px var(--accent-good-glow);
+}
+.radar-blip {
+  position: absolute; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent-good); box-shadow: 0 0 10px var(--accent-good-glow);
+}
+.radar-blip.b1 { top: 30%; left: 64%; animation: blip 3.6s ease-in-out infinite; }
+.radar-blip.b2 { top: 62%; left: 38%; background: var(--accent-down); box-shadow: 0 0 10px var(--accent-down-glow); animation: blip 3.6s ease-in-out infinite 1.8s; }
+@keyframes blip { 0%, 100% { opacity: 0.25; transform: scale(0.8); } 18% { opacity: 1; transform: scale(1.15); } 60% { opacity: 0.4; } }
+
+.watch-label { margin-bottom: var(--space-8); color: var(--text-tertiary); }
+.watch-count {
+  font-size: 3rem; line-height: 1; margin-bottom: var(--space-16);
+  filter: drop-shadow(0 0 28px var(--accent-good-glow));
+}
+
+/* a hairline that fades at both ends — a watch-dial detail */
+.hairline {
+  height: 1px; width: 64%; margin: 0 auto var(--space-16);
+  background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+}
+
+.hero-meta { display: flex; align-items: stretch; justify-content: center; gap: var(--space-16); }
+.meta-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 96px; }
+.meta-cell b {
+  font-family: var(--font-display); font-weight: 600; font-size: var(--fs-lg);
+  color: var(--text-primary); font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+}
+#threatCount { color: var(--accent-down); }
+#oppCount { color: var(--accent-good); }
+.meta-cell span { font-size: var(--fs-2xs); color: var(--text-tertiary); }
+.meta-sep { width: 1px; align-self: center; height: 26px; background: var(--glass-border); }
+
+/* ---- Moves section ---- */
+.section-head { display: flex; align-items: center; gap: var(--space-8); margin-bottom: var(--space-12); }
+.count {
+  font-size: var(--fs-2xs); background: var(--glass-fill); border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill); padding: 2px 9px; color: var(--text-secondary); font-variant-numeric: tabular-nums;
+}
+.moves-list { display: flex; flex-direction: column; gap: var(--space-12); }
+
+/* Move card — layered glass with a hover lift */
+.move-card {
+  position: relative;
+  display: grid; grid-template-columns: 1fr auto; gap: var(--space-12); align-items: center;
+  padding: var(--space-12) var(--space-16); border-radius: var(--r-md);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  cursor: pointer;
+  transition: transform var(--dur-standard) var(--ease-calm),
+    border-color var(--dur-standard) var(--ease-soft), box-shadow var(--dur-standard) var(--ease-soft);
+  animation: ps-fade-up var(--dur-major) var(--ease-calm) both;
+}
+.move-card:hover { transform: translateY(-2px); border-color: var(--glass-highlight); box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 10px 30px rgba(0, 0, 0, 0.4); }
+.move-card.threat { border-color: var(--accent-down-glow); }
+.move-card.threat:hover { box-shadow: inset 0 1px 0 0 var(--glass-highlight), 0 0 26px var(--accent-down-glow); }
+.move-card.unseen::before {
+  content: ""; position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent-good);
+  box-shadow: 0 0 8px var(--accent-good-glow);
+}
+.move-card.unseen.threat::before { background: var(--accent-down); box-shadow: 0 0 8px var(--accent-down-glow); }
+
+.mc-body { min-width: 0; }
+.mc-name { font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); }
+.mc-sub { display: flex; align-items: center; gap: var(--space-8); margin-top: 3px; }
+.mc-price { font-family: var(--font-display); font-size: var(--fs-xs); color: var(--text-secondary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mc-host { font-size: var(--fs-2xs); color: var(--text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; }
+
+.mc-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.mc-spark { width: 64px; height: 22px; display: block; }
+.mc-spark polyline { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.mc-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--font-display); font-weight: 600; font-size: var(--fs-2xs);
+  padding: 2px 7px; border-radius: var(--r-pill); font-variant-numeric: tabular-nums;
+}
+.mc-badge.down { color: var(--accent-down); background: var(--accent-down-glow); }
+.mc-badge.up { color: var(--accent-good); background: var(--accent-good-glow); }
+.mc-badge.same { color: var(--text-tertiary); background: var(--glass-fill); }
+
+/* ---- Empty / quiet states ---- */
+.empty, .all-quiet { padding: var(--space-24); color: var(--text-secondary); font-size: var(--fs-xs); line-height: var(--lh-body); }
+.empty { display: flex; align-items: center; gap: var(--space-16); }
+.empty p b { color: var(--accent-good); font-weight: 600; }
+.empty-ico {
+  flex: 0 0 auto; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%;
+  color: var(--accent-good); background: var(--accent-good-glow); border: 1px solid var(--accent-good-glow);
+  box-shadow: 0 0 20px var(--accent-good-glow);
+}
+.all-quiet { display: flex; align-items: center; gap: var(--space-12); padding: var(--space-16) var(--space-24); }
+.quiet-dot {
+  flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: var(--accent-good);
+  box-shadow: 0 0 12px var(--accent-good-glow); animation: quiet-pulse 2.6s var(--ease-soft) infinite;
+}
+@keyframes quiet-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+
+/* ---- Footer ---- */
+.foot { display: flex; gap: var(--space-8); margin-top: var(--space-24); }
+.btn-ghost {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-8);
+  padding: var(--space-12); border-radius: var(--r-md); border: 1px solid var(--glass-border);
+  background: var(--glass-fill); color: var(--text-secondary);
+  font-family: var(--font-body); font-size: var(--fs-sm); cursor: pointer;
+  transition: transform var(--dur-micro) var(--ease-calm), background var(--dur-standard) var(--ease-soft),
+    color var(--dur-standard) var(--ease-soft), border-color var(--dur-standard) var(--ease-soft);
+}
+.btn-ghost svg { color: var(--accent-calm); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.06); color: var(--text-primary); border-color: var(--glass-highlight); }
+.btn-ghost:active { transform: scale(0.98); }
+.btn-ghost.icon-only { flex: 0 0 auto; width: 46px; padding: var(--space-12); }

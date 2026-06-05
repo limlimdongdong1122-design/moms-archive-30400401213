@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "PRICE SCOUT — 경쟁사 가격 정찰",
+  "version": "1.0.0",
+  "description": "셀러를 위한 경쟁사 가격 모니터링. 상품을 추적하면 매일 자동으로 가격 변동을 정찰하고 알려줘요. 100% 로컬.",
+
+  "permissions": ["storage", "alarms", "notifications", "scripting"],
+
+  "host_permissions": [
+    "*://*.coupang.com/*",
+    "*://smartstore.naver.com/*",
+    "*://shopping.naver.com/*",
+    "*://search.shopping.naver.com/*",
+    "*://*.11st.co.kr/*",
+    "*://*.gmarket.co.kr/*",
+    "*://*.auction.co.kr/*",
+    "*://*.wemakeprice.com/*",
+    "*://*.tmon.co.kr/*",
+    "*://*.musinsa.com/*",
+    "*://*.aliexpress.com/*",
+    "*://*.amazon.com/*"
+  ],
+
+  "optional_host_permissions": ["*://*/*"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.coupang.com/*",
+        "*://smartstore.naver.com/*",
+        "*://shopping.naver.com/*",
+        "*://*.11st.co.kr/*",
+        "*://*.gmarket.co.kr/*",
+        "*://*.auction.co.kr/*",
+        "*://*.wemakeprice.com/*",
+        "*://*.tmon.co.kr/*",
+        "*://*.musinsa.com/*",
+        "*://*.aliexpress.com/*",
+        "*://*.amazon.com/*"
+      ],
+      "js": ["utils/price.js", "utils/adapters.js", "content/tracker.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "PRICE SCOUT",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "options_page": "dashboard/dashboard.html"
+}

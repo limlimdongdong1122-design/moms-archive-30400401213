@@ -6,32 +6,14 @@
 
 var CONFIG = {
   // Where "시작하기 / 브라우저에 추가하기" sends people. Until the Chrome Web
-  // Store listing is live, this points at the bundled install guide page
-  // (install.html), which has the .zip download + load-unpacked steps.
+  // Store / Edge Add-ons listings are live, this points at the bundled install
+  // guide page (install.html) with per-browser load-unpacked steps.
   // Swap it for your Web Store URL once published.
   INSTALL_URL: 'install.html',
 
-  // Desktop app installer (.exe). The "latest/download" permalink always
-  // points at the newest release asset, so new versions work without edits.
-  DESKTOP_WIN_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases/latest/download/IMPULSE-VAULT-Setup.exe',
-  // Where the "all releases" / source link points.
-  RELEASES_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases',
-
-  // Donation links (hosted platforms — no secrets here). Blank = "준비 중".
-  // KakaoPay is active; the others stay blank until you add them.
-  DONATION_LINKS: {
-    kakaoPay: 'https://qr.kakaopay.com/FJdGwoyyy', // ✅ 카카오페이 후원 (활성)
-    toss: '',
-    buyMeACoffee: '',
-    paypal: '',
-  },
-  CURRENCY: '₩',
-  // Suggested amounts — all open KakaoPay, where the supporter sets the amount.
-  TIERS: [
-    { amount: 1000, link: 'kakaoPay', emoji: '☕', label: '커피 한 모금' },
-    { amount: 5000, link: 'kakaoPay', emoji: '🧋', label: '커피 한 잔' },
-    { amount: 10000, link: 'kakaoPay', emoji: '🌟', label: '든든한 응원' },
-  ],
+  // 후원 계좌 — 판매/인수 시 구매자가 본인 계좌로 교체하세요.
+  // (index.html 의 #bankAccount 텍스트도 같은 값으로 바꾸면 끝)
+  BANK: { name: '은행명', account: '000-0000-000000' },
 };
 
 (function () {
@@ -50,52 +32,30 @@ var CONFIG = {
     }
   });
 
-  // ---- Desktop (.exe) download wiring ----
-  function ready(v) { return v && v.indexOf('PASTE') !== 0; }
-  var desktopUrl = ready(CONFIG.DESKTOP_WIN_URL) ? CONFIG.DESKTOP_WIN_URL : null;
-  var releasesUrl = ready(CONFIG.RELEASES_URL) ? CONFIG.RELEASES_URL : null;
-  document.querySelectorAll('[data-download-desktop]').forEach(function (a) {
-    if (desktopUrl) {
-      a.href = desktopUrl;
-      a.setAttribute('download', '');
-      a.rel = 'noopener';
-    } else {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (releasesUrl) { window.open(releasesUrl, '_blank', 'noopener'); return; }
-        alert('데스크탑 앱은 곧 공개돼요.\n(app.js의 CONFIG.DESKTOP_WIN_URL에 GitHub Release의 .exe 주소를 넣으세요.)');
-      });
-    }
-  });
-  document.querySelectorAll('[data-download-note]').forEach(function (p) {
-    if (releasesUrl) {
-      p.innerHTML = '모든 버전은 <a href="' + releasesUrl + '" target="_blank" rel="noopener">GitHub Releases</a>에서 받을 수 있어요.';
-    }
-  });
-
-  // ---- Donation tiers ----
-  var grid = document.getElementById('donateTiers');
-  if (grid) {
-    CONFIG.TIERS.forEach(function (t) {
-      var url = CONFIG.DONATION_LINKS[t.link];
-      var ready = url && url.indexOf('PASTE') !== 0;
-      var card = document.createElement('div');
-      card.className = 'tier card';
-      card.innerHTML =
-        '<div class="tier-emoji">' + t.emoji + '</div>' +
-        '<div class="tier-amt">' + CONFIG.CURRENCY + t.amount.toLocaleString('ko-KR') + '</div>' +
-        '<div class="tier-label">' + t.label + '</div>';
-      var btn = document.createElement('button');
-      if (ready) {
-        btn.textContent = '후원하기';
-        btn.addEventListener('click', function () { window.open(url, '_blank', 'noopener'); });
+  // ---- Donation account: one-tap copy of the bank account number ----
+  var copyBtn = document.getElementById('copyAccount');
+  var acct = document.getElementById('bankAccount');
+  if (copyBtn && acct) {
+    var fallbackCopy = function (text) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      } catch (_) {}
+    };
+    copyBtn.addEventListener('click', function () {
+      var num = (acct.textContent || '').trim();
+      var done = function () {
+        copyBtn.textContent = '복사됨!';
+        copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.textContent = '복사'; copyBtn.classList.remove('copied'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(num).then(done, function () { fallbackCopy(num); done(); });
       } else {
-        btn.textContent = '준비 중';
-        btn.className = 'pending';
-        btn.disabled = true;
+        fallbackCopy(num); done();
       }
-      card.appendChild(btn);
-      grid.appendChild(card);
     });
   }
 
@@ -177,7 +137,7 @@ var CONFIG = {
     }
 
     // ---- 3D tilt + cursor-following sheen on the interactive cards ----
-    document.querySelectorAll('.feat, .step, .tier, .desktop-card').forEach(function (card) {
+    document.querySelectorAll('.feat, .step, .tier, .desktop-card, .g-item').forEach(function (card) {
       var rect = null;
       card.addEventListener('mouseenter', function () { rect = card.getBoundingClientRect(); });
       card.addEventListener('mousemove', function (e) {

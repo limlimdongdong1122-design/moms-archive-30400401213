@@ -80,6 +80,7 @@
         <h2>결제 직전, 이렇게 끼어들어요.</h2>
         <p class="showcase-sub">실제 화면이에요. 막지 않고, 잠깐 멈춰 <b>장점·단점·대안</b>을 보여줘요.</p>
         <div class="preview-stage">
+          <!-- dark · 상품 예시 -->
           <div class="preview-modal">
             <span class="pv-badge">잠깐 멈춤</span>
             <div class="pv-title">이거 진짜 필요해?</div>
@@ -104,6 +105,34 @@
             <div class="pv-actions">
               <span class="pv-btn pv-primary">금고에 넣기 · 24시간</span>
               <span class="pv-btn pv-ghost">안 살래</span>
+            </div>
+          </div>
+
+          <!-- light · 구독 예시 -->
+          <div class="preview-modal light">
+            <span class="pv-badge">구독 점검</span>
+            <div class="pv-title">정말 계속 볼까?</div>
+            <div class="pv-item">프리미엄 영상 스트리밍 구독</div>
+            <div class="pv-reframe">
+              <span class="pv-price">월 ₩13,900</span>
+              <span class="pv-sub">연 ₩166,800 · 지난달 시청 4회</span>
+            </div>
+            <div class="pv-cols">
+              <div class="pv-col">
+                <div class="pv-col-h pv-pro">장점</div>
+                <span class="pv-line"><i></i>광고 없이 시청</span>
+                <span class="pv-line"><i></i>오프라인 저장</span>
+              </div>
+              <div class="pv-col">
+                <div class="pv-col-h pv-con">단점</div>
+                <span class="pv-line"><i class="con"></i>한 달 4번밖에 안 봄</span>
+                <span class="pv-line"><i class="con"></i>무료 대안 존재</span>
+              </div>
+            </div>
+            <div class="pv-verdict"><b>결론</b> · 이번 달은 해지하고 무료 대안을 먼저 써보길 추천해요</div>
+            <div class="pv-actions">
+              <span class="pv-btn pv-primary">1달 뒤 다시 묻기</span>
+              <span class="pv-btn pv-ghost">해지할래</span>
             </div>
           </div>
         </div>
@@ -196,7 +225,16 @@
       <!-- PRIVACY -->
       <section id="privacy" class="section privacy">
         <div class="card privacy-card">
-          <span class="lock">🔒</span>
+          <span class="privacy-art" aria-hidden="true">
+            <svg viewBox="0 0 130 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M65 10l38 14v27c0 27-18 44-38 53-20-9-38-26-38-53V24z" fill="rgba(110,168,255,0.06)"/>
+              <rect x="48" y="56" width="34" height="27" rx="5"/>
+              <path d="M54 56v-7a11 11 0 0 1 22 0v7"/>
+              <circle cx="65" cy="67" r="3.4"/><path d="M65 67v6"/>
+              <path d="M96 30a9 9 0 0 1 .5 17.9" stroke="var(--warn)" opacity="0.85"/>
+              <path d="M90 26l16 24" stroke="var(--warn)"/>
+            </svg>
+          </span>
           <h2>당신의 쇼핑은 당신만 봐요.</h2>
           <p>
             IMPULSE VAULT는 검색어·상품·구매 패턴을 <b>어떤 서버로도 보내지 않아요.</b>
@@ -214,6 +252,14 @@
           IMPULSE VAULT는 무료예요. 무료 AI 분석 서버 비용은 후원으로 유지돼요.
           커피 한 잔이면 충분히 큰 힘이 돼요. 강요는 절대 없어요. ☕
         </p>
+        <span class="support-art" aria-hidden="true">
+          <svg viewBox="0 0 130 110" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M34 48h52v20a24 24 0 0 1-24 24H58a24 24 0 0 1-24-24z" fill="rgba(110,168,255,0.06)"/>
+            <path d="M86 54h9a11 11 0 0 1 0 22h-3"/>
+            <path d="M30 100h60"/>
+            <path d="M52 36c0-5.5 8-6.5 9-1 1-5.5 9-4.5 9 1 0 6-9 10.5-9 10.5S52 42 52 36z" fill="rgba(194,169,142,0.18)" stroke="var(--warn)"/>
+          </svg>
+        </span>
         <div class="donate-account card">
           <span class="da-badge">💛 후원 계좌</span>
           <div class="da-bank">신한은행</div>

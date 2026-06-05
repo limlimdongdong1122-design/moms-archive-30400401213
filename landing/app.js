@@ -126,4 +126,83 @@ var CONFIG = {
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     targets.forEach(function (el) { io.observe(el); });
   }
+
+  // ============================================================
+  // PREMIUM INTERACTIONS — cursor light, 3D tilt, magnetic, scroll bar
+  // All optional polish: skipped on touch devices and when the user
+  // prefers reduced motion. Never blocks core functionality.
+  // ============================================================
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+
+  // ---- Scroll progress bar (cheap, always on) ----
+  var bar = document.querySelector('.scroll-progress i');
+  if (bar) {
+    var onScroll = function () {
+      var h = document.documentElement;
+      var max = (h.scrollHeight - h.clientHeight) || 1;
+      bar.style.width = Math.min(100, (h.scrollTop / max) * 100) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  if (fine && !reduce) {
+    // ---- Cursor light: a soft glow + a precise dot that ease toward the pointer ----
+    var glow = document.querySelector('.cursor-glow');
+    var dot = document.querySelector('.cursor-dot');
+    if (glow && dot) {
+      var tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+      var gx = tx, gy = ty, dx = tx, dy = ty, raf = null;
+      var render = function () {
+        gx = lerp(gx, tx, 0.12); gy = lerp(gy, ty, 0.12);   // glow trails softly
+        dx = lerp(dx, tx, 0.35); dy = lerp(dy, ty, 0.35);   // dot is snappier
+        glow.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0) translate(-50%,-50%)';
+        dot.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0) translate(-50%,-50%)';
+        raf = (Math.abs(gx - tx) > 0.5 || Math.abs(gy - ty) > 0.5 || Math.abs(dx - tx) > 0.5)
+          ? requestAnimationFrame(render) : null;
+      };
+      var kick = function () { if (!raf) raf = requestAnimationFrame(render); };
+      window.addEventListener('mousemove', function (e) {
+        tx = e.clientX; ty = e.clientY; document.body.classList.add('cursor-on'); kick();
+      }, { passive: true });
+      document.addEventListener('mouseleave', function () { document.body.classList.remove('cursor-on'); });
+      // The dot fattens over clickable things.
+      var hot = 'a,button,[role="button"],input,.acc-head';
+      document.addEventListener('mouseover', function (e) {
+        if (e.target.closest && e.target.closest(hot)) dot.classList.add('hot');
+      }, { passive: true });
+      document.addEventListener('mouseout', function (e) {
+        if (e.target.closest && e.target.closest(hot)) dot.classList.remove('hot');
+      }, { passive: true });
+    }
+
+    // ---- 3D tilt + cursor-following sheen on the interactive cards ----
+    document.querySelectorAll('.feat, .step, .tier, .desktop-card').forEach(function (card) {
+      var rect = null;
+      card.addEventListener('mouseenter', function () { rect = card.getBoundingClientRect(); });
+      card.addEventListener('mousemove', function (e) {
+        if (!rect) rect = card.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;   // 0..1
+        var py = (e.clientY - rect.top) / rect.height;   // 0..1
+        card.style.setProperty('--mx', (px * 100) + '%');
+        card.style.setProperty('--my', (py * 100) + '%');
+        var rx = (0.5 - py) * 7;  // tilt up/down
+        var ry = (px - 0.5) * 9;  // tilt left/right
+        card.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px) scale(1.025)';
+      });
+      card.addEventListener('mouseleave', function () { rect = null; card.style.transform = ''; });
+    });
+
+    // ---- Magnetic primary buttons: gently pull toward the cursor ----
+    document.querySelectorAll('.btn-primary').forEach(function (b) {
+      b.addEventListener('mousemove', function (e) {
+        var r = b.getBoundingClientRect();
+        var mx = e.clientX - (r.left + r.width / 2);
+        var my = e.clientY - (r.top + r.height / 2);
+        b.style.transform = 'translate(' + mx * 0.22 + 'px,' + my * 0.30 + 'px) scale(1.06)';
+      });
+      b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+    });
+  }
 })();

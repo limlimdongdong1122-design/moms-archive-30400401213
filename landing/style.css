@@ -147,6 +147,53 @@ code { background: var(--glass); border: 1px solid var(--glass-bd); border-radiu
 .foot-row { width: min(1080px,100%); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .copy { color: var(--faint); font-size: 13px; }
 
+/* ============================================================
+ * PREMIUM LAYER — cursor light, 3D tilt, magnetic & shimmer
+ * ============================================================ */
+
+/* third aurora for a richer, deeper background field */
+.a3 { width: 42vw; height: 42vw; background: radial-gradient(circle, #6ea8ff, transparent 70%); top: 30vh; left: 35vw; opacity: 0.16; animation: drift 52s var(--ease) infinite alternate; }
+
+/* scroll progress bar */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; pointer-events: none; }
+.scroll-progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #8b7bf0); box-shadow: 0 0 12px var(--accent-glow); transition: width .1s linear; }
+
+/* premium cursor — a soft light that follows the pointer + a precise dot */
+.cursor-glow { position: fixed; top: 0; left: 0; width: 460px; height: 460px; border-radius: 50%; pointer-events: none; z-index: 55; transform: translate3d(-50%, -50%, 0); background: radial-gradient(circle, rgba(110,168,255,0.10), transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity .5s; will-change: transform; }
+.cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; z-index: 56; transform: translate3d(-50%, -50%, 0); background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); opacity: 0; transition: opacity .4s, width .2s var(--ease), height .2s var(--ease), background .2s; will-change: transform; }
+.cursor-dot.hot { width: 16px; height: 16px; background: #fff; }
+body.cursor-on .cursor-glow, body.cursor-on .cursor-dot { opacity: 1; }
+@media (hover: none), (pointer: coarse) { .cursor-glow, .cursor-dot { display: none; } }
+
+/* headline — brushed-metal shimmer sweeping across the text */
+.hero h1 { background: linear-gradient(110deg, #cdd7ea 0%, #ffffff 18%, #cdd7ea 38%, #aab4c6 55%, #eef2fb 78%, #cdd7ea 100%); background-size: 240% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 8s linear infinite; }
+@keyframes shine { to { background-position: -240% 0; } }
+
+/* hero vault — a rotating conic light-sweep ring for depth */
+.hero-vault::before { content: ''; position: absolute; inset: -28px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0%, rgba(110,168,255,0.28) 18%, transparent 38%, transparent 100%); filter: blur(7px); animation: spin 11s linear infinite; pointer-events: none; }
+.hero-vault .dome { box-shadow: 0 0 70px var(--accent-glow), inset 0 0 40px rgba(110,168,255,0.18); }
+
+/* primary buttons — a glossy light sweep on hover */
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after { content: ''; position: absolute; top: 0; left: -130%; width: 65%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent); transform: skewX(-18deg); transition: left .6s var(--ease); z-index: 1; }
+.btn-primary:hover::after { left: 150%; }
+
+/* cards — cursor-following inner glow (the "expensive" sheen) on the
+ * interactive cards. Content is lifted above the glow so text stays crisp. */
+.feat, .step, .tier, .desktop-card { position: relative; z-index: 0; overflow: hidden; will-change: transform; }
+.feat > *, .step > *, .tier > *, .desktop-card > * { position: relative; z-index: 1; }
+.feat::before, .step::before, .tier::before, .desktop-card::before { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; opacity: 0; transition: opacity .45s var(--ease); pointer-events: none; background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(110,168,255,0.20), transparent 60%); }
+.feat:hover::before, .step:hover::before, .tier:hover::before, .desktop-card:hover::before { opacity: 1; }
+
+/* section labels — a refined gradient hairline accent */
+.label { position: relative; padding-bottom: 10px; }
+.label::after { content: ''; position: absolute; left: 0; bottom: 0; width: 34px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+/* glass cards — a faint gradient ring for a more crafted edge
+ * (scoped to avoid clobbering .final-card::after's glow) */
+.card { position: relative; }
+.feat::after, .step::after, .tier::after, .desktop-card::after, .privacy-card::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; padding: 1px; background: linear-gradient(150deg, rgba(255,255,255,0.20), rgba(255,255,255,0.02) 40%, transparent 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: .85; }
+
 /* reveal */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }

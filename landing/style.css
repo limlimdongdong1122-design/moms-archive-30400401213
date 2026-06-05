@@ -300,3 +300,9 @@ body.cursor-on .cursor-glow, body.cursor-on .cursor-dot { opacity: 1; }
 .privacy-art svg { width: 96px; height: auto; display: block; }
 .support-art { color: var(--accent); display: block; width: 98px; margin: 6px auto 26px; }
 .support-art svg { width: 98px; height: auto; display: block; }
+
+/* ---- realistic product "photo" header inside each mockup ---- */
+.preview-modal { width: min(410px, 94%); overflow: hidden; }
+.pv-photo { margin: -26px -26px 20px; padding: 12px 16px 4px; border-bottom: 1px solid var(--glass-bd); background: radial-gradient(120% 100% at 50% 0%, rgba(110,168,255,0.16), rgba(255,255,255,0.015)); }
+.pv-photo svg { width: 100%; height: 150px; display: block; }
+.preview-modal.light .pv-photo { background: radial-gradient(120% 100% at 50% 0%, rgba(110,168,255,0.16), rgba(20,30,50,0.02)); border-color: rgba(20,30,50,0.08); }

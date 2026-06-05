@@ -14,7 +14,48 @@
  * memory and always read/write through IVStorage.
  * ============================================================ */
 
-importScripts('utils/storage.js', 'utils/patterns.js', 'utils/analysis.js');
+importScripts('utils/storage.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js', 'lib/ExtPay.js');
+
+// ---- ExtensionPay (Pro subscriptions) -------------------------------------
+// `lib/ExtPay.js` is a safe stub until the real library is dropped in (see its
+// header). We keep ExtPay isolated here + in utils/pro.js so the rest of the
+// app only ever asks IVPro "is this user Pro?".
+let extpay = null;
+try {
+  extpay = ExtPay(IVPro.EXTPAY_ID);
+  extpay.startBackground();
+  if (extpay.onPaid && extpay.onPaid.addListener) extpay.onPaid.addListener(() => syncPro());
+  if (extpay.onTrialStarted && extpay.onTrialStarted.addListener) extpay.onTrialStarted.addListener(() => syncPro());
+} catch (e) {
+  console.warn('[IMPULSE VAULT] ExtPay unavailable — staying on Free:', e);
+}
+
+/** Pull the latest paid/trial status from ExtPay and cache it via IVPro. */
+async function syncPro() {
+  if (!extpay) return;
+  try {
+    const user = await extpay.getUser();
+    await IVPro.setStatus(IVPro.fromExtPayUser(user));
+  } catch (e) {
+    // network/offline — keep the last cached status
+  }
+}
+
+/** AI availability with the Pro rule baked in.
+ *  - rules-based scorecard: always free (handled elsewhere)
+ *  - BYOK (user's own key): free
+ *  - managed proxy (we pay): PRO only
+ *  Returns { ok, reason } where reason is 'pro_required' | 'ai_disabled' | ''. */
+async function aiAvailability(settings) {
+  if (!settings.aiEnabled) return { ok: false, reason: 'ai_disabled' };
+  if (settings.aiKey) return { ok: true, reason: '' };           // BYOK is free
+  if (settings.aiProxyUrl) {
+    return (await IVPro.isPro())
+      ? { ok: true, reason: '' }
+      : { ok: false, reason: 'pro_required' };                   // managed AI = Pro
+  }
+  return { ok: false, reason: 'ai_disabled' };
+}
 
 const CONTENT_SCRIPT_ID = 'iv-dynamic-content';
 const CONTENT_FILES = {
@@ -104,9 +145,13 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   }
   // On any install/update, make sure registration reflects current grants.
   await syncContentScripts();
+  await syncPro();
 });
 
-chrome.runtime.onStartup.addListener(syncContentScripts);
+chrome.runtime.onStartup.addListener(async () => {
+  await syncContentScripts();
+  await syncPro();
+});
 
 // Re-sync whenever the granted permission set changes from anywhere.
 if (chrome.permissions && chrome.permissions.onAdded) {
@@ -151,6 +196,12 @@ async function callAi(settings, prompt, useWeb) {
   // Hybrid rule: if the user supplied their OWN key, honor it (BYOK) and skip
   // the proxy; otherwise fall back to the shared proxy (owner pays).
   if (settings.aiProxyUrl && !settings.aiKey) {
+    // Managed AI (we pay the bill) is a Pro feature. BYOK stays free above.
+    if (!(await IVPro.isPro())) {
+      const e = new Error('pro_required');
+      e.code = 'pro_required';
+      throw e;
+    }
     const headers = { 'Content-Type': 'application/json' };
     if (settings.aiProxySecret) headers['x-iv-secret'] = settings.aiProxySecret;
     const res = await fetch(settings.aiProxyUrl, {
@@ -412,7 +463,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               console.warn('[IMPULSE VAULT] scorecard build failed:', err);
             }
             // Flags so the overlay knows whether to offer AI / web-search.
-            payload.aiEnabled = !!(settings.aiEnabled && (settings.aiKey || settings.aiProxyUrl));
+            // Managed AI is Pro; BYOK is free — aiAvailability() encodes the rule.
+            const aiAvail = await aiAvailability(settings);
+            payload.aiEnabled = aiAvail.ok;
+            payload.aiProLocked = aiAvail.reason === 'pro_required'; // gentle upsell hint
             payload.webSearchEnabled = !!settings.webSearchEnabled;
             payload.productName = msg.name;
             // Grounded data the overlay passes back for optional AI enrichment.
@@ -435,26 +489,25 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           return sendResponse({ ok: true, tier, payload, score: result.score });
         }
 
-        // ---- Optional BYOK AI enrichment for the scorecard ----
+        // ---- Optional AI enrichment for the scorecard (BYOK free · managed = Pro) ----
         case 'ANALYZE_AI': {
           const settings = await IVStorage.getSettings();
-          if (!settings.aiEnabled || (!settings.aiKey && !settings.aiProxyUrl)) {
-            return sendResponse({ ok: false, error: 'ai_disabled' });
-          }
+          const avail = await aiAvailability(settings);
+          if (!avail.ok) return sendResponse({ ok: false, error: avail.reason });
           try {
             const text = await callAiProvider(settings, msg.details || {});
             return sendResponse({ ok: true, text });
           } catch (err) {
-            return sendResponse({ ok: false, error: String(err) });
+            const code = (err && err.code) || (String(err).includes('pro_required') ? 'pro_required' : '');
+            return sendResponse({ ok: false, error: code || String(err) });
           }
         }
 
         // ---- AI finds real alternative products via live web search ----
         case 'FIND_ALTERNATIVES': {
           const settings = await IVStorage.getSettings();
-          if (!settings.aiEnabled || (!settings.aiKey && !settings.aiProxyUrl)) {
-            return sendResponse({ ok: false, error: 'ai_disabled' });
-          }
+          const avail = await aiAvailability(settings);
+          if (!avail.ok) return sendResponse({ ok: false, error: avail.reason });
           try {
             const prompt = IVAnalysis.buildAltPrompt(msg.details || {}, msg.kind || 'better');
             // Force web search on so it returns REAL, current products.
@@ -515,6 +568,31 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case 'REBUILD_PROFILE': {
           const profile = await rebuildProfile();
           return sendResponse({ ok: true, profile });
+        }
+
+        // ---- Pro / billing ----
+        case 'GET_PRO': {
+          const status = await IVPro.getStatus();
+          return sendResponse({ ok: true, status, stub: !!self.__EXTPAY_STUB__ });
+        }
+        case 'REFRESH_PRO': {
+          await syncPro();
+          const status = await IVPro.getStatus();
+          return sendResponse({ ok: true, status, stub: !!self.__EXTPAY_STUB__ });
+        }
+        case 'OPEN_PAYMENT': {
+          // ExtPay opens hosted Stripe checkout (from the real library).
+          try { if (extpay) extpay.openPaymentPage(); } catch (_) {}
+          return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
+        }
+        case 'OPEN_TRIAL': {
+          try { if (extpay) extpay.openTrialPage(); } catch (_) {}
+          return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
+        }
+        case 'SET_DEV_PRO': {
+          // Local-only preview of Pro features (NOT a real payment).
+          const status = await IVPro.setStatus({ devOverride: !!msg.on });
+          return sendResponse({ ok: true, status });
         }
 
         default:

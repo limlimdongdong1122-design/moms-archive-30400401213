@@ -11,14 +11,11 @@ var CONFIG = {
   // Swap it for your Web Store URL once published.
   INSTALL_URL: 'install.html',
 
-  // Desktop app installer (.exe). Build it with `npm run dist:win` inside
-  // desktop/, then upload the generated .exe to a GitHub Release and paste the
-  // direct asset URL here. Tip: a permalink like
-  //   https://github.com/<owner>/<repo>/releases/latest/download/IMPULSE-VAULT-Setup.exe
-  // always points at the newest release, so you never have to edit this again.
-  DESKTOP_WIN_URL: 'PASTE_DESKTOP_EXE_URL_HERE',
-  // Where the "all releases" / source link points (optional, shown as fallback).
-  RELEASES_URL: 'PASTE_RELEASES_URL_HERE',
+  // Desktop app installer (.exe). The "latest/download" permalink always
+  // points at the newest release asset, so new versions work without edits.
+  DESKTOP_WIN_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases/latest/download/IMPULSE-VAULT-Setup.exe',
+  // Where the "all releases" / source link points.
+  RELEASES_URL: 'https://github.com/limlimdongdong1122-design/moms-archive-30400401213/releases',
 
   // Donation links (hosted platforms — no secrets here). Blank = "준비 중".
   DONATION_LINKS: {

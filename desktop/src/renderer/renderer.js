@@ -362,6 +362,19 @@
       if (el) el.textContent = '🛑 결제 화면 감지' + (d.price ? ' · 약 ₩' + Number(d.price).toLocaleString('ko-KR') : '');
       showView('home');
     });
+    window.iv.on('screen-status', (p) => renderScreenStatus((p && p.status) || {}));
+  }
+
+  // Show the live screen-watch status under the toggle so the user can see
+  // whether OCR loaded and is actually scanning (it used to fail silently).
+  function renderScreenStatus(st) {
+    const el = document.getElementById('screenWatchStatus');
+    if (!el) return;
+    const icon = { loading: '⏳', ready: '✅', scan: '👁️', error: '⚠️', off: '' };
+    if (!st.state || st.state === 'off') { el.style.display = 'none'; el.textContent = ''; return; }
+    el.style.display = 'block';
+    el.style.color = st.state === 'error' ? 'var(--accent-warn)' : 'var(--accent-calm)';
+    el.textContent = (icon[st.state] || '') + ' ' + (st.info || st.state);
   }
 
   // ---------- Boot ----------

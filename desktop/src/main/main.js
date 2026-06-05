@@ -191,9 +191,15 @@ function updateScreenWatch() {
   const s = store.getSettings();
   const shouldRun = !!s.screenWatch && !s.paused;
   if (shouldRun && !screenwatch.isRunning()) {
-    screenwatch.start({ intervalMs: s.screenWatchIntervalMs || 5000, onDetect: handleScreenDetect });
+    screenwatch.start({
+      intervalMs: s.screenWatchIntervalMs || 5000,
+      onDetect: handleScreenDetect,
+      onStatus: (st) => notifyRenderer({ type: 'screen-status', status: st }),
+    });
+    notifyRenderer({ type: 'screen-status', status: { state: 'loading', info: '시작하는 중…' } });
   } else if (!shouldRun && screenwatch.isRunning()) {
     screenwatch.stop();
+    notifyRenderer({ type: 'screen-status', status: { state: 'off', info: '' } });
   }
 }
 

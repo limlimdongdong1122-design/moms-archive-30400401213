@@ -22,6 +22,7 @@ const path = require('path');
 
 let win = null;
 let onDetect = null;
+let onStatus = null;
 let lastNudge = 0;
 const NUDGE_COOLDOWN_MS = 8 * 60 * 1000; // don't nudge more than ~once / 8 min
 
@@ -35,9 +36,17 @@ ipcMain.on('iv-screen-detect', (_e, payload) => {
   }
 });
 
+// Status heartbeats (loading / ready / scan / error) → surfaced in the app UI.
+ipcMain.on('iv-screen-status', (_e, payload) => {
+  if (onStatus) {
+    try { onStatus(payload || {}); } catch (_) {}
+  }
+});
+
 async function start(opts) {
   if (win) return; // already running
   onDetect = (opts && opts.onDetect) || null;
+  onStatus = (opts && opts.onStatus) || null;
   const intervalMs = (opts && opts.intervalMs) || 5000;
   try {
     win = new BrowserWindow({

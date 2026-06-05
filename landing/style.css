@@ -110,6 +110,20 @@ code { background: var(--glass); border: 1px solid var(--glass-bd); border-radiu
 .desktop-note { color: var(--faint); font-size: 13px; margin-top: 16px; }
 .desktop-note a { color: var(--accent); }
 
+/* Windows Defender / SmartScreen reassurance box */
+.install-guide { max-width: 620px; margin: 26px auto 0; padding: 26px 28px; text-align: left; border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(194,169,142,0.10), rgba(255,255,255,0.015)); border: 1px solid rgba(194,169,142,0.30); box-shadow: inset 0 1px 0 0 var(--glass-hi); }
+.ig-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.ig-ico { font-size: 26px; line-height: 1; }
+.ig-head h3 { font-family: var(--fdisp); font-size: 18px; font-weight: 600; }
+.ig-hl { color: var(--warn); }
+.ig-lead { color: var(--dim); font-size: 15px; margin-bottom: 16px; }
+.ig-steps { list-style: none; counter-reset: ig; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
+.ig-steps li { counter-increment: ig; position: relative; padding: 10px 14px 10px 46px; background: var(--glass); border: 1px solid var(--glass-bd); border-radius: var(--r-md); color: var(--dim); font-size: 14.5px; }
+.ig-steps li b { color: var(--text); }
+.ig-steps li::before { content: counter(ig); position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(180deg, #d8c4ab, var(--warn)); color: #1a1410; font-family: var(--fdisp); font-weight: 700; font-size: 13px; }
+.ig-steps code { background: var(--glass); border: 1px solid var(--glass-bd); border-radius: 6px; padding: 1px 6px; font-size: 13px; color: var(--accent); }
+.ig-safe { color: var(--faint); font-size: 13px; line-height: 1.7; }
+
 /* support / donation */
 .support { text-align: center; }
 .support-sub { color: var(--dim); max-width: 56ch; margin: 0 auto 32px; font-size: 16px; }

@@ -22,7 +22,7 @@
 
   // ---- Register your extension at extensionpay.com, then paste its id here.
   //      Until you do, the bundled ExtPay STUB keeps everyone on Free safely. ----
-  const EXTPAY_ID = 'impulse-vault';
+  const EXTPAY_ID = 'impursivevault';
 
   const KEY = 'iv_pro';
 

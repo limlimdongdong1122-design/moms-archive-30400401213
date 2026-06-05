@@ -14,13 +14,10 @@
 ────────────────────────────────────────────────────────────
 utils/pro.js 윗부분:
 
-    const EXTPAY_ID = 'impulse-vault';
+    const EXTPAY_ID = 'impursivevault';   ← 내 ExtPay ID로 설정 완료 ✅
 
-이 'impulse-vault' 가 ExtensionPay에 "등록할 때 정한 ID"와
-정확히 같아야 해요. (ExtensionPay 대시보드 주소
- https://extensionpay.com/extension/<여기가-내-ID> 에서 확인)
-
-다르면 이 줄의 따옴표 안을 내 ID로 바꾸세요. 같으면 그대로 두면 됩니다.
+ExtensionPay 대시보드 주소 https://extensionpay.com/extension/impursivevault
+와 일치합니다. (이미 맞춰뒀으니 그대로 두면 됩니다.)
 
 
 ────────────────────────────────────────────────────────────

@@ -1,0 +1,10 @@
+{
+  "name": "price-scout",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Competitor price monitoring extension for e-commerce sellers (Coupang, Naver smartstore, 11st, Gmarket, and more).",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node test/run.cjs"
+  }
+}

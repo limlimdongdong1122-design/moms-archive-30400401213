@@ -137,7 +137,7 @@ var CONFIG = {
     }
 
     // ---- 3D tilt + cursor-following sheen on the interactive cards ----
-    document.querySelectorAll('.feat, .step, .tier, .desktop-card').forEach(function (card) {
+    document.querySelectorAll('.feat, .step, .tier, .desktop-card, .g-item').forEach(function (card) {
       var rect = null;
       card.addEventListener('mouseenter', function () { rect = card.getBoundingClientRect(); });
       card.addEventListener('mousemove', function (e) {

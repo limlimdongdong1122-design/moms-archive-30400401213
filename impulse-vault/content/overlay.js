@@ -592,7 +592,7 @@
     col.appendChild(el('div', 'iv-an-col-head', label));
     const ul = el('ul', 'iv-an-list');
     if (!items || !items.length) {
-      ul.appendChild(el('li', 'iv-an-empty', kind === 'pro' ? '뚜렷한 장점 정보가 적어요' : '뚜렷한 단점 정보가 적어요'));
+      ul.appendChild(el('li', 'iv-an-empty', kind === 'pro' ? IVI18n.pick('Not much clear upside info here', '뚜렷한 장점 정보가 적어요') : IVI18n.pick('Not much clear downside info here', '뚜렷한 단점 정보가 적어요')));
     } else {
       items.forEach((it) => {
         const li = el('li');

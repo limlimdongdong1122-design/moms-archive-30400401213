@@ -11,6 +11,11 @@
 
 // patterns.js / analysis.js attach to `self`; expose it as the global.
 global.self = global;
+// analysis.js localizes its display strings through IVI18n. Provide a shim so
+// this pure-logic harness runs headless (no Chrome). Return the Korean variant
+// so the existing string assertions below stay valid — the logic under test is
+// language-agnostic.
+global.IVI18n = { pick: (en, ko) => ko, current: 'ko', ready: Promise.resolve('ko') };
 require('../utils/patterns.js');
 require('../utils/analysis.js');
 const P = global.IVPatterns;

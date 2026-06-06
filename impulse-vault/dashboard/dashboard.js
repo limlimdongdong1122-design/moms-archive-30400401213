@@ -11,7 +11,9 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
 
-  const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const WEEKDAYS_KO = ['일', '월', '화', '수', '목', '금', '토'];
+  const weekdays = () => IVI18n.pick(WEEKDAYS_EN, WEEKDAYS_KO);
 
   // 'pending' until we try once, then 'ready' (WebGL) or 'fallback' (CSS).
   let vault3dState = 'pending';
@@ -22,9 +24,9 @@
 
   function fmtKRW(n) {
     try {
-      return '₩' + Number(n || 0).toLocaleString('ko-KR');
+      return '$' + Number(n || 0).toLocaleString('en-US');
     } catch (_) {
-      return '₩' + (n || 0);
+      return '$' + (n || 0);
     }
   }
 
@@ -83,7 +85,7 @@
     const ok = vault3dState === 'ready';
 
     if (locked.length === 0) {
-      $('#stageItem').textContent = '금고는 비어 있어요';
+      $('#stageItem').textContent = IVI18n.pick('Your vault is empty', '금고는 비어 있어요');
       if (ok) window.IVVault3D.setHasItem(false);
     } else {
       // Pick the item closest to release for the visual.
@@ -112,7 +114,7 @@
       // bg-elev-2 → accent-warn. More temptation = warmer.
       const v = byHour[h] > 0 ? 12 + (byHour[h] / max) * 78 : 0;
       cell.style.setProperty('--v', String(Math.round(v)));
-      cell.title = `${h}시 · ${byHour[h]}회`;
+      cell.title = IVI18n.pick(`${h}:00 · ${byHour[h]}×`, `${h}시 · ${byHour[h]}회`);
       wrap.appendChild(cell);
     }
   }
@@ -127,10 +129,10 @@
       const bar = document.createElement('div');
       bar.className = 'bar';
       bar.style.height = Math.round((byWeekday[d] / max) * 100) + '%';
-      bar.title = `${byWeekday[d]}회`;
+      bar.title = IVI18n.pick(`${byWeekday[d]}×`, `${byWeekday[d]}회`);
       const label = document.createElement('div');
       label.className = 'bar-label';
-      label.textContent = WEEKDAYS[d];
+      label.textContent = weekdays()[d];
       col.appendChild(bar);
       col.appendChild(label);
       wrap.appendChild(col);
@@ -141,7 +143,7 @@
     const wrap = $('#topKeywords');
     wrap.innerHTML = '';
     if (!top || top.length === 0) {
-      wrap.innerHTML = '<span class="empty-note">아직 끌린 게 없어요 — 고요하네요. 🌙</span>';
+      wrap.innerHTML = `<span class="empty-note">${IVI18n.pick('Nothing has tempted you yet — all quiet. 🌙', '아직 끌린 게 없어요 — 고요하네요. 🌙')}</span>`;
       return;
     }
     top.forEach((k) => {
@@ -156,7 +158,7 @@
     const wrap = $('#topSites');
     wrap.innerHTML = '';
     if (!top || top.length === 0) {
-      wrap.innerHTML = '<span class="empty-note">아직 패턴이 없어요. 며칠 쓰면 여기에 보여줄게요.</span>';
+      wrap.innerHTML = `<span class="empty-note">${IVI18n.pick("No patterns yet. Use it for a few days and we'll show them here.", '아직 패턴이 없어요. 며칠 쓰면 여기에 보여줄게요.')}</span>`;
       return;
     }
     const max = Math.max(...top.map((t) => t.value), 1);
@@ -189,10 +191,18 @@
     const insight = $('#hourInsight');
     if (profile && profile.hasHourSignal) {
       const h = profile.peakHour;
-      const lateNote = IVPatterns.isLateNight(h) ? ' 밤 시간 주의 ⚠️' : '';
-      insight.textContent = `가장 충동적인 시간대: ${h}시쯤.${lateNote}`;
+      const lateNote = IVPatterns.isLateNight(h)
+        ? IVI18n.pick(' Watch out late at night ⚠️', ' 밤 시간 주의 ⚠️')
+        : '';
+      insight.textContent = IVI18n.pick(
+        `Your most impulsive time: around ${h}:00.${lateNote}`,
+        `가장 충동적인 시간대: ${h}시쯤.${lateNote}`
+      );
     } else {
-      insight.textContent = '데이터가 더 쌓이면 시간대 패턴을 알려줄게요.';
+      insight.textContent = IVI18n.pick(
+        "As more data builds up, we'll reveal your time-of-day patterns.",
+        '데이터가 더 쌓이면 시간대 패턴을 알려줄게요.'
+      );
     }
   }
 
@@ -218,9 +228,11 @@
     card.className = 'v-item ' + item.status;
 
     const statusText = {
-      locked: ready ? '식음 완료 ✓' : '식히는 중',
-      bought: '구매함',
-      released: '보냄 · 절약',
+      locked: ready
+        ? IVI18n.pick('Cooled off ✓', '식음 완료 ✓')
+        : IVI18n.pick('Cooling off', '식히는 중'),
+      bought: IVI18n.pick('Bought', '구매함'),
+      released: IVI18n.pick('Let go · saved', '보냄 · 절약'),
     }[item.status];
 
     card.innerHTML = `
@@ -233,7 +245,7 @@
       actions.className = 'vi-actions';
       const buy = document.createElement('button');
       buy.className = 'vi-buy';
-      buy.textContent = '살래요';
+      buy.textContent = IVI18n.pick("I'll buy it", '살래요');
       buy.addEventListener('click', async () => {
         await IVStorage.updateVaultItem(item.id, { status: 'bought' });
         if (item.url) window.open(item.url, '_blank');
@@ -241,7 +253,7 @@
       });
       const letGo = document.createElement('button');
       letGo.className = 'vi-let';
-      letGo.textContent = '보낼래요';
+      letGo.textContent = IVI18n.pick("I'll let it go", '보낼래요');
       letGo.addEventListener('click', async () => {
         await IVStorage.updateVaultItem(item.id, { status: 'released' });
         await IVStorage.bumpStats({ totalSaved: item.price || 0 });
@@ -304,7 +316,7 @@
       pill.innerHTML = `<span>${escapeHtml(d)}</span>`;
       const x = document.createElement('button');
       x.textContent = '×';
-      x.title = '제거';
+      x.title = IVI18n.pick('Remove', '제거');
       x.addEventListener('click', () => removeDomain(d));
       pill.appendChild(x);
       wrap.appendChild(pill);
@@ -345,7 +357,7 @@
       }
     });
     if (!granted) {
-      alert('권한이 승인되지 않아 추가하지 못했어요.');
+      alert(IVI18n.pick("Permission wasn't granted, so we couldn't add it.", '권한이 승인되지 않아 추가하지 못했어요.'));
       return;
     }
     const next = settingsCache.domains.concat(domain);
@@ -416,7 +428,7 @@
         });
         if (!granted) {
           e.target.checked = false;
-          alert('모든 사이트에서 감지하려면 전체 사이트 접근 권한이 필요해요.');
+          alert(IVI18n.pick('Detecting on all sites requires access-to-all-sites permission.', '모든 사이트에서 감지하려면 전체 사이트 접근 권한이 필요해요.'));
           return;
         }
       }
@@ -452,7 +464,7 @@
       });
       if (!granted) {
         out.style.color = 'var(--accent-warn)';
-        out.textContent = '✗ 제공자 접근 권한이 필요해요.';
+        out.textContent = IVI18n.pick('✗ Provider access permission is required.', '✗ 제공자 접근 권한이 필요해요.');
         return;
       }
       // Persist current field values first so the worker uses them.
@@ -465,17 +477,23 @@
       $('#aiToggle').checked = true;
       $('#aiKeyArea').hidden = false;
       out.style.color = 'var(--text-secondary)';
-      out.textContent = '테스트 중…';
+      out.textContent = IVI18n.pick('Testing…', '테스트 중…');
       const res = await sendMsg({
         type: 'ANALYZE_AI',
-        details: { name: '테스트 상품', price: 50000, itemType: 'product', specs: ['예시 스펙'], reviews: [] },
+        details: {
+          name: IVI18n.pick('Test product', '테스트 상품'),
+          price: 50000,
+          itemType: 'product',
+          specs: [IVI18n.pick('Example spec', '예시 스펙')],
+          reviews: [],
+        },
       });
       if (res && res.ok && res.text) {
         out.style.color = 'var(--accent-good)';
-        out.textContent = '✓ 연결 성공! AI 분석이 정상 작동해요.';
+        out.textContent = IVI18n.pick('✓ Connected! AI analysis is working.', '✓ 연결 성공! AI 분석이 정상 작동해요.');
       } else {
         out.style.color = 'var(--accent-warn)';
-        out.textContent = '✗ 실패: ' + ((res && res.error) || '알 수 없는 오류');
+        out.textContent = IVI18n.pick('✗ Failed: ', '✗ 실패: ') + ((res && res.error) || IVI18n.pick('Unknown error', '알 수 없는 오류'));
       }
     });
     $('#aiToggle').addEventListener('change', async (e) => {
@@ -492,7 +510,7 @@
         if (!granted) {
           e.target.checked = false;
           $('#aiKeyArea').hidden = true;
-          alert('AI 분석을 쓰려면 제공자(api.anthropic.com / api.openai.com) 접근 권한이 필요해요.');
+          alert(IVI18n.pick('Using AI analysis requires access to the provider (api.anthropic.com / api.openai.com).', 'AI 분석을 쓰려면 제공자(api.anthropic.com / api.openai.com) 접근 권한이 필요해요.'));
           return;
         }
       }
@@ -532,20 +550,20 @@
     if (s.paid) {
       badge.textContent = 'PRO'; badge.classList.add('is-pro');
       upgrade.hidden = true; manage.hidden = false;
-      status.textContent = '💙 Pro 구독 중이에요. 함께해줘서 고마워요.'; status.classList.add('good');
+      status.textContent = IVI18n.pick("💙 You're a Pro subscriber. Thanks for being here.", '💙 Pro 구독 중이에요. 함께해줘서 고마워요.'); status.classList.add('good');
     } else if (s.trialActive) {
-      badge.textContent = '체험 중'; badge.classList.add('is-trial');
-      upgrade.hidden = false; upgrade.textContent = '지금 구독하기'; manage.hidden = false;
-      status.textContent = `무료 체험 중 — 남은 ${trialDaysLeft()}일`; status.classList.add('warn');
+      badge.textContent = IVI18n.pick('Trial', '체험 중'); badge.classList.add('is-trial');
+      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Subscribe now', '지금 구독하기'); manage.hidden = false;
+      status.textContent = IVI18n.pick(`Free trial — ${trialDaysLeft()} days left`, `무료 체험 중 — 남은 ${trialDaysLeft()}일`); status.classList.add('warn');
     } else if (s.devOverride) {
-      badge.textContent = 'PRO · 데모'; badge.classList.add('is-pro');
-      upgrade.hidden = false; upgrade.textContent = 'Pro 시작하기'; manage.hidden = true;
-      status.textContent = '🧪 데모로 Pro 기능을 미리 보는 중이에요 (실제 결제 아님).'; status.classList.add('good');
+      badge.textContent = IVI18n.pick('PRO · Demo', 'PRO · 데모'); badge.classList.add('is-pro');
+      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Start Pro', 'Pro 시작하기'); manage.hidden = true;
+      status.textContent = IVI18n.pick('🧪 Previewing Pro features in demo (not a real charge).', '🧪 데모로 Pro 기능을 미리 보는 중이에요 (실제 결제 아님).'); status.classList.add('good');
     } else {
       badge.textContent = 'FREE';
-      upgrade.hidden = false; upgrade.textContent = 'Pro 시작하기'; manage.hidden = true;
+      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Start Pro', 'Pro 시작하기'); manage.hidden = true;
       status.textContent = proIsStub
-        ? '※ 결제 연동(ExtPay) 전이라 데모 모드예요. 아래 토글로 Pro 기능을 미리 볼 수 있어요.'
+        ? IVI18n.pick("※ Billing (ExtPay) isn't wired up yet, so this is demo mode. Use the toggle below to preview Pro features.", '※ 결제 연동(ExtPay) 전이라 데모 모드예요. 아래 토글로 Pro 기능을 미리 볼 수 있어요.')
         : '';
     }
 
@@ -559,7 +577,7 @@
       if (proIsStub) {
         const st = $('#proStatus');
         st.classList.remove('good'); st.classList.add('warn');
-        st.textContent = '결제는 실제 ExtPay 연동 후 활성화돼요. 지금은 아래 “데모” 토글로 Pro를 미리 체험해보세요. (lib/ExtPay.js 안내 참고)';
+        st.textContent = IVI18n.pick('Payments activate once ExtPay is wired up. For now, try Pro via the “Demo” toggle below. (See the lib/ExtPay.js notes.)', '결제는 실제 ExtPay 연동 후 활성화돼요. 지금은 아래 “데모” 토글로 Pro를 미리 체험해보세요. (lib/ExtPay.js 안내 참고)');
         $('#proDemo').hidden = false;
         return;
       }
@@ -609,13 +627,13 @@
       IVStorage.getStats(),
     ]);
     const rows = [
-      ['검색 기록', `${searches.length}건`],
-      ['상품 조회 기록', `${Object.keys(views).length}개 상품`],
-      ['금고 항목', `${vault.length}건`],
-      ['행동 이벤트(패턴 계산용)', `${events.length}건`],
-      ['멈춘 순간(누적)', `${stats.interventions || 0}회`],
-      ['저장 위치', 'chrome.storage.local (이 기기)'],
-      ['서버 전송', '없음 — 0건'],
+      [IVI18n.pick('Search history', '검색 기록'), IVI18n.pick(`${searches.length} entries`, `${searches.length}건`)],
+      [IVI18n.pick('Product view history', '상품 조회 기록'), IVI18n.pick(`${Object.keys(views).length} products`, `${Object.keys(views).length}개 상품`)],
+      [IVI18n.pick('Vault items', '금고 항목'), IVI18n.pick(`${vault.length} items`, `${vault.length}건`)],
+      [IVI18n.pick('Behavior events (for pattern calc)', '행동 이벤트(패턴 계산용)'), IVI18n.pick(`${events.length} events`, `${events.length}건`)],
+      [IVI18n.pick('Interventions (cumulative)', '멈춘 순간(누적)'), IVI18n.pick(`${stats.interventions || 0} times`, `${stats.interventions || 0}회`)],
+      [IVI18n.pick('Storage location', '저장 위치'), IVI18n.pick('chrome.storage.local (this device)', 'chrome.storage.local (이 기기)')],
+      [IVI18n.pick('Sent to server', '서버 전송'), IVI18n.pick('None — 0', '없음 — 0건')],
     ];
     const wrap = $('#dataTable');
     wrap.innerHTML = '';
@@ -631,14 +649,17 @@
     $('#deleteAll').addEventListener('click', async () => {
       if (
         !confirm(
-          '정말 모든 데이터를 삭제할까요?\n검색·조회·금고·통계·프로필이 전부 지워지고 되돌릴 수 없어요.'
+          IVI18n.pick(
+            "Really delete all data?\nYour searches, views, vault, stats, and profile will all be erased — this can't be undone.",
+            '정말 모든 데이터를 삭제할까요?\n검색·조회·금고·통계·프로필이 전부 지워지고 되돌릴 수 없어요.'
+          )
         )
       )
         return;
       await IVStorage.deleteAll();
       await sendMsg({ type: 'REBUILD_PROFILE' });
       refreshAll();
-      alert('모든 데이터를 삭제했어요. 🧹');
+      alert(IVI18n.pick('All data deleted. 🧹', '모든 데이터를 삭제했어요. 🧹'));
     });
 
     $('#exportData').addEventListener('click', async () => {
@@ -696,13 +717,37 @@
     await renderDataTable();
   }
 
+  // ------- language toggle -------
+  function initLangHandlers() {
+    const seg = $('#langSeg');
+    if (seg) {
+      seg.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-lang-btn]');
+        if (!btn) return;
+        IVI18n.setLang(btn.dataset.val);
+      });
+    }
+    // Re-run the renders that build dynamic strings, then re-apply static swaps.
+    IVI18n.onChange(() => {
+      renderOverview();
+      renderProfile();
+      renderVault();
+      renderMembership();
+      renderDataTable();
+      renderSettings();
+      IVI18n.apply();
+    });
+  }
+
   // ------- boot -------
   function boot() {
     initNav();
+    initLangHandlers();
     initSettingsHandlers();
     initProHandlers();
     initDataHandlers();
     refreshAll();
+    IVI18n.apply();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

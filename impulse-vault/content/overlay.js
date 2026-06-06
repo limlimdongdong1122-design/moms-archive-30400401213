@@ -78,9 +78,9 @@
 
   function fmtKRW(n) {
     try {
-      return '₩' + Number(n || 0).toLocaleString('ko-KR');
+      return '$' + Number(n || 0).toLocaleString('en-US');
     } catch (_) {
-      return '₩' + (n || 0);
+      return '$' + (n || 0);
     }
   }
 
@@ -93,11 +93,13 @@
       if (!shadow) return;
       const wrap = el('div', 'iv-toast');
       wrap.style.pointerEvents = 'auto';
-      const q = el('div', 'iv-toast-q', payload && payload.title ? payload.title : '이거 진짜 필요해? 🤔');
+      const q = el('div', 'iv-toast-q', payload && payload.title ? payload.title : IVI18n.pick('Do you really need this? 🤔', '이거 진짜 필요해? 🤔'));
       const sub = el(
         'div',
         'iv-toast-sub',
-        payload && payload.price ? `${fmtKRW(payload.price)} · 잠깐만 생각해봐` : '잠깐만 생각해봐'
+        payload && payload.price
+          ? `${fmtKRW(payload.price)} · ${IVI18n.pick('Take a moment to think', '잠깐만 생각해봐')}`
+          : IVI18n.pick('Take a moment to think', '잠깐만 생각해봐')
       );
       wrap.appendChild(q);
       wrap.appendChild(sub);
@@ -111,7 +113,7 @@
       // If we have grounded analysis, expose a "근거 보기" action so the
       // supporting evidence is reachable even for low-signal nudges.
       if (payload && payload.scorecard) {
-        const more = el('button', 'iv-toast-more', '근거 보기 →');
+        const more = el('button', 'iv-toast-more', IVI18n.pick('See the reasoning →', '근거 보기 →'));
         more.addEventListener('click', (e) => {
           e.stopPropagation();
           remove();
@@ -140,11 +142,11 @@
       const backdrop = el('div', 'iv-backdrop');
       backdrop.style.pointerEvents = 'auto';
       const card = el('div', 'iv-card');
-      card.appendChild(el('div', 'iv-badge', '구매 분석'));
-      card.appendChild(el('h2', 'iv-title', '냉정한 분석'));
+      card.appendChild(el('div', 'iv-badge', IVI18n.pick('Purchase analysis', '구매 분석')));
+      card.appendChild(el('h2', 'iv-title', IVI18n.pick('A clear-eyed look', '냉정한 분석')));
       if (payload.name) card.appendChild(el('div', 'iv-item', payload.name));
       try { card.appendChild(buildScorecard(payload)); } catch (_) {}
-      const close = el('button', 'iv-btn iv-btn-ghost', '닫기');
+      const close = el('button', 'iv-btn iv-btn-ghost', IVI18n.pick('Close', '닫기'));
       const doClose = () => {
         backdrop.classList.add('iv-backdrop-out');
         setTimeout(() => backdrop.remove(), 320);
@@ -179,9 +181,9 @@
       const card = el('div', 'iv-card' + (high ? ' iv-card-high' : ''));
 
       // Header
-      const badge = el('div', 'iv-badge', high ? '강한 충동 신호' : '잠깐 멈춤');
-      const title = el('h2', 'iv-title', payload.title || '이거 진짜 필요해?');
-      const item = el('div', 'iv-item', payload.name || '이 상품');
+      const badge = el('div', 'iv-badge', high ? IVI18n.pick('Strong impulse signal', '강한 충동 신호') : IVI18n.pick('A quick pause', '잠깐 멈춤'));
+      const title = el('h2', 'iv-title', payload.title || IVI18n.pick('Do you really need this?', '이거 진짜 필요해?'));
+      const item = el('div', 'iv-item', payload.name || IVI18n.pick('this item', '이 상품'));
       card.appendChild(badge);
       card.appendChild(title);
       card.appendChild(item);
@@ -192,8 +194,8 @@
       const fsBtn = el('button', 'iv-fs-toggle');
       const setFsLabel = () => {
         const on = backdrop.classList.contains('iv-fullscreen');
-        fsBtn.textContent = on ? '⤡ 작게' : '⤢ 전체화면';
-        fsBtn.setAttribute('aria-label', on ? '작은 창으로' : '전체화면으로');
+        fsBtn.textContent = on ? IVI18n.pick('⤡ Shrink', '⤡ 작게') : IVI18n.pick('⤢ Fullscreen', '⤢ 전체화면');
+        fsBtn.setAttribute('aria-label', on ? IVI18n.pick('Smaller window', '작은 창으로') : IVI18n.pick('Fullscreen', '전체화면으로'));
       };
       setFsLabel();
       fsBtn.addEventListener('click', (e) => {
@@ -212,8 +214,8 @@
         const reframe = el('div', 'iv-reframe');
         if (payload.price) reframe.appendChild(el('span', 'iv-price', fmtKRW(payload.price)));
         const parts = [];
-        if (rf.hoursOfWork > 0) parts.push(`≈ ${rf.hoursOfWork}시간 노동`);
-        if (rf.gameUnits > 0) parts.push(`≈ ${rf.gameUnits}개의 아끼는 것`);
+        if (rf.hoursOfWork > 0) parts.push(IVI18n.pick(`≈ ${rf.hoursOfWork} hours of work`, `≈ ${rf.hoursOfWork}시간 노동`));
+        if (rf.gameUnits > 0) parts.push(IVI18n.pick(`≈ ${rf.gameUnits} of the things you save up for`, `≈ ${rf.gameUnits}개의 아끼는 것`));
         if (parts.length) reframe.appendChild(el('span', 'iv-reframe-sub', parts.join('  ·  ')));
         card.appendChild(reframe);
       }
@@ -280,7 +282,7 @@
         svg.appendChild(fg);
         const label = el('div');
         const num = el('span', 'iv-thinking-num', String(remaining) + 's');
-        label.appendChild(document.createTextNode('잠깐만 — 천천히 생각해보자 '));
+        label.appendChild(document.createTextNode(IVI18n.pick('Hold on — let’s take our time ', '잠깐만 — 천천히 생각해보자 ')));
         label.appendChild(num);
         thinking.appendChild(svg);
         thinking.appendChild(label);
@@ -305,15 +307,18 @@
       const vaultBtn = el(
         'button',
         'iv-btn iv-btn-primary',
-        `금고에 넣기 · ${payload.coolingHours || 24}시간 식히기`
+        IVI18n.pick(
+          `Put in the Vault · cool off for ${payload.coolingHours || 24}h`,
+          `금고에 넣기 · ${payload.coolingHours || 24}시간 식히기`
+        )
       );
 
       // Secondary: walk away (also good — celebrated).
-      const resistBtn = el('button', 'iv-btn iv-btn-ghost', '안 살래');
+      const resistBtn = el('button', 'iv-btn iv-btn-ghost', IVI18n.pick('Let it go', '안 살래'));
 
       // Understated escape hatch (not a tempting CTA).
       const proceedBtn = el('button', 'iv-btn iv-btn-proceed');
-      const proceedLabel = high ? '그래도 살게요' : '그래도 살래요';
+      const proceedLabel = high ? IVI18n.pick('Buy it anyway', '그래도 살게요') : IVI18n.pick('Buy it anyway', '그래도 살래요');
       proceedBtn.textContent = proceedLabel;
       proceedBtn.disabled = seconds > 0;
 
@@ -328,10 +333,10 @@
         try {
           const cel = el('div', 'iv-celebrate');
           cel.appendChild(el('div', 'iv-celebrate-emoji', '🌱'));
-          cel.appendChild(el('div', 'iv-celebrate-title', '잘 참았어!'));
+          cel.appendChild(el('div', 'iv-celebrate-title', IVI18n.pick('Nicely resisted!', '잘 참았어!')));
           if (amount)
             cel.appendChild(
-              el('div', 'iv-celebrate-sub', `${fmtKRW(amount)} 아꼈어 · Total Saved에 추가됨`)
+              el('div', 'iv-celebrate-sub', IVI18n.pick(`Saved ${fmtKRW(amount)} · added to Total Saved`, `${fmtKRW(amount)} 아꼈어 · Total Saved에 추가됨`))
             );
           // Confetti dots (pure CSS animated).
           const conf = el('div', 'iv-confetti');
@@ -363,7 +368,7 @@
       });
 
       // Snooze for the rest of today.
-      const snooze = el('button', 'iv-snooze', '오늘은 그만 물어보기');
+      const snooze = el('button', 'iv-snooze', IVI18n.pick('Stop asking for today', '오늘은 그만 물어보기'));
       snooze.addEventListener('click', () => {
         try {
           const end = new Date();
@@ -417,10 +422,10 @@
     // Header: title + "참고용" chip + neutral consideration meter
     const head = el('div', 'iv-an-head');
     const titleText = sc.typeLabel && sc.itemType !== 'product'
-      ? '냉정한 분석 · ' + sc.typeLabel
-      : '냉정한 구매 분석';
+      ? IVI18n.pick('A clear-eyed look · ', '냉정한 분석 · ') + sc.typeLabel
+      : IVI18n.pick('A clear-eyed purchase analysis', '냉정한 구매 분석');
     const title = el('div', 'iv-an-title', titleText);
-    const chip = el('span', 'iv-an-chip', sc.note || '참고용');
+    const chip = el('span', 'iv-an-chip', sc.note || IVI18n.pick('For reference', '참고용'));
     head.appendChild(title);
     head.appendChild(chip);
     wrap.appendChild(head);
@@ -430,8 +435,8 @@
       const v = sc.verdict;
       const box = el('div', 'iv-an-verdict iv-an-v-' + (v.level || 'consider'));
       const top = el('div', 'iv-an-v-top');
-      top.appendChild(el('span', 'iv-an-v-label', '결론'));
-      const conf = v.strength >= 66 ? '확신도 높음' : v.strength >= 45 ? '확신도 보통' : '확신도 낮음';
+      top.appendChild(el('span', 'iv-an-v-label', IVI18n.pick('Verdict', '결론')));
+      const conf = v.strength >= 66 ? IVI18n.pick('High confidence', '확신도 높음') : v.strength >= 45 ? IVI18n.pick('Medium confidence', '확신도 보통') : IVI18n.pick('Low confidence', '확신도 낮음');
       top.appendChild(el('span', 'iv-an-v-conf', conf));
       box.appendChild(top);
       box.appendChild(el('div', 'iv-an-v-line', v.line || ''));
@@ -452,17 +457,17 @@
     // Objective summary
     if (sc.summary) wrap.appendChild(el('div', 'iv-an-summary', sc.summary));
 
-    // Two columns: 장점 | 단점
+    // Two columns: Pros | Cons
     const cols = el('div', 'iv-an-cols');
-    cols.appendChild(buildColumn('장점', sc.pros, 'pro'));
-    cols.appendChild(buildColumn('단점', sc.cons, 'con'));
+    cols.appendChild(buildColumn(IVI18n.pick('Pros', '장점'), sc.pros, 'pro'));
+    cols.appendChild(buildColumn(IVI18n.pick('Cons', '단점'), sc.cons, 'con'));
     wrap.appendChild(cols);
 
     // Consideration meter (NOT a verdict)
     if (sc.meter) {
       const meter = el('div', 'iv-an-meter');
       const mlabel = el('div', 'iv-an-meter-label');
-      mlabel.appendChild(el('span', null, '고려도'));
+      mlabel.appendChild(el('span', null, IVI18n.pick('Caution level', '고려도')));
       mlabel.appendChild(el('span', 'iv-an-meter-val', sc.meter.label));
       const bar = el('div', 'iv-an-meter-bar');
       const fill = el('i');
@@ -470,14 +475,14 @@
       bar.appendChild(fill);
       meter.appendChild(mlabel);
       meter.appendChild(bar);
-      meter.appendChild(el('div', 'iv-an-meter-note', '※ 사라/사지마 판정이 아니라, 얼마나 신중할지에 대한 참고예요.'));
+      meter.appendChild(el('div', 'iv-an-meter-note', IVI18n.pick('※ This is not a buy / don’t-buy verdict — just a guide to how carefully to think it through.', '※ 사라/사지마 판정이 아니라, 얼마나 신중할지에 대한 참고예요.')));
       wrap.appendChild(meter);
     }
 
     // Reflection points (point + "why this matters")
     if (Array.isArray(sc.reflections) && sc.reflections.length) {
       const ref = el('div', 'iv-an-reflect');
-      ref.appendChild(el('div', 'iv-an-subhead', '합리적 판단 포인트'));
+      ref.appendChild(el('div', 'iv-an-subhead', IVI18n.pick('Points for a sound decision', '합리적 판단 포인트')));
       sc.reflections.forEach((r) => {
         const item = el('div', 'iv-an-ref-item');
         item.appendChild(el('div', 'iv-an-ref-point', r.point));

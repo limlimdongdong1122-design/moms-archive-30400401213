@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMPULSE VAULT — 설치하기</title>
-    <meta name="description" content="IMPULSE VAULT 브라우저 확장 설치 방법 — 30초면 끝나요." />
+    <title data-ko="IMPULSE VAULT — 설치하기">IMPULSE VAULT — Install</title>
+    <meta name="description" content="How to install the IMPULSE VAULT browser extension — done in 30 seconds." />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
@@ -39,26 +39,27 @@
 
     <header class="nav">
       <a class="brand" href="index.html"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
-      <a class="btn btn-ghost" href="index.html">← 홈으로</a>
+      <span class="lang-switch"><button data-lang-btn="en">EN</button><button data-lang-btn="ko">한</button></span>
+      <a class="btn btn-ghost" href="index.html" data-ko="← 홈으로">← Home</a>
     </header>
 
     <main class="install-wrap">
       <article class="card install-card">
-        <span class="label">설치하기</span>
-        <h1>브라우저에 추가하기</h1>
-        <p class="sub">
-          아직 크롬 웹스토어 심사 전이라, 지금은 파일을 받아서 직접 추가해요.
-          크롬·엣지·웨일·브레이브 등 크로미움 계열 브라우저에서 동작해요. (30초면 끝!)
+        <span class="label" data-ko="설치하기">Install</span>
+        <h1 data-ko="브라우저에 추가하기">Add to your browser</h1>
+        <p class="sub" data-ko="아직 크롬 웹스토어 심사 전이라, 지금은 파일을 받아서 직접 추가해요. 크롬·엣지·웨일·브레이브 등 크로미움 계열 브라우저에서 동작해요. (30초면 끝!)">
+          It's still in review for the Chrome Web Store, so for now you download the file and add it yourself.
+          It works on Chromium-based browsers like Chrome, Edge, Whale, and Brave. (Done in 30 seconds!)
         </p>
 
         <div class="dl-row">
-          <a class="btn btn-primary btn-lg" href="impulse-vault.zip" download>확장 프로그램 다운로드 (.zip)</a>
-          <span class="dl-hint">받은 zip은 꼭 <b>압축을 풀어</b> 주세요.</span>
+          <a class="btn btn-primary btn-lg" href="impulse-vault.zip" download data-ko="확장 프로그램 다운로드 (.zip)">Download the extension (.zip)</a>
+          <span class="dl-hint" data-ko="받은 zip은 꼭 <b>압축을 풀어</b> 주세요.">Be sure to <b>unzip</b> the file after downloading.</span>
         </div>
 
         <ol class="steps2">
-          <li>위 버튼으로 받은 zip을 <b>압축 해제</b>해요. (<code class="kbd">impulse-vault</code> 폴더가 나와요)</li>
-          <li><b>확장 관리 페이지</b>를 열어요 — 주소창에 <b>본인 브라우저</b>의 주소를 입력 → 엔터:
+          <li data-ko="위 버튼으로 받은 zip을 <b>압축 해제</b>해요. (<code class='kbd'>impulse-vault</code> 폴더가 나와요)"><b>Unzip</b> the file you downloaded with the button above. (You'll get an <code class="kbd">impulse-vault</code> folder)</li>
+          <li data-ko="<b>확장 관리 페이지</b>를 열어요 — 주소창에 <b>본인 브라우저</b>의 주소를 입력 → 엔터:">Open the <b>extensions management page</b> — type <b>your browser's</b> address into the address bar → Enter:
             <div class="addr-list">
               <span><b>Chrome</b> <code class="kbd">chrome://extensions</code></span>
               <span><b>Edge</b> <code class="kbd">edge://extensions</code></span>
@@ -68,25 +69,26 @@
               <span><b>Vivaldi</b> <code class="kbd">vivaldi://extensions</code></span>
             </div>
           </li>
-          <li><b>개발자 모드</b>를 켜요. (Chrome·Brave·Whale·Vivaldi는 오른쪽 위, <b>Edge·Opera는 왼쪽</b> 토글)</li>
-          <li><b>압축해제된 확장 프로그램을 로드</b>(Load unpacked) 버튼 → 방금 푼 <code class="kbd">impulse-vault</code> 폴더 선택.</li>
-          <li>설치 완료! 처음 한 번 <b>온보딩 화면</b>에서 감시할 사이트와 권한을 허용하면 끝이에요.</li>
+          <li data-ko="<b>개발자 모드</b>를 켜요. (Chrome·Brave·Whale·Vivaldi는 오른쪽 위, <b>Edge·Opera는 왼쪽</b> 토글)">Turn on <b>Developer mode</b>. (Top-right toggle on Chrome, Brave, Whale, and Vivaldi; <b>on the left for Edge and Opera</b>)</li>
+          <li data-ko="<b>압축해제된 확장 프로그램을 로드</b>(Load unpacked) 버튼 → 방금 푼 <code class='kbd'>impulse-vault</code> 폴더 선택.">Click <b>Load unpacked</b> → choose the <code class="kbd">impulse-vault</code> folder you just unzipped.</li>
+          <li data-ko="설치 완료! 처음 한 번 <b>온보딩 화면</b>에서 감시할 사이트와 권한을 허용하면 끝이에요.">All set! Just once, on the <b>onboarding screen</b>, allow the sites to watch and the permissions, and you're done.</li>
         </ol>
 
-        <div class="note-box">
-          <b>안심하세요 🔒</b> — IMPULSE VAULT는 검색·상품·구매 기록을 어떤 서버로도 보내지 않아요.
-          모든 분석은 브라우저 안(로컬)에서만 이뤄져요. "개발자 모드" 경고는 웹스토어 정식 등록 전이라 뜨는 일반적인 안내예요.
+        <div class="note-box" data-ko="<b>안심하세요 🔒</b> — IMPULSE VAULT는 검색·상품·구매 기록을 어떤 서버로도 보내지 않아요. 모든 분석은 브라우저 안(로컬)에서만 이뤄져요. '개발자 모드' 경고는 웹스토어 정식 등록 전이라 뜨는 일반적인 안내예요.">
+          <b>Rest easy 🔒</b> — IMPULSE VAULT never sends your searches, products, or purchase history to any server.
+          All analysis happens inside your browser (local) only. The 'Developer mode' warning is a routine notice that appears before official Web Store listing.
         </div>
 
-        <a class="back-link" href="index.html">← 소개 페이지로 돌아가기</a>
+        <a class="back-link" href="index.html" data-ko="← 소개 페이지로 돌아가기">← Back to the overview page</a>
       </article>
     </main>
 
     <footer class="footer">
       <div class="foot-row">
         <a class="brand" href="index.html"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
-        <span class="copy">© 2026 IMPULSE VAULT · 100% 로컬 · 충동구매에 맞서는 작은 도구</span>
+        <span class="copy" data-ko="© 2026 IMPULSE VAULT · 100% 로컬 · 충동구매에 맞서는 작은 도구">© 2026 IMPULSE VAULT · 100% local · a small tool against impulse buying</span>
       </div>
     </footer>
+    <script src="i18n.js"></script>
   </body>
 </html>

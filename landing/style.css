@@ -44,6 +44,12 @@ h2 { font-family: var(--fdisp); font-size: clamp(26px, 4vw, 40px); font-weight: 
 .nav-links a:hover { color: var(--text); }
 @media (max-width: 760px) { .nav-links { display: none; } }
 
+/* language toggle — small pill buttons in the nav */
+.lang-switch { display: inline-flex; gap: 2px; padding: 3px; margin-left: auto; margin-right: 4px; border-radius: var(--r-pill); background: var(--glass); border: 1px solid var(--glass-bd); }
+.lang-switch button { appearance: none; border: 0; cursor: pointer; font-family: var(--fbody); font-size: 12.5px; font-weight: 600; line-height: 1; padding: 6px 11px; border-radius: var(--r-pill); background: transparent; color: var(--dim); transition: color .25s, background .25s; }
+.lang-switch button:hover { color: var(--text); }
+.lang-switch button.on { color: #06101f; background: linear-gradient(180deg, #a9cbff, var(--accent)); box-shadow: 0 4px 14px var(--accent-glow); }
+
 /* buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 20px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; border: 1px solid transparent; cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .3s; font-family: var(--fbody); }
 .btn-lg { padding: 15px 30px; font-size: 16px; }

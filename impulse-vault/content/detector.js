@@ -612,7 +612,7 @@
   }
 
   async function handleIntercept(btn, product, host) {
-    const name = (product && product.name) || guessNameNearButton(btn) || '이 상품';
+    const name = (product && product.name) || guessNameNearButton(btn) || (window.IVI18n ? IVI18n.pick('this item', '이 상품') : 'this item');
     const price = (product && product.price) || guessPriceOnPage() || 0;
     const key = (product && product.key) || productKeyFromUrl();
     const details = safe(() => extractDetails(), {}) || {};

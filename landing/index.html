@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMPULSE VAULT — 사기 전에, 딱 한 번만 더</title>
+    <title data-ko="IMPULSE VAULT — 사기 전에, 딱 한 번만 더">IMPULSE VAULT — Before you buy, just one more moment</title>
     <meta
       name="description"
-      content="충동구매가 일어나는 그 순간, 냉정한 분석으로 한 번 더 생각하게 해주는 브라우저 확장. 100% 로컬, 무료."
+      content="A browser extension that, at the exact moment of an impulse buy, gives you a clear-eyed analysis so you think it through one more time. 100% local, free."
     />
-    <meta property="og:title" content="IMPULSE VAULT — 사기 전에, 딱 한 번만 더" />
-    <meta property="og:description" content="결제 버튼을 누르는 순간, 장단점·대안을 냉정하게 분석해 드려요. 100% 로컬." />
+    <meta property="og:title" content="IMPULSE VAULT — Before you buy, just one more moment" />
+    <meta property="og:description" content="The moment you hit the checkout button, we lay out the pros, cons, and alternatives with a cool head. 100% local." />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
@@ -34,13 +34,14 @@
     <header class="nav">
       <a class="brand" href="#top"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
       <nav class="nav-links">
-        <a href="#how">작동 방식</a>
-        <a href="#features">기능</a>
-        <a href="#privacy">프라이버시</a>
-        <a href="#pricing">요금제</a>
-        <a href="#support">후원</a>
+        <a href="#how" data-ko="작동 방식">How it works</a>
+        <a href="#features" data-ko="기능">Features</a>
+        <a href="#privacy" data-ko="프라이버시">Privacy</a>
+        <a href="#pricing" data-ko="요금제">Pricing</a>
+        <a href="#support" data-ko="후원">Support</a>
       </nav>
-      <a class="btn btn-primary" data-install href="#">시작하기</a>
+      <span class="lang-switch"><button data-lang-btn="en">EN</button><button data-lang-btn="ko">한</button></span>
+      <a class="btn btn-primary" data-install href="#" data-ko="시작하기">Get started</a>
     </header>
 
     <main id="top">
@@ -49,37 +50,37 @@
         <div class="hero-vault" aria-hidden="true">
           <span class="dome"></span><span class="coin">₩</span><span class="ring"></span>
         </div>
-        <span class="eyebrow">100% 로컬 · 무료 · 오픈한 코드</span>
-        <h1>사기 전에,<br />딱 한 번만 더.</h1>
-        <p class="sub">
-          결제 버튼을 누르는 그 순간, IMPULSE VAULT가 조용히 끼어들어
-          <b>이게 진짜 필요한지</b>, <b>장점과 단점</b>, <b>더 나은 대안</b>까지
-          냉정하게 분석해 드려요. 막지 않아요 — 잠깐 멈춰 생각할 틈만 만들어줘요.
+        <span class="eyebrow" data-ko="100% 로컬 · 무료 · 오픈한 코드">100% local · Free · Open code</span>
+        <h1 data-ko="사기 전에,<br />딱 한 번만 더.">Before you buy,<br />just one more moment.</h1>
+        <p class="sub" data-ko="결제 버튼을 누르는 그 순간, IMPULSE VAULT가 조용히 끼어들어 <b>이게 진짜 필요한지</b>, <b>장점과 단점</b>, <b>더 나은 대안</b>까지 냉정하게 분석해 드려요. 막지 않아요 — 잠깐 멈춰 생각할 틈만 만들어줘요.">
+          The moment you hit the checkout button, IMPULSE VAULT quietly steps in
+          to lay out <b>whether you truly need it</b>, <b>the pros and cons</b>, and <b>better alternatives</b>
+          with a clear head. It never blocks you — it just makes room for one more thought.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" data-install href="#">브라우저에 추가하기</a>
-          <a class="btn btn-ghost btn-lg" href="#how">어떻게 작동하나요?</a>
+          <a class="btn btn-primary btn-lg" data-install href="#" data-ko="브라우저에 추가하기">Add to your browser</a>
+          <a class="btn btn-ghost btn-lg" href="#how" data-ko="어떻게 작동하나요?">How does it work?</a>
         </div>
         <div class="trust">
-          <span><b>0</b> 서버 전송</span><i></i>
-          <span><b>30초</b> 설치</span><i></i>
-          <span><b>무료</b> 기본 분석</span>
+          <span data-ko="<b>0</b> 서버 전송"><b>0</b> sent to servers</span><i></i>
+          <span data-ko="<b>30초</b> 설치"><b>30 sec</b> to install</span><i></i>
+          <span data-ko="<b>무료</b> 기본 분석"><b>Free</b> core analysis</span>
         </div>
       </section>
 
       <!-- PROBLEM -->
       <section class="band">
-        <p class="band-quote">
-          “장바구니에 담을 땐 꼭 필요해 보였는데,<br />도착하니 한 번도 안 쓰더라.”
+        <p class="band-quote" data-ko="“장바구니에 담을 땐 꼭 필요해 보였는데,<br />도착하니 한 번도 안 쓰더라.”">
+          'It felt essential when I added it to the cart,<br />but once it arrived I never used it once.'
         </p>
-        <p class="band-sub">충동구매의 70%는 30일 안에 후회로 남아요. 문제는 의지가 아니라 <b>그 순간의 속도</b>예요.</p>
+        <p class="band-sub" data-ko="충동구매의 70%는 30일 안에 후회로 남아요. 문제는 의지가 아니라 <b>그 순간의 속도</b>예요.">70% of impulse buys turn into regret within 30 days. The problem isn't willpower — it's <b>the speed of that one moment</b>.</p>
       </section>
 
       <!-- TEMPTATIONS GALLERY -->
       <section id="tempt" class="section gallery">
-        <span class="label">유혹의 순간</span>
-        <h2>당신을 흔드는 건, 대개 이런 것들.</h2>
-        <p class="gallery-sub">사고 싶은 마음은 자연스러워요. IMPULSE VAULT는 바로 그 순간에만 살짝 끼어들어요.</p>
+        <span class="label" data-ko="유혹의 순간">Moments of temptation</span>
+        <h2 data-ko="당신을 흔드는 건, 대개 이런 것들.">The things that usually tempt you.</h2>
+        <p class="gallery-sub" data-ko="사고 싶은 마음은 자연스러워요. IMPULSE VAULT는 바로 그 순간에만 살짝 끼어들어요.">Wanting things is natural. IMPULSE VAULT steps in gently only at that exact moment.</p>
 
         <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
           <linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfcff"/><stop offset=".5" stop-color="#cfd6e4"/><stop offset="1" stop-color="#9aa3b6"/></linearGradient>
@@ -92,36 +93,36 @@
         <div class="gallery-grid">
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="52" r="46" fill="url(#gGlow)"/><ellipse cx="60" cy="98" rx="38" ry="6" fill="rgba(0,0,0,0.30)"/><path d="M30 62V50a30 30 0 0 1 60 0v12" fill="none" stroke="url(#gMetal)" stroke-width="8" stroke-linecap="round"/><rect x="22" y="56" width="17" height="30" rx="8" fill="url(#gInk)"/><rect x="81" y="56" width="17" height="30" rx="8" fill="url(#gInk)"/><rect x="25.5" y="60" width="5" height="22" rx="2.5" fill="rgba(110,168,255,0.7)"/><ellipse cx="30" cy="62" rx="4" ry="3" fill="#fff" opacity="0.4"/></svg></div>
-            <figcaption><b>프리미엄 헤드폰</b><span class="g-price">₩249,000</span></figcaption>
+            <figcaption><b data-ko="프리미엄 헤드폰">Premium headphones</b><span class="g-price" data-ko="₩249,000">$199</span></figcaption>
           </figure>
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="52" r="44" fill="url(#gGlow)"/><ellipse cx="60" cy="99" rx="26" ry="5" fill="rgba(0,0,0,0.28)"/><rect x="48" y="16" width="24" height="22" rx="6" fill="url(#gInk)"/><rect x="48" y="72" width="24" height="22" rx="6" fill="url(#gInk)"/><rect x="40" y="32" width="40" height="46" rx="13" fill="url(#gMetal)"/><rect x="46" y="38" width="28" height="34" rx="8" fill="url(#gBlue)"/><rect x="50" y="44" width="14" height="3" rx="1.5" fill="#fff" opacity="0.55"/><rect x="80" y="48" width="4" height="8" rx="2" fill="#9aa3b6"/></svg></div>
-            <figcaption><b>스마트워치</b><span class="g-price">₩329,000</span></figcaption>
+            <figcaption><b data-ko="스마트워치">Smartwatch</b><span class="g-price" data-ko="₩329,000">$299</span></figcaption>
           </figure>
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="52" r="45" fill="url(#gGlow)"/><ellipse cx="60" cy="96" rx="40" ry="6" fill="rgba(0,0,0,0.30)"/><rect x="44" y="34" width="20" height="9" rx="2" fill="url(#gInk)"/><rect x="26" y="42" width="68" height="44" rx="9" fill="url(#gInk)"/><circle cx="60" cy="64" r="17" fill="url(#gMetal)"/><circle cx="60" cy="64" r="10" fill="url(#gBlue)"/><circle cx="55" cy="59" r="3.5" fill="#fff" opacity="0.5"/><circle cx="82" cy="50" r="3" fill="rgba(194,169,142,0.9)"/></svg></div>
-            <figcaption><b>미러리스 카메라</b><span class="g-price">₩1,290,000</span></figcaption>
+            <figcaption><b data-ko="미러리스 카메라">Mirrorless camera</b><span class="g-price" data-ko="₩1,290,000">$1,199</span></figcaption>
           </figure>
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="52" r="44" fill="url(#gGlow)"/><ellipse cx="60" cy="96" rx="36" ry="6" fill="rgba(0,0,0,0.28)"/><path d="M46 44v-3a14 14 0 0 1 28 0v3" fill="none" stroke="url(#gWarm)" stroke-width="5"/><path d="M38 46h44l5 38a4 4 0 0 1-4 4H37a4 4 0 0 1-4-4z" fill="url(#gWarm)"/><rect x="54" y="56" width="12" height="7" rx="2" fill="rgba(0,0,0,0.22)"/><path d="M38 46h44" stroke="#fff" opacity="0.22" stroke-width="2.5"/></svg></div>
-            <figcaption><b>디자이너 핸드백</b><span class="g-price">₩890,000</span></figcaption>
+            <figcaption><b data-ko="디자이너 핸드백">Designer handbag</b><span class="g-price" data-ko="₩890,000">$799</span></figcaption>
           </figure>
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="54" r="44" fill="url(#gGlow)"/><ellipse cx="60" cy="92" rx="40" ry="6" fill="rgba(0,0,0,0.28)"/><path d="M40 50h40c11 0 18 9 18 20s-9 14-16 10l-9-6H47l-9 6c-7 4-16-1-16-10s7-20 18-20z" fill="url(#gInk)"/><path d="M44 60v10M39 65h10" stroke="#cfd6e4" stroke-width="3" stroke-linecap="round"/><circle cx="74" cy="61" r="3" fill="rgba(110,168,255,0.9)"/><circle cx="82" cy="68" r="3" fill="rgba(194,169,142,0.9)"/><ellipse cx="50" cy="55" rx="10" ry="3" fill="#fff" opacity="0.18"/></svg></div>
-            <figcaption><b>게임 콘솔 패드</b><span class="g-price">₩79,000</span></figcaption>
+            <figcaption><b data-ko="게임 콘솔 패드">Game controller</b><span class="g-price" data-ko="₩79,000">$69</span></figcaption>
           </figure>
           <figure class="card g-item">
             <div class="g-art"><svg viewBox="0 0 120 110"><circle cx="60" cy="54" r="44" fill="url(#gGlow)"/><ellipse cx="62" cy="94" rx="42" ry="6" fill="rgba(0,0,0,0.30)"/><path d="M22 76c0-8 6-13 16-16l12-12 7 7 16 2c10 1 17 7 17 15v3a3 3 0 0 1-3 3H25a3 3 0 0 1-3-3z" fill="url(#gMetal)"/><path d="M22 78h83" stroke="rgba(0,0,0,0.28)" stroke-width="5" stroke-linecap="round"/><path d="M52 56l8 7M58 50l9 8M64 47l9 7" stroke="#9aa3b6" stroke-width="2.5" stroke-linecap="round"/><path d="M70 60c9-3 16 0 20 6" stroke="rgba(110,168,255,0.65)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
-            <figcaption><b>한정판 운동화</b><span class="g-price">₩219,000</span></figcaption>
+            <figcaption><b data-ko="한정판 운동화">Limited-edition sneakers</b><span class="g-price" data-ko="₩219,000">$179</span></figcaption>
           </figure>
         </div>
       </section>
 
       <!-- SHOWCASE (preview mockup) -->
       <section id="preview" class="section showcase">
-        <span class="label">미리보기</span>
-        <h2>결제 직전, 이렇게 끼어들어요.</h2>
-        <p class="showcase-sub">실제 화면이에요. 막지 않고, 잠깐 멈춰 <b>장점·단점·대안</b>을 보여줘요.</p>
+        <span class="label" data-ko="미리보기">Preview</span>
+        <h2 data-ko="결제 직전, 이렇게 끼어들어요.">Right before checkout, here's how it steps in.</h2>
+        <p class="showcase-sub" data-ko="실제 화면이에요. 막지 않고, 잠깐 멈춰 <b>장점·단점·대안</b>을 보여줘요.">This is the real screen. It doesn't block you — it just pauses to show the <b>pros, cons, and alternatives</b>.</p>
         <div class="preview-stage">
           <!-- dark · 상품 예시 -->
           <div class="preview-modal">
@@ -151,29 +152,29 @@
                 </g>
               </svg>
             </div>
-            <span class="pv-badge">잠깐 멈춤</span>
-            <div class="pv-title">이거 진짜 필요해?</div>
-            <div class="pv-item">무선 노이즈캔슬 이어버드</div>
+            <span class="pv-badge" data-ko="잠깐 멈춤">Quick pause</span>
+            <div class="pv-title" data-ko="이거 진짜 필요해?">Do you really need this?</div>
+            <div class="pv-item" data-ko="무선 노이즈캔슬 이어버드">Wireless noise-cancelling earbuds</div>
             <div class="pv-reframe">
-              <span class="pv-price">₩189,000</span>
-              <span class="pv-sub">≈ 3.2시간 노동 · ≈ 3개의 아끼는 것</span>
+              <span class="pv-price" data-ko="₩189,000">$149</span>
+              <span class="pv-sub" data-ko="≈ 3.2시간 노동 · ≈ 3개의 아끼는 것">≈ 3.2 hours of work · ≈ 3 things you love</span>
             </div>
             <div class="pv-cols">
               <div class="pv-col">
-                <div class="pv-col-h pv-pro">장점</div>
-                <span class="pv-line"><i></i>노이즈캔슬 만족 후기 다수</span>
-                <span class="pv-line"><i></i>가벼운 착용감</span>
+                <div class="pv-col-h pv-pro" data-ko="장점">Pros</div>
+                <span class="pv-line"><i></i><span data-ko="노이즈캔슬 만족 후기 다수">Many happy reviews on the noise-cancelling</span></span>
+                <span class="pv-line"><i></i><span data-ko="가벼운 착용감">Light, comfortable fit</span></span>
               </div>
               <div class="pv-col">
-                <div class="pv-col-h pv-con">단점</div>
-                <span class="pv-line"><i class="con"></i>비슷한 제품 이미 보유</span>
-                <span class="pv-line"><i class="con"></i>가격대 높은 편</span>
+                <div class="pv-col-h pv-con" data-ko="단점">Cons</div>
+                <span class="pv-line"><i class="con"></i><span data-ko="비슷한 제품 이미 보유">You already own something similar</span></span>
+                <span class="pv-line"><i class="con"></i><span data-ko="가격대 높은 편">On the pricey side</span></span>
               </div>
             </div>
-            <div class="pv-verdict"><b>결론</b> · 지금은 금고에 넣고 24시간 식혀보는 걸 추천해요</div>
+            <div class="pv-verdict" data-ko="<b>결론</b> · 지금은 금고에 넣고 24시간 식혀보는 걸 추천해요"><b>Verdict</b> · For now, drop it in the Vault and let it cool for 24 hours</div>
             <div class="pv-actions">
-              <span class="pv-btn pv-primary">금고에 넣기 · 24시간</span>
-              <span class="pv-btn pv-ghost">안 살래</span>
+              <span class="pv-btn pv-primary" data-ko="금고에 넣기 · 24시간">Put in Vault · 24 hrs</span>
+              <span class="pv-btn pv-ghost" data-ko="안 살래">Skip it</span>
             </div>
           </div>
 
@@ -203,29 +204,29 @@
                 <rect x="84" y="128" width="72" height="7" rx="3.5" fill="url(#tvFrame)"/>
               </svg>
             </div>
-            <span class="pv-badge">구독 점검</span>
-            <div class="pv-title">정말 계속 볼까?</div>
-            <div class="pv-item">프리미엄 영상 스트리밍 구독</div>
+            <span class="pv-badge" data-ko="구독 점검">Subscription check</span>
+            <div class="pv-title" data-ko="정말 계속 볼까?">Will you really keep watching?</div>
+            <div class="pv-item" data-ko="프리미엄 영상 스트리밍 구독">Premium video streaming subscription</div>
             <div class="pv-reframe">
-              <span class="pv-price">월 ₩13,900</span>
-              <span class="pv-sub">연 ₩166,800 · 지난달 시청 4회</span>
+              <span class="pv-price" data-ko="월 ₩13,900">$10.99/mo</span>
+              <span class="pv-sub" data-ko="연 ₩166,800 · 지난달 시청 4회">$131/yr · watched 4 times last month</span>
             </div>
             <div class="pv-cols">
               <div class="pv-col">
-                <div class="pv-col-h pv-pro">장점</div>
-                <span class="pv-line"><i></i>광고 없이 시청</span>
-                <span class="pv-line"><i></i>오프라인 저장</span>
+                <div class="pv-col-h pv-pro" data-ko="장점">Pros</div>
+                <span class="pv-line"><i></i><span data-ko="광고 없이 시청">Ad-free viewing</span></span>
+                <span class="pv-line"><i></i><span data-ko="오프라인 저장">Offline downloads</span></span>
               </div>
               <div class="pv-col">
-                <div class="pv-col-h pv-con">단점</div>
-                <span class="pv-line"><i class="con"></i>한 달 4번밖에 안 봄</span>
-                <span class="pv-line"><i class="con"></i>무료 대안 존재</span>
+                <div class="pv-col-h pv-con" data-ko="단점">Cons</div>
+                <span class="pv-line"><i class="con"></i><span data-ko="한 달 4번밖에 안 봄">Only watched 4 times a month</span></span>
+                <span class="pv-line"><i class="con"></i><span data-ko="무료 대안 존재">Free alternatives exist</span></span>
               </div>
             </div>
-            <div class="pv-verdict"><b>결론</b> · 이번 달은 해지하고 무료 대안을 먼저 써보길 추천해요</div>
+            <div class="pv-verdict" data-ko="<b>결론</b> · 이번 달은 해지하고 무료 대안을 먼저 써보길 추천해요"><b>Verdict</b> · Cancel this month and try a free alternative first</div>
             <div class="pv-actions">
-              <span class="pv-btn pv-primary">1달 뒤 다시 묻기</span>
-              <span class="pv-btn pv-ghost">해지할래</span>
+              <span class="pv-btn pv-primary" data-ko="1달 뒤 다시 묻기">Ask again in 1 month</span>
+              <span class="pv-btn pv-ghost" data-ko="해지할래">Cancel it</span>
             </div>
           </div>
         </div>
@@ -233,75 +234,75 @@
 
       <!-- HOW -->
       <section id="how" class="section">
-        <span class="label">작동 방식</span>
-        <h2>세 단계. 전부 자동.</h2>
+        <span class="label" data-ko="작동 방식">How it works</span>
+        <h2 data-ko="세 단계. 전부 자동.">Three steps. All automatic.</h2>
         <div class="steps">
           <article class="card step">
             <span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12s3.6-6.5 9-6.5S21 12 21 12s-3.6 6.5-9 6.5S3 12 3 12z"/></svg></span>
             <span class="step-n">01</span>
-            <h3>감지</h3>
-            <p>쇼핑·서비스·구독 사이트에서 결제·구매 버튼을 누르는 순간을 감지해요. 가격·스펙·평점·리뷰를 그 페이지에서 읽어와요.</p>
+            <h3 data-ko="감지">Detect</h3>
+            <p data-ko="쇼핑·서비스·구독 사이트에서 결제·구매 버튼을 누르는 순간을 감지해요. 가격·스펙·평점·리뷰를 그 페이지에서 읽어와요.">It catches the moment you hit a checkout or buy button on shopping, service, and subscription sites. It reads the price, specs, ratings, and reviews right off that page.</p>
           </article>
           <article class="card step">
             <span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 21h12M4 7.5l8-2 8 2"/><path d="M4 7.5 1.8 13a3 3 0 0 0 4.4 0z"/><path d="M20 7.5 17.8 13a3 3 0 0 0 4.4 0z"/></svg></span>
             <span class="step-n">02</span>
-            <h3>냉정한 분석</h3>
-            <p>장점·단점을 5:5로 팽팽하게, 기회비용·대안까지. AI를 켜면 인터넷을 직접 검색해 외부 리뷰와 더 싼/나은 상품을 찾아줘요.</p>
+            <h3 data-ko="냉정한 분석">Clear-eyed analysis</h3>
+            <p data-ko="장점·단점을 5:5로 팽팽하게, 기회비용·대안까지. AI를 켜면 인터넷을 직접 검색해 외부 리뷰와 더 싼/나은 상품을 찾아줘요.">A balanced 50:50 view of the pros and cons, plus opportunity cost and alternatives. Turn on AI and it searches the web directly for outside reviews and cheaper or better products.</p>
           </article>
           <article class="card step">
             <span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16 9.5"/></svg></span>
             <span class="step-n">03</span>
-            <h3>결정</h3>
-            <p>그래도 사거나, 금고에 넣어 24시간 식히거나, 그냥 보내거나. 참을 때마다 아낀 돈이 쌓여요. 선택은 늘 당신 몫.</p>
+            <h3 data-ko="결정">Decide</h3>
+            <p data-ko="그래도 사거나, 금고에 넣어 24시간 식히거나, 그냥 보내거나. 참을 때마다 아낀 돈이 쌓여요. 선택은 늘 당신 몫.">Buy it anyway, drop it in the Vault to cool for 24 hours, or let it go. Every time you hold back, your savings add up. The choice is always yours.</p>
           </article>
         </div>
       </section>
 
       <!-- FEATURES -->
       <section id="features" class="section">
-        <span class="label">기능</span>
-        <h2>가볍지만, 빈틈없이.</h2>
+        <span class="label" data-ko="기능">Features</span>
+        <h2 data-ko="가볍지만, 빈틈없이.">Lightweight, but thorough.</h2>
         <div class="feat-grid">
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 21h12M4 7.5l8-2 8 2"/><path d="M4 7.5 1.8 13a3 3 0 0 0 4.4 0z"/><path d="M20 7.5 17.8 13a3 3 0 0 0 4.4 0z"/></svg></span>
-            <h3>냉정한 구매 분석</h3>
-            <p>근거 기반 장단점 + "이게 최선인가" 결론 + 확신도. 없는 사실은 지어내지 않아요.</p>
+            <h3 data-ko="냉정한 구매 분석">Clear-eyed purchase analysis</h3>
+            <p data-ko="근거 기반 장단점 + '이게 최선인가' 결론 + 확신도. 없는 사실은 지어내지 않아요.">Evidence-based pros and cons, an 'is this really the best choice' verdict, and a confidence level. It never invents facts that aren't there.</p>
           </article>
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.9-4.9"/><path d="M18.4 3.2l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z"/></svg></span>
-            <h3>AI 웹검색 대안 찾기</h3>
-            <p>버튼 한 번이면 AI가 인터넷을 뒤져 <b>더 싸거나 더 나은 실제 상품</b>을 출처와 함께 찾아줘요.</p>
+            <h3 data-ko="AI 웹검색 대안 찾기">AI web-search for alternatives</h3>
+            <p data-ko="버튼 한 번이면 AI가 인터넷을 뒤져 <b>더 싸거나 더 나은 실제 상품</b>을 출처와 함께 찾아줘요.">One tap and the AI scours the web to find <b>cheaper or better real products</b>, complete with sources.</p>
           </article>
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2l1.4 1"/></svg></span>
-            <h3>쿨다운 금고</h3>
-            <p>"지금 사고 싶다" 싶으면 금고에 넣어 식혀요. 24시간 뒤에도 갖고 싶으면 그때 사요.</p>
+            <h3 data-ko="쿨다운 금고">Cooldown Vault</h3>
+            <p data-ko="'지금 사고 싶다' 싶으면 금고에 넣어 식혀요. 24시간 뒤에도 갖고 싶으면 그때 사요.">When the urge hits, drop it in the Vault to cool off. If you still want it 24 hours later, buy it then.</p>
           </article>
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3.1 7.8-7 9-3.9-1.2-7-4.4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-            <h3>100% 로컬 프라이버시</h3>
-            <p>검색·상품·통계는 <b>내 기기에만</b>. 사용자 데이터를 담은 서버 전송은 0건이에요.</p>
+            <h3 data-ko="100% 로컬 프라이버시">100% local privacy</h3>
+            <p data-ko="검색·상품·통계는 <b>내 기기에만</b>. 사용자 데이터를 담은 서버 전송은 0건이에요.">Your searches, products, and stats stay <b>on your device only</b>. Zero transmissions of user data to any server.</p>
           </article>
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><rect x="5" y="11" width="3" height="8" rx="1"/><rect x="10.5" y="6" width="3" height="13" rx="1"/><rect x="16" y="14" width="3" height="5" rx="1"/></svg></span>
-            <h3>충동 프로필 대시보드</h3>
-            <p>언제·어디서·무엇에 약한지 시간대 히트맵·통계로 보여줘요. 전부 로컬 계산.</p>
+            <h3 data-ko="충동 프로필 대시보드">Impulse profile dashboard</h3>
+            <p data-ko="언제·어디서·무엇에 약한지 시간대 히트맵·통계로 보여줘요. 전부 로컬 계산.">See when, where, and what you're weakest to, with a time-of-day heatmap and stats. All computed locally.</p>
           </article>
           <article class="card feat">
             <span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="14" r="6"/><path d="M6.7 11.7 9 16l2.3-4.3M6.9 13.7h4.2"/><path d="M15 9l3-3 3 3M18 6v7"/></svg></span>
-            <h3>아낀 돈, 눈에 보이게</h3>
-            <p>참을 때마다 "총 아낀 돈"이 쌓여요. 절제가 숫자로 보상돼요.</p>
+            <h3 data-ko="아낀 돈, 눈에 보이게">Savings you can see</h3>
+            <p data-ko="참을 때마다 '총 아낀 돈'이 쌓여요. 절제가 숫자로 보상돼요.">Every time you hold back, your 'total saved' grows. Restraint gets rewarded in real numbers.</p>
           </article>
         </div>
       </section>
 
       <!-- BROWSERS -->
       <section id="browsers" class="section browsers">
-        <span class="label">지원 브라우저</span>
-        <h2>쓰던 브라우저에 그대로.</h2>
-        <p class="browsers-sub">
-          크로미움 계열 브라우저는 <b>같은 확장 하나</b>로 전부 동작해요.
-          설치는 30초, 권한은 당신이 허용한 사이트에만 적용돼요.
+        <span class="label" data-ko="지원 브라우저">Supported browsers</span>
+        <h2 data-ko="쓰던 브라우저에 그대로.">Right in the browser you already use.</h2>
+        <p class="browsers-sub" data-ko="크로미움 계열 브라우저는 <b>같은 확장 하나</b>로 전부 동작해요. 설치는 30초, 권한은 당신이 허용한 사이트에만 적용돼요.">
+          Every Chromium-based browser runs on <b>one and the same extension</b>.
+          Install takes 30 seconds, and permissions apply only to the sites you allow.
         </p>
         <div class="browser-grid">
           <div class="card browser-chip"><span class="bc-ico">🌐</span><b>Chrome</b></div>
@@ -311,8 +312,8 @@
           <div class="card browser-chip"><span class="bc-ico">🔴</span><b>Opera</b></div>
           <div class="card browser-chip"><span class="bc-ico">💎</span><b>Vivaldi</b></div>
         </div>
-        <a class="btn btn-primary btn-lg" data-install href="#">브라우저에 추가하기</a>
-        <p class="support-note">설치 방법은 브라우저별로 안내 페이지에서 단계별로 확인할 수 있어요.</p>
+        <a class="btn btn-primary btn-lg" data-install href="#" data-ko="브라우저에 추가하기">Add to your browser</a>
+        <p class="support-note" data-ko="설치 방법은 브라우저별로 안내 페이지에서 단계별로 확인할 수 있어요.">You can follow step-by-step install instructions for each browser on the guide page.</p>
       </section>
 
       <!-- PRIVACY -->
@@ -328,67 +329,67 @@
               <path d="M90 26l16 24" stroke="var(--warn)"/>
             </svg>
           </span>
-          <h2>당신의 쇼핑은 당신만 봐요.</h2>
-          <p>
-            IMPULSE VAULT는 검색어·상품·구매 패턴을 <b>어떤 서버로도 보내지 않아요.</b>
-            모든 분석과 기록은 브라우저 안(<code>로컬</code>)에서 끝나요.
-            AI 분석은 켤 때만, 그리고 당신이 고른 AI에게만 전송돼요.
+          <h2 data-ko="당신의 쇼핑은 당신만 봐요.">Your shopping is for your eyes only.</h2>
+          <p data-ko="IMPULSE VAULT는 검색어·상품·구매 패턴을 <b>어떤 서버로도 보내지 않아요.</b> 모든 분석과 기록은 브라우저 안(<code>로컬</code>)에서 끝나요. AI 분석은 켤 때만, 그리고 당신이 고른 AI에게만 전송돼요.">
+            IMPULSE VAULT <b>never sends your searches, products, or buying patterns to any server.</b>
+            All analysis and records stay inside your browser (<code>local</code>).
+            AI analysis runs only when you turn it on, and only to the AI you choose.
           </p>
         </div>
       </section>
 
       <!-- PRICING / PRO -->
       <section id="pricing" class="section pricing">
-        <span class="label">요금제</span>
-        <h2>무료로도 충분히. Pro는 더 똑똑하게.</h2>
-        <p class="pricing-sub">
-          핵심 기능은 평생 무료예요. Pro는 가장 강력한 무기 —
-          <b>키 없이 켜지는 AI 분석</b>과 <b>웹검색 대안 찾기</b>를 더해줘요.
+        <span class="label" data-ko="요금제">Pricing</span>
+        <h2 data-ko="무료로도 충분히. Pro는 더 똑똑하게.">Plenty for free. Pro, even smarter.</h2>
+        <p class="pricing-sub" data-ko="핵심 기능은 평생 무료예요. Pro는 가장 강력한 무기 — <b>키 없이 켜지는 AI 분석</b>과 <b>웹검색 대안 찾기</b>를 더해줘요.">
+          The core features are free forever. Pro is your sharpest tool —
+          adding <b>AI analysis with no key required</b> and <b>web-search for alternatives</b>.
         </p>
 
         <div class="pricing-grid">
           <!-- FREE -->
           <div class="card plan">
             <div class="plan-name">FREE</div>
-            <div class="plan-price">₩0<span class="plan-per">영원히</span></div>
+            <div class="plan-price" data-ko="₩0<span class='plan-per'>영원히</span>">$0<span class="plan-per">forever</span></div>
             <ul class="plan-feats">
-              <li>결제 순간 부드러운 개입 · 금고(식히기)</li>
-              <li>아낀 돈 · 충동 프로필 · 통계</li>
-              <li>규칙 기반 냉정한 구매 분석</li>
-              <li>AI 분석 — <b>내 API 키(BYOK)</b>로 무료</li>
-              <li>100% 로컬 · 내보내기 · 전체 삭제</li>
+              <li data-ko="결제 순간 부드러운 개입 · 금고(식히기)">A gentle nudge at checkout · Vault (cool-off)</li>
+              <li data-ko="아낀 돈 · 충동 프로필 · 통계">Money saved · impulse profile · stats</li>
+              <li data-ko="규칙 기반 냉정한 구매 분석">Rule-based, clear-eyed purchase analysis</li>
+              <li data-ko="AI 분석 — <b>내 API 키(BYOK)</b>로 무료">AI analysis — free with <b>your own API key (BYOK)</b></li>
+              <li data-ko="100% 로컬 · 내보내기 · 전체 삭제">100% local · export · delete everything</li>
             </ul>
-            <a class="btn btn-ghost btn-block" data-install href="#">무료로 시작하기</a>
+            <a class="btn btn-ghost btn-block" data-install href="#" data-ko="무료로 시작하기">Start for free</a>
           </div>
 
           <!-- PRO -->
           <div class="card plan plan-pro">
-            <span class="plan-badge">가장 인기</span>
+            <span class="plan-badge" data-ko="가장 인기">Most popular</span>
             <div class="plan-name pro">PRO</div>
-            <div class="plan-price">₩3,900<span class="plan-per">/월</span></div>
-            <div class="plan-annual">또는 연 ₩29,000 · <b>7일 무료체험</b></div>
+            <div class="plan-price" data-ko="₩3,900<span class='plan-per'>/월</span>">$2.99<span class="plan-per">/mo</span></div>
+            <div class="plan-annual" data-ko="또는 연 ₩29,000 · <b>7일 무료체험</b>">or $24.99/yr · <b>7-day free trial</b></div>
             <ul class="plan-feats">
-              <li><b>FREE의 모든 기능 포함</b></li>
-              <li>⚡ AI 냉정한 구매 분석 — <b>키 없이 바로</b></li>
-              <li>🔎 웹검색으로 더 싼 대안·리뷰·문제점 찾기</li>
-              <li>🧠 페이지 데이터 기반 더 똑똑한 개입</li>
-              <li>💞 앞으로 추가될 Pro 기능 모두 포함</li>
+              <li data-ko="<b>FREE의 모든 기능 포함</b>"><b>Everything in FREE included</b></li>
+              <li data-ko="⚡ AI 냉정한 구매 분석 — <b>키 없이 바로</b>">⚡ AI clear-eyed purchase analysis — <b>no key, instantly</b></li>
+              <li data-ko="🔎 웹검색으로 더 싼 대안·리뷰·문제점 찾기">🔎 Web-search for cheaper alternatives, reviews, and red flags</li>
+              <li data-ko="🧠 페이지 데이터 기반 더 똑똑한 개입">🧠 Smarter interventions based on page data</li>
+              <li data-ko="💞 앞으로 추가될 Pro 기능 모두 포함">💞 All future Pro features included</li>
             </ul>
-            <a class="btn btn-primary btn-block" data-install href="#">Pro 시작하기</a>
-            <p class="plan-note">설치 후 대시보드 → <b>Pro 멤버십</b>에서 업그레이드</p>
+            <a class="btn btn-primary btn-block" data-install href="#" data-ko="Pro 시작하기">Start Pro</a>
+            <p class="plan-note" data-ko="설치 후 대시보드 → <b>Pro 멤버십</b>에서 업그레이드">After installing, upgrade from the dashboard → <b>Pro membership</b></p>
           </div>
         </div>
 
-        <p class="pricing-foot">🔒 결제·구독 관리는 ExtensionPay(Stripe)로 안전하게. 카드 정보는 저장하지 않고, 언제든 해지할 수 있어요.</p>
+        <p class="pricing-foot" data-ko="🔒 결제·구독 관리는 ExtensionPay(Stripe)로 안전하게. 카드 정보는 저장하지 않고, 언제든 해지할 수 있어요.">🔒 Payments and subscriptions are handled securely by ExtensionPay (Stripe). We never store your card details, and you can cancel anytime.</p>
       </section>
 
       <!-- SUPPORT / DONATION -->
       <section id="support" class="section support">
-        <span class="label">후원</span>
-        <h2>이 앱이 한 번이라도 당신을 멈춰 세웠다면.</h2>
-        <p class="support-sub">
-          IMPULSE VAULT의 핵심은 무료예요. 운영과 서버 비용은 Pro 구독과 후원으로 유지돼요.
-          커피 한 잔이면 충분히 큰 힘이 돼요. 강요는 절대 없어요. ☕
+        <span class="label" data-ko="후원">Support</span>
+        <h2 data-ko="이 앱이 한 번이라도 당신을 멈춰 세웠다면.">If this app ever stopped you, even once.</h2>
+        <p class="support-sub" data-ko="IMPULSE VAULT의 핵심은 무료예요. 운영과 서버 비용은 Pro 구독과 후원으로 유지돼요. 커피 한 잔이면 충분히 큰 힘이 돼요. 강요는 절대 없어요. ☕">
+          The heart of IMPULSE VAULT is free. Operating and server costs are covered by Pro subscriptions and support.
+          Even the price of a coffee makes a real difference. Never any pressure. ☕
         </p>
         <span class="support-art" aria-hidden="true">
           <svg viewBox="0 0 130 110" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -399,35 +400,35 @@
           </svg>
         </span>
         <div class="donate-account card">
-          <span class="da-badge">💛 후원 계좌</span>
-          <div class="da-bank">은행명</div>
+          <span class="da-badge" data-ko="💛 후원 계좌">💛 Support account</span>
+          <div class="da-bank" data-ko="은행명">Bank name</div>
           <div class="da-row">
             <span class="da-number" id="bankAccount">000-0000-000000</span>
-            <button class="da-copy" id="copyAccount" type="button" aria-label="계좌번호 복사">복사</button>
+            <button class="da-copy" id="copyAccount" type="button" aria-label="Copy account number" data-ko-aria="계좌번호 복사" data-ko="복사">Copy</button>
           </div>
-          <p class="da-msg">커피 한 잔의 응원이 큰 힘이 돼요. 보내주신 마음은 무료 운영에 보탬이 돼요. ☕</p>
+          <p class="da-msg" data-ko="커피 한 잔의 응원이 큰 힘이 돼요. 보내주신 마음은 무료 운영에 보탬이 돼요. ☕">The cheer of a single coffee goes a long way. What you send helps keep this free to run. ☕</p>
         </div>
-        <p class="support-note">후원은 100% 선택이에요. 후원하지 않아도 모든 기능을 그대로 써요.</p>
+        <p class="support-note" data-ko="후원은 100% 선택이에요. 후원하지 않아도 모든 기능을 그대로 써요.">Support is 100% optional. You get every feature whether you support us or not.</p>
       </section>
 
       <!-- FINAL CTA -->
       <section class="section final">
         <div class="card final-card">
-          <h2>다음 결제 전에, 30초만.</h2>
-          <p>설치하고, 평소처럼 쇼핑하세요. 필요한 순간에만 조용히 나타나요.</p>
-          <a class="btn btn-primary btn-lg" data-install href="#">무료로 시작하기</a>
+          <h2 data-ko="다음 결제 전에, 30초만.">Before your next checkout, just 30 seconds.</h2>
+          <p data-ko="설치하고, 평소처럼 쇼핑하세요. 필요한 순간에만 조용히 나타나요.">Install it and shop like you always do. It appears quietly only when you need it.</p>
+          <a class="btn btn-primary btn-lg" data-install href="#" data-ko="무료로 시작하기">Start for free</a>
         </div>
       </section>
 
       <!-- FAQ -->
       <section class="section">
         <span class="label">FAQ</span>
-        <h2>자주 묻는 것들.</h2>
+        <h2 data-ko="자주 묻는 것들.">Frequently asked.</h2>
         <div class="acc" id="faq">
-          <div class="acc-item"><button class="acc-head">무료인가요?<span class="plus"></span></button><div class="acc-body"><p>핵심 분석·금고·통계는 <b>평생 무료</b>예요. '키 없이 쓰는 AI 분석 + 웹검색'은 <b>Pro(월 ₩3,900 · 7일 무료체험)</b>이고, 본인 API 키가 있으면 AI도 무료로 쓸 수 있어요.</p></div></div>
-          <div class="acc-item"><button class="acc-head">제 쇼핑 기록이 새나가나요?<span class="plus"></span></button><div class="acc-body"><p>아니요. 모든 데이터는 브라우저 안에만 저장돼요. 사용자 데이터를 담은 서버 전송은 0건입니다.</p></div></div>
-          <div class="acc-item"><button class="acc-head">구매를 못 하게 막나요?<span class="plus"></span></button><div class="acc-body"><p>막지 않아요. 잠깐 멈춰 생각할 틈을 줄 뿐, "그래도 살래요"는 늘 한 번에 가능해요.</p></div></div>
-          <div class="acc-item"><button class="acc-head">어떤 브라우저에서 되나요?<span class="plus"></span></button><div class="acc-body"><p>Chrome·Edge·Brave 등 크로미움 계열에서 동작해요.</p></div></div>
+          <div class="acc-item"><button class="acc-head" data-ko="무료인가요?<span class='plus'></span>">Is it free?<span class="plus"></span></button><div class="acc-body"><p data-ko="핵심 분석·금고·통계는 <b>평생 무료</b>예요. '키 없이 쓰는 AI 분석 + 웹검색'은 <b>Pro(월 $2.99 · 7일 무료체험)</b>이고, 본인 API 키가 있으면 AI도 무료로 쓸 수 있어요.">The core analysis, Vault, and stats are <b>free forever</b>. The 'AI analysis with no key + web search' is <b>Pro ($2.99/mo · 7-day free trial)</b>, and if you have your own API key you can use AI for free too.</p></div></div>
+          <div class="acc-item"><button class="acc-head" data-ko="제 쇼핑 기록이 새나가나요?<span class='plus'></span>">Does my shopping history leak out?<span class="plus"></span></button><div class="acc-body"><p data-ko="아니요. 모든 데이터는 브라우저 안에만 저장돼요. 사용자 데이터를 담은 서버 전송은 0건입니다.">No. All data is stored inside your browser only. There are zero transmissions of user data to any server.</p></div></div>
+          <div class="acc-item"><button class="acc-head" data-ko="구매를 못 하게 막나요?<span class='plus'></span>">Does it block me from buying?<span class="plus"></span></button><div class="acc-body"><p data-ko="막지 않아요. 잠깐 멈춰 생각할 틈을 줄 뿐, '그래도 살래요'는 늘 한 번에 가능해요.">It never blocks you. It just gives you a moment to pause and think — 'buy it anyway' is always one tap away.</p></div></div>
+          <div class="acc-item"><button class="acc-head" data-ko="어떤 브라우저에서 되나요?<span class='plus'></span>">Which browsers does it work on?<span class="plus"></span></button><div class="acc-body"><p data-ko="Chrome·Edge·Brave 등 크로미움 계열에서 동작해요.">It works on Chromium-based browsers like Chrome, Edge, and Brave.</p></div></div>
         </div>
       </section>
     </main>
@@ -435,10 +436,11 @@
     <footer class="footer">
       <div class="foot-row">
         <a class="brand" href="#top"><span class="mark"></span><b>IMPULSE&nbsp;VAULT</b></a>
-        <span class="copy">© 2026 IMPULSE VAULT · 100% 로컬 · 충동구매에 맞서는 작은 도구</span>
+        <span class="copy" data-ko="© 2026 IMPULSE VAULT · 100% 로컬 · 충동구매에 맞서는 작은 도구">© 2026 IMPULSE VAULT · 100% local · a small tool against impulse buying</span>
       </div>
     </footer>
 
+    <script src="i18n.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

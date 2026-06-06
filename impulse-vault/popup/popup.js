@@ -13,9 +13,9 @@
 
   function fmtKRW(n) {
     try {
-      return '₩' + Number(n || 0).toLocaleString('ko-KR');
+      return '$' + Number(n || 0).toLocaleString('en-US');
     } catch (_) {
-      return '₩' + (n || 0);
+      return '$' + (n || 0);
     }
   }
 
@@ -41,14 +41,14 @@
   }
 
   function fmtRemaining(ms) {
-    if (ms <= 0) return '준비됨 ✓';
+    if (ms <= 0) return IVI18n.pick('Ready ✓', '준비됨 ✓');
     const s = Math.floor(ms / 1000);
     const h = Math.floor(s / 3600);
     const m = Math.floor((s % 3600) / 60);
     const sec = s % 60;
-    if (h > 0) return `${h}시간 ${m}분 남음`;
-    if (m > 0) return `${m}분 ${sec}초 남음`;
-    return `${sec}초 남음`;
+    if (h > 0) return IVI18n.pick(`${h}h ${m}m left`, `${h}시간 ${m}분 남음`);
+    if (m > 0) return IVI18n.pick(`${m}m ${sec}s left`, `${m}분 ${sec}초 남음`);
+    return IVI18n.pick(`${sec}s left`, `${sec}초 남음`);
   }
 
   async function render() {
@@ -125,7 +125,7 @@
     body.className = 'vc-body';
     const name = document.createElement('div');
     name.className = 'vc-name';
-    name.textContent = item.item || '이름 없는 항목';
+    name.textContent = item.item || IVI18n.pick('Untitled item', '이름 없는 항목');
     const sub = document.createElement('div');
     sub.className = 'vc-sub';
     const price = document.createElement('span');
@@ -150,12 +150,12 @@
 
     const buy = document.createElement('button');
     buy.className = 'vc-buy';
-    buy.textContent = '살래요';
+    buy.textContent = IVI18n.pick('Buy it', '살래요');
     buy.addEventListener('click', () => onBuy(item));
 
     const letGo = document.createElement('button');
     letGo.className = 'vc-let';
-    letGo.textContent = '보낼래요';
+    letGo.textContent = IVI18n.pick('Let it go', '보낼래요');
     letGo.addEventListener('click', () => onLetGo(item, card));
 
     actions.appendChild(buy);

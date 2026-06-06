@@ -26,10 +26,10 @@
 
   const KEY = 'iv_pro';
 
-  // Pricing copy shown in the UI (keep in one place).
-  const PRICE = '₩3,900';
-  const PERIOD = '월';
-  const ANNUAL = '₩29,000';
+  // Pricing copy shown in the UI (keep in one place). USD.
+  const PRICE = '$2.99';
+  const PERIOD = 'mo';
+  const ANNUAL = '$24.99';
   const TRIAL_DAYS = 7;
 
   const DEFAULT = {

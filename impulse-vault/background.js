@@ -14,7 +14,7 @@
  * memory and always read/write through IVStorage.
  * ============================================================ */
 
-importScripts('utils/storage.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js', 'lib/ExtPay.js');
+importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js', 'lib/ExtPay.js');
 
 // ---- ExtensionPay (Pro subscriptions) -------------------------------------
 // `lib/ExtPay.js` is a safe stub until the real library is dropped in (see its
@@ -59,7 +59,7 @@ async function aiAvailability(settings) {
 
 const CONTENT_SCRIPT_ID = 'iv-dynamic-content';
 const CONTENT_FILES = {
-  js: ['utils/storage.js', 'utils/patterns.js', 'content/detector.js', 'content/overlay.js'],
+  js: ['utils/i18n.js', 'utils/storage.js', 'utils/patterns.js', 'content/detector.js', 'content/overlay.js'],
   // No page-level CSS: the overlay renders in a Shadow DOM and pulls
   // overlay.css into the shadow root (declared web_accessible_resource),
   // so nothing leaks into — or breaks from — the host page.
@@ -214,11 +214,11 @@ async function callAi(settings, prompt, useWeb) {
       try { body = await res.text(); } catch (_) {}
       let msg = body;
       try { const j = JSON.parse(body); msg = j.error || body; } catch (_) {}
-      throw new Error('프록시 ' + 'HTTP ' + res.status + (msg ? ' · ' + String(msg).slice(0, 160) : ''));
+      throw new Error(IVI18n.pick('Proxy ', '프록시 ') + 'HTTP ' + res.status + (msg ? ' · ' + String(msg).slice(0, 160) : ''));
     }
     const data = await res.json();
     if (data && data.ok && data.text) return data.text;
-    throw new Error('프록시 응답 오류' + (data && data.error ? ' · ' + data.error : ''));
+    throw new Error(IVI18n.pick('Proxy response error', '프록시 응답 오류') + (data && data.error ? ' · ' + data.error : ''));
   }
 
   // Helper: extract a short human-readable error from a failed API response.
@@ -307,13 +307,17 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   const vault = await IVStorage.getVault();
   const item = vault.find((x) => x.id === id);
   if (!item || item.status !== 'locked') return;
+  try { await IVI18n.ready; } catch (_) {}
   try {
     chrome.notifications &&
       chrome.notifications.create(alarm.name, {
         type: 'basic',
         iconUrl: chrome.runtime.getURL('icons/icon128.png'),
-        title: '금고가 열렸어요 🔓',
-        message: `"${item.item}" 식었어. 이제 결정할 시간 — 살래, 보낼래?`,
+        title: IVI18n.pick('Your Vault is open 🔓', '금고가 열렸어요 🔓'),
+        message: IVI18n.pick(
+          `"${item.item}" has cooled off. Time to decide — buy it, or let it go?`,
+          `"${item.item}" 식었어. 이제 결정할 시간 — 살래, 보낼래?`
+        ),
       });
   } catch (_) {
     /* notifications permission may not be granted; that's fine */
@@ -379,6 +383,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         // ---- Content script: user clicked buy → score the moment ----
         case 'SCORE_SIGNAL': {
           const settings = await IVStorage.getSettings();
+          try { await IVI18n.ready; } catch (_) {}
 
           // Respect global pause / snooze immediately.
           const now = Date.now();
@@ -495,6 +500,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         // ---- Optional AI enrichment for the scorecard (BYOK free · managed = Pro) ----
         case 'ANALYZE_AI': {
           const settings = await IVStorage.getSettings();
+          try { await IVI18n.ready; } catch (_) {}
           const avail = await aiAvailability(settings);
           if (!avail.ok) return sendResponse({ ok: false, error: avail.reason });
           try {
@@ -509,6 +515,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         // ---- AI finds real alternative products via live web search ----
         case 'FIND_ALTERNATIVES': {
           const settings = await IVStorage.getSettings();
+          try { await IVI18n.ready; } catch (_) {}
           const avail = await aiAvailability(settings);
           if (!avail.ok) return sendResponse({ ok: false, error: avail.reason });
           try {
@@ -627,11 +634,11 @@ function buildInterventionPayload(tier, result, settings, profile, viewRec, simi
 
   // Reflection questions (rotate a couple based on tier).
   const reflectionPool = [
-    '30일 뒤에도 이걸 쓰고 있을까?',
-    '이미 비슷한 게 집에 있지 않아?',
-    '지금 당장 사야 하는 진짜 이유가 있어?',
-    '이거 안 사면 무슨 일이 생겨?',
-    '일주일 뒤에 사도 똑같이 좋을까?',
+    IVI18n.pick('Will I still be using this in 30 days?', '30일 뒤에도 이걸 쓰고 있을까?'),
+    IVI18n.pick('Do I already have something similar at home?', '이미 비슷한 게 집에 있지 않아?'),
+    IVI18n.pick('Is there a real reason I need to buy this right now?', '지금 당장 사야 하는 진짜 이유가 있어?'),
+    IVI18n.pick('What actually happens if I don’t buy this?', '이거 안 사면 무슨 일이 생겨?'),
+    IVI18n.pick('Would this be just as good if I bought it a week from now?', '일주일 뒤에 사도 똑같이 좋을까?'),
   ];
   const questions =
     tier === 'high'
@@ -645,27 +652,42 @@ function buildInterventionPayload(tier, result, settings, profile, viewRec, simi
     const hour = new Date().getHours();
     const mm = String(new Date().getMinutes()).padStart(2, '0');
     if (profile && profile.hasHourSignal && Math.abs(profile.peakHour - hour) <= 1) {
-      insight = `넌 보통 ${profile.peakHour}시쯤 충동구매를 해. 지금 ${hour}:${mm}이야.`;
+      insight = IVI18n.pick(
+        `You usually shop on impulse around ${profile.peakHour}:00. It’s ${hour}:${mm} right now.`,
+        `넌 보통 ${profile.peakHour}시쯤 충동구매를 해. 지금 ${hour}:${mm}이야.`
+      );
     } else if (IVPatterns.isLateNight(hour)) {
-      insight = `지금 ${hour}:${mm}. 밤에 산 물건, 아침에 후회한 적 없어?`;
+      insight = IVI18n.pick(
+        `It’s ${hour}:${mm}. Ever regretted a late-night buy the next morning?`,
+        `지금 ${hour}:${mm}. 밤에 산 물건, 아침에 후회한 적 없어?`
+      );
     } else if ((viewRec && viewRec.count >= 3) || similar >= 3) {
       const n = Math.max((viewRec && viewRec.count) || 0, similar);
-      insight = `이번에 비슷한 걸 ${n}번이나 봤어. 진짜 끌리나 봐 — 그래서 더 천천히.`;
+      insight = IVI18n.pick(
+        `You’ve looked at something like this ${n} times now. It’s clearly tempting — all the more reason to slow down.`,
+        `이번에 비슷한 걸 ${n}번이나 봤어. 진짜 끌리나 봐 — 그래서 더 천천히.`
+      );
     } else if (price > 0 && gameUnits >= 1) {
-      insight = `이 돈이면 네가 아끼는 것 ${gameUnits.toFixed(1)}개야.`;
+      insight = IVI18n.pick(
+        `This is the price of ${gameUnits.toFixed(1)} of the things you save up for.`,
+        `이 돈이면 네가 아끼는 것 ${gameUnits.toFixed(1)}개야.`
+      );
     }
-    futureMessage = '미래의 내가: "그때 안 사길 잘했어. 그 돈 더 좋은 데 썼잖아." 🙂';
+    futureMessage = IVI18n.pick(
+      'Future you: "I’m glad I passed on that. I put the money toward something better." 🙂',
+      '미래의 내가: "그때 안 사길 잘했어. 그 돈 더 좋은 데 썼잖아." 🙂'
+    );
   }
 
   return {
     tier,
     title:
       tier === 'high'
-        ? '잠깐, 이거 진짜 필요해?'
+        ? IVI18n.pick('Hold on — do you really need this?', '잠깐, 이거 진짜 필요해?')
         : tier === 'medium'
-        ? '이거 진짜 필요해? 🤔'
-        : '이거 진짜 필요해? 🤔',
-    name: msg.name || '이 상품',
+        ? IVI18n.pick('Do you really need this? 🤔', '이거 진짜 필요해? 🤔')
+        : IVI18n.pick('Do you really need this? 🤔', '이거 진짜 필요해? 🤔'),
+    name: msg.name || IVI18n.pick('this item', '이 상품'),
     price,
     questions,
     insight,

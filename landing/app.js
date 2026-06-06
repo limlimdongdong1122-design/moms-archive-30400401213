@@ -4,6 +4,12 @@
  * ============================================================ */
 'use strict';
 
+// Tiny i18n helper: returns the Korean string only when the visitor has the
+// site set to Korean (via window.IVLang from i18n.js); English otherwise.
+var L = function (en, ko) {
+  return (window.IVLang && window.IVLang.current === 'ko') ? ko : en;
+};
+
 var CONFIG = {
   // Where "시작하기 / 브라우저에 추가하기" sends people. Until the Chrome Web
   // Store / Edge Add-ons listings are live, this points at the bundled install
@@ -27,7 +33,10 @@ var CONFIG = {
     } else {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        alert('설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)');
+        alert(L(
+          'The install link is being prepared.\n(Add your store/GitHub URL to CONFIG.INSTALL_URL in app.js.)',
+          '설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)'
+        ));
       });
     }
   });
@@ -47,9 +56,9 @@ var CONFIG = {
     copyBtn.addEventListener('click', function () {
       var num = (acct.textContent || '').trim();
       var done = function () {
-        copyBtn.textContent = '복사됨!';
+        copyBtn.textContent = L('Copied!', '복사됨!');
         copyBtn.classList.add('copied');
-        setTimeout(function () { copyBtn.textContent = '복사'; copyBtn.classList.remove('copied'); }, 1600);
+        setTimeout(function () { copyBtn.textContent = L('Copy', '복사'); copyBtn.classList.remove('copied'); }, 1600);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(num).then(done, function () { fallbackCopy(num); done(); });

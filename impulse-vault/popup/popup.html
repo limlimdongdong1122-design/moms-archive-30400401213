@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMPULSE VAULT</title>
+    <title data-ko="IMPULSE VAULT">IMPULSE VAULT</title>
     <link rel="stylesheet" href="../tokens.css" />
     <link rel="stylesheet" href="popup.css" />
   </head>
@@ -22,7 +22,7 @@
           <span class="logo-mark" aria-hidden="true"></span>
           <span class="logo-name">IMPULSE&nbsp;VAULT</span>
         </div>
-        <label class="pause" title="잠시 멈춤">
+        <label class="pause" title="Pause" data-ko-title="잠시 멈춤">
           <input type="checkbox" id="pauseToggle" />
           <span class="pause-track"><span class="pause-thumb"></span></span>
         </label>
@@ -31,8 +31,8 @@
       <!-- Not-yet-onboarded notice -->
       <section id="needSetup" class="need-setup" hidden>
         <div class="ns-orb" aria-hidden="true"></div>
-        <p>아직 설정이 끝나지 않았어요.</p>
-        <button class="btn-primary" id="openOnboard">설정 시작하기</button>
+        <p data-ko="아직 설정이 끝나지 않았어요.">Setup isn't finished yet.</p>
+        <button class="btn-primary" id="openOnboard" data-ko="설정 시작하기">Start setup</button>
       </section>
 
       <main id="main" hidden>
@@ -44,35 +44,35 @@
             <canvas id="coinCanvas"></canvas>
             <div class="coin-fallback" id="coinFallback">
               <div class="coin-glow"></div>
-              <div class="coin-disc">₩</div>
+              <div class="coin-disc">$</div>
             </div>
           </div>
-          <div class="saved-label iv-label">지금까지 아낀 돈</div>
-          <div class="saved-amount iv-stat-number" id="totalSaved">₩0</div>
+          <div class="saved-label iv-label" data-ko="지금까지 아낀 돈">Total Saved</div>
+          <div class="saved-amount iv-stat-number" id="totalSaved">$0</div>
           <div class="hairline" aria-hidden="true"></div>
           <div class="saved-meta">
             <div class="meta-cell">
               <b id="resisted">0</b>
-              <span>번 참았어요</span>
+              <span data-ko="번 참았어요">resisted</span>
             </div>
             <span class="meta-sep" aria-hidden="true"></span>
             <div class="meta-cell">
               <b id="resistRate">0%</b>
-              <span>저항률</span>
+              <span data-ko="저항률">Resist rate</span>
             </div>
           </div>
         </section>
 
         <!-- Snooze banner (only when snoozed) -->
         <div class="snooze-banner glass" id="snoozeBanner" hidden>
-          <span>오늘은 그만 묻는 중</span>
-          <button id="unsnooze">다시 켜기</button>
+          <span data-ko="오늘은 그만 묻는 중">Paused asking for today</span>
+          <button id="unsnooze" data-ko="다시 켜기">Turn back on</button>
         </div>
 
         <!-- Vault items -->
         <section class="vault-list-section iv-enter" style="--iv-delay: 120ms">
           <div class="section-head">
-            <h2 class="iv-label">금고</h2>
+            <h2 class="iv-label" data-ko="금고">Vault</h2>
             <span class="count" id="vaultCount">0</span>
           </div>
           <div id="vaultList" class="vault-list"></div>
@@ -83,7 +83,7 @@
                 <path d="M8 10V7a4 4 0 0 1 8 0v3" />
               </svg>
             </span>
-            <p>금고가 고요해요.<br />충동이 올 때 여기 넣어두면 천천히 식혀줄게요.</p>
+            <p data-ko="금고가 고요해요.<br />충동이 올 때 여기 넣어두면 천천히 식혀줄게요.">The vault is quiet.<br />When an impulse hits, drop it here and we'll let it cool down slowly.</p>
           </div>
         </section>
 
@@ -92,9 +92,9 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19V5M4 19h16M8 16v-5M12 16V8M16 16v-3" />
             </svg>
-            <span>대시보드 · 통계</span>
+            <span data-ko="대시보드 · 통계">Dashboard · Stats</span>
           </button>
-          <button class="btn-ghost icon-only" id="openSettings" title="설정" aria-label="설정">
+          <button class="btn-ghost icon-only" id="openSettings" title="Settings" data-ko-title="설정" aria-label="설정">
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3" />
               <path d="M12 2.5v2.2M12 19.3v2.2M21.5 12h-2.2M4.7 12H2.5M18.4 5.6l-1.5 1.5M7.1 16.9l-1.5 1.5M18.4 18.4l-1.5-1.5M7.1 7.1 5.6 5.6" />
@@ -104,6 +104,7 @@
       </main>
     </div>
 
+    <script src="../utils/i18n.js"></script>
     <script src="../lib/three.min.js"></script>
     <script src="../utils/iv3d.js"></script>
     <script src="../utils/storage.js"></script>

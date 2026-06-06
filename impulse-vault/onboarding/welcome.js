@@ -60,7 +60,7 @@
   $('grantBtn').addEventListener('click', async () => {
     const status = $('grantStatus');
     status.className = 'grant-status';
-    status.textContent = '브라우저 권한 창을 여는 중…';
+    status.textContent = IVI18n.pick('Opening the browser permission prompt…', '브라우저 권한 창을 여는 중…');
 
     const origins = (settings.domains || []).map(domainToOrigin);
 
@@ -82,7 +82,7 @@
       });
     } catch (err) {
       status.classList.add('err');
-      status.textContent = '권한 요청 중 문제가 생겼어요: ' + err;
+      status.textContent = IVI18n.pick('Something went wrong requesting permission: ', '권한 요청 중 문제가 생겼어요: ') + err;
       return;
     }
 
@@ -101,7 +101,7 @@
 
     if (!granted) {
       status.classList.add('err');
-      status.textContent = '승인되지 않았어요. 확장은 계속 잠잠히 있을게요. 원하면 다시 눌러봐요.';
+      status.textContent = IVI18n.pick("Not approved. The extension will stay quiet. Press again whenever you like.", '승인되지 않았어요. 확장은 계속 잠잠히 있을게요. 원하면 다시 눌러봐요.');
       return;
     }
 
@@ -112,7 +112,7 @@
     } catch (_) {}
 
     status.classList.add('ok');
-    status.textContent = '승인 완료! 🎉';
+    status.textContent = IVI18n.pick('Approved! 🎉', '승인 완료! 🎉');
     setTimeout(() => show('step-setup'), 700);
   });
 

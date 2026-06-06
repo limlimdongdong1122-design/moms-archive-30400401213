@@ -602,7 +602,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
         }
         case 'OPEN_TRIAL': {
-          try { if (extpay) extpay.openTrialPage(); } catch (_) {}
+          try { if (extpay) extpay.openTrialPage(msg.period || undefined); } catch (_) {}
           return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
         }
         case 'SET_DEV_PRO': {

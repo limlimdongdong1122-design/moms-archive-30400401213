@@ -740,6 +740,23 @@
   }
 
   // ------- boot -------
+  // Product Hunt promo deep-link: dashboard.html#ph offers the extended trial.
+  // The ACTUAL trial length is set in the ExtPay dashboard; the period string
+  // here is what ExtPay shows on its trial page.
+  function initPromo() {
+    const h = (location.hash || '').toLowerCase();
+    if (h !== '#ph' && h !== '#producthunt') return;
+    const mem = document.querySelector('#membership');
+    if (mem) mem.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      const ok = confirm(IVI18n.pick(
+        'Product Hunt offer 🎉  Start your 60-day free trial of IMPULSE VAULT Pro?',
+        'Product Hunt 혜택 🎉  IMPULSE VAULT Pro 60일 무료체험을 시작할까요?'
+      ));
+      if (ok) sendMsg({ type: 'OPEN_TRIAL', period: '60 days' });
+    }, 600);
+  }
+
   function boot() {
     initNav();
     initLangHandlers();
@@ -748,6 +765,7 @@
     initDataHandlers();
     refreshAll();
     IVI18n.apply();
+    initPromo();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

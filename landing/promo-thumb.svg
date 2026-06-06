@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" font-family="'Space Grotesk','Inter',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d0f15"/><stop offset="1" stop-color="#070809"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#6ea8ff" stop-opacity="0.6"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bcd5ff"/><stop offset="1" stop-color="#6ea8ff"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c7d6f3"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="70"/></filter>
+    <filter id="markShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="22" flood-color="#6ea8ff" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <circle cx="400" cy="300" r="360" fill="url(#glow)" filter="url(#soft)"/>
+
+  <!-- vault / shield mark -->
+  <g transform="translate(400,300)" filter="url(#markShadow)">
+    <path d="M0,-118 L96,-78 V6 C96,76 50,120 0,140 C-50,120 -96,76 -96,6 V-78 Z"
+          fill="#10131b" stroke="url(#accent)" stroke-width="6"/>
+    <!-- dial -->
+    <circle cx="0" cy="2" r="46" fill="none" stroke="url(#accent)" stroke-width="6"/>
+    <circle cx="0" cy="2" r="13" fill="url(#accent)"/>
+    <g stroke="url(#accent)" stroke-width="6" stroke-linecap="round">
+      <line x1="0" y1="-60" x2="0" y2="-44"/>
+      <line x1="0" y1="48" x2="0" y2="64"/>
+      <line x1="-60" y1="2" x2="-44" y2="2"/>
+      <line x1="44" y1="2" x2="60" y2="2"/>
+    </g>
+  </g>
+
+  <!-- wordmark -->
+  <text x="400" y="540" text-anchor="middle" font-size="62" font-weight="700" letter-spacing="4" fill="url(#ink)">IMPULSE VAULT</text>
+  <text x="400" y="592" text-anchor="middle" font-size="27" font-weight="500" letter-spacing="1" fill="#9fb0cc">Pause before you buy</text>
+
+  <!-- bottom badges -->
+  <g transform="translate(400,664)" font-size="19" font-weight="600">
+    <g transform="translate(-176,0)">
+      <rect x="0" y="0" width="150" height="48" rx="24" fill="#ffffff" fill-opacity="0.05" stroke="#6ea8ff" stroke-opacity="0.5"/>
+      <text x="75" y="31" text-anchor="middle" fill="#cfe0ff">🔒 100% local</text>
+    </g>
+    <g transform="translate(-10,0)">
+      <rect x="0" y="0" width="84" height="48" rx="24" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.16"/>
+      <text x="42" y="31" text-anchor="middle" fill="#d7dee9">Free</text>
+    </g>
+    <g transform="translate(90,0)">
+      <rect x="0" y="0" width="86" height="48" rx="24" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.16"/>
+      <text x="43" y="31" text-anchor="middle" fill="#d7dee9">EN · 한</text>
+    </g>
+  </g>
+</svg>

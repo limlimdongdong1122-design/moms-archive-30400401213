@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" font-family="'Space Grotesk','Inter',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c0e13"/><stop offset="1" stop-color="#070809"/></linearGradient>
+    <radialGradient id="aur" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.5"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c7d6f3"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eafff7"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.03"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="60"/></filter>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#000" flood-opacity="0.5"/></filter>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <circle cx="160" cy="140" r="300" fill="url(#aur)" filter="url(#soft)"/>
+  <circle cx="1050" cy="640" r="280" fill="url(#aur)" filter="url(#soft)" opacity="0.7"/>
+
+  <g transform="translate(64,56)">
+    <g transform="rotate(45 11 11)"><rect width="22" height="22" rx="6" fill="url(#acc)"/></g>
+    <text x="40" y="17" font-size="19" font-weight="700" letter-spacing="3" fill="#eef2f8">IMPULSE&#160;VAULT</text>
+  </g>
+
+  <g transform="translate(72,250)">
+    <text x="0" y="0" font-size="15" font-weight="600" letter-spacing="3" fill="#6ea8ff">DASHBOARD</text>
+    <text x="-2" y="64" font-size="54" font-weight="700" letter-spacing="-1" fill="url(#ink)">Watch your</text>
+    <text x="-2" y="126" font-size="54" font-weight="700" letter-spacing="-1" fill="url(#ink)">savings grow.</text>
+    <text x="0" y="186" font-size="23" fill="#aab3c4">Total Saved, plus a local impulse profile</text>
+    <text x="0" y="218" font-size="23" fill="#aab3c4">— when &amp; where you’re weak. All on-device.</text>
+  </g>
+
+  <!-- RIGHT column of cards -->
+  <!-- big stat -->
+  <g transform="translate(700,150)" filter="url(#sh)">
+    <rect width="436" height="150" rx="22" fill="#12151c" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect width="436" height="150" rx="22" fill="url(#glass)"/>
+    <text x="32" y="50" font-size="14" font-weight="600" letter-spacing="2" fill="#8a93a4">TOTAL SAVED</text>
+    <text x="32" y="116" font-size="58" font-weight="700" fill="url(#mint)">$1,240</text>
+    <text x="300" y="116" font-size="16" fill="#7fd6a6">▲ this month</text>
+  </g>
+  <!-- two small stats -->
+  <g transform="translate(700,316)" filter="url(#sh)">
+    <rect width="210" height="120" rx="20" fill="#12151c" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect width="210" height="120" rx="20" fill="url(#glass)"/>
+    <text x="26" y="44" font-size="13" font-weight="600" letter-spacing="1.5" fill="#8a93a4">RESISTED</text>
+    <text x="26" y="92" font-size="40" font-weight="700" fill="#eef2f8">37</text>
+  </g>
+  <g transform="translate(926,316)" filter="url(#sh)">
+    <rect width="210" height="120" rx="20" fill="#12151c" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect width="210" height="120" rx="20" fill="url(#glass)"/>
+    <text x="26" y="44" font-size="13" font-weight="600" letter-spacing="1.5" fill="#8a93a4">RESIST RATE</text>
+    <text x="26" y="92" font-size="40" font-weight="700" fill="#9cc2ff">71%</text>
+  </g>
+  <!-- heatmap card -->
+  <g transform="translate(700,452)" filter="url(#sh)">
+    <rect width="436" height="150" rx="20" fill="#12151c" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect width="436" height="150" rx="20" fill="url(#glass)"/>
+    <text x="26" y="40" font-size="13" font-weight="600" letter-spacing="1.5" fill="#8a93a4">WEAK HOURS (LOCAL)</text>
+    <g transform="translate(26,58)">
+      <!-- 24 cells, varying opacity -->
+      <g fill="#6ea8ff">
+        <rect x="0" y="0" width="13" height="62" rx="3" opacity="0.12"/>
+        <rect x="17" y="0" width="13" height="62" rx="3" opacity="0.1"/>
+        <rect x="34" y="0" width="13" height="62" rx="3" opacity="0.08"/>
+        <rect x="51" y="0" width="13" height="62" rx="3" opacity="0.1"/>
+        <rect x="68" y="0" width="13" height="62" rx="3" opacity="0.16"/>
+        <rect x="85" y="0" width="13" height="62" rx="3" opacity="0.22"/>
+        <rect x="102" y="0" width="13" height="62" rx="3" opacity="0.3"/>
+        <rect x="119" y="0" width="13" height="62" rx="3" opacity="0.28"/>
+        <rect x="136" y="0" width="13" height="62" rx="3" opacity="0.2"/>
+        <rect x="153" y="0" width="13" height="62" rx="3" opacity="0.16"/>
+        <rect x="170" y="0" width="13" height="62" rx="3" opacity="0.24"/>
+        <rect x="187" y="0" width="13" height="62" rx="3" opacity="0.34"/>
+        <rect x="204" y="0" width="13" height="62" rx="3" opacity="0.42"/>
+        <rect x="221" y="0" width="13" height="62" rx="3" opacity="0.5"/>
+        <rect x="238" y="0" width="13" height="62" rx="3" opacity="0.4"/>
+        <rect x="255" y="0" width="13" height="62" rx="3" opacity="0.3"/>
+        <rect x="272" y="0" width="13" height="62" rx="3" opacity="0.36"/>
+        <rect x="289" y="0" width="13" height="62" rx="3" opacity="0.5"/>
+        <rect x="306" y="0" width="13" height="62" rx="3" opacity="0.7"/>
+        <rect x="323" y="0" width="13" height="62" rx="3" opacity="0.9"/>
+        <rect x="340" y="0" width="13" height="62" rx="3" opacity="1"/>
+        <rect x="357" y="0" width="13" height="62" rx="3" opacity="0.66"/>
+        <rect x="374" y="0" width="13" height="62" rx="3" opacity="0.4"/>
+        <rect x="391" y="0" width="13" height="62" rx="3" opacity="0.2"/>
+      </g>
+    </g>
+    <text x="26" y="142" font-size="12" fill="#6b7484">0:00</text>
+    <text x="410" y="142" text-anchor="end" font-size="12" fill="#e0a17a">⚠ 9–11pm peak</text>
+  </g>
+</svg>

@@ -659,6 +659,7 @@
           name,
           price,
           site: host,
+          key, // remember this product → don't intervene on it again
         });
         proceed(btn);
       },

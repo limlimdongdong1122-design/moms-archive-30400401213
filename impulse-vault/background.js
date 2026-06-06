@@ -392,6 +392,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           if (settings.snoozeUntil && now < settings.snoozeUntil)
             return sendResponse({ ok: true, tier: 'none', reason: 'snoozed' });
 
+          // "Buy it anyway" earlier on THIS product → never nag about it again.
+          if (msg.key && (await IVStorage.isSuppressed(msg.key)))
+            return sendResponse({ ok: true, tier: 'none', reason: 'suppressed' });
+
           const [profile, searches, viewRec] = await Promise.all([
             IVStorage.getProfile(),
             IVStorage.getSearches(),
@@ -535,6 +539,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             await IVStorage.bumpStats({ resisted: 1, totalSaved: msg.price || 0 });
           } else if (msg.decision === 'proceeded') {
             await IVStorage.bumpStats({ proceeded: 1 });
+            // Remember this exact product so we don't intervene on it again.
+            if (msg.key) await IVStorage.addSuppressed(msg.key);
           }
           await IVStorage.addEvent({
             ts: Date.now(),

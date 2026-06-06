@@ -30,6 +30,7 @@
     EVENTS: 'iv_events',
     PROFILE: 'iv_profile',
     INTERVENTIONS: 'iv_intervention_log',
+    SUPPRESS: 'iv_suppressed',
   };
 
   // ---- The default list of watched shopping + search domains ----
@@ -271,6 +272,48 @@
       const list = res[K.INTERVENTIONS] || [];
       const cutoff = Date.now() - 3600 * 1000;
       return list.filter((t) => t >= cutoff).length;
+    },
+
+    // ---- Per-product "don't ask again" list ----
+    // When the user chooses "Buy it anyway", that product's key is recorded
+    // here so the intervention never re-appears for the same product. Stored
+    // as { [key]: ts } and capped so it can't grow without bound.
+    async getSuppressed() {
+      const res = await get(K.SUPPRESS);
+      const map = res[K.SUPPRESS];
+      return map && typeof map === 'object' ? map : {};
+    },
+    async isSuppressed(key) {
+      if (!key) return false;
+      const map = await this.getSuppressed();
+      return Object.prototype.hasOwnProperty.call(map, key);
+    },
+    async addSuppressed(key) {
+      if (!key) return null;
+      const map = await this.getSuppressed();
+      map[key] = Date.now();
+      // Cap to the 1000 most recent so the list can't grow forever.
+      const keys = Object.keys(map);
+      if (keys.length > 1000) {
+        keys
+          .sort((a, b) => map[a] - map[b]) // oldest first
+          .slice(0, keys.length - 1000)
+          .forEach((k) => delete map[k]);
+      }
+      await set({ [K.SUPPRESS]: map });
+      return map;
+    },
+    async removeSuppressed(key) {
+      const map = await this.getSuppressed();
+      if (Object.prototype.hasOwnProperty.call(map, key)) {
+        delete map[key];
+        await set({ [K.SUPPRESS]: map });
+      }
+      return map;
+    },
+    async clearSuppressed() {
+      await set({ [K.SUPPRESS]: {} });
+      return {};
     },
 
     // ---- The nuclear "Delete all my data" button ----

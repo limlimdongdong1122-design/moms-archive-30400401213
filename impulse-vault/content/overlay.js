@@ -497,7 +497,7 @@
     if ((payload.webSearchEnabled || payload.aiEnabled) && payload.productName) {
       const tools = el('div', 'iv-an-tools');
       const name = payload.productName;
-      const altWord = (sc && sc.altWord) || '대안';
+      const altWord = (sc && sc.altWord) || IVI18n.pick('alternative', '대안');
       const isProduct = !sc || sc.itemType === 'product' || !sc.itemType;
       const results = el('div', 'iv-an-altresults');
       results.style.display = 'none';
@@ -506,7 +506,10 @@
         // No AI key → fall back to a normal search so the button still works.
         if (!payload.aiEnabled || !payload.aiDetails) {
           try {
-            const q = encodeURIComponent(name + (kind === 'cheaper' ? ' 최저가' : ' 대안 비교 추천 리뷰'));
+            const q = encodeURIComponent(name + IVI18n.pick(
+              kind === 'cheaper' ? ' lowest price' : ' alternatives compare recommend review',
+              kind === 'cheaper' ? ' 최저가' : ' 대안 비교 추천 리뷰'
+            ));
             const url = kind === 'cheaper'
               ? 'https://search.shopping.naver.com/search/all?query=' + q
               : 'https://www.google.com/search?q=' + q;
@@ -517,27 +520,33 @@
         // AI web-search path: analyse + return real products inline.
         tools.querySelectorAll('button').forEach((b) => (b.disabled = true));
         results.style.display = 'block';
-        results.replaceChildren(el('div', 'iv-an-loading', 'AI가 인터넷에서 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + '을(를) 찾는 중…'));
+        results.replaceChildren(el('div', 'iv-an-loading', IVI18n.pick(
+          'AI is searching the web for a ' + (kind === 'cheaper' ? 'cheaper ' : 'better ') + altWord + '…',
+          'AI가 인터넷에서 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + '을(를) 찾는 중…'
+        )));
         ivSend({ type: 'FIND_ALTERNATIVES', kind, details: payload.aiDetails }).then((res) => {
           tools.querySelectorAll('button').forEach((b) => (b.disabled = false));
           results.replaceChildren();
-          results.appendChild(el('div', 'iv-an-subhead', 'AI 추천 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + ' · 참고용'));
+          results.appendChild(el('div', 'iv-an-subhead', IVI18n.pick(
+            'AI-suggested ' + (kind === 'cheaper' ? 'cheaper ' : 'better ') + altWord + ' · for reference',
+            'AI 추천 ' + (kind === 'cheaper' ? '더 싼 ' : '더 나은 ') + altWord + ' · 참고용'
+          )));
           if (res && res.ok && res.text) {
             String(res.text).split('\n').forEach((line) => {
               if (line.trim()) results.appendChild(el('div', 'iv-an-alt-line', line.trim()));
             });
           } else {
-            const msg = (res && res.error) ? String(res.error) : '키·권한·네트워크 확인';
-            results.appendChild(el('div', 'iv-an-ai-err', '대안 검색 실패: ' + msg));
+            const msg = (res && res.error) ? String(res.error) : IVI18n.pick('Check your key, permissions, and network', '키·권한·네트워크 확인');
+            results.appendChild(el('div', 'iv-an-ai-err', IVI18n.pick('Alternative search failed: ', '대안 검색 실패: ') + msg));
           }
         });
       };
 
-      const better = el('button', 'iv-an-tool', '더 나은 ' + altWord + ' 찾기');
+      const better = el('button', 'iv-an-tool', IVI18n.pick('Find a better ' + altWord, '더 나은 ' + altWord + ' 찾기'));
       better.addEventListener('click', () => runAlt('better', better));
       tools.appendChild(better);
       if (isProduct) {
-        const cheaper = el('button', 'iv-an-tool', '더 싼 값 찾기');
+        const cheaper = el('button', 'iv-an-tool', IVI18n.pick('Find a cheaper price', '더 싼 값 찾기'));
         cheaper.addEventListener('click', () => runAlt('cheaper', cheaper));
         tools.appendChild(cheaper);
       }
@@ -548,9 +557,9 @@
     // Optional AI enrichment (BYOK) — instant card already shown; this fills in.
     if (payload.aiEnabled && payload.aiDetails) {
       const ai = el('div', 'iv-an-ai');
-      ai.appendChild(el('div', 'iv-an-subhead', (payload.webSearchEnabled ? 'AI 웹검색 분석 · 참고용' : 'AI 분석 · 참고용')));
+      ai.appendChild(el('div', 'iv-an-subhead', (payload.webSearchEnabled ? IVI18n.pick('AI web-search analysis · for reference', 'AI 웹검색 분석 · 참고용') : IVI18n.pick('AI analysis · for reference', 'AI 분석 · 참고용'))));
       const body = el('div', 'iv-an-ai-body');
-      body.appendChild(el('div', 'iv-an-loading', '불러오는 중…'));
+      body.appendChild(el('div', 'iv-an-loading', IVI18n.pick('Loading…', '불러오는 중…')));
       ai.appendChild(body);
       wrap.appendChild(ai);
       ivSend({ type: 'ANALYZE_AI', details: payload.aiDetails }).then((res) => {
@@ -561,17 +570,17 @@
             if (line.trim()) body.appendChild(el('div', 'iv-an-ai-line', line.trim()));
           });
         } else {
-          const msg = (res && res.error) ? String(res.error) : '키·권한·네트워크 확인';
-          body.appendChild(el('div', 'iv-an-ai-err', 'AI 분석 실패: ' + msg));
+          const msg = (res && res.error) ? String(res.error) : IVI18n.pick('Check your key, permissions, and network', '키·권한·네트워크 확인');
+          body.appendChild(el('div', 'iv-an-ai-err', IVI18n.pick('AI analysis failed: ', 'AI 분석 실패: ') + msg));
         }
       });
     } else {
       // AI off → tell the user how to get the deeper AI-backed reasoning.
       const hint = el('div', 'iv-an-aihint');
-      hint.appendChild(el('span', null, '🔒 더 깊은 AI 근거를 원하면 '));
-      const b = el('span', 'iv-an-aihint-b', '대시보드 → 설정 → "AI 분석"');
+      hint.appendChild(el('span', null, IVI18n.pick('🔒 For deeper AI-backed reasoning, turn on ', '🔒 더 깊은 AI 근거를 원하면 ')));
+      const b = el('span', 'iv-an-aihint-b', IVI18n.pick('Dashboard → Settings → “AI Analysis”', '대시보드 → 설정 → "AI 분석"'));
       hint.appendChild(b);
-      hint.appendChild(el('span', null, '을 켜고 내 API 키를 넣으세요. (위 분석은 키 없이 무료로 작동해요.)'));
+      hint.appendChild(el('span', null, IVI18n.pick(' and add your own API key. (The analysis above works for free, no key needed.)', '을 켜고 내 API 키를 넣으세요. (위 분석은 키 없이 무료로 작동해요.)')));
       wrap.appendChild(hint);
     }
 

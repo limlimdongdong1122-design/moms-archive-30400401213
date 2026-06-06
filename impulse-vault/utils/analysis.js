@@ -31,8 +31,8 @@
   ];
 
   function fmtKRW(n) {
-    try { return '₩' + Math.round(n || 0).toLocaleString('ko-KR'); }
-    catch (_) { return '₩' + Math.round(n || 0); }
+    try { return '$' + Math.round(n || 0).toLocaleString('en-US'); }
+    catch (_) { return '$' + Math.round(n || 0); }
   }
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
@@ -52,9 +52,9 @@
    */
   // Human label + alternative-search hint per item type.
   function typeInfo(itemType) {
-    if (itemType === 'service') return { label: '서비스/구독', altWord: '대체 서비스' };
-    if (itemType === 'software') return { label: '프로그램/소프트웨어', altWord: '대체 프로그램' };
-    return { label: '상품', altWord: '대체 상품' };
+    if (itemType === 'service') return { label: IVI18n.pick('Service / Subscription', '서비스/구독'), altWord: IVI18n.pick('alternative service', '대체 서비스') };
+    if (itemType === 'software') return { label: IVI18n.pick('Program / Software', '프로그램/소프트웨어'), altWord: IVI18n.pick('alternative program', '대체 프로그램') };
+    return { label: IVI18n.pick('Product', '상품'), altWord: IVI18n.pick('alternative product', '대체 상품') };
   }
 
   function buildScorecard(input) {

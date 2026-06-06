@@ -19,10 +19,15 @@ var CONFIG = {
 
   // 후원 계좌 — 판매/인수 시 구매자가 본인 계좌로 교체하세요.
   // (index.html 의 #bankAccount 텍스트도 같은 값으로 바꾸면 끝)
-  BANK: { name: '은행명', account: '000-0000-000000' },
+  BANK: { name: 'Bank', account: '000-0000-000000' },
 };
 
 (function () {
+  // Bilingual helper — returns Korean only when the toggle is set to KO.
+  var L = function (en, ko) {
+    return (window.IVLang && window.IVLang.current === 'ko') ? ko : en;
+  };
+
   // ---- Install CTA wiring ----
   var installUrl = CONFIG.INSTALL_URL && CONFIG.INSTALL_URL.indexOf('PASTE') !== 0 ? CONFIG.INSTALL_URL : null;
   document.querySelectorAll('[data-install]').forEach(function (a) {
@@ -33,10 +38,7 @@ var CONFIG = {
     } else {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        alert(L(
-          'The install link is being prepared.\n(Add your store/GitHub URL to CONFIG.INSTALL_URL in app.js.)',
-          '설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)'
-        ));
+        alert(L('The install link is being set up.\n(Add your store/GitHub URL to CONFIG.INSTALL_URL in app.js.)', '설치 링크는 준비 중이에요.\n(app.js의 CONFIG.INSTALL_URL에 스토어/깃허브 주소를 넣으세요.)'));
       });
     }
   });

@@ -383,3 +383,12 @@ body.cursor-on .cursor-glow, body.cursor-on .cursor-dot { opacity: 1; }
 .plan-note { font-size: 12px; color: var(--faint); margin-top: 12px; text-align: center; position: relative; }
 .plan-note b { color: var(--dim); }
 .pricing-foot { font-size: 13px; color: var(--faint); margin-top: 32px; }
+
+/* ============================================================
+ * LANGUAGE SWITCH (EN / 한)
+ * ============================================================ */
+.lang-switch { display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--r-pill); background: var(--glass); border: 1px solid var(--glass-bd); margin-right: 4px; }
+.lang-switch button { border: none; background: transparent; color: var(--dim); cursor: pointer; font-family: var(--fbody); font-size: 13px; font-weight: 600; line-height: 1; padding: 6px 10px; border-radius: var(--r-pill); transition: color .25s, background .25s; }
+.lang-switch button:hover { color: var(--text); }
+.lang-switch button.on { color: #06101f; background: linear-gradient(180deg, #a9cbff, var(--accent)); box-shadow: 0 4px 14px var(--accent-glow); }
+@media (max-width: 560px) { .lang-switch button { padding: 6px 8px; font-size: 12px; } }

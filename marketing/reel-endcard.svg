@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Inter',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#0d0f15"/><stop offset="1" stop-color="#070809"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.36" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.6"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd5ff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c7d6f3"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="90"/></filter>
+    <filter id="ms" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="12" stdDeviation="26" flood-color="#6ea8ff" flood-opacity="0.55"/></filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <circle cx="540" cy="640" r="520" fill="url(#glow)" filter="url(#soft)"/>
+
+  <!-- vault mark -->
+  <g transform="translate(540,560)" filter="url(#ms)">
+    <path d="M0,-150 L122,-100 V8 C122,96 64,152 0,178 C-64,152 -122,96 -122,8 V-100 Z" fill="#10131b" stroke="url(#acc)" stroke-width="7"/>
+    <circle cx="0" cy="3" r="58" fill="none" stroke="url(#acc)" stroke-width="7"/>
+    <circle cx="0" cy="3" r="16" fill="url(#acc)"/>
+    <g stroke="url(#acc)" stroke-width="7" stroke-linecap="round">
+      <line x1="0" y1="-76" x2="0" y2="-56"/><line x1="0" y1="62" x2="0" y2="82"/>
+      <line x1="-76" y1="3" x2="-56" y2="3"/><line x1="56" y1="3" x2="76" y2="3"/>
+    </g>
+  </g>
+
+  <text x="540" y="900" text-anchor="middle" font-size="78" font-weight="700" letter-spacing="-1" fill="url(#ink)">Before you buy,</text>
+  <text x="540" y="992" text-anchor="middle" font-size="78" font-weight="700" letter-spacing="-1" fill="url(#ink)">just one more moment.</text>
+
+  <text x="540" y="1086" text-anchor="middle" font-size="34" font-weight="600" letter-spacing="3" fill="#6ea8ff">IMPULSE&#160;VAULT</text>
+  <text x="540" y="1136" text-anchor="middle" font-size="28" fill="#9fb0cc">Free browser extension · 100% local</text>
+
+  <!-- CTA pill -->
+  <g transform="translate(540,1320)">
+    <rect x="-260" y="-46" width="520" height="92" rx="46" fill="url(#acc)"/>
+    <text x="0" y="13" text-anchor="middle" font-size="36" font-weight="700" fill="#06101f">🔗  Link in bio — try it free</text>
+  </g>
+
+  <text x="540" y="1500" text-anchor="middle" font-size="26" fill="#6b7484">Chrome · Edge · Brave</text>
+</svg>

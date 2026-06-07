@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2160" viewBox="0 0 1080 2160" font-family="'Inter','Space Grotesk',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f8fc"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset="1" stop-color="#9bb6e6"/></linearGradient>
+    <linearGradient id="buy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb0ff"/><stop offset="1" stop-color="#3f6fe0"/></linearGradient>
+  </defs>
+  <rect width="1080" height="2160" fill="url(#pg)"/>
+
+  <!-- status bar -->
+  <text x="64" y="84" font-size="34" font-weight="700" fill="#1a2030">9:41</text>
+  <g fill="#1a2030"><rect x="900" y="58" width="40" height="26" rx="5"/><circle cx="972" cy="71" r="13"/><rect x="996" y="58" width="48" height="26" rx="6"/></g>
+
+  <!-- top bar -->
+  <text x="56" y="172" font-size="44" fill="#1a2030">‹</text>
+  <text x="540" y="170" text-anchor="middle" font-size="36" font-weight="700" fill="#161b29">Checkout</text>
+
+  <!-- order item -->
+  <text x="64" y="300" font-size="30" font-weight="700" letter-spacing="2" fill="#8a93a8">YOUR ORDER</text>
+  <rect x="64" y="330" width="952" height="200" rx="28" fill="#ffffff"/>
+  <rect x="100" y="366" width="128" height="128" rx="24" fill="#eef3fb"/>
+  <g transform="translate(164,430) scale(0.62)">
+    <rect x="-70" y="-16" width="34" height="100" rx="17" fill="url(#prod)"/><ellipse cx="-53" cy="-22" rx="42" ry="46" fill="url(#prod)"/>
+    <rect x="36" y="-16" width="34" height="100" rx="17" fill="url(#prod)"/><ellipse cx="53" cy="-22" rx="42" ry="46" fill="url(#prod)"/>
+  </g>
+  <text x="264" y="420" font-size="38" font-weight="700" fill="#161b29">Wireless Earbuds Pro</text>
+  <text x="264" y="470" font-size="30" fill="#8a93a8">Qty 1 · Black</text>
+  <text x="980" y="445" text-anchor="end" font-size="42" font-weight="800" fill="#161b29">$149</text>
+
+  <!-- delivery -->
+  <text x="64" y="620" font-size="30" font-weight="700" letter-spacing="2" fill="#8a93a8">DELIVER TO</text>
+  <rect x="64" y="650" width="952" height="150" rx="28" fill="#ffffff"/>
+  <text x="100" y="710" font-size="34" font-weight="600" fill="#161b29">Home · 123 Main St</text>
+  <text x="100" y="758" font-size="28" fill="#8a93a8">Arrives Tue, free delivery</text>
+
+  <!-- payment -->
+  <text x="64" y="890" font-size="30" font-weight="700" letter-spacing="2" fill="#8a93a8">PAYMENT</text>
+  <rect x="64" y="920" width="952" height="150" rx="28" fill="#ffffff"/>
+  <rect x="100" y="966" width="92" height="60" rx="10" fill="url(#buy)"/>
+  <text x="220" y="1015" font-size="34" font-weight="600" fill="#161b29">Card ···· 4242</text>
+  <text x="980" y="1015" text-anchor="end" font-size="32" fill="#3f6fe0">Change</text>
+
+  <!-- summary -->
+  <line x1="64" y1="1170" x2="1016" y2="1170" stroke="#dfe4ee" stroke-width="2"/>
+  <text x="64" y="1240" font-size="34" fill="#8a93a8">Subtotal</text><text x="980" y="1240" text-anchor="end" font-size="34" fill="#48506a">$149</text>
+  <text x="64" y="1300" font-size="34" fill="#8a93a8">Delivery</text><text x="980" y="1300" text-anchor="end" font-size="34" fill="#48506a">Free</text>
+  <text x="64" y="1380" font-size="44" font-weight="800" fill="#161b29">Total</text><text x="980" y="1380" text-anchor="end" font-size="52" font-weight="800" fill="#161b29">$149</text>
+
+  <!-- PAY button (highlighted) -->
+  <rect x="64" y="1840" width="952" height="160" rx="42" fill="url(#buy)"/>
+  <text x="540" y="1942" text-anchor="middle" font-size="52" font-weight="800" fill="#ffffff">Pay $149</text>
+
+  <!-- tap ripple on the button -->
+  <circle cx="540" cy="1920" r="120" fill="#ffffff" opacity="0.18"/>
+  <circle cx="540" cy="1920" r="74" fill="#ffffff" opacity="0.22"/>
+  <!-- finger -->
+  <g transform="translate(620,1900)">
+    <path d="M0,120 C-6,70 -6,40 8,18 C16,4 34,8 34,28 L34,60 L40,18 C42,2 64,4 62,24 L60,64 L70,40 C74,26 92,30 88,50 L82,96 C78,140 60,168 24,168 C6,168 -4,150 -8,132 Z" fill="#f1d3b6" stroke="#d9b48f" stroke-width="3"/>
+  </g>
+
+  <rect x="420" y="2092" width="240" height="12" rx="6" fill="#c4ccd8"/>
+</svg>

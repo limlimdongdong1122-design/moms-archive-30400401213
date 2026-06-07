@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2160" viewBox="0 0 1080 2160" font-family="'Inter','Space Grotesk',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f8fc"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset="1" stop-color="#9bb6e6"/></linearGradient>
+    <linearGradient id="buy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb0ff"/><stop offset="1" stop-color="#3f6fe0"/></linearGradient>
+    <radialGradient id="pglow" cx="0.5" cy="0.42" r="0.6"><stop offset="0" stop-color="rgba(110,168,255,0.5)"/><stop offset="1" stop-color="rgba(110,168,255,0)"/></radialGradient>
+  </defs>
+  <rect width="1080" height="2160" fill="url(#pg)"/>
+
+  <!-- status bar -->
+  <text x="64" y="84" font-size="34" font-weight="700" fill="#1a2030">9:41</text>
+  <g fill="#1a2030"><rect x="900" y="58" width="40" height="26" rx="5"/><circle cx="972" cy="71" r="13"/><rect x="996" y="58" width="48" height="26" rx="6"/></g>
+
+  <!-- top bar -->
+  <text x="56" y="172" font-size="44" fill="#1a2030">‹</text>
+  <text x="540" y="170" text-anchor="middle" font-size="34" font-weight="600" fill="#48506a">Store</text>
+  <text x="1006" y="172" text-anchor="end" font-size="36" fill="#48506a">♡</text>
+
+  <!-- product image -->
+  <rect x="120" y="240" width="840" height="760" rx="40" fill="#ffffff"/>
+  <circle cx="540" cy="610" r="300" fill="url(#pglow)"/>
+  <g transform="translate(540,600)">
+    <rect x="-150" y="-30" width="60" height="190" rx="30" fill="url(#prod)"/>
+    <ellipse cx="-120" cy="-40" rx="78" ry="84" fill="url(#prod)"/>
+    <circle cx="-116" cy="-36" r="26" fill="#ffffff" opacity="0.6"/>
+    <rect x="90" y="-30" width="60" height="190" rx="30" fill="url(#prod)"/>
+    <ellipse cx="120" cy="-40" rx="78" ry="84" fill="url(#prod)"/>
+    <circle cx="124" cy="-36" r="26" fill="#ffffff" opacity="0.6"/>
+  </g>
+
+  <!-- title / price -->
+  <text x="64" y="1110" font-size="52" font-weight="700" fill="#161b29">Wireless Earbuds Pro</text>
+  <text x="64" y="1176" font-size="34" fill="#8a93a8">★ 4.6 · 1,200 reviews</text>
+  <text x="64" y="1290" font-size="78" font-weight="800" fill="#161b29">$149</text>
+
+  <!-- spec chips -->
+  <g font-size="30" fill="#48506a">
+    <rect x="64" y="1350" width="300" height="72" rx="20" fill="#ffffff"/><text x="96" y="1396">Noise cancelling</text>
+    <rect x="384" y="1350" width="250" height="72" rx="20" fill="#ffffff"/><text x="416" y="1396">30h battery</text>
+  </g>
+
+  <!-- delivery line -->
+  <text x="64" y="1500" font-size="32" fill="#8a93a8">Free delivery · arrives Tue</text>
+
+  <!-- BUY button -->
+  <rect x="64" y="1880" width="952" height="150" rx="40" fill="url(#buy)"/>
+  <text x="540" y="1975" text-anchor="middle" font-size="50" font-weight="700" fill="#ffffff">Buy now</text>
+
+  <!-- home indicator -->
+  <rect x="420" y="2092" width="240" height="12" rx="6" fill="#c4ccd8"/>
+</svg>

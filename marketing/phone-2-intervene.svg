@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2160" viewBox="0 0 1080 2160" font-family="'Inter','Space Grotesk',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f8fc"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset="1" stop-color="#9bb6e6"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="sheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161a22"/><stop offset="1" stop-color="#0d0f15"/></linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="-12" stdDeviation="40" flood-color="#000" flood-opacity="0.45"/></filter>
+  </defs>
+  <!-- dimmed store page behind -->
+  <rect width="1080" height="2160" fill="url(#pg)"/>
+  <rect x="120" y="240" width="840" height="600" rx="40" fill="#ffffff"/>
+  <g transform="translate(540,520)" opacity="0.9">
+    <rect x="-150" y="-30" width="60" height="170" rx="30" fill="url(#prod)"/><ellipse cx="-120" cy="-40" rx="70" ry="76" fill="url(#prod)"/>
+    <rect x="90" y="-30" width="60" height="170" rx="30" fill="url(#prod)"/><ellipse cx="120" cy="-40" rx="70" ry="76" fill="url(#prod)"/>
+  </g>
+  <text x="64" y="930" font-size="48" font-weight="700" fill="#161b29">Wireless Earbuds Pro</text>
+  <text x="64" y="1000" font-size="70" font-weight="800" fill="#161b29">$149</text>
+  <rect width="1080" height="2160" fill="#0a0c12" opacity="0.55"/>
+
+  <!-- status bar -->
+  <text x="64" y="84" font-size="34" font-weight="700" fill="#ffffff">9:41</text>
+
+  <!-- BOTTOM SHEET modal -->
+  <g filter="url(#sh)">
+    <rect x="0" y="900" width="1080" height="1260" rx="56" fill="url(#sheet)" stroke="#ffffff" stroke-opacity="0.10"/>
+  </g>
+  <rect x="480" y="948" width="120" height="12" rx="6" fill="#ffffff" opacity="0.25"/>
+
+  <!-- badge + title -->
+  <rect x="64" y="1000" width="220" height="64" rx="32" fill="#6ea8ff" fill-opacity="0.16" stroke="#6ea8ff" stroke-opacity="0.5"/>
+  <text x="174" y="1042" text-anchor="middle" font-size="32" font-weight="700" fill="#9cc2ff">⏸  Pause</text>
+  <text x="64" y="1150" font-size="58" font-weight="800" fill="#eef2f8">Do you really need this?</text>
+  <text x="64" y="1210" font-size="36" fill="#aab3c4">Wireless Earbuds Pro</text>
+
+  <!-- price reframe -->
+  <text x="64" y="1320" font-size="76" font-weight="800" fill="#ffffff">$149</text>
+  <text x="320" y="1320" font-size="34" fill="#8a93a4">≈ 3.2 hrs of work</text>
+
+  <!-- pros / cons -->
+  <g transform="translate(64,1380)" font-size="34">
+    <text x="0" y="0" font-size="30" font-weight="800" letter-spacing="2" fill="#7fd6a6">PROS</text>
+    <circle cx="10" cy="52" r="8" fill="#7fd6a6"/><text x="40" y="64" fill="#c4ccd8">Great noise cancelling</text>
+    <circle cx="10" cy="116" r="8" fill="#7fd6a6"/><text x="40" y="128" fill="#c4ccd8">Light, comfy fit</text>
+  </g>
+  <g transform="translate(580,1380)" font-size="34">
+    <text x="0" y="0" font-size="30" font-weight="800" letter-spacing="2" fill="#e0a17a">CONS</text>
+    <circle cx="10" cy="52" r="8" fill="#e0a17a"/><text x="40" y="64" fill="#c4ccd8">You own one already</text>
+    <circle cx="10" cy="116" r="8" fill="#e0a17a"/><text x="40" y="128" fill="#c4ccd8">Pricey for the type</text>
+  </g>
+
+  <!-- verdict -->
+  <rect x="64" y="1590" width="952" height="96" rx="24" fill="#6ea8ff" fill-opacity="0.10"/>
+  <text x="96" y="1650" font-size="34" fill="#aab3c4"><tspan font-weight="800" fill="#cfe0ff">Verdict</tspan> · Vault it and cool off 24h</text>
+
+  <!-- buttons -->
+  <rect x="64" y="1740" width="600" height="150" rx="40" fill="url(#acc)"/>
+  <text x="364" y="1834" text-anchor="middle" font-size="46" font-weight="800" fill="#06101f">Vault it · 24h</text>
+  <rect x="688" y="1740" width="328" height="150" rx="40" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+  <text x="852" y="1834" text-anchor="middle" font-size="40" font-weight="600" fill="#c4ccd8">Buy anyway</text>
+
+  <rect x="420" y="2092" width="240" height="12" rx="6" fill="#ffffff" opacity="0.25"/>
+</svg>

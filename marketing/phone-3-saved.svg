@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2160" viewBox="0 0 1080 2160" font-family="'Space Grotesk','Inter',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1"><stop offset="0" stop-color="#0d0f15"/><stop offset="1" stop-color="#070809"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.38" r="0.55"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.55"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd5ff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eafff7"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <filter id="ms" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="14" stdDeviation="34" flood-color="#6ea8ff" flood-opacity="0.55"/></filter>
+  </defs>
+  <rect width="1080" height="2160" fill="url(#bg)"/>
+  <circle cx="540" cy="760" r="560" fill="url(#glow)"/>
+
+  <text x="64" y="84" font-size="34" font-weight="700" fill="#ffffff">9:41</text>
+
+  <!-- check + vault mark -->
+  <g transform="translate(540,640)" filter="url(#ms)">
+    <circle r="170" fill="#10131b" stroke="url(#acc)" stroke-width="8"/>
+    <path d="M-70,5 L-18,58 L78,-52" fill="none" stroke="url(#mint)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="540" y="980" text-anchor="middle" font-size="64" font-weight="800" fill="#eef2f8">Vaulted ✓</text>
+  <text x="540" y="1052" text-anchor="middle" font-size="38" fill="#9fb0cc">Cooling off · 23:59:50 left</text>
+
+  <!-- saved card -->
+  <rect x="100" y="1170" width="880" height="300" rx="40" fill="#12151c" stroke="#ffffff" stroke-opacity="0.10"/>
+  <text x="150" y="1270" font-size="34" font-weight="700" letter-spacing="3" fill="#8a93a4">TOTAL SAVED</text>
+  <text x="150" y="1400" font-size="120" font-weight="800" fill="url(#mint)">$1,240</text>
+  <text x="760" y="1400" font-size="40" font-weight="700" fill="#7fd6a6">▲ +$149</text>
+
+  <text x="540" y="1620" text-anchor="middle" font-size="40" fill="#aab3c4">Most of the time, the urge is gone.</text>
+
+  <!-- brand -->
+  <g transform="translate(540,1820)">
+    <g transform="rotate(45 -100 0)"><rect x="-115" y="-15" width="30" height="30" rx="8" fill="url(#acc)"/></g>
+    <text x="-70" y="12" font-size="40" font-weight="700" letter-spacing="3" fill="#eef2f8">IMPULSE VAULT</text>
+  </g>
+  <text x="540" y="1900" text-anchor="middle" font-size="30" fill="#6b7484">Free browser extension · 100% local</text>
+
+  <rect x="420" y="2092" width="240" height="12" rx="6" fill="#ffffff" opacity="0.25"/>
+</svg>

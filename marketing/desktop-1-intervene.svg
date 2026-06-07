@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" font-family="'Inter','Space Grotesk',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f9fc"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset="1" stop-color="#9bb6e6"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="sheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161a22"/><stop offset="1" stop-color="#0d0f15"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.1"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.03"/></linearGradient>
+    <radialGradient id="pglow" cx="0.5" cy="0.45" r="0.6"><stop offset="0" stop-color="rgba(110,168,255,0.45)"/><stop offset="1" stop-color="rgba(110,168,255,0)"/></radialGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="30" stdDeviation="40" flood-color="#000" flood-opacity="0.45"/></filter>
+  </defs>
+
+  <!-- ===== browser chrome ===== -->
+  <rect width="1920" height="1080" fill="url(#page)"/>
+  <rect width="1920" height="96" fill="#e7ebf2"/>
+  <circle cx="48" cy="48" r="13" fill="#ff5f57"/><circle cx="90" cy="48" r="13" fill="#febc2e"/><circle cx="132" cy="48" r="13" fill="#28c840"/>
+  <!-- tab -->
+  <rect x="190" y="22" width="360" height="74" rx="14" fill="#f7f9fc"/>
+  <text x="220" y="68" font-size="26" fill="#48506a">ShopMart — Earbuds Pro</text>
+  <!-- address bar -->
+  <rect x="600" y="28" width="1120" height="60" rx="30" fill="#f3f5f9" stroke="#dfe4ee"/>
+  <text x="636" y="68" font-size="26" fill="#8a93a8">🔒  shopmart.com/p/earbuds-pro</text>
+  <!-- extension icon in toolbar -->
+  <g transform="rotate(45 1856 58)"><rect x="1842" y="44" width="28" height="28" rx="8" fill="url(#acc)"/></g>
+
+  <!-- ===== store page (dimmed) ===== -->
+  <g opacity="1">
+    <rect x="120" y="170" width="760" height="640" rx="28" fill="#ffffff"/>
+    <circle cx="500" cy="490" r="270" fill="url(#pglow)"/>
+    <g transform="translate(500,480)">
+      <rect x="-130" y="-26" width="54" height="160" rx="27" fill="url(#prod)"/><ellipse cx="-103" cy="-36" rx="66" ry="72" fill="url(#prod)"/><circle cx="-100" cy="-32" r="22" fill="#fff" opacity="0.6"/>
+      <rect x="76" y="-26" width="54" height="160" rx="27" fill="url(#prod)"/><ellipse cx="103" cy="-36" rx="66" ry="72" fill="url(#prod)"/><circle cx="106" cy="-32" r="22" fill="#fff" opacity="0.6"/>
+    </g>
+    <text x="940" y="240" font-size="50" font-weight="700" fill="#161b29">Wireless Earbuds Pro</text>
+    <text x="940" y="300" font-size="30" fill="#8a93a8">★ 4.6 · 1,200 reviews</text>
+    <text x="940" y="420" font-size="84" font-weight="800" fill="#161b29">$149</text>
+    <rect x="940" y="470" width="320" height="70" rx="18" fill="#eef2f8"/><text x="970" y="515" font-size="28" fill="#48506a">Noise cancelling</text>
+    <rect x="940" y="700" width="520" height="92" rx="22" fill="#3f6fe0"/><text x="1200" y="758" text-anchor="middle" font-size="36" font-weight="700" fill="#fff">Buy now</text>
+  </g>
+  <!-- dim -->
+  <rect x="0" y="96" width="1920" height="984" fill="#0a0c12" opacity="0.5"/>
+
+  <!-- ===== IMPULSE VAULT modal (centered) ===== -->
+  <g transform="translate(560,210)" filter="url(#sh)">
+    <rect width="800" height="700" rx="32" fill="url(#sheet)" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect width="800" height="700" rx="32" fill="url(#glass)"/>
+
+    <!-- header -->
+    <g transform="rotate(45 60 56)"><rect x="46" y="42" width="28" height="28" rx="8" fill="url(#acc)"/></g>
+    <text x="92" y="66" font-size="24" font-weight="700" letter-spacing="2" fill="#cdd6e6">IMPULSE&#160;VAULT</text>
+    <rect x="624" y="40" width="140" height="44" rx="22" fill="#6ea8ff" fill-opacity="0.16" stroke="#6ea8ff" stroke-opacity="0.5"/>
+    <text x="694" y="69" text-anchor="middle" font-size="22" font-weight="700" fill="#9cc2ff">⏸ Pause</text>
+
+    <text x="48" y="170" font-size="46" font-weight="800" fill="#eef2f8">Do you really need this?</text>
+    <text x="48" y="214" font-size="26" fill="#aab3c4">Wireless Earbuds Pro</text>
+    <text x="48" y="300" font-size="64" font-weight="800" fill="#fff">$149</text>
+    <text x="250" y="300" font-size="26" fill="#8a93a4">≈ 3.2 hrs of work · ≈ 3 things you value</text>
+
+    <!-- pros / cons -->
+    <g transform="translate(48,346)" font-size="26">
+      <text x="0" y="0" font-size="24" font-weight="800" letter-spacing="2" fill="#7fd6a6">PROS</text>
+      <circle cx="8" cy="44" r="6" fill="#7fd6a6"/><text x="30" y="54" fill="#c4ccd8">Great noise-cancelling reviews</text>
+      <circle cx="8" cy="92" r="6" fill="#7fd6a6"/><text x="30" y="102" fill="#c4ccd8">Light, comfortable fit</text>
+    </g>
+    <g transform="translate(430,346)" font-size="26">
+      <text x="0" y="0" font-size="24" font-weight="800" letter-spacing="2" fill="#e0a17a">CONS</text>
+      <circle cx="8" cy="44" r="6" fill="#e0a17a"/><text x="30" y="54" fill="#c4ccd8">You own one already</text>
+      <circle cx="8" cy="92" r="6" fill="#e0a17a"/><text x="30" y="102" fill="#c4ccd8">Pricey for the type</text>
+    </g>
+
+    <rect x="48" y="486" width="704" height="74" rx="18" fill="#6ea8ff" fill-opacity="0.10"/>
+    <text x="72" y="532" font-size="26" fill="#aab3c4"><tspan font-weight="800" fill="#cfe0ff">Verdict</tspan> · Vault it and cool off 24h</text>
+
+    <rect x="48" y="596" width="440" height="76" rx="20" fill="url(#acc)"/>
+    <text x="268" y="644" text-anchor="middle" font-size="30" font-weight="800" fill="#06101f">Vault it · 24h</text>
+    <rect x="512" y="596" width="240" height="76" rx="20" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="632" y="644" text-anchor="middle" font-size="28" font-weight="600" fill="#c4ccd8">Buy anyway</text>
+  </g>
+</svg>

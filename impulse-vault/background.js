@@ -16,11 +16,11 @@
 
 importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js');
 
-// ---- Gumroad (Pro license) -------------------------------------------------
-// Payments run through Gumroad: the user buys, gets a license key, enters it,
-// and IVPro verifies it against Gumroad's License API and caches the result.
-// We keep all of that inside utils/pro.js so the rest of the app only ever
-// asks IVPro "is this user Pro?".
+// ---- Lemon Squeezy (Pro license) -------------------------------------------
+// Payments run through Lemon Squeezy: the user buys, gets a license key, enters
+// it, and IVPro activates/validates it against Lemon Squeezy's License API and
+// caches the result. We keep all of that inside utils/pro.js so the rest of the
+// app only ever asks IVPro "is this user Pro?".
 async function recheckPro() {
   try { await IVPro.recheck(); } catch (_) {}
 }
@@ -567,7 +567,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           return sendResponse({ ok: true, profile });
         }
 
-        // ---- Pro / billing (Gumroad license) ----
+        // ---- Pro / billing (Lemon Squeezy license) ----
         case 'GET_PRO': {
           const status = await IVPro.getStatus();
           return sendResponse({ ok: true, status });
@@ -578,12 +578,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           return sendResponse({ ok: true, status });
         }
         case 'OPEN_PAYMENT': {
-          // Send the buyer to the Gumroad product page.
-          try { chrome.tabs.create({ url: IVPro.GUMROAD_URL }); } catch (_) {}
+          // Send the buyer to the Lemon Squeezy checkout page.
+          try { chrome.tabs.create({ url: IVPro.CHECKOUT_URL }); } catch (_) {}
           return sendResponse({ ok: true });
         }
         case 'VERIFY_LICENSE': {
-          // Verify the entered Gumroad license key + cache the result.
+          // Verify the entered Lemon Squeezy license key + cache the result.
           const res = await IVPro.verifyLicense(msg.key || '');
           const status = await IVPro.getStatus();
           return sendResponse({ ok: res.ok, paid: res.paid, error: res.error, status });

@@ -6,7 +6,7 @@
 
   "permissions": ["storage", "scripting", "alarms"],
 
-  "host_permissions": ["https://api.gumroad.com/*"],
+  "host_permissions": ["https://api.lemonsqueezy.com/*"],
 
   "optional_permissions": ["history", "tabs", "webNavigation", "activeTab"],
 

@@ -560,7 +560,7 @@
       } else if (s.status === 'inactive') {
         status.textContent = IVI18n.pick('Your subscription looks inactive (cancelled or refunded).', '구독이 비활성 상태로 보여요 (해지/환불).'); status.classList.add('warn');
       } else if (s.configured === false) {
-        status.textContent = IVI18n.pick('※ Gumroad isn’t set up yet — preview Pro with the demo toggle below.', '※ Gumroad 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
+        status.textContent = IVI18n.pick('※ Lemon Squeezy isn’t set up yet — preview Pro with the demo toggle below.', '※ Lemon Squeezy 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
       } else {
         status.textContent = '';
       }
@@ -571,12 +571,12 @@
   }
 
   function initProHandlers() {
-    // Open the Gumroad product page.
+    // Open the Lemon Squeezy checkout page.
     $('#proUpgrade').addEventListener('click', () => {
       sendMsg({ type: 'OPEN_PAYMENT' });
     });
 
-    // Activate a Gumroad license key.
+    // Activate a Lemon Squeezy license key.
     const actBtn = $('#licenseActivate');
     if (actBtn) {
       actBtn.addEventListener('click', async () => {
@@ -596,7 +596,7 @@
         if (!(res && res.ok && res.paid)) {
           status.classList.remove('good'); status.classList.add('warn');
           const map = {
-            not_configured: IVI18n.pick('Gumroad product isn’t configured yet (set GUMROAD_PRODUCT_ID in utils/pro.js).', 'Gumroad 상품이 아직 설정 안 됐어요 (utils/pro.js의 GUMROAD_PRODUCT_ID 설정).'),
+            not_configured: IVI18n.pick('Lemon Squeezy checkout isn’t configured yet (set CHECKOUT_URL in utils/pro.js).', 'Lemon Squeezy 결제가 아직 설정 안 됐어요 (utils/pro.js의 CHECKOUT_URL 설정).'),
             invalid_license: IVI18n.pick('✗ Invalid license key.', '✗ 잘못된 라이선스 키예요.'),
             no_key: IVI18n.pick('Enter your license key first.', '라이선스 키를 먼저 입력해 주세요.'),
             network: IVI18n.pick('Network error — please try again.', '네트워크 오류 — 다시 시도해 주세요.'),
@@ -626,7 +626,7 @@
       });
     }
 
-    // Returning from the Gumroad tab → re-verify the stored license.
+    // Returning from the Lemon Squeezy tab → re-verify the stored license.
     window.addEventListener('focus', async () => {
       await sendMsg({ type: 'REFRESH_PRO' });
       await loadPro();

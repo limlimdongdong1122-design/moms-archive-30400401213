@@ -836,7 +836,7 @@ body {
 .aipn-pro { color: var(--accent-good); }
 .ai-pro-note p { font-size: var(--fs-2xs); color: var(--text-secondary); margin: 4px 0 10px; line-height: var(--lh-body); }
 
-/* ---- Gumroad license activation ---- */
+/* ---- Lemon Squeezy license activation ---- */
 .license-row { margin-top: var(--space-16); }
 .license-input { display: flex; gap: var(--space-8); margin-top: var(--space-8); }
 .license-input input {

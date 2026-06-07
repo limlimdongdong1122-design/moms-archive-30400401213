@@ -14,31 +14,15 @@
  * memory and always read/write through IVStorage.
  * ============================================================ */
 
-importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js', 'lib/ExtPay.js');
+importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js');
 
-// ---- ExtensionPay (Pro subscriptions) -------------------------------------
-// `lib/ExtPay.js` is a safe stub until the real library is dropped in (see its
-// header). We keep ExtPay isolated here + in utils/pro.js so the rest of the
-// app only ever asks IVPro "is this user Pro?".
-let extpay = null;
-try {
-  extpay = ExtPay(IVPro.EXTPAY_ID);
-  extpay.startBackground();
-  if (extpay.onPaid && extpay.onPaid.addListener) extpay.onPaid.addListener(() => syncPro());
-  if (extpay.onTrialStarted && extpay.onTrialStarted.addListener) extpay.onTrialStarted.addListener(() => syncPro());
-} catch (e) {
-  console.warn('[IMPULSE VAULT] ExtPay unavailable — staying on Free:', e);
-}
-
-/** Pull the latest paid/trial status from ExtPay and cache it via IVPro. */
-async function syncPro() {
-  if (!extpay) return;
-  try {
-    const user = await extpay.getUser();
-    await IVPro.setStatus(IVPro.fromExtPayUser(user));
-  } catch (e) {
-    // network/offline — keep the last cached status
-  }
+// ---- Gumroad (Pro license) -------------------------------------------------
+// Payments run through Gumroad: the user buys, gets a license key, enters it,
+// and IVPro verifies it against Gumroad's License API and caches the result.
+// We keep all of that inside utils/pro.js so the rest of the app only ever
+// asks IVPro "is this user Pro?".
+async function recheckPro() {
+  try { await IVPro.recheck(); } catch (_) {}
 }
 
 /** AI availability with the Pro rule baked in.
@@ -145,12 +129,12 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   }
   // On any install/update, make sure registration reflects current grants.
   await syncContentScripts();
-  await syncPro();
+  await recheckPro();
 });
 
 chrome.runtime.onStartup.addListener(async () => {
   await syncContentScripts();
-  await syncPro();
+  await recheckPro();
 });
 
 // Re-sync whenever the granted permission set changes from anywhere.
@@ -329,9 +313,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 // Returns true from the listener to keep the channel open for async.
 // ============================================================
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  // ExtPay uses plain STRING messages ("extpay-*"). Let ExtPay's own
-  // background listener handle those — don't intercept or respond here.
-  if (typeof msg === 'string') return false;
   (async () => {
     try {
       switch (msg && msg.type) {
@@ -586,27 +567,29 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           return sendResponse({ ok: true, profile });
         }
 
-        // ---- Pro / billing ----
+        // ---- Pro / billing (Gumroad license) ----
         case 'GET_PRO': {
           const status = await IVPro.getStatus();
-          return sendResponse({ ok: true, status, stub: !!self.__EXTPAY_STUB__ });
+          return sendResponse({ ok: true, status });
         }
         case 'REFRESH_PRO': {
-          await syncPro();
+          await recheckPro();
           const status = await IVPro.getStatus();
-          return sendResponse({ ok: true, status, stub: !!self.__EXTPAY_STUB__ });
+          return sendResponse({ ok: true, status });
         }
         case 'OPEN_PAYMENT': {
-          // ExtPay opens hosted Stripe checkout (from the real library).
-          try { if (extpay) extpay.openPaymentPage(); } catch (_) {}
-          return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
+          // Send the buyer to the Gumroad product page.
+          try { chrome.tabs.create({ url: IVPro.GUMROAD_URL }); } catch (_) {}
+          return sendResponse({ ok: true });
         }
-        case 'OPEN_TRIAL': {
-          try { if (extpay) extpay.openTrialPage(msg.period || undefined); } catch (_) {}
-          return sendResponse({ ok: true, stub: !!self.__EXTPAY_STUB__ });
+        case 'VERIFY_LICENSE': {
+          // Verify the entered Gumroad license key + cache the result.
+          const res = await IVPro.verifyLicense(msg.key || '');
+          const status = await IVPro.getStatus();
+          return sendResponse({ ok: res.ok, paid: res.paid, error: res.error, status });
         }
         case 'SET_DEV_PRO': {
-          // Local-only preview of Pro features (NOT a real payment).
+          // Local-only preview of Pro features (NOT a real purchase).
           const status = await IVPro.setStatus({ devOverride: !!msg.on });
           return sendResponse({ ok: true, status });
         }

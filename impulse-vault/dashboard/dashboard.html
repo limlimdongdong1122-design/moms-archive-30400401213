@@ -314,7 +314,7 @@
             <span class="pro-badge" id="proBadge">FREE</span>
             <div class="pro-pricing">
               <span class="pro-price" id="proPriceMain">$2.99</span><span class="pro-period" data-ko="/월">/mo</span>
-              <span class="pro-annual" data-ko="또는 연 ₩29,000 · 7일 무료체험">or $24.99/yr · 7-day free trial</span>
+              <span class="pro-annual" data-ko="또는 연 $24.99">or $24.99/yr</span>
             </div>
           </div>
 
@@ -328,17 +328,27 @@
           </ul>
 
           <div class="pro-actions">
-            <button class="btn-primary" id="proUpgrade" data-ko="Pro 시작하기">Start Pro</button>
-            <button class="btn-ghost" id="proManage" hidden data-ko="구독 관리">Manage subscription</button>
+            <button class="btn-primary" id="proUpgrade" data-ko="Gumroad에서 Pro 받기">Get Pro on Gumroad</button>
           </div>
+
+          <!-- License key activation -->
+          <div class="license-row" id="licenseRow">
+            <label class="set-label" for="licenseInput" data-ko="라이선스 키 입력">Enter your license key</label>
+            <p class="set-hint" data-ko="Gumroad에서 구매하면 받는 라이선스 키를 붙여넣고 활성화하세요.">Paste the license key from your Gumroad purchase and activate.</p>
+            <div class="license-input">
+              <input type="text" id="licenseInput" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" data-ko-ph="라이선스 키 붙여넣기" autocomplete="off" spellcheck="false" />
+              <button class="btn-sm" id="licenseActivate" type="button" data-ko="활성화">Activate</button>
+            </div>
+          </div>
+
           <p class="pro-status" id="proStatus"></p>
 
-          <!-- Demo: preview Pro features before real billing is wired (stub mode only) -->
+          <!-- Demo: preview Pro features locally (no real purchase) -->
           <div class="pro-demo" id="proDemo" hidden>
             <div class="toggle-block">
               <div>
                 <label class="set-label" data-ko="데모 — Pro 기능 미리보기">Demo — preview Pro features</label>
-                <p class="set-hint" data-ko="결제 연동(ExtPay) 전, Pro 잠금 기능을 직접 체험하는 <b>로컬 토글</b>이에요. 실제 결제가 아니며 이 기기에서만 적용돼요.">A <b>local toggle</b> to try the Pro-locked features before billing (ExtPay) is wired up. It's not a real charge and applies only on this device.</p>
+                <p class="set-hint" data-ko="Pro 잠금 기능을 결제 없이 직접 체험하는 <b>로컬 토글</b>이에요. 실제 구매가 아니며 이 기기에서만 적용돼요.">A <b>local toggle</b> to try the Pro-locked features with no purchase. Not a real charge; applies only on this device.</p>
               </div>
               <label class="switch">
                 <input type="checkbox" id="devProToggle" />
@@ -348,8 +358,8 @@
           </div>
         </div>
 
-        <p class="pro-finenote" data-ko="🔒 결제·구독 관리는 <b>ExtensionPay(Stripe)</b>로 안전하게 처리돼요. 카드 정보는 IMPULSE VAULT에 저장되지 않습니다. 언제든 해지할 수 있고, 해지해도 무료 기능은 그대로 쓸 수 있어요.">
-          🔒 Payments and subscription management are handled securely through <b>ExtensionPay (Stripe)</b>. Your card details are never stored in IMPULSE VAULT.
+        <p class="pro-finenote" data-ko="🔒 결제는 <b>Gumroad</b>에서 안전하게 처리돼요. 카드 정보는 IMPULSE VAULT에 저장되지 않고, 라이선스 키만 이 기기에 저장돼요. 언제든 해지할 수 있고, 해지해도 무료 기능은 그대로 쓸 수 있어요.">
+          🔒 Payments are handled securely by <b>Gumroad</b>. Your card details are never stored in IMPULSE VAULT — only your license key is saved on this device.
           You can cancel anytime, and free features keep working even after you cancel.
         </p>
       </section>
@@ -385,7 +395,6 @@
 
     <!-- LOCAL Three.js — see lib/three.min.js note. Loads only if present. -->
     <script src="../lib/three.min.js"></script>
-    <script src="../lib/ExtPay.js"></script>
     <script src="../utils/iv3d.js"></script>
     <script src="../utils/i18n.js"></script>
     <script src="../utils/storage.js"></script>

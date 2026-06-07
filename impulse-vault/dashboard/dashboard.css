@@ -835,3 +835,13 @@ body {
 .ai-pro-note b { font-size: var(--fs-sm); color: var(--text-primary); }
 .aipn-pro { color: var(--accent-good); }
 .ai-pro-note p { font-size: var(--fs-2xs); color: var(--text-secondary); margin: 4px 0 10px; line-height: var(--lh-body); }
+
+/* ---- Gumroad license activation ---- */
+.license-row { margin-top: var(--space-16); }
+.license-input { display: flex; gap: var(--space-8); margin-top: var(--space-8); }
+.license-input input {
+  flex: 1; background: var(--glass-fill); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 12px 14px; color: var(--text-primary);
+  font-family: var(--font-body); font-size: var(--fs-sm); letter-spacing: 0.02em;
+}
+.license-input input:focus { outline: none; border-color: var(--accent-calm); }

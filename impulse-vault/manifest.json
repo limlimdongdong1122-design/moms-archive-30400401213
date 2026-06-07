@@ -6,7 +6,7 @@
 
   "permissions": ["storage", "scripting", "alarms"],
 
-  "host_permissions": ["https://extensionpay.com/*"],
+  "host_permissions": ["https://api.gumroad.com/*"],
 
   "optional_permissions": ["history", "tabs", "webNavigation", "activeTab"],
 
@@ -29,14 +29,6 @@
   "background": {
     "service_worker": "background.js"
   },
-
-  "content_scripts": [
-    {
-      "matches": ["https://extensionpay.com/*"],
-      "js": ["lib/ExtPay.js"],
-      "run_at": "document_start"
-    }
-  ],
 
   "action": {
     "default_popup": "popup/popup.html",

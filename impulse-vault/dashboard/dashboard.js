@@ -524,75 +524,96 @@
   async function loadPro() {
     const res = await sendMsg({ type: 'GET_PRO' });
     if (res && res.status) proStatus = res.status;
-    proIsStub = !!(res && res.stub);
     return proStatus;
-  }
-
-  function trialDaysLeft() {
-    if (!proStatus.trialStartedAt) return 0;
-    const days = (window.IVPro ? IVPro.TRIAL_DAYS : 7);
-    const end = proStatus.trialStartedAt + days * 24 * 3600 * 1000;
-    return Math.max(0, Math.ceil((end - Date.now()) / (24 * 3600 * 1000)));
   }
 
   function renderMembership() {
     const s = proStatus || {};
     const badge = $('#proBadge');
     const upgrade = $('#proUpgrade');
-    const manage = $('#proManage');
     const status = $('#proStatus');
     const demo = $('#proDemo');
     const devToggle = $('#devProToggle');
+    const licenseRow = $('#licenseRow');
+    const licenseInput = $('#licenseInput');
 
     badge.classList.remove('is-pro', 'is-trial');
     status.classList.remove('good', 'warn');
+    if (licenseInput && s.licenseKey && !licenseInput.value) licenseInput.value = s.licenseKey;
 
     if (s.paid) {
       badge.textContent = 'PRO'; badge.classList.add('is-pro');
-      upgrade.hidden = true; manage.hidden = false;
-      status.textContent = IVI18n.pick("💙 You're a Pro subscriber. Thanks for being here.", '💙 Pro 구독 중이에요. 함께해줘서 고마워요.'); status.classList.add('good');
-    } else if (s.trialActive) {
-      badge.textContent = IVI18n.pick('Trial', '체험 중'); badge.classList.add('is-trial');
-      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Subscribe now', '지금 구독하기'); manage.hidden = false;
-      status.textContent = IVI18n.pick(`Free trial — ${trialDaysLeft()} days left`, `무료 체험 중 — 남은 ${trialDaysLeft()}일`); status.classList.add('warn');
+      upgrade.hidden = true;
+      if (licenseRow) licenseRow.hidden = true;
+      status.textContent = IVI18n.pick('💙 Pro is active. Thanks for supporting IMPULSE VAULT!', '💙 Pro가 활성화됐어요. 응원해줘서 고마워요!'); status.classList.add('good');
     } else if (s.devOverride) {
       badge.textContent = IVI18n.pick('PRO · Demo', 'PRO · 데모'); badge.classList.add('is-pro');
-      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Start Pro', 'Pro 시작하기'); manage.hidden = true;
-      status.textContent = IVI18n.pick('🧪 Previewing Pro features in demo (not a real charge).', '🧪 데모로 Pro 기능을 미리 보는 중이에요 (실제 결제 아님).'); status.classList.add('good');
+      upgrade.hidden = false;
+      if (licenseRow) licenseRow.hidden = false;
+      status.textContent = IVI18n.pick('🧪 Previewing Pro features in demo (not a real purchase).', '🧪 데모로 Pro 기능을 미리 보는 중이에요 (실제 구매 아님).'); status.classList.add('good');
     } else {
       badge.textContent = 'FREE';
-      upgrade.hidden = false; upgrade.textContent = IVI18n.pick('Start Pro', 'Pro 시작하기'); manage.hidden = true;
-      status.textContent = proIsStub
-        ? IVI18n.pick("※ Billing (ExtPay) isn't wired up yet, so this is demo mode. Use the toggle below to preview Pro features.", '※ 결제 연동(ExtPay) 전이라 데모 모드예요. 아래 토글로 Pro 기능을 미리 볼 수 있어요.')
-        : '';
+      upgrade.hidden = false;
+      if (licenseRow) licenseRow.hidden = false;
+      if (s.status === 'invalid') {
+        status.textContent = IVI18n.pick('✗ That license key didn’t verify. Check it and try again.', '✗ 라이선스 키 확인에 실패했어요. 다시 확인해 주세요.'); status.classList.add('warn');
+      } else if (s.status === 'inactive') {
+        status.textContent = IVI18n.pick('Your subscription looks inactive (cancelled or refunded).', '구독이 비활성 상태로 보여요 (해지/환불).'); status.classList.add('warn');
+      } else if (s.configured === false) {
+        status.textContent = IVI18n.pick('※ Gumroad isn’t set up yet — preview Pro with the demo toggle below.', '※ Gumroad 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
+      } else {
+        status.textContent = '';
+      }
     }
 
-    // The local preview toggle only makes sense before real billing is wired.
-    demo.hidden = !proIsStub;
+    demo.hidden = !!s.paid; // hide the local preview toggle once truly Pro
     devToggle.checked = !!s.devOverride;
   }
 
   function initProHandlers() {
-    $('#proUpgrade').addEventListener('click', async () => {
-      if (proIsStub) {
-        const st = $('#proStatus');
-        st.classList.remove('good'); st.classList.add('warn');
-        st.textContent = IVI18n.pick('Payments activate once ExtPay is wired up. For now, try Pro via the “Demo” toggle below. (See the lib/ExtPay.js notes.)', '결제는 실제 ExtPay 연동 후 활성화돼요. 지금은 아래 “데모” 토글로 Pro를 미리 체험해보세요. (lib/ExtPay.js 안내 참고)');
-        $('#proDemo').hidden = false;
-        return;
-      }
-      await sendMsg({ type: 'OPEN_PAYMENT' });
+    // Open the Gumroad product page.
+    $('#proUpgrade').addEventListener('click', () => {
+      sendMsg({ type: 'OPEN_PAYMENT' });
     });
 
-    $('#proManage').addEventListener('click', async () => {
-      await sendMsg({ type: 'OPEN_PAYMENT' }); // ExtPay's page handles manage/cancel
-    });
+    // Activate a Gumroad license key.
+    const actBtn = $('#licenseActivate');
+    if (actBtn) {
+      actBtn.addEventListener('click', async () => {
+        const input = $('#licenseInput');
+        const key = ((input && input.value) || '').trim();
+        const status = $('#proStatus');
+        if (!key) {
+          status.classList.remove('good'); status.classList.add('warn');
+          status.textContent = IVI18n.pick('Enter your license key first.', '라이선스 키를 먼저 입력해 주세요.');
+          return;
+        }
+        const prev = actBtn.textContent;
+        actBtn.disabled = true; actBtn.textContent = IVI18n.pick('Checking…', '확인 중…');
+        const res = await sendMsg({ type: 'VERIFY_LICENSE', key });
+        actBtn.disabled = false; actBtn.textContent = prev;
+        if (res && res.status) proStatus = res.status;
+        if (!(res && res.ok && res.paid)) {
+          status.classList.remove('good'); status.classList.add('warn');
+          const map = {
+            not_configured: IVI18n.pick('Gumroad product isn’t configured yet (set GUMROAD_PRODUCT_ID in utils/pro.js).', 'Gumroad 상품이 아직 설정 안 됐어요 (utils/pro.js의 GUMROAD_PRODUCT_ID 설정).'),
+            invalid_license: IVI18n.pick('✗ Invalid license key.', '✗ 잘못된 라이선스 키예요.'),
+            no_key: IVI18n.pick('Enter your license key first.', '라이선스 키를 먼저 입력해 주세요.'),
+            network: IVI18n.pick('Network error — please try again.', '네트워크 오류 — 다시 시도해 주세요.'),
+          };
+          status.textContent = map[(res && res.error)] || IVI18n.pick('✗ Could not verify the license.', '✗ 라이선스 확인에 실패했어요.');
+        }
+        renderMembership();
+        await renderSettings(); // reflect the AI Pro-lock note immediately
+        flashSaved();
+      });
+    }
 
     $('#devProToggle').addEventListener('change', async (e) => {
       const res = await sendMsg({ type: 'SET_DEV_PRO', on: e.target.checked });
       if (res && res.status) proStatus = res.status;
       renderMembership();
-      await renderSettings(); // reflect the AI Pro-lock note immediately
+      await renderSettings();
       flashSaved();
     });
 
@@ -605,9 +626,8 @@
       });
     }
 
-    // When returning from the hosted checkout tab, refresh status.
+    // Returning from the Gumroad tab → re-verify the stored license.
     window.addEventListener('focus', async () => {
-      if (proIsStub) return;
       await sendMsg({ type: 'REFRESH_PRO' });
       await loadPro();
       renderMembership();
@@ -740,21 +760,13 @@
   }
 
   // ------- boot -------
-  // Product Hunt promo deep-link: dashboard.html#ph offers the extended trial.
-  // The ACTUAL trial length is set in the ExtPay dashboard; the period string
-  // here is what ExtPay shows on its trial page.
+  // Promo deep-link: dashboard.html#ph (or #producthunt) jumps to the Pro
+  // section so a campaign link lands people right on the offer.
   function initPromo() {
     const h = (location.hash || '').toLowerCase();
     if (h !== '#ph' && h !== '#producthunt') return;
     const mem = document.querySelector('#membership');
     if (mem) mem.scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => {
-      const ok = confirm(IVI18n.pick(
-        'Product Hunt offer 🎉  Start your 60-day free trial of IMPULSE VAULT Pro?',
-        'Product Hunt 혜택 🎉  IMPULSE VAULT Pro 60일 무료체험을 시작할까요?'
-      ));
-      if (ok) sendMsg({ type: 'OPEN_TRIAL', period: '60 days' });
-    }, 600);
   }
 
   function boot() {

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" font-family="'Inter','Space Grotesk',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="scene" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#0e1118"/><stop offset="1" stop-color="#070809"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.55"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.4"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f9fc"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset="1" stop-color="#9bb6e6"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="sheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161a22"/><stop offset="1" stop-color="#0d0f15"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f49"/><stop offset="1" stop-color="#191c22"/></linearGradient>
+    <clipPath id="lscr"><rect x="116" y="600" width="848" height="540" rx="10"/></clipPath>
+    <filter id="dsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="40" stdDeviation="50" flood-color="#000" flood-opacity="0.55"/></filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#scene)"/>
+  <circle cx="540" cy="860" r="600" fill="url(#glow)"/>
+
+  <!-- laptop -->
+  <g filter="url(#dsh)">
+    <!-- lid -->
+    <rect x="92" y="576" width="896" height="588" rx="26" fill="url(#metal)"/>
+    <rect x="110" y="594" width="860" height="552" rx="12" fill="#0b0d12"/>
+    <circle cx="540" cy="585" r="4" fill="#3a3f49"/>
+    <!-- base -->
+    <path d="M40 1164 H1040 L1066 1216 a14 14 0 0 1 -14 14 H28 a14 14 0 0 1 -14 -14 Z" fill="url(#metal)"/>
+    <rect x="470" y="1164" width="140" height="14" rx="7" fill="#0b0d12"/>
+  </g>
+
+  <!-- screen content -->
+  <g clip-path="url(#lscr)">
+    <rect x="116" y="600" width="848" height="540" fill="url(#pg)"/>
+    <!-- browser bar -->
+    <rect x="116" y="600" width="848" height="52" fill="#e7ebf2"/>
+    <circle cx="146" cy="626" r="7" fill="#ff5f57"/><circle cx="168" cy="626" r="7" fill="#febc2e"/><circle cx="190" cy="626" r="7" fill="#28c840"/>
+    <rect x="240" y="610" width="560" height="32" rx="16" fill="#f3f5f9"/>
+    <text x="262" y="632" font-size="17" fill="#8a93a8">🔒 shopmart.com/p/earbuds-pro</text>
+
+    <!-- store page (dim) -->
+    <rect x="150" y="690" width="360" height="300" rx="16" fill="#ffffff"/>
+    <g transform="translate(330,840)">
+      <rect x="-90" y="-18" width="38" height="110" rx="19" fill="url(#prod)"/><ellipse cx="-71" cy="-26" rx="46" ry="50" fill="url(#prod)"/>
+      <rect x="52" y="-18" width="38" height="110" rx="19" fill="url(#prod)"/><ellipse cx="71" cy="-26" rx="46" ry="50" fill="url(#prod)"/>
+    </g>
+    <text x="540" y="730" font-size="30" font-weight="700" fill="#161b29">Wireless Earbuds Pro</text>
+    <text x="540" y="800" font-size="48" font-weight="800" fill="#161b29">$149</text>
+    <rect x="540" y="900" width="240" height="64" rx="16" fill="#3f6fe0"/><text x="660" y="941" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">Buy now</text>
+    <rect x="116" y="652" width="848" height="488" fill="#0a0c12" opacity="0.5"/>
+
+    <!-- IMPULSE VAULT modal -->
+    <g transform="translate(290,690)">
+      <rect width="500" height="420" rx="22" fill="url(#sheet)" stroke="#ffffff" stroke-opacity="0.1"/>
+      <g transform="rotate(45 40 38)"><rect x="28" y="26" width="22" height="22" rx="6" fill="url(#acc)"/></g>
+      <text x="66" y="46" font-size="17" font-weight="700" letter-spacing="1.5" fill="#cdd6e6">IMPULSE&#160;VAULT</text>
+      <rect x="386" y="26" width="92" height="34" rx="17" fill="#6ea8ff" fill-opacity="0.16" stroke="#6ea8ff" stroke-opacity="0.5"/>
+      <text x="432" y="49" text-anchor="middle" font-size="16" font-weight="700" fill="#9cc2ff">⏸ Pause</text>
+      <text x="32" y="120" font-size="32" font-weight="800" fill="#eef2f8">Do you really need this?</text>
+      <text x="32" y="184" font-size="44" font-weight="800" fill="#fff">$149</text>
+      <text x="172" y="184" font-size="18" fill="#8a93a4">≈ 3.2 hrs of work</text>
+      <g transform="translate(32,214)" font-size="18">
+        <text x="0" y="0" font-size="16" font-weight="800" letter-spacing="1.5" fill="#7fd6a6">PROS</text>
+        <circle cx="6" cy="30" r="5" fill="#7fd6a6"/><text x="22" y="37" fill="#c4ccd8">Great reviews</text>
+      </g>
+      <g transform="translate(280,214)" font-size="18">
+        <text x="0" y="0" font-size="16" font-weight="800" letter-spacing="1.5" fill="#e0a17a">CONS</text>
+        <circle cx="6" cy="30" r="5" fill="#e0a17a"/><text x="22" y="37" fill="#c4ccd8">You own one</text>
+      </g>
+      <rect x="32" y="318" width="280" height="62" rx="16" fill="url(#acc)"/>
+      <text x="172" y="357" text-anchor="middle" font-size="24" font-weight="800" fill="#06101f">Vault it · 24h</text>
+      <rect x="328" y="318" width="140" height="62" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+      <text x="398" y="357" text-anchor="middle" font-size="20" font-weight="600" fill="#c4ccd8">Buy</text>
+    </g>
+  </g>
+</svg>

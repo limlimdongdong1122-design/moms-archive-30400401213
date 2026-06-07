@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Inter',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="scene" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#0e1118"/><stop offset="1" stop-color="#070809"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.55"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.4"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eafff7"/><stop offset="0.5" stop-color="#8ff0cf"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f49"/><stop offset="1" stop-color="#191c22"/></linearGradient>
+    <clipPath id="lscr2"><rect x="116" y="600" width="848" height="540" rx="10"/></clipPath>
+    <filter id="dsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="40" stdDeviation="50" flood-color="#000" flood-opacity="0.55"/></filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#scene)"/>
+  <circle cx="540" cy="860" r="600" fill="url(#glow)"/>
+
+  <!-- laptop -->
+  <g filter="url(#dsh)">
+    <rect x="92" y="576" width="896" height="588" rx="26" fill="url(#metal)"/>
+    <rect x="110" y="594" width="860" height="552" rx="12" fill="#0b0d12"/>
+    <circle cx="540" cy="585" r="4" fill="#3a3f49"/>
+    <path d="M40 1164 H1040 L1066 1216 a14 14 0 0 1 -14 14 H28 a14 14 0 0 1 -14 -14 Z" fill="url(#metal)"/>
+    <rect x="470" y="1164" width="140" height="14" rx="7" fill="#0b0d12"/>
+  </g>
+
+  <!-- dashboard content -->
+  <g clip-path="url(#lscr2)">
+    <rect x="116" y="600" width="848" height="540" fill="#0c0e13"/>
+    <circle cx="820" cy="760" r="260" fill="url(#glow)"/>
+
+    <!-- sidebar -->
+    <rect x="116" y="600" width="170" height="540" fill="#0e1218"/>
+    <g transform="translate(140,648)"><g transform="rotate(45 9 9)"><rect width="18" height="18" rx="5" fill="url(#acc)"/></g>
+      <text x="32" y="14" font-size="14" font-weight="700" letter-spacing="1" fill="#eef2f8">VAULT</text></g>
+    <g font-size="16" fill="#8a93a8">
+      <rect x="132" y="710" width="138" height="40" rx="10" fill="#6ea8ff" fill-opacity="0.12"/><text x="150" y="736" fill="#dbe6fb">Overview</text>
+      <text x="150" y="796">Vault</text><text x="150" y="846">Settings</text><text x="150" y="896" fill="#9cc2ff">Pro</text>
+    </g>
+
+    <!-- main -->
+    <text x="318" y="666" font-size="28" font-weight="800" fill="#eef2f8">Overview</text>
+
+    <rect x="318" y="694" width="430" height="150" rx="18" fill="#12151c" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="344" y="742" font-size="15" font-weight="700" letter-spacing="2" fill="#8a93a4">TOTAL SAVED</text>
+    <text x="344" y="812" font-size="66" font-weight="800" fill="url(#mint)">$1,240</text>
+
+    <rect x="766" y="694" width="172" height="71" rx="14" fill="#12151c" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="788" y="730" font-size="13" font-weight="700" letter-spacing="1" fill="#8a93a4">RESISTED</text>
+    <text x="916" y="746" text-anchor="end" font-size="32" font-weight="800" fill="#eef2f8">37</text>
+    <rect x="766" y="773" width="172" height="71" rx="14" fill="#12151c" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="788" y="809" font-size="13" font-weight="700" letter-spacing="1" fill="#8a93a4">RESIST RATE</text>
+    <text x="916" y="825" text-anchor="end" font-size="32" font-weight="800" fill="#9cc2ff">71%</text>
+
+    <!-- heatmap -->
+    <rect x="318" y="864" width="620" height="232" rx="18" fill="#12151c" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="344" y="910" font-size="15" font-weight="700" letter-spacing="1.5" fill="#8a93a4">WHEN YOU'RE WEAK (BY HOUR)</text>
+    <g transform="translate(344,936)" fill="#6ea8ff">
+      <rect x="0" y="0" width="20" height="120" rx="4" opacity="0.1"/><rect x="25" y="0" width="20" height="120" rx="4" opacity="0.09"/>
+      <rect x="50" y="0" width="20" height="120" rx="4" opacity="0.08"/><rect x="75" y="0" width="20" height="120" rx="4" opacity="0.12"/>
+      <rect x="100" y="0" width="20" height="120" rx="4" opacity="0.18"/><rect x="125" y="0" width="20" height="120" rx="4" opacity="0.24"/>
+      <rect x="150" y="0" width="20" height="120" rx="4" opacity="0.3"/><rect x="175" y="0" width="20" height="120" rx="4" opacity="0.24"/>
+      <rect x="200" y="0" width="20" height="120" rx="4" opacity="0.18"/><rect x="225" y="0" width="20" height="120" rx="4" opacity="0.2"/>
+      <rect x="250" y="0" width="20" height="120" rx="4" opacity="0.3"/><rect x="275" y="0" width="20" height="120" rx="4" opacity="0.4"/>
+      <rect x="300" y="0" width="20" height="120" rx="4" opacity="0.5"/><rect x="325" y="0" width="20" height="120" rx="4" opacity="0.44"/>
+      <rect x="350" y="0" width="20" height="120" rx="4" opacity="0.34"/><rect x="375" y="0" width="20" height="120" rx="4" opacity="0.42"/>
+      <rect x="400" y="0" width="20" height="120" rx="4" opacity="0.6"/><rect x="425" y="0" width="20" height="120" rx="4" opacity="0.8"/>
+      <rect x="450" y="0" width="20" height="120" rx="4" opacity="1"/><rect x="475" y="0" width="20" height="120" rx="4" opacity="0.7"/>
+      <rect x="500" y="0" width="20" height="120" rx="4" opacity="0.4"/><rect x="525" y="0" width="20" height="120" rx="4" opacity="0.24"/>
+      <rect x="550" y="0" width="20" height="120" rx="4" opacity="0.16"/>
+    </g>
+    <text x="906" y="930" text-anchor="end" font-size="14" fill="#e0a17a">⚠ 9–11pm peak</text>
+  </g>
+</svg>

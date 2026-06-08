@@ -560,13 +560,15 @@
       } else if (s.status === 'expired') {
         status.textContent = IVI18n.pick('Your license has expired. Renew to keep Pro.', '라이선스가 만료됐어요. Pro 유지하려면 갱신해 주세요.'); status.classList.add('warn');
       } else if (s.configured === false) {
-        status.textContent = IVI18n.pick('※ PayPal isn’t set up yet — preview Pro with the demo toggle below.', '※ PayPal 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
+        status.textContent = IVI18n.pick('※ PayPal isn’t set up yet (set CHECKOUT_URL in utils/pro.js).', '※ PayPal 설정 전이에요 (utils/pro.js의 CHECKOUT_URL 설정).');
       } else {
         status.textContent = '';
       }
     }
 
-    demo.hidden = !!s.paid; // hide the local preview toggle once truly Pro
+    // Demo toggle is hidden from users (owner-only preview via SET_DEV_PRO).
+    // It never grants managed AI anyway — the Worker requires a real license.
+    demo.hidden = true;
     devToggle.checked = !!s.devOverride;
   }
 

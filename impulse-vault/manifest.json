@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "IMPULSE VAULT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Detects your own online-shopping intent and adds gentle, smart friction at the moment of purchase. 100% local, privacy-first.",
 
   "permissions": ["storage", "scripting", "alarms"],

@@ -1,0 +1,69 @@
+/* ============================================================
+   IMPULSE VAULT — Squarespace Custom CSS skin
+   ------------------------------------------------------------
+   Where to paste:  Design → Custom CSS  (works on all paid plans)
+   What it does:    skins your NATIVE Squarespace blocks
+                    (headings, paragraphs, buttons) into the
+                    IMPULSE VAULT dark / ice-blue brand look.
+   Note: CSS only styles — you still type your text into normal
+         text/button blocks on the page (see the guide).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+
+/* ---- Headings: display font + ice-blue gradient text ---- */
+h1, h2 {
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff, #bcd2f3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---- Body font ---- */
+body, p { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+/* ---- Buttons: shared shape ---- */
+.sqs-block-button-element {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 14px !important;
+  padding: 15px 28px !important;
+  transition: transform .18s ease, box-shadow .18s ease !important;
+}
+
+/* Primary button — filled ice-blue gradient */
+.sqs-block-button-element--primary,
+a.sqs-block-button-element {
+  background: linear-gradient(180deg, #a9cbff, #6ea8ff) !important;
+  color: #06101f !important;
+  box-shadow: 0 8px 30px rgba(110,168,255,.35) !important;
+  border: none !important;
+}
+.sqs-block-button-element:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 40px rgba(110,168,255,.5) !important;
+}
+
+/* Secondary button — outline / glass */
+.sqs-block-button-element--secondary {
+  background: rgba(255,255,255,.05) !important;
+  color: #eaf1fb !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: none !important;
+}
+
+/* ---- Feature paragraphs ---- */
+.sqs-block-html .sqs-html-content { color: #9fb0c6; }
+
+/* ============================================================
+   OPTIONAL — limit the skin to ONE page only.
+   Wrap everything above inside your page's body id:
+
+     #collection-XXXXXXXX { ...all rules... }
+
+   Find the id: open the page, right-click → Inspect → look at
+   <body id="collection-..."> . If this whole site is the
+   IMPULSE VAULT promo, you can skip this and leave it site-wide.
+   ============================================================ */

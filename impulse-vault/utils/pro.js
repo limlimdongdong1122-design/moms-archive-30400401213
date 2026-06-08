@@ -24,7 +24,7 @@
   //    Pay Links / Buttons → copy the public link buyers go to).
   // 2) LICENSE_API: your Worker's license-verify endpoint. With the bundled
   //    _worker.js on Cloudflare Pages this is <site>/api/license.
-  const CHECKOUT_URL = 'https://www.paypal.com/ncp/payment/FUKRBYYZZSJPN';
+  const CHECKOUT_URL = 'https://www.paypal.com/ncp/payment/EMNBNM7WZHRNC';
   const LICENSE_API = 'https://impursivevault.com/api/license';
 
   const KEY = 'iv_pro';

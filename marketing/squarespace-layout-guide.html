@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMPULSE VAULT — 스퀘어스페이스 꾸미기 가이드 (예시)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0e14;--bg2:#0e141d;--text:#eaf1fb;--dim:#9fb0c6;--faint:#6c7c93;
+    --accent:#6ea8ff;--accent2:#a9cbff;--glass:rgba(255,255,255,.05);--glass-bd:rgba(255,255,255,.1);
+  }
+  body{
+    background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;line-height:1.6;padding-bottom:80px;
+  }
+
+  /* ===== 안내 배너 (가이드 전용 — 실제 사이트엔 안 들어감) ===== */
+  .guide-top{
+    background:#11243f;border-bottom:1px solid var(--glass-bd);
+    padding:18px 22px;text-align:center;font-size:14px;color:var(--dim);
+  }
+  .guide-top b{color:var(--accent2)}
+
+  /* ===== 블록 라벨 시스템 ===== */
+  .block{position:relative;border:1px dashed rgba(110,168,255,.35);border-radius:14px;margin:14px auto;padding:22px;max-width:980px}
+  .block::before{
+    content:attr(data-label);position:absolute;top:-11px;left:16px;
+    background:var(--accent);color:#06101f;font-size:11.5px;font-weight:700;
+    font-family:'Space Grotesk',sans-serif;letter-spacing:.02em;
+    padding:3px 10px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* ===== 섹션 래퍼 ===== */
+  .section{max-width:1040px;margin:0 auto;padding:40px 20px}
+  .section-tag{
+    display:block;text-align:center;font-family:'Space Grotesk',sans-serif;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+    margin:48px 0 4px;
+  }
+
+  /* ===== 실제 콘텐츠 스타일 (IMPULSE VAULT 톤) ===== */
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent2);font-weight:600;padding:7px 14px;
+    border:1px solid var(--glass-bd);border-radius:999px;background:var(--glass)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,5vw,52px);
+    line-height:1.07;letter-spacing:-.02em;margin:18px 0;
+    background:linear-gradient(180deg,#fff,#bcd2f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(24px,4vw,38px);
+    background:linear-gradient(180deg,#fff,#bcd2f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(16px,2.2vw,19px);color:var(--dim);max-width:580px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;padding:14px 26px;border-radius:14px;margin:6px 8px 0 0}
+  .btn-primary{background:linear-gradient(180deg,var(--accent2),var(--accent));color:#06101f;box-shadow:0 8px 30px rgba(110,168,255,.35)}
+  .btn-ghost{background:var(--glass);color:var(--text);border:1px solid var(--glass-bd)}
+  .note{font-size:13px;color:var(--faint);margin-top:12px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid var(--glass-bd);border-radius:16px;padding:24px}
+  .card h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin-bottom:8px}
+  .card p{font-size:14.5px;color:var(--dim)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .imgph{display:grid;place-items:center;min-height:200px;border-radius:16px;
+    background:repeating-linear-gradient(45deg,rgba(110,168,255,.08),rgba(110,168,255,.08) 12px,transparent 12px,transparent 24px);
+    border:1px solid var(--glass-bd);color:var(--accent2);font-size:14px;text-align:center;padding:20px}
+  .price{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700}
+  .price small{font-size:14px;color:var(--faint);font-weight:500}
+  ul.feat{list-style:none;margin-top:14px;display:grid;gap:9px}
+  ul.feat li{font-size:14.5px;color:var(--dim);padding-left:22px;position:relative}
+  ul.feat li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .privacy{text-align:center;background:var(--glass);border:1px solid var(--glass-bd);border-radius:14px;padding:20px;color:var(--dim)}
+  .privacy b{color:var(--text)}
+  .faq-q{font-weight:600;margin-top:16px}
+  .faq-a{color:var(--dim);font-size:14.5px}
+  @media(max-width:760px){.grid3,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+  <div class="guide-top">
+    📘 <b>꾸미기 가이드 (예시 화면)</b> — 파란 점선 박스 + 라벨은 <b>"스퀘어스페이스에서 이 부분은 무슨 블록으로 만들면 되는지"</b> 알려주는 표시예요.
+    실제 사이트엔 점선/라벨이 안 들어가요. 이 모습처럼 블록을 쌓으면 됩니다.
+  </div>
+
+  <!-- ============ 1. 히어로 ============ -->
+  <span class="section-tag">① 히어로 섹션 (맨 위)</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 (작은 라벨)">
+      <span class="eyebrow"><span class="dot"></span> Privacy-first · 100% local</span>
+    </div>
+    <div class="block" data-label="텍스트 블록 (제목 = H1)">
+      <h1>Add a calm pause<br>before every impulse buy.</h1>
+    </div>
+    <div class="block" data-label="텍스트 블록 (본문)">
+      <p class="sub">IMPULSE VAULT catches your own online-shopping impulses and adds gentle, smart friction at the exact moment you're about to check out — so you buy on purpose, not on impulse.</p>
+    </div>
+    <div class="block" data-label="버튼 블록 ×2 (Primary + Secondary)">
+      <a class="btn btn-primary" href="#">Add to your browser — free</a>
+      <a class="btn btn-ghost" href="#">See how it works</a>
+      <p class="note">Works on Chrome, Edge, Brave & Whale · No account · Nothing leaves your device</p>
+    </div>
+    <div class="block" data-label="이미지 블록 (promo-hero.png 넣기)">
+      <div class="imgph">🖼️ 여기에 promo-hero 이미지<br>(SVG를 PNG로 변환해서 업로드)</div>
+    </div>
+  </div>
+
+  <!-- ============ 2. 기능 ============ -->
+  <span class="section-tag">② 기능 소개 섹션</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 (제목 = H2)" style="text-align:center">
+      <h2>Why it works</h2>
+    </div>
+    <div class="block" data-label="이미지 블록 ×3 + 텍스트 블록 ×3 (3단 컬럼)">
+      <div class="grid3">
+        <div class="card"><h3>🛑 Friction at the right moment</h3><p>A quiet pause appears right when you're about to buy — never nagging, just enough to think twice.</p></div>
+        <div class="card"><h3>🧊 Cool-off vault</h3><p>Not sure? Drop the item in your vault and let the urge cool down. Still want it later? It's there.</p></div>
+        <div class="card"><h3>🔒 Truly private</h3><p>All analysis runs inside your browser. Your searches and history never touch a server.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 3. 작동 방식 ============ -->
+  <span class="section-tag">③ 작동 방식 섹션 (이미지 + 글 나란히)</span>
+  <div class="section">
+    <div class="block" data-label="이미지 블록 + 텍스트 블록 (좌우 2단)">
+      <div class="grid2" style="align-items:center">
+        <div class="imgph">🖼️ phone-2-intervene 이미지<br>(멈춤 화면)</div>
+        <div>
+          <h2 style="font-size:26px;margin-bottom:10px">A pause, right at checkout</h2>
+          <p class="sub">Shop wherever you already shop. The moment you're about to buy, a gentle scorecard shows the real cost in hours of your time — and a moment to breathe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 4. 가격 ============ -->
+  <span class="section-tag">④ 가격 섹션 (Free vs Pro)</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 ×2 + 버튼 블록 (2단 카드)">
+      <div class="grid2">
+        <div class="card">
+          <h3>Free</h3><div class="price">$0</div>
+          <ul class="feat"><li>Rules-based purchase scorecard</li><li>Cool-off vault & impulse profile</li><li>Bring your own AI key (BYOK)</li><li>100% local — forever</li></ul>
+        </div>
+        <div class="card" style="border-color:rgba(110,168,255,.5);background:linear-gradient(180deg,rgba(110,168,255,.12),rgba(110,168,255,.03))">
+          <h3>Pro</h3><div class="price">$2.99 <small>/ mo · or $24.99 / yr</small></div>
+          <ul class="feat"><li>Managed AI analysis — no API key</li><li>Deeper, personalized reads</li><li>Everything in Free</li><li>Cancel anytime</li></ul>
+          <a class="btn btn-primary" href="#" style="margin-top:16px">Get Pro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 5. 프라이버시 ============ -->
+  <span class="section-tag">⑤ 프라이버시 한 줄 띠</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 (가운데 정렬)">
+      <div class="privacy"><b>No tracking. No accounts. No data collection.</b><br>IMPULSE VAULT is a small tool that respects you — built to help you spend intentionally.</div>
+    </div>
+  </div>
+
+  <!-- ============ 6. FAQ ============ -->
+  <span class="section-tag">⑥ FAQ 섹션</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 (질문/답변 반복) 또는 아코디언 블록">
+      <p class="faq-q">Is my data really private?</p>
+      <p class="faq-a">Yes. All analysis happens locally in your browser. Nothing is ever sent to a server.</p>
+      <p class="faq-q">Do I need an account?</p>
+      <p class="faq-a">No accounts, no sign-up. Just install and go.</p>
+      <p class="faq-q">What's the difference between Free and Pro?</p>
+      <p class="faq-a">Free = scorecard + your own AI key. Pro = managed AI analysis with no key to set up.</p>
+    </div>
+  </div>
+
+  <!-- ============ 7. 마무리 ============ -->
+  <span class="section-tag">⑦ 마무리 / 푸터</span>
+  <div class="section">
+    <div class="block" data-label="텍스트 블록 (제목) + 버튼 블록" style="text-align:center">
+      <h2>Spend on purpose.</h2>
+      <a class="btn btn-primary" href="#" style="margin-top:14px">Add to your browser — free</a>
+      <p class="note">© 2026 IMPULSE VAULT · 100% local · a small tool against impulse buying</p>
+    </div>
+  </div>
+
+</body>
+</html>

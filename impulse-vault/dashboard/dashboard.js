@@ -557,10 +557,10 @@
       if (licenseRow) licenseRow.hidden = false;
       if (s.status === 'invalid') {
         status.textContent = IVI18n.pick('✗ That license key didn’t verify. Check it and try again.', '✗ 라이선스 키 확인에 실패했어요. 다시 확인해 주세요.'); status.classList.add('warn');
-      } else if (s.status === 'inactive') {
-        status.textContent = IVI18n.pick('Your subscription looks inactive (cancelled or refunded).', '구독이 비활성 상태로 보여요 (해지/환불).'); status.classList.add('warn');
+      } else if (s.status === 'expired') {
+        status.textContent = IVI18n.pick('Your license has expired. Renew to keep Pro.', '라이선스가 만료됐어요. Pro 유지하려면 갱신해 주세요.'); status.classList.add('warn');
       } else if (s.configured === false) {
-        status.textContent = IVI18n.pick('※ Lemon Squeezy isn’t set up yet — preview Pro with the demo toggle below.', '※ Lemon Squeezy 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
+        status.textContent = IVI18n.pick('※ PayPal isn’t set up yet — preview Pro with the demo toggle below.', '※ PayPal 설정 전이에요 — 아래 데모 토글로 Pro를 미리 볼 수 있어요.');
       } else {
         status.textContent = '';
       }
@@ -571,12 +571,12 @@
   }
 
   function initProHandlers() {
-    // Open the Lemon Squeezy checkout page.
+    // Open the PayPal checkout page.
     $('#proUpgrade').addEventListener('click', () => {
       sendMsg({ type: 'OPEN_PAYMENT' });
     });
 
-    // Activate a Lemon Squeezy license key.
+    // Activate a license key (verified by the Worker).
     const actBtn = $('#licenseActivate');
     if (actBtn) {
       actBtn.addEventListener('click', async () => {
@@ -596,8 +596,11 @@
         if (!(res && res.ok && res.paid)) {
           status.classList.remove('good'); status.classList.add('warn');
           const map = {
-            not_configured: IVI18n.pick('Lemon Squeezy checkout isn’t configured yet (set CHECKOUT_URL in utils/pro.js).', 'Lemon Squeezy 결제가 아직 설정 안 됐어요 (utils/pro.js의 CHECKOUT_URL 설정).'),
+            not_configured: IVI18n.pick('PayPal checkout isn’t configured yet (set CHECKOUT_URL in utils/pro.js).', 'PayPal 결제가 아직 설정 안 됐어요 (utils/pro.js의 CHECKOUT_URL 설정).'),
             invalid_license: IVI18n.pick('✗ Invalid license key.', '✗ 잘못된 라이선스 키예요.'),
+            malformed: IVI18n.pick('✗ That doesn’t look like a valid key (IVP-…).', '✗ 올바른 키 형식이 아니에요 (IVP-…).'),
+            bad_signature: IVI18n.pick('✗ Invalid license key.', '✗ 잘못된 라이선스 키예요.'),
+            expired: IVI18n.pick('Your license has expired. Renew to keep Pro.', '라이선스가 만료됐어요. Pro 유지하려면 갱신해 주세요.'),
             no_key: IVI18n.pick('Enter your license key first.', '라이선스 키를 먼저 입력해 주세요.'),
             network: IVI18n.pick('Network error — please try again.', '네트워크 오류 — 다시 시도해 주세요.'),
           };
@@ -626,7 +629,7 @@
       });
     }
 
-    // Returning from the Lemon Squeezy tab → re-verify the stored license.
+    // Returning from the PayPal tab → re-verify the stored license.
     window.addEventListener('focus', async () => {
       await sendMsg({ type: 'REFRESH_PRO' });
       await loadPro();

@@ -3,8 +3,9 @@
  * ------------------------------------------------------------
  * One file that powers the whole Pages site:
  *
- *   POST /api  → keyless AI proxy for the extension (holds YOUR key)
- *   anything else → serves the static landing site (index.html, …)
+ *   POST /api          → keyless AI proxy for the extension (holds YOUR key)
+ *   POST /api/license  → verify a PayPal-issued, HMAC-signed license key
+ *   anything else      → serves the static landing site (index.html, …)
  *
  * Because it lives in the Pages project, the proxy URL is simply
  * https://impursivevault.com/api — which the extension uses by default.
@@ -12,8 +13,15 @@
  * 🔑 Your Claude key is NEVER in this file or the extension. Set it in
  *    Cloudflare → your Pages project → Settings → Variables and Secrets:
  *      ANTHROPIC_API_KEY = sk-ant-...   (type: Secret)
+ *      LICENSE_SECRET    = <a long random string>  (type: Secret)
+ *        ↑ signs/verifies Pro license keys. Use the SAME value in
+ *          tools/make-license.cjs when you generate keys for buyers.
  *    Optional vars: PROVIDER ("claude"|"openai"), MODEL, DAILY_PER_IP,
  *    DAILY_GLOBAL, ALLOW_ORIGIN, OPENAI_API_KEY, SHARED_SECRET.
+ *
+ * 💡 When LICENSE_SECRET is set, the AI proxy (/api) ALSO requires a valid
+ *    license (header x-iv-license) — so your API budget is only ever spent
+ *    on real Pro users, even if someone tampers with the extension locally.
  *
  * 💰 Cost guard: bind a KV namespace named IV_KV (Settings → Functions →
  *    KV namespace bindings) to enable the per-IP/global daily caps. Without
@@ -27,6 +35,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // ---- License verify lives at /api/license ----
+    if (url.pathname === '/api/license' || url.pathname === '/api/license/') {
+      return handleLicense(request, env);
+    }
+
     // ---- AI proxy lives at /api ; everything else is the static site ----
     if (url.pathname === '/api' || url.pathname === '/api/') {
       return handleApi(request, env);
@@ -37,6 +50,55 @@ export default {
   },
 };
 
+// ============================================================
+// License keys — HMAC-signed, no database.
+// Key format:  IVP-<expB36>-<nonce>-<sig>
+//   expB36 = expiry unix-seconds in base36 ("0" = lifetime)
+//   nonce  = random base36 (uniqueness; lets you revoke a single key)
+//   sig    = first 20 hex chars of HMAC-SHA256("<expB36>.<nonce>", SECRET)
+// The same algorithm lives in tools/make-license.cjs (key generator).
+// ============================================================
+async function hmacHex(secret, msg) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(msg));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// timing-safe-ish compare for equal-length hex strings
+function safeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+// Returns { valid, exp } or { valid:false, error }.
+async function checkLicense(rawKey, secret) {
+  const key = String(rawKey || '').trim();
+  const m = key.match(/^IVP-([0-9a-z]+)-([0-9a-z]+)-([0-9a-f]{20})$/i);
+  if (!m) return { valid: false, error: 'malformed' };
+  const [, expB36, nonce, sig] = m;
+  const expected = (await hmacHex(secret, `${expB36}.${nonce}`)).slice(0, 20);
+  if (!safeEqual(sig.toLowerCase(), expected.toLowerCase())) return { valid: false, error: 'bad_signature' };
+  const exp = parseInt(expB36, 36) || 0;
+  if (exp && exp * 1000 <= Date.now()) return { valid: false, error: 'expired', exp };
+  return { valid: true, exp };
+}
+
+async function handleLicense(request, env) {
+  const origin = env.ALLOW_ORIGIN || '*';
+  if (request.method === 'OPTIONS') return cors(new Response(null, { status: 204 }), origin);
+  if (request.method !== 'POST') return cors(json({ error: 'POST only' }, 405), origin);
+  if (!env.LICENSE_SECRET) return cors(json({ valid: false, error: 'not_configured' }, 200), origin);
+  let body;
+  try { body = await request.json(); } catch (_) { return cors(json({ error: 'bad json' }, 400), origin); }
+  const result = await checkLicense(body.key, env.LICENSE_SECRET);
+  return cors(json(result), origin);
+}
+
 async function handleApi(request, env) {
   const origin = env.ALLOW_ORIGIN || '*';
   if (request.method === 'OPTIONS') return cors(new Response(null, { status: 204 }), origin);
@@ -45,6 +107,14 @@ async function handleApi(request, env) {
   // Optional shared secret (cheap bot deterrent).
   if (env.SHARED_SECRET && request.headers.get('x-iv-secret') !== env.SHARED_SECRET) {
     return cors(json({ error: 'unauthorized' }, 401), origin);
+  }
+
+  // Pro gate: when LICENSE_SECRET is configured, only verified license
+  // holders may use the managed proxy (so it only spends YOUR API budget
+  // on real Pro users). Free users run BYOK and never hit this endpoint.
+  if (env.LICENSE_SECRET) {
+    const lic = await checkLicense(request.headers.get('x-iv-license'), env.LICENSE_SECRET);
+    if (!lic.valid) return cors(json({ error: 'pro_required' }, 402), origin);
   }
 
   let body;
@@ -134,6 +204,6 @@ function json(obj, status) {
 function cors(res, origin) {
   res.headers.set('Access-Control-Allow-Origin', origin || '*');
   res.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.headers.set('Access-Control-Allow-Headers', 'Content-Type, x-iv-secret');
+  res.headers.set('Access-Control-Allow-Headers', 'Content-Type, x-iv-secret, x-iv-license');
   return res;
 }

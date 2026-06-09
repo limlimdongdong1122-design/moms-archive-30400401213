@@ -83,3 +83,12 @@ details p{padding:0 0 18px;font-size:14.5px}
 .iv-field{display:block;width:100%;margin:8px 0 16px;padding:12px 14px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-bd);color:var(--text);font-size:15px}
 .iv-input-label{font-size:13px;color:var(--faint)}
 @media(max-width:860px){.iv-hero{grid-template-columns:1fr;gap:36px}.iv-g3,.iv-g2{grid-template-columns:1fr}}
+
+/* big "go here" website address banner */
+.iv-address{display:inline-block;margin:22px auto 10px;padding:18px 40px;border-radius:18px;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.01em;
+  font-size:clamp(30px,6vw,60px);line-height:1.1;text-decoration:none;color:#eaf3ff;
+  background:linear-gradient(180deg,rgba(110,168,255,.16),rgba(110,168,255,.04));
+  border:1px solid rgba(110,168,255,.5);box-shadow:0 12px 50px rgba(110,168,255,.28);
+  text-shadow:0 0 26px rgba(110,168,255,.55);transition:transform .18s ease,box-shadow .18s ease}
+.iv-address:hover{transform:translateY(-2px);box-shadow:0 18px 64px rgba(110,168,255,.5)}

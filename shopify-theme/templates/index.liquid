@@ -110,10 +110,15 @@
       <div class="iv-step"><span class="iv-num">3</span><h3>Load unpacked</h3><p>Click <b>Load unpacked</b> → choose the unzipped folder. Done — it’s installed.</p></div>
     </div>
     <div class="iv-cta" style="justify-content:center">
-      <!-- DOWNLOAD LINK: upload impulse-vault.zip to Shopify (Settings → Files)
-           and paste its URL here, or point to your live site's copy. -->
-      <a class="iv-btn iv-btn-primary" href="https://impursivevault.com/impulse-vault.zip">Download the extension (.zip)</a>
+      <!-- ============================================================
+           DOWNLOAD LINK — set this ONCE so it doesn't 404:
+           Shopify Admin → Settings → Files → Upload "impulse-vault.zip"
+           → copy its URL (cdn.shopify.com/...) → replace the href="#" below.
+           (We use "#" by default so the button never throws a 404.)
+           ============================================================ -->
+      <a class="iv-btn iv-btn-primary" href="#">Download the extension (.zip)</a>
     </div>
     <p class="iv-note iv-center">Works on Chrome, Edge, Brave, Whale, Opera &amp; Vivaldi · 100% local</p>
+    <p class="iv-note iv-center">Store owner: set the download link in <b>templates/index.liquid</b> (see code comment).</p>
   </div>
 </section>

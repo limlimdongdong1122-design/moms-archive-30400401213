@@ -1,0 +1,11 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>My account</h1>
+  <p>Welcome, {{ customer.first_name }}.</p>
+  <p><a href="{{ routes.account_logout_url }}">Log out</a></p>
+  <h3 style="margin-top:24px">Order history</h3>
+  {% for order in customer.orders %}
+    <p style="margin:8px 0"><a href="{{ order.customer_url }}">{{ order.name }}</a> — {{ order.total_price | money }}</p>
+  {% else %}
+    <p>No orders yet.</p>
+  {% endfor %}
+</section>

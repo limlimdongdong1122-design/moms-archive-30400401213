@@ -1,0 +1,16 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Search</h1>
+  <form action="{{ routes.search_url }}" method="get">
+    <input class="iv-field" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search…">
+    <button class="iv-btn iv-btn-primary" type="submit">Search</button>
+  </form>
+  {% if search.performed %}
+    <div style="margin-top:24px">
+      {% for item in search.results %}
+        <p style="margin:10px 0"><a href="{{ item.url }}">{{ item.title }}</a></p>
+      {% else %}
+        <p>No results.</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

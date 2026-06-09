@@ -1,0 +1,8 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Activate account</h1>
+  {% form 'activate_customer_password' %}
+    <label class="iv-input-label">Password</label><input class="iv-field" type="password" name="customer[password]">
+    <label class="iv-input-label">Confirm</label><input class="iv-field" type="password" name="customer[password_confirmation]">
+    <button class="iv-btn iv-btn-primary" type="submit">Activate</button>
+  {% endform %}
+</section>

@@ -1,0 +1,6 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Addresses</h1>
+  {% for address in customer.addresses %}
+    <p style="margin:8px 0">{{ address | format_address }}</p>
+  {% endfor %}
+</section>

@@ -1,0 +1,13 @@
+<section class="iv-wrap iv-sec">
+  <h1>{{ collection.title }}</h1>
+  <div class="iv-g3" style="margin-top:32px">
+    {% for product in collection.products %}
+      <a class="iv-card" href="{{ product.url }}">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price | money }}</p>
+      </a>
+    {% else %}
+      <p>No products yet.</p>
+    {% endfor %}
+  </div>
+</section>

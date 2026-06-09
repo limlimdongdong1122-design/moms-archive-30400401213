@@ -1,0 +1,10 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Create account</h1>
+  {% form 'create_customer' %}
+    <label class="iv-input-label">First name</label><input class="iv-field" type="text" name="customer[first_name]">
+    <label class="iv-input-label">Last name</label><input class="iv-field" type="text" name="customer[last_name]">
+    <label class="iv-input-label">Email</label><input class="iv-field" type="email" name="customer[email]">
+    <label class="iv-input-label">Password</label><input class="iv-field" type="password" name="customer[password]">
+    <button class="iv-btn iv-btn-primary" type="submit">Create</button>
+  {% endform %}
+</section>

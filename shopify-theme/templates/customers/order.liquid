@@ -1,0 +1,7 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Order {{ order.name }}</h1>
+  {% for line_item in order.line_items %}
+    <p style="margin:8px 0">{{ line_item.quantity }} × {{ line_item.title }} — {{ line_item.final_line_price | money }}</p>
+  {% endfor %}
+  <p class="iv-price" style="margin-top:12px">Total: {{ order.total_price | money }}</p>
+</section>

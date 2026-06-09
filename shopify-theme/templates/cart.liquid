@@ -1,0 +1,14 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Your cart</h1>
+  {% if cart.item_count > 0 %}
+    {% form 'cart', cart %}
+      {% for item in cart.items %}
+        <p style="margin:12px 0">{{ item.quantity }} × {{ item.product.title }} — {{ item.final_line_price | money }}</p>
+      {% endfor %}
+      <p class="iv-price" style="margin:16px 0">Total: {{ cart.total_price | money }}</p>
+      <button class="iv-btn iv-btn-primary" type="submit" name="checkout">Checkout</button>
+    {% endform %}
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+</section>

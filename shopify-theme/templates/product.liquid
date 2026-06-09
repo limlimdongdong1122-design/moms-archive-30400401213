@@ -1,0 +1,13 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>{{ product.title }}</h1>
+  <p class="iv-price" style="margin:8px 0 16px">{{ product.price | money }}</p>
+  {% form 'product', product %}
+    <select name="id" class="iv-field">
+      {% for variant in product.variants %}
+        <option value="{{ variant.id }}">{{ variant.title }} — {{ variant.price | money }}</option>
+      {% endfor %}
+    </select>
+    <button class="iv-btn iv-btn-primary" type="submit">Add to cart</button>
+  {% endform %}
+  <div style="margin-top:24px">{{ product.description }}</div>
+</section>

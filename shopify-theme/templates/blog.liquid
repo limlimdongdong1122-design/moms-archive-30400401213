@@ -1,0 +1,6 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>{{ blog.title }}</h1>
+  {% for article in blog.articles %}
+    <p style="margin-top:16px"><a href="{{ article.url }}"><b>{{ article.title }}</b></a><br>{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</p>
+  {% endfor %}
+</section>

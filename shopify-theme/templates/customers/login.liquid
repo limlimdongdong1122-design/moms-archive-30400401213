@@ -1,0 +1,8 @@
+<section class="iv-wrap iv-sec iv-prose">
+  <h1>Login</h1>
+  {% form 'customer_login' %}
+    <label class="iv-input-label">Email</label><input class="iv-field" type="email" name="customer[email]">
+    <label class="iv-input-label">Password</label><input class="iv-field" type="password" name="customer[password]">
+    <button class="iv-btn iv-btn-primary" type="submit">Sign in</button>
+  {% endform %}
+</section>

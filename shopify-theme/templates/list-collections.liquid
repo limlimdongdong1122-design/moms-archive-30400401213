@@ -1,0 +1,8 @@
+<section class="iv-wrap iv-sec">
+  <h1>Collections</h1>
+  <div class="iv-g3" style="margin-top:32px">
+    {% for collection in collections %}
+      <a class="iv-card" href="{{ collection.url }}"><h3>{{ collection.title }}</h3></a>
+    {% endfor %}
+  </div>
+</section>

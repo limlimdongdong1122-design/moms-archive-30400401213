@@ -21,6 +21,7 @@
         <span class="logo-name">IMPULSE&nbsp;VAULT</span>
       </div>
       <a href="#overview" class="nav-link active" data-ko="개요">Overview</a>
+      <a href="#momentum" class="nav-link" data-ko="동기부여">Momentum</a>
       <a href="#profile" class="nav-link" data-ko="충동 프로필">Impulse profile</a>
       <a href="#vault" class="nav-link" data-ko="금고">Vault</a>
       <a href="#settings" class="nav-link" data-ko="설정">Settings</a>
@@ -75,6 +76,49 @@
             </div>
           </div>
         </div>
+      </section>
+
+      <!-- ============ MOMENTUM (v1.2) ============ -->
+      <section id="momentum" class="panel">
+        <h2 class="panel-title" data-ko="동기부여">Momentum</h2>
+        <p class="panel-sub" data-ko="참는 걸 습관으로. 연속 기록·목표·뱃지로 동기를 유지해요.">Turn resisting into a habit — streaks, a savings goal, and badges to keep you going.</p>
+
+        <div class="cards-2">
+          <!-- Streak -->
+          <div class="glass mom-card">
+            <div class="mom-flame" id="streakFlame">🔥</div>
+            <div class="mom-streak-num" id="streakNum">0</div>
+            <div class="mom-streak-label" data-ko="연속으로 참은 횟수">resists in a row</div>
+            <div class="mom-best" id="streakBest" data-ko="최고 기록: 0">Best: 0</div>
+          </div>
+
+          <!-- Savings goal -->
+          <div class="glass mom-card mom-goal">
+            <div class="mom-goal-head">
+              <span class="stat-label" data-ko="저축 목표">Savings goal</span>
+              <span class="mom-goal-pct" id="goalPct">—</span>
+            </div>
+            <div class="mom-goal-name" id="goalName" data-ko="목표를 정해보세요">Set a goal</div>
+            <div class="goal-bar"><i id="goalFill"></i></div>
+            <div class="mom-goal-sub" id="goalSub"></div>
+            <div class="mom-goal-edit">
+              <input type="text" id="goalNameInput" maxlength="40" placeholder="e.g. Trip to Japan" data-ko-ph="예: 일본 여행" />
+              <input type="number" id="goalTargetInput" min="0" step="10000" placeholder="Target ($)" data-ko-ph="목표 금액 ($)" />
+              <button class="btn-ghost-sm" id="goalSave" data-ko="저장">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal motivation -->
+        <div class="glass setting-block mom-why">
+          <label class="set-label" for="motivationInput" data-ko="나만의 다짐 (개입 화면에 표시돼요)">Your personal “why” (shown during interventions)</label>
+          <input type="text" id="motivationInput" maxlength="120" placeholder="e.g. I'm saving for freedom, not stuff." data-ko-ph="예: 물건이 아니라 자유를 위해 모은다." />
+          <button class="btn-ghost-sm" id="motivationSave" data-ko="저장">Save</button>
+        </div>
+
+        <!-- Achievements -->
+        <h3 class="mom-sub" data-ko="뱃지">Badges</h3>
+        <div class="badge-grid" id="badgeGrid"></div>
       </section>
 
       <!-- ============ PROFILE ============ -->
@@ -399,6 +443,7 @@
     <script src="../utils/i18n.js"></script>
     <script src="../utils/storage.js"></script>
     <script src="../utils/patterns.js"></script>
+    <script src="../utils/achievements.js"></script>
     <script src="../utils/pro.js"></script>
     <script src="vault3d.js"></script>
     <script src="dashboard.js"></script>

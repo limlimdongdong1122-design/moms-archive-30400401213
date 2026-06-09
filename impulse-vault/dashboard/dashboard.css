@@ -845,3 +845,52 @@ body {
   font-family: var(--font-body); font-size: var(--fs-sm); letter-spacing: 0.02em;
 }
 .license-input input:focus { outline: none; border-color: var(--accent-calm); }
+
+/* ============================================================
+   v1.2 Momentum — streak · savings goal · badges
+   ============================================================ */
+.mom-card { padding: var(--space-24); display: flex; flex-direction: column; }
+.mom-flame { font-size: 40px; line-height: 1; transition: opacity 0.3s ease; }
+.mom-streak-num {
+  font-family: var(--font-display); font-weight: 700; font-size: 48px;
+  line-height: 1.05; color: var(--accent-warn); margin-top: 6px;
+}
+.mom-streak-label { color: var(--text-secondary); font-size: var(--fs-sm); }
+.mom-best { margin-top: auto; padding-top: var(--space-12); color: var(--text-tertiary); font-size: var(--fs-2xs); }
+
+.mom-goal-head { display: flex; justify-content: space-between; align-items: baseline; }
+.mom-goal-pct { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg); color: var(--accent-good); }
+.mom-goal-name { font-family: var(--font-display); font-size: var(--fs-md); margin: 4px 0 12px; }
+.goal-bar { height: 10px; border-radius: 999px; background: var(--bg-elev-2); overflow: hidden; }
+.goal-bar i { display: block; height: 100%; width: 0%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-calm), var(--accent-good)); transition: width 0.6s var(--ease-calm); }
+.mom-goal-sub { margin-top: 8px; color: var(--text-secondary); font-size: var(--fs-2xs); }
+.mom-goal-edit { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.mom-goal-edit input { flex: 1 1 120px; min-width: 0; background: var(--glass-fill);
+  border: 1px solid var(--glass-border); border-radius: var(--r-md); padding: 10px 12px;
+  color: var(--text-primary); font-family: var(--font-body); font-size: var(--fs-sm); }
+.mom-goal-edit input:focus { outline: none; border-color: var(--accent-calm); }
+
+.mom-why { margin-top: var(--space-24); }
+.mom-why input { width: 100%; background: var(--glass-fill); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 12px 14px; color: var(--text-primary);
+  font-family: var(--font-body); font-size: var(--fs-sm); margin: 10px 0; }
+.mom-why input:focus { outline: none; border-color: var(--accent-calm); }
+
+.btn-ghost-sm { background: var(--glass-fill); border: 1px solid var(--glass-border);
+  border-radius: var(--r-md); padding: 10px 18px; color: var(--text-primary);
+  font-family: var(--font-display); font-weight: 600; font-size: var(--fs-sm); cursor: pointer;
+  transition: all var(--dur-standard) var(--ease-soft); }
+.btn-ghost-sm:hover { border-color: var(--accent-calm); transform: translateY(-1px); }
+
+.mom-sub { font-family: var(--font-display); font-size: var(--fs-md); margin: var(--space-32) 0 var(--space-16); }
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-16); }
+.badge { background: var(--glass-fill); border: 1px solid var(--glass-border); border-radius: var(--r-lg);
+  padding: var(--space-20) var(--space-16); text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 6px; transition: all var(--dur-standard) var(--ease-soft); }
+.badge.earned { border-color: var(--accent-good-glow); background: linear-gradient(180deg, rgba(110,168,255,0.10), rgba(110,168,255,0.02)); }
+.badge.earned:hover { transform: translateY(-3px); }
+.badge.locked { opacity: 0.5; }
+.badge-ico { font-size: 30px; line-height: 1; }
+.badge-name { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-sm); }
+.badge-desc { font-size: var(--fs-2xs); color: var(--text-tertiary); line-height: 1.4; }

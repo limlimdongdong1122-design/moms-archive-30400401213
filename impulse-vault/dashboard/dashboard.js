@@ -732,9 +732,95 @@
     });
   }
 
+  // ===================================================
+  // MOMENTUM (v1.2): streak · savings goal · badges
+  // ===================================================
+  async function renderMomentum() {
+    const [stats, settings, unlocked] = await Promise.all([
+      IVStorage.getStats(),
+      IVStorage.getSettings(),
+      IVStorage.getAchievements(),
+    ]);
+
+    // ---- streak ----
+    const streak = stats.streak || 0;
+    const flame = $('#streakFlame');
+    if (flame) flame.style.opacity = streak > 0 ? '1' : '0.3';
+    if ($('#streakNum')) $('#streakNum').textContent = streak;
+    if ($('#streakBest'))
+      $('#streakBest').textContent = IVI18n.pick(`Best: ${stats.bestStreak || 0}`, `최고 기록: ${stats.bestStreak || 0}`);
+
+    // ---- savings goal ----
+    const goal = settings.goal || { name: '', target: 0 };
+    const target = Number(goal.target) || 0;
+    const saved = stats.totalSaved || 0;
+    const pct = target > 0 ? Math.max(0, Math.min(100, Math.round((saved / target) * 100))) : 0;
+    if ($('#goalPct')) $('#goalPct').textContent = target > 0 ? pct + '%' : '—';
+    if ($('#goalName'))
+      $('#goalName').textContent = target > 0
+        ? (goal.name || IVI18n.pick('Savings goal', '저축 목표'))
+        : IVI18n.pick('Set a goal', '목표를 정해보세요');
+    if ($('#goalFill')) $('#goalFill').style.width = pct + '%';
+    if ($('#goalSub'))
+      $('#goalSub').textContent = target > 0
+        ? IVI18n.pick(`${fmtKRW(saved)} of ${fmtKRW(target)} saved`, `${fmtKRW(target)} 중 ${fmtKRW(saved)} 모음`)
+        : '';
+
+    // ---- prefill editors (don't clobber what the user is typing) ----
+    const gn = $('#goalNameInput'), gt = $('#goalTargetInput'), mi = $('#motivationInput');
+    if (gn && document.activeElement !== gn && !gn.value && goal.name) gn.value = goal.name;
+    if (gt && document.activeElement !== gt && !gt.value && target) gt.value = target;
+    if (mi && document.activeElement !== mi && !mi.value && settings.motivation) mi.value = settings.motivation;
+
+    // ---- badges ----
+    const grid = $('#badgeGrid');
+    if (grid && window.IVAchievements) {
+      const have = new Set(unlocked);
+      grid.innerHTML = '';
+      IVAchievements.ALL.forEach((a) => {
+        const earned = have.has(a.id);
+        const cell = document.createElement('div');
+        cell.className = 'badge' + (earned ? ' earned' : ' locked');
+        const ico = document.createElement('span');
+        ico.className = 'badge-ico';
+        ico.textContent = earned ? a.icon : '🔒';
+        const name = document.createElement('span');
+        name.className = 'badge-name';
+        name.textContent = IVI18n.pick(a.en, a.ko);
+        const desc = document.createElement('span');
+        desc.className = 'badge-desc';
+        desc.textContent = IVI18n.pick(a.enDesc, a.koDesc);
+        cell.appendChild(ico); cell.appendChild(name); cell.appendChild(desc);
+        grid.appendChild(cell);
+      });
+    }
+  }
+
+  function initMomentumHandlers() {
+    const goalSave = $('#goalSave');
+    if (goalSave) {
+      goalSave.addEventListener('click', async () => {
+        const name = (($('#goalNameInput') || {}).value || '').trim().slice(0, 40);
+        const target = Math.max(0, Math.round(Number(($('#goalTargetInput') || {}).value) || 0));
+        await IVStorage.saveSettings({ goal: { name, target } });
+        await renderMomentum();
+        flashSaved();
+      });
+    }
+    const motiSave = $('#motivationSave');
+    if (motiSave) {
+      motiSave.addEventListener('click', async () => {
+        const motivation = (($('#motivationInput') || {}).value || '').trim().slice(0, 120);
+        await IVStorage.saveSettings({ motivation });
+        flashSaved();
+      });
+    }
+  }
+
   async function refreshAll() {
     await loadPro(); // load Pro status first so settings/membership reflect it
     await renderOverview();
+    await renderMomentum();
     await renderProfile();
     await renderVault();
     await renderSettings();
@@ -755,6 +841,7 @@
     // Re-run the renders that build dynamic strings, then re-apply static swaps.
     IVI18n.onChange(() => {
       renderOverview();
+      renderMomentum();
       renderProfile();
       renderVault();
       renderMembership();
@@ -779,6 +866,7 @@
     initLangHandlers();
     initSettingsHandlers();
     initProHandlers();
+    initMomentumHandlers();
     initDataHandlers();
     refreshAll();
     IVI18n.apply();

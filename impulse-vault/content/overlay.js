@@ -228,6 +228,38 @@
         card.appendChild(ins);
       }
 
+      // ---- v1.2 Momentum: streak · personal "why" · savings goal ----
+      if (payload.streak || payload.motivation || payload.goal) {
+        const mom = el('div', 'iv-momentum');
+        if (payload.streak) {
+          mom.appendChild(el('div', 'iv-streak',
+            IVI18n.pick(
+              `🔥 ${payload.streak} in a row — don't break the streak.`,
+              `🔥 연속 ${payload.streak}번 참았어요 — 여기서 끊지 말기.`
+            )));
+        }
+        if (payload.motivation) {
+          const why = el('div', 'iv-why');
+          why.appendChild(el('span', 'iv-why-label', IVI18n.pick('Remember', '기억해')));
+          why.appendChild(el('span', 'iv-why-text', '“' + payload.motivation + '”'));
+          mom.appendChild(why);
+        }
+        if (payload.goal && payload.goal.target > 0) {
+          const g = payload.goal;
+          const pct = Math.max(0, Math.min(100, Math.round((g.saved / g.target) * 100)));
+          const label = g.name
+            ? IVI18n.pick(`🎯 ${g.name}: ${pct}% there`, `🎯 ${g.name}: ${pct}% 달성`)
+            : IVI18n.pick(`🎯 Goal: ${pct}% there`, `🎯 목표: ${pct}% 달성`);
+          mom.appendChild(el('div', 'iv-goal-line', label));
+          const bar = el('div', 'iv-goal-bar');
+          const fill = el('i', 'iv-goal-fill');
+          fill.style.width = pct + '%';
+          bar.appendChild(fill);
+          mom.appendChild(bar);
+        }
+        card.appendChild(mom);
+      }
+
       // Reflection questions
       if (Array.isArray(payload.questions) && payload.questions.length) {
         const qs = el('ul', 'iv-questions');

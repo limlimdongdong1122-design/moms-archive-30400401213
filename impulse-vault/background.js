@@ -14,7 +14,7 @@
  * memory and always read/write through IVStorage.
  * ============================================================ */
 
-importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/pro.js');
+importScripts('utils/storage.js', 'utils/i18n.js', 'utils/patterns.js', 'utils/analysis.js', 'utils/achievements.js', 'utils/pro.js');
 
 // ---- PayPal (Pro license) --------------------------------------------------
 // Payments run through PayPal: the user pays, we email them a signed license
@@ -478,6 +478,22 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             }
           }
 
+          // ---- v1.2 Momentum: personal "why", live streak, savings goal ----
+          // Gives the moment-of-truth modal something to fight for.
+          try {
+            const stats = await IVStorage.getStats();
+            if (settings.motivation) payload.motivation = String(settings.motivation).slice(0, 240);
+            if ((stats.streak || 0) > 0) payload.streak = stats.streak;
+            const goal = settings.goal || {};
+            if (goal && Number(goal.target) > 0) {
+              payload.goal = {
+                name: goal.name || '',
+                target: Number(goal.target),
+                saved: stats.totalSaved || 0,
+              };
+            }
+          } catch (_) { /* momentum extras are never critical */ }
+
           if (tier === 'medium' || tier === 'high') {
             await IVStorage.logIntervention(now);
             await IVStorage.bumpStats({ interventions: 1 });
@@ -522,8 +538,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           // msg.decision: 'resisted' | 'proceeded' | 'vaulted'
           if (msg.decision === 'resisted') {
             await IVStorage.bumpStats({ resisted: 1, totalSaved: msg.price || 0 });
+            await IVStorage.updateStreak(true);
           } else if (msg.decision === 'proceeded') {
             await IVStorage.bumpStats({ proceeded: 1 });
+            await IVStorage.updateStreak(false); // buying anyway breaks the streak
             // Remember this exact product so we don't intervene on it again.
             if (msg.key) await IVStorage.addSuppressed(msg.key);
           }
@@ -535,8 +553,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             category: msg.category || '',
             keyword: msg.name || '',
           });
+          // Award any newly-earned badges and tell the caller about them.
+          const newAchievements = await IVStorage.addAchievements(
+            IVAchievements.evaluate(await IVStorage.getStats())
+          );
           rebuildProfile();
-          return sendResponse({ ok: true });
+          return sendResponse({ ok: true, newAchievements });
         }
 
         // ---- Add an item to the Vault (cooling-off) ----
@@ -549,8 +571,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             coolingHours: msg.coolingHours,
           });
           scheduleVaultAlarm(item);
-          await IVStorage.bumpStats({ resisted: 1 });
-          return sendResponse({ ok: true, item });
+          await IVStorage.bumpStats({ resisted: 1, vaulted: 1 });
+          await IVStorage.updateStreak(true); // cooling something off counts as a resist
+          const newAchievements = await IVStorage.addAchievements(
+            IVAchievements.evaluate(await IVStorage.getStats())
+          );
+          return sendResponse({ ok: true, item, newAchievements });
         }
 
         // ---- Settings changed somewhere → re-sync registration ----

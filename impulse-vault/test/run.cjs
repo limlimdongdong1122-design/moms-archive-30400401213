@@ -96,5 +96,18 @@ const svc = A.buildScorecard({ name: '월 구독', price: 9900, itemType: 'servi
 ok('service balanced pros/cons', svc.pros.length === svc.cons.length);
 ok('service altWord = 대체 서비스', svc.altWord === '대체 서비스');
 
+console.log('\nachievements (v1.2 momentum):');
+require('../utils/achievements.js');
+const AC = global.IVAchievements;
+ok('empty stats -> no badges', AC.evaluate({}).length === 0);
+ok('1 resist -> first_save', AC.evaluate({ resisted: 1 }).includes('first_save'));
+ok('5 resists -> guarded too', AC.evaluate({ resisted: 5 }).includes('resist_5'));
+ok('4 resists -> NOT resist_5', !AC.evaluate({ resisted: 4 }).includes('resist_5'));
+ok('bestStreak 7 -> streak_3 + streak_7', (() => { const r = AC.evaluate({ bestStreak: 7 }); return r.includes('streak_3') && r.includes('streak_7') && !r.includes('streak_30'); })());
+ok('vaulted 1 -> vault_first', AC.evaluate({ vaulted: 1 }).includes('vault_first'));
+ok('big savings -> saved_big', AC.evaluate({ totalSaved: 500000 }).includes('saved_big'));
+ok('meta() returns icon+labels', (() => { const m = AC.meta('first_save'); return m && m.icon && m.en && m.ko; })());
+ok('every badge has en/ko/desc/test', AC.ALL.every((a) => a.icon && a.en && a.ko && a.enDesc && a.koDesc && typeof a.test === 'function'));
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

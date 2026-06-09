@@ -224,6 +224,63 @@
   50% { opacity: 1; }
 }
 
+/* ---- v1.2 Momentum: streak · why · goal ---- */
+.iv-momentum {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.iv-streak {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: rgba(255, 138, 76, 0.10);
+  border: 1px solid rgba(255, 138, 76, 0.30);
+}
+.iv-why {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: rgba(110, 168, 255, 0.08);
+  border: 1px solid rgba(110, 168, 255, 0.22);
+}
+.iv-why-label {
+  flex: 0 0 auto;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-calm, #6ea8ff);
+  font-weight: 700;
+}
+.iv-why-text {
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  font-style: italic;
+}
+.iv-goal-line {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+}
+.iv-goal-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.iv-goal-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #a9cbff, #6ea8ff);
+  transition: width 0.6s var(--ease-soft, ease);
+}
+
 .iv-questions {
   list-style: none;
   margin: 0 0 18px;

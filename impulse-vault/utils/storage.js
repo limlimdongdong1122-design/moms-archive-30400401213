@@ -31,6 +31,7 @@
     PROFILE: 'iv_profile',
     INTERVENTIONS: 'iv_intervention_log',
     SUPPRESS: 'iv_suppressed',
+    ACHIEVEMENTS: 'iv_achievements',
   };
 
   // ---- The default list of watched shopping + search domains ----
@@ -76,6 +77,10 @@
     aiProxyUrl: 'https://impursivevault.com/api', // shared proxy: users need NO key
     aiProxySecret: '', // optional x-iv-secret header for the proxy
     webSearchEnabled: false, // "더 싼 대안 찾기" + review search
+
+    // ---- v1.2 Momentum ----
+    goal: { name: '', target: 0 }, // a savings goal to aim resisted money at
+    motivation: '', // a personal "why" the user sees during interventions
   };
 
   const DEFAULT_STATS = {
@@ -83,6 +88,9 @@
     resisted: 0, // # times user backed off after an intervention
     proceeded: 0, // # times user bought anyway (never shamed)
     interventions: 0, // # of blocking interventions shown
+    vaulted: 0, // # items sent to the Vault to cool off
+    streak: 0, // current run of resists without a "buy anyway"
+    bestStreak: 0, // longest run ever
   };
 
   // ---- Low-level helpers (Promise wrappers over chrome.storage) ----
@@ -138,6 +146,38 @@
       }
       await set({ [K.STATS]: next });
       return next;
+    },
+
+    // ---- v1.2: resist streak ----
+    // didResist=true extends the current streak (and best); false breaks it.
+    async updateStreak(didResist) {
+      const cur = await this.getStats();
+      const next = Object.assign({}, cur);
+      if (didResist) {
+        next.streak = (next.streak || 0) + 1;
+        next.bestStreak = Math.max(next.bestStreak || 0, next.streak);
+      } else {
+        next.streak = 0;
+      }
+      await set({ [K.STATS]: next });
+      return next;
+    },
+
+    // ---- v1.2: achievement badges (list of unlocked ids) ----
+    async getAchievements() {
+      const res = await get(K.ACHIEVEMENTS);
+      return Array.isArray(res[K.ACHIEVEMENTS]) ? res[K.ACHIEVEMENTS] : [];
+    },
+    // Merge in any newly-earned ids; returns ONLY the ones that were new.
+    async addAchievements(ids) {
+      const cur = await this.getAchievements();
+      const have = new Set(cur);
+      const added = [];
+      for (const id of ids || []) {
+        if (!have.has(id)) { have.add(id); added.push(id); }
+      }
+      if (added.length) await set({ [K.ACHIEVEMENTS]: Array.from(have) });
+      return added;
     },
 
     // ---- Search-query history (capped to keep storage small) ----

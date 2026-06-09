@@ -149,7 +149,8 @@
     top.forEach((k) => {
       const tag = document.createElement('span');
       tag.className = 'tag';
-      tag.innerHTML = `${k.key}<b>${k.value}</b>`;
+      // k.key is scraped page text — escape it (DOM-XSS guard).
+      tag.innerHTML = `${escapeHtml(k.key)}<b>${escapeHtml(String(k.value))}</b>`;
       wrap.appendChild(tag);
     });
   }
@@ -165,10 +166,11 @@
     top.forEach((s) => {
       const row = document.createElement('div');
       row.className = 'rank-row';
+      // s.key is scraped page text — escape it (DOM-XSS guard).
       row.innerHTML = `
-        <span class="rank-name">${s.key}</span>
+        <span class="rank-name">${escapeHtml(s.key)}</span>
         <span class="rank-bar"><i style="width:${Math.round((s.value / max) * 100)}%"></i></span>
-        <span class="rank-val">${s.value}</span>`;
+        <span class="rank-val">${escapeHtml(String(s.value))}</span>`;
       wrap.appendChild(row);
     });
   }
@@ -248,7 +250,7 @@
       buy.textContent = IVI18n.pick("I'll buy it", '살래요');
       buy.addEventListener('click', async () => {
         await IVStorage.updateVaultItem(item.id, { status: 'bought' });
-        if (item.url) window.open(item.url, '_blank');
+        openExternal(item.url);
         refreshAll();
       });
       const letGo = document.createElement('button');
@@ -708,6 +710,17 @@
   }
 
   // ------- helpers -------
+  // Only allow http(s) links to be opened — blocks javascript:/data: URLs
+  // that could ride in on scraped product data.
+  function safeUrl(url) {
+    const u = String(url || '').trim();
+    return /^https?:\/\//i.test(u) ? u : null;
+  }
+  function openExternal(url) {
+    const u = safeUrl(url);
+    if (u) window.open(u, '_blank', 'noopener');
+  }
+
   function escapeHtml(str) {
     return String(str || '').replace(/[&<>"']/g, (c) => {
       return {

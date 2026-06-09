@@ -198,10 +198,12 @@
   async function onBuy(item) {
     await IVStorage.updateVaultItem(item.id, { status: 'bought' });
     // Buying after a cooling-off is a fine, un-shamed outcome.
-    if (item.url) {
+    // Only open real http(s) links (block javascript:/data: from scraped urls).
+    const url = /^https?:\/\//i.test(String(item.url || '')) ? item.url : null;
+    if (url) {
       chrome.tabs
-        ? chrome.tabs.create({ url: item.url })
-        : window.open(item.url, '_blank');
+        ? chrome.tabs.create({ url })
+        : window.open(url, '_blank', 'noopener');
     }
     render();
   }

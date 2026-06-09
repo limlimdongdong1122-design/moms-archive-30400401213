@@ -33,22 +33,53 @@ const MAX_TOKENS = 1000;
 
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url);
+    try {
+      const url = new URL(request.url);
 
-    // ---- License verify lives at /api/license ----
-    if (url.pathname === '/api/license' || url.pathname === '/api/license/') {
-      return handleLicense(request, env);
+      // Inline favicon so browsers never 404 on /favicon.ico.
+      if (url.pathname === '/favicon.ico') {
+        return new Response(FAVICON_SVG, {
+          headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' },
+        });
+      }
+
+      // ---- License verify lives at /api/license ----
+      if (url.pathname === '/api/license' || url.pathname === '/api/license/') {
+        return handleLicense(request, env);
+      }
+
+      // ---- AI proxy lives at /api ; everything else is the static site ----
+      if (url.pathname === '/api' || url.pathname === '/api/') {
+        return handleApi(request, env);
+      }
+
+      // Serve the uploaded static assets (index.html, style.css, the .zip, …).
+      // Guard against unexpected ASSETS failures so we never surface a 5XX.
+      try {
+        return await env.ASSETS.fetch(request);
+      } catch (_) {
+        return new Response('Not found', { status: 404, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+      }
+    } catch (_) {
+      // Last-resort guard: turn any unexpected throw into a clean response
+      // instead of an opaque 5XX.
+      return new Response(JSON.stringify({ ok: false, error: 'temporary_error' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
     }
-
-    // ---- AI proxy lives at /api ; everything else is the static site ----
-    if (url.pathname === '/api' || url.pathname === '/api/') {
-      return handleApi(request, env);
-    }
-
-    // Serve the uploaded static assets (index.html, style.css, the .zip, …).
-    return env.ASSETS.fetch(request);
   },
 };
+
+// A tiny brand favicon (ice-blue vault dial) served for /favicon.ico.
+const FAVICON_SVG =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+  '<rect width="32" height="32" rx="8" fill="#0a0e14"/>' +
+  '<rect x="6" y="6" width="20" height="20" rx="6" fill="url(#g)"/>' +
+  '<circle cx="16" cy="16" r="4.5" fill="#06101f"/>' +
+  '<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">' +
+  '<stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/>' +
+  '</linearGradient></defs></svg>';
 
 // ============================================================
 // License keys — HMAC-signed, no database.
@@ -91,7 +122,9 @@ async function checkLicense(rawKey, secret) {
 async function handleLicense(request, env) {
   const origin = env.ALLOW_ORIGIN || '*';
   if (request.method === 'OPTIONS') return cors(new Response(null, { status: 204 }), origin);
-  if (request.method !== 'POST') return cors(json({ error: 'POST only' }, 405), origin);
+  // Health/probe requests (and browsers hitting the URL) get a clean 200.
+  if (request.method === 'GET' || request.method === 'HEAD') return cors(json({ ok: true, service: 'iv-license' }), origin);
+  if (request.method !== 'POST') return cors(json({ ok: true, service: 'iv-license' }), origin);
   if (!env.LICENSE_SECRET) return cors(json({ valid: false, error: 'not_configured' }, 200), origin);
   let body;
   try { body = await request.json(); } catch (_) { return cors(json({ error: 'bad json' }, 400), origin); }
@@ -102,7 +135,9 @@ async function handleLicense(request, env) {
 async function handleApi(request, env) {
   const origin = env.ALLOW_ORIGIN || '*';
   if (request.method === 'OPTIONS') return cors(new Response(null, { status: 204 }), origin);
-  if (request.method !== 'POST') return cors(json({ error: 'POST only' }, 405), origin);
+  // Health/probe requests (and browsers hitting the URL) get a clean 200.
+  if (request.method === 'GET' || request.method === 'HEAD') return cors(json({ ok: true, service: 'iv-api' }), origin);
+  if (request.method !== 'POST') return cors(json({ ok: true, service: 'iv-api' }), origin);
 
   // Optional shared secret (cheap bot deterrent).
   if (env.SHARED_SECRET && request.headers.get('x-iv-secret') !== env.SHARED_SECRET) {

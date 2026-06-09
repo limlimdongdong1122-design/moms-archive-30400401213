@@ -202,6 +202,13 @@ async function callAi(settings, prompt, useWeb) {
       try { body = await res.text(); } catch (_) {}
       let msg = body;
       try { const j = JSON.parse(body); msg = j.error || body; } catch (_) {}
+      // 402 from the proxy means "needs a valid Pro license" — surface it as a
+      // clean pro_required upsell instead of a scary HTTP error string.
+      if (res.status === 402) {
+        const e = new Error('pro_required');
+        e.code = 'pro_required';
+        throw e;
+      }
       throw new Error(IVI18n.pick('Proxy ', '프록시 ') + 'HTTP ' + res.status + (msg ? ' · ' + String(msg).slice(0, 160) : ''));
     }
     const data = await res.json();

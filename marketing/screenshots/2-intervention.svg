@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="btn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg)"/>
+<!-- faint blurred "shop page" behind -->
+<g opacity="0.12" fill="#9fb0c6">
+  <rect x="80" y="80" width="300" height="22" rx="6"/>
+  <rect x="80" y="120" width="520" height="14" rx="5"/>
+  <rect x="80" y="146" width="460" height="14" rx="5"/>
+  <rect x="900" y="80" width="300" height="380" rx="16"/>
+  <rect x="80" y="620" width="1120" height="14" rx="5"/>
+  <rect x="80" y="650" width="980" height="14" rx="5"/>
+</g>
+<rect width="1280" height="800" fill="#06090d" opacity="0.55"/>
+<!-- modal -->
+<g transform="translate(420,110)">
+  <rect x="0" y="0" width="440" height="580" rx="26" fill="#131b26" stroke="rgba(194,169,142,0.3)"/>
+  <rect x="30" y="30" width="118" height="32" rx="16" fill="rgba(194,169,142,0.12)" stroke="rgba(194,169,142,0.3)"/>
+  <text x="89" y="51" fill="#c2a98e" font-size="13" font-weight="600" letter-spacing="2" text-anchor="middle">HIGH</text>
+  <text x="30" y="112" fill="url(#head)" font-size="30" font-weight="700">Hold on — do you</text>
+  <text x="30" y="150" fill="url(#head)" font-size="30" font-weight="700">really need this?</text>
+  <text x="30" y="186" fill="#9fb0c6" font-size="17" font-family="'Inter',sans-serif">Mechanical Keyboard · $159</text>
+  <!-- streak (momentum) -->
+  <rect x="30" y="208" width="380" height="46" rx="12" fill="rgba(255,138,76,0.10)" stroke="rgba(255,138,76,0.3)"/>
+  <text x="48" y="237" fill="#eaf1fb" font-size="15" font-weight="600">🔥 5 in a row — do not break the streak.</text>
+  <!-- why -->
+  <rect x="30" y="266" width="380" height="46" rx="12" fill="rgba(110,168,255,0.08)" stroke="rgba(110,168,255,0.22)"/>
+  <text x="48" y="288" fill="#6ea8ff" font-size="11" font-weight="700" letter-spacing="1">REMEMBER</text>
+  <text x="48" y="305" fill="#eaf1fb" font-size="14" font-style="italic">“Saving for freedom, not stuff.”</text>
+  <!-- questions -->
+  <text x="30" y="346" fill="#eaf1fb" font-size="16">• Will I still use this in 30 days?</text>
+  <text x="30" y="380" fill="#eaf1fb" font-size="16">• Do I already own something similar?</text>
+  <text x="30" y="414" fill="#eaf1fb" font-size="16">• What happens if I don't buy it?</text>
+  <!-- scorecard hint -->
+  <rect x="30" y="438" width="380" height="58" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="48" y="465" fill="#9fb0c6" font-size="13">Scorecard · ⭐ 4.6 · 2 pros / 2 cons · cheaper alt found</text>
+  <text x="48" y="485" fill="#6ea8ff" font-size="13" font-weight="600">View the evidence →</text>
+  <!-- buttons -->
+  <rect x="30" y="514" width="184" height="50" rx="13" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="122" y="545" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">🧊 Cool off 24h</text>
+  <rect x="226" y="514" width="184" height="50" rx="13" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="318" y="545" fill="#6c7c93" font-size="15" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+</svg>

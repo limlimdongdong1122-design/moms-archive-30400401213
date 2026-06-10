@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+<linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg)"/>
+<text x="120" y="110" fill="url(#head)" font-size="40" font-weight="700">Cool-off Vault</text>
+<text x="120" y="146" fill="#9fb0c6" font-size="17" font-family="'Inter',sans-serif">Not sure? Drop it in. Let the urge cool down — then decide with a clear head.</text>
+  <g transform="translate(120,210)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring)" stroke-width="9" stroke-linecap="round" stroke-dasharray="156 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">⏳</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Mechanical Keyboard</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">59</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">6h 12m left</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+  <g transform="translate(120,384)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring)" stroke-width="9" stroke-linecap="round" stroke-dasharray="211 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">⏳</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Designer Sneakers</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">40</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">2h 03m left</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+  <g transform="translate(120,558)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring)" stroke-width="9" stroke-linecap="round" stroke-dasharray="251 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">✓</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Cooled off — decide now</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">99</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">Ready ✓</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+<text x="120" y="770" fill="#6c7c93" font-size="14" font-family="'Inter',sans-serif">Items released without buying are banked as savings toward your goal.</text>
+</svg>

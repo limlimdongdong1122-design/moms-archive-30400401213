@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="btn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+<linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg)"/>
+<!-- sidebar -->
+<rect x="0" y="0" width="220" height="800" fill="#0e141d" stroke="rgba(255,255,255,0.08)"/>
+<g transform="translate(28,40)">
+  <rect x="0" y="0" width="16" height="16" rx="5" fill="url(#btn)" transform="rotate(45 8 8)"/>
+  <text x="30" y="13" fill="#eaf1fb" font-size="12" font-weight="700" letter-spacing="2">IMPULSE VAULT</text>
+</g>
+<g font-size="14" fill="#9fb0c6" transform="translate(28,110)">
+  <rect x="-8" y="-18" width="180" height="34" rx="9" fill="rgba(110,168,255,0.12)" stroke="rgba(110,168,255,0.35)"/>
+  <text x="6" y="4" fill="#eaf1fb">Overview</text>
+  <text x="6" y="50">Momentum</text>
+  <text x="6" y="92">Impulse profile</text>
+  <text x="6" y="134">Vault</text>
+  <text x="6" y="176">Settings</text>
+  <text x="6" y="218">Pro Membership</text>
+</g>
+<!-- content -->
+<text x="260" y="70" fill="url(#head)" font-size="34" font-weight="700">Momentum</text>
+<text x="260" y="100" fill="#9fb0c6" font-size="15" font-family="'Inter',sans-serif">Turn resisting into a habit — streaks, a goal, and badges.</text>
+<!-- streak card -->
+<g transform="translate(260,130)">
+  <rect width="340" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="28" y="64" font-size="40">🔥</text>
+  <text x="28" y="128" fill="#ffb454" font-size="52" font-weight="700">12</text>
+  <text x="28" y="156" fill="#9fb0c6" font-size="15">resists in a row</text>
+  <text x="28" y="184" fill="#6c7c93" font-size="12">Best: 18</text>
+</g>
+<!-- goal card -->
+<g transform="translate(620,130)">
+  <rect width="400" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="28" y="44" fill="#868d99" font-size="12" letter-spacing="1">SAVINGS GOAL</text>
+  <text x="372" y="44" fill="#6ea8ff" font-size="20" font-weight="700" text-anchor="end">61%</text>
+  <text x="28" y="80" fill="#eaf1fb" font-size="20" font-weight="700">Trip to Japan</text>
+  <rect x="28" y="100" width="344" height="12" rx="6" fill="#1b1d22"/>
+  <rect x="28" y="100" width="210" height="12" rx="6" fill="url(#bar)"/>
+  <text x="28" y="138" fill="#9fb0c6" font-size="13">$1,220 of $2,000 saved</text>
+</g>
+<!-- big saved stat -->
+<g transform="translate(1040,130)">
+  <rect width="172" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="22" y="44" fill="#868d99" font-size="11" letter-spacing="1">TOTAL SAVED</text>
+  <text x="22" y="92" fill="#6ea8ff" font-size="30" font-weight="700">$1,220</text>
+  <text x="22" y="128" fill="#9fb0c6" font-size="13">38 resisted</text>
+  <text x="22" y="150" fill="#9fb0c6" font-size="13">73% resist rate</text>
+</g>
+<!-- badges -->
+<text x="260" y="392" fill="#eaf1fb" font-size="18" font-weight="700">Badges</text>
+<g transform="translate(260,410)">
+  <g transform="translate(0,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🌱</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">First save</text>
+  </g>
+  <g transform="translate(162,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🛡️</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Guarded</text>
+  </g>
+  <g transform="translate(324,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🏅</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Disciplined</text>
+  </g>
+  <g transform="translate(486,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🔥</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">On a roll</text>
+  </g>
+  <g transform="translate(648,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">⚡</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Unstoppable</text>
+  </g>
+  <g transform="translate(810,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🧊</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Cooled off</text>
+  </g>
+</g>
+</svg>

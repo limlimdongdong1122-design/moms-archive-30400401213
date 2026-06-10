@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<radialGradient id="glow" cx="0.82" cy="0.05" r="0.7"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.22"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="btn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg)"/>
+<rect width="1280" height="800" fill="url(#glow)"/>
+<!-- brand -->
+<g transform="translate(80,64)">
+  <rect x="0" y="0" width="20" height="20" rx="6" fill="url(#btn)" transform="rotate(45 10 10)"/>
+  <text x="34" y="16" fill="#eaf1fb" font-size="18" font-weight="700" letter-spacing="3">IMPULSE VAULT</text>
+</g>
+<!-- left copy -->
+<g transform="translate(80,210)">
+  <rect x="0" y="0" width="320" height="38" rx="19" fill="rgba(255,255,255,0.05)" stroke="rgba(110,168,255,0.4)"/>
+  <circle cx="24" cy="19" r="4" fill="#6ea8ff"/>
+  <text x="40" y="24" fill="#a9cbff" font-size="13" font-weight="600" letter-spacing="2">PRIVACY-FIRST · 100% LOCAL</text>
+  <text x="0" y="118" fill="url(#head)" font-size="60" font-weight="700" letter-spacing="-1">Before you buy,</text>
+  <text x="0" y="182" fill="url(#head)" font-size="60" font-weight="700" letter-spacing="-1">just one more moment.</text>
+  <text x="0" y="244" fill="#9fb0c6" font-size="21" font-family="'Inter',system-ui,sans-serif">A calm, smart pause at the exact moment of an</text>
+  <text x="0" y="274" fill="#9fb0c6" font-size="21" font-family="'Inter',system-ui,sans-serif">impulse buy. Pros, cons, real cost — 100% local.</text>
+  <rect x="0" y="320" width="240" height="56" rx="14" fill="url(#btn)"/>
+  <text x="120" y="355" fill="#06101f" font-size="17" font-weight="700" text-anchor="middle">Add to your browser</text>
+  <rect x="256" y="320" width="170" height="56" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="341" y="355" fill="#eaf1fb" font-size="17" font-weight="600" text-anchor="middle">See how</text>
+</g>
+<!-- pause card -->
+<g transform="translate(770,200)">
+  <rect x="0" y="0" width="430" height="400" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="32" y="52" fill="#ffb454" font-size="13" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="32" y="96" fill="#eaf1fb" font-size="24" font-weight="700">Wireless Headphones</text>
+  <text x="32" y="142" fill="#ffffff" font-size="38" font-weight="700">$199</text>
+  <rect x="32" y="168" width="366" height="80" rx="14" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="52" y="202" fill="#ffd9a8" font-size="15">⏳ That is about 13 hours of your work time.</text>
+  <text x="52" y="226" fill="#ffd9a8" font-size="15" font-weight="700">Still worth it?</text>
+  <rect x="32" y="280" width="178" height="58" rx="13" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="121" y="316" fill="#a9cbff" font-size="16" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="220" y="280" width="178" height="58" rx="13" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="309" y="316" fill="#6c7c93" font-size="16" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+</svg>

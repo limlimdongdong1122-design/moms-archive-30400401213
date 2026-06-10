@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0" r="0.7"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.16"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="btn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg)"/>
+<rect width="1280" height="800" fill="url(#glow)"/>
+<text x="640" y="100" fill="url(#head)" font-size="42" font-weight="700" text-anchor="middle">Free to start. Smarter with Pro.</text>
+<text x="640" y="140" fill="#9fb0c6" font-size="18" font-family="'Inter',sans-serif" text-anchor="middle">The core is free forever. Pro adds managed AI — no key, no setup.</text>
+<!-- FREE -->
+<g transform="translate(220,200)">
+  <rect width="380" height="480" rx="22" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="36" y="64" fill="#a9cbff" font-size="14" font-weight="700" letter-spacing="2">FREE</text>
+  <text x="36" y="128" fill="#ffffff" font-size="56" font-weight="700">$0</text>
+  <text x="160" y="128" fill="#6c7c93" font-size="16">forever</text>
+  <g fill="#9fb0c6" font-size="16" font-family="'Inter',sans-serif">
+    <text x="60" y="200">Rules-based purchase scorecard</text>
+    <text x="60" y="244">Cool-off vault &amp; impulse profile</text>
+    <text x="60" y="288">Real cost in hours of your time</text>
+    <text x="60" y="332">Bring your own AI key (BYOK)</text>
+    <text x="60" y="376">100% local — no account</text>
+  </g>
+  <g fill="#6ea8ff" font-size="16" font-weight="700"><text x="36" y="200">✓</text><text x="36" y="244">✓</text><text x="36" y="288">✓</text><text x="36" y="332">✓</text><text x="36" y="376">✓</text></g>
+  <rect x="36" y="408" width="308" height="50" rx="13" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="190" y="439" fill="#eaf1fb" font-size="16" font-weight="600" text-anchor="middle">Get started — free</text>
+</g>
+<!-- PRO -->
+<g transform="translate(680,200)">
+  <rect width="380" height="480" rx="22" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.5)"/>
+  <text x="36" y="64" fill="#a9cbff" font-size="14" font-weight="700" letter-spacing="2">PRO</text>
+  <text x="36" y="124" fill="#ffffff" font-size="50" font-weight="700">$2.99</text>
+  <text x="178" y="124" fill="#6c7c93" font-size="16">/mo · or $24.99/yr</text>
+  <g fill="#9fb0c6" font-size="16" font-family="'Inter',sans-serif">
+    <text x="60" y="196">Managed AI analysis — no API key</text>
+    <text x="60" y="240">Deeper, personalized reads</text>
+    <text x="60" y="284">Smarter "wait or buy" guidance</text>
+    <text x="60" y="328">Everything in Free</text>
+    <text x="60" y="372">Cancel anytime</text>
+  </g>
+  <g fill="#6ea8ff" font-size="16" font-weight="700"><text x="36" y="196">✓</text><text x="36" y="240">✓</text><text x="36" y="284">✓</text><text x="36" y="328">✓</text><text x="36" y="372">✓</text></g>
+  <rect x="36" y="408" width="308" height="50" rx="13" fill="url(#btn)"/>
+  <text x="190" y="439" fill="#06101f" font-size="16" font-weight="700" text-anchor="middle">Get Pro with PayPal</text>
+</g>
+<text x="640" y="730" fill="#6c7c93" font-size="14" font-family="'Inter',sans-serif" text-anchor="middle">🔒 Payments via PayPal · license keys verified locally · no card details stored</text>
+</svg>

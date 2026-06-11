@@ -1,121 +1,395 @@
-{%- comment -%}
-  IMPULSE VAULT — Shopify homepage (teaser / billboard).
-  Pure marketing: enticing copy + a BIG website address so visitors
-  know where to get it. No download buttons (so nothing 404s).
+{%- comment -%} IMPULSE VAULT — illustrated homepage. Change "impursivevault.com" and PayPal links if needed. {%- endcomment -%}
+<div class="iv-promo">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+.iv-promo *{box-sizing:border-box;margin:0;padding:0}
+.iv-promo{--bg:#0a0e14;--bg2:#0e141d;--text:#eaf1fb;--dim:#9fb0c6;--faint:#6c7c93;--accent:#6ea8ff;--accent2:#a9cbff;--warn:#ffb454;--glass:rgba(255,255,255,.05);--glass-bd:rgba(255,255,255,.1);--r:18px;
+  position:relative;overflow:hidden;isolation:isolate;
+  background:radial-gradient(1200px 600px at 85% -8%,rgba(110,168,255,.16),transparent 60%),radial-gradient(900px 520px at -5% 108%,rgba(110,168,255,.08),transparent 55%),linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--text);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.65;border-radius:var(--r)}
+.iv-promo .iv-wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.iv-promo .iv-sec{padding:clamp(48px,7vw,92px) 0}
+.iv-promo .iv-center{text-align:center}
+.iv-promo h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,5.5vw,56px);line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;background:linear-gradient(180deg,#fff,#bcd2f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+.iv-promo h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,4.2vw,40px);line-height:1.1;letter-spacing:-.02em;background:linear-gradient(180deg,#fff,#c4d6f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+.iv-promo h3{font-family:'Space Grotesk',sans-serif;font-size:19px;margin-bottom:8px}
+.iv-promo p{color:var(--dim)}
+.iv-promo .iv-lead{font-size:clamp(16px,2.1vw,20px);max-width:560px}
+.iv-promo .iv-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);font-weight:600;padding:7px 14px;border:1px solid var(--glass-bd);border-radius:999px;background:var(--glass);margin-bottom:22px}
+.iv-promo .iv-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.iv-promo .iv-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.iv-promo .iv-center .iv-cta{justify-content:center}
+.iv-promo a.iv-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;padding:15px 28px;border-radius:14px;transition:transform .18s ease,box-shadow .18s ease}
+.iv-promo a.iv-btn-primary{background:linear-gradient(180deg,var(--accent2),var(--accent));color:#06101f;box-shadow:0 8px 30px rgba(110,168,255,.35)}
+.iv-promo a.iv-btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(110,168,255,.5)}
+.iv-promo a.iv-btn-ghost{background:var(--glass);color:var(--text);border:1px solid var(--glass-bd)}
+.iv-promo a.iv-btn-ghost:hover{transform:translateY(-2px);border-color:var(--accent)}
+.iv-promo .iv-note{font-size:13px;color:var(--faint);margin-top:14px}
+.iv-promo .iv-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.iv-promo .iv-shot{border-radius:var(--r);overflow:hidden;border:1px solid var(--glass-bd);box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.iv-promo .iv-svg{display:block;width:100%;height:auto}
+.iv-promo .iv-g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.iv-promo .iv-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--glass-bd);border-radius:var(--r);padding:26px 22px}
+.iv-promo .iv-ico{font-size:28px;display:block;margin-bottom:12px}
+.iv-promo .iv-card p{font-size:14.5px}
+.iv-promo .iv-g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px}
+.iv-promo .iv-tier{background:var(--glass);border:1px solid var(--glass-bd);border-radius:var(--r);padding:30px 28px}
+.iv-promo .iv-tier.pro{border-color:rgba(110,168,255,.5);background:linear-gradient(180deg,rgba(110,168,255,.13),rgba(110,168,255,.03));box-shadow:0 12px 44px rgba(110,168,255,.2)}
+.iv-promo .iv-tier h4{font-family:'Space Grotesk',sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
+.iv-promo .iv-price{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;color:#fff}
+.iv-promo .iv-price small{font-size:15px;color:var(--faint);font-weight:500}
+.iv-promo .iv-tier ul{list-style:none;margin-top:16px;display:grid;gap:10px}
+.iv-promo .iv-tier li{font-size:14.5px;color:var(--dim);padding-left:22px;position:relative}
+.iv-promo .iv-tier li::before{content:"\2713";position:absolute;left:0;color:var(--accent);font-weight:700}
+.iv-promo .iv-privacy{padding:24px;border-radius:var(--r);text-align:center;background:var(--glass);border:1px solid var(--glass-bd)}
+.iv-promo .iv-privacy b{color:var(--text)}
+.iv-promo .iv-address{display:inline-block;margin:18px auto 8px;padding:16px 34px;border-radius:18px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,5vw,50px);text-decoration:none;color:#eaf3ff;background:linear-gradient(180deg,rgba(110,168,255,.16),rgba(110,168,255,.04));border:1px solid rgba(110,168,255,.5);box-shadow:0 12px 50px rgba(110,168,255,.28);text-shadow:0 0 26px rgba(110,168,255,.55)}
+.iv-promo .iv-cap{font-size:13px;color:var(--faint);text-align:center;margin-top:14px}
+@media(max-width:860px){.iv-promo .iv-split{grid-template-columns:1fr;gap:30px}.iv-promo .iv-g3,.iv-promo .iv-g2{grid-template-columns:1fr}}
+</style>
 
-  >> SET YOUR ADDRESS: search "impursivevault.com" below and replace it
-     with the address where people actually get the extension.
-{%- endcomment -%}
-
-<section class="iv-sec">
-  <div class="iv-wrap iv-hero">
-    <div>
-      <span class="iv-eyebrow"><span class="iv-dot"></span> Privacy-first · 100% local</span>
-      <h1>Add a calm pause before every impulse buy.</h1>
-      <p class="iv-lead">IMPULSE VAULT catches your own online-shopping impulses and adds gentle, smart friction at the exact moment you’re about to check out — so you buy on purpose, not on impulse.</p>
-      <div class="iv-cta">
-        <a class="iv-btn iv-btn-primary" href="#iv-get">Get it now</a>
-        <a class="iv-btn iv-btn-ghost" href="#iv-why">See how it works</a>
-      </div>
-      <p class="iv-note">Works on Chrome, Edge, Brave &amp; Whale · No account · Nothing leaves your device</p>
+<!-- HERO -->
+<section class="iv-sec"><div class="iv-wrap iv-split">
+  <div>
+    <span class="iv-eyebrow"><span class="iv-dot"></span> Privacy-first · 100% local</span>
+    <h1>Add a calm pause before every impulse buy.</h1>
+    <p class="iv-lead">IMPULSE VAULT steps in at the exact moment of an impulse buy — the real cost in hours of your time, pros, cons, and cheaper alternatives — so you buy on purpose, not on impulse.</p>
+    <div class="iv-cta">
+      <a class="iv-btn iv-btn-primary" href="#iv-get">Add to your browser — free</a>
+      <a class="iv-btn iv-btn-ghost" href="#iv-how">See how it works</a>
     </div>
-    <div>
-      <div class="iv-mock">
-        <div class="iv-tag">⏸ Hold on a second</div>
-        <div class="iv-item">Wireless Headphones</div>
-        <div class="iv-pr">$199</div>
-        <div class="iv-cost">⏳ That’s about <b>13 hours</b> of your work time.<br>Still worth it?</div>
-        <div class="iv-row"><div class="iv-mini v">🧊 Vault it</div><div class="iv-mini b">Buy anyway</div></div>
-      </div>
-    </div>
+    <p class="iv-note">Works on Chrome, Edge, Brave &amp; Whale · No account · Nothing leaves your device</p>
   </div>
-</section>
+  <div class="iv-shot"><svg class="iv-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg_2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="btn_2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head_2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg_2)"/>
+<!-- faint blurred "shop page" behind -->
+<g opacity="0.12" fill="#9fb0c6">
+  <rect x="80" y="80" width="300" height="22" rx="6"/>
+  <rect x="80" y="120" width="520" height="14" rx="5"/>
+  <rect x="80" y="146" width="460" height="14" rx="5"/>
+  <rect x="900" y="80" width="300" height="380" rx="16"/>
+  <rect x="80" y="620" width="1120" height="14" rx="5"/>
+  <rect x="80" y="650" width="980" height="14" rx="5"/>
+</g>
+<rect width="1280" height="800" fill="#06090d" opacity="0.55"/>
+<!-- modal -->
+<g transform="translate(420,110)">
+  <rect x="0" y="0" width="440" height="580" rx="26" fill="#131b26" stroke="rgba(194,169,142,0.3)"/>
+  <rect x="30" y="30" width="118" height="32" rx="16" fill="rgba(194,169,142,0.12)" stroke="rgba(194,169,142,0.3)"/>
+  <text x="89" y="51" fill="#c2a98e" font-size="13" font-weight="600" letter-spacing="2" text-anchor="middle">HIGH</text>
+  <text x="30" y="112" fill="url(#head_2)" font-size="30" font-weight="700">Hold on — do you</text>
+  <text x="30" y="150" fill="url(#head_2)" font-size="30" font-weight="700">really need this?</text>
+  <text x="30" y="186" fill="#9fb0c6" font-size="17" font-family="'Inter',sans-serif">Mechanical Keyboard · $159</text>
+  <!-- streak (momentum) -->
+  <rect x="30" y="208" width="380" height="46" rx="12" fill="rgba(255,138,76,0.10)" stroke="rgba(255,138,76,0.3)"/>
+  <text x="48" y="237" fill="#eaf1fb" font-size="15" font-weight="600">🔥 5 in a row — do not break the streak.</text>
+  <!-- why -->
+  <rect x="30" y="266" width="380" height="46" rx="12" fill="rgba(110,168,255,0.08)" stroke="rgba(110,168,255,0.22)"/>
+  <text x="48" y="288" fill="#6ea8ff" font-size="11" font-weight="700" letter-spacing="1">REMEMBER</text>
+  <text x="48" y="305" fill="#eaf1fb" font-size="14" font-style="italic">“Saving for freedom, not stuff.”</text>
+  <!-- questions -->
+  <text x="30" y="346" fill="#eaf1fb" font-size="16">• Will I still use this in 30 days?</text>
+  <text x="30" y="380" fill="#eaf1fb" font-size="16">• Do I already own something similar?</text>
+  <text x="30" y="414" fill="#eaf1fb" font-size="16">• What happens if I don't buy it?</text>
+  <!-- scorecard hint -->
+  <rect x="30" y="438" width="380" height="58" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="48" y="465" fill="#9fb0c6" font-size="13">Scorecard · ⭐ 4.6 · 2 pros / 2 cons · cheaper alt found</text>
+  <text x="48" y="485" fill="#6ea8ff" font-size="13" font-weight="600">View the evidence →</text>
+  <!-- buttons -->
+  <rect x="30" y="514" width="184" height="50" rx="13" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="122" y="545" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">🧊 Cool off 24h</text>
+  <rect x="226" y="514" width="184" height="50" rx="13" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="318" y="545" fill="#6c7c93" font-size="15" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+</svg>
+</div>
+</div></section>
 
-<section class="iv-sec" id="iv-why">
-  <div class="iv-wrap iv-center">
-    <h2>Why people love it</h2>
-    <div class="iv-g3" style="text-align:left">
-      <div class="iv-card"><span class="iv-ico">🛑</span><h3>Friction at the right moment</h3><p>A quiet pause appears right when you’re about to buy — never nagging, just enough to think twice.</p></div>
-      <div class="iv-card"><span class="iv-ico">🧊</span><h3>Cool-off vault</h3><p>Not sure? Drop the item in your vault and let the urge cool down. Still want it later? It’s there.</p></div>
-      <div class="iv-card"><span class="iv-ico">🔒</span><h3>Truly private</h3><p>All analysis runs inside your browser. Your searches, products, and history never touch a server.</p></div>
-    </div>
+<!-- WHY -->
+<section class="iv-sec"><div class="iv-wrap iv-center">
+  <h2>Why people love it</h2>
+  <div class="iv-g3" style="text-align:left">
+    <div class="iv-card"><span class="iv-ico">🛑</span><h3>Friction at the right moment</h3><p>A quiet pause appears right when you’re about to buy — never nagging, just enough to think twice.</p></div>
+    <div class="iv-card"><span class="iv-ico">🧊</span><h3>Cool-off vault</h3><p>Not sure? Drop the item in your vault and let the urge cool down. Still want it later? It’s there.</p></div>
+    <div class="iv-card"><span class="iv-ico">🔒</span><h3>Truly private</h3><p>All analysis runs inside your browser. Your searches and history never touch a server.</p></div>
   </div>
-</section>
+</div></section>
 
-<section class="iv-sec">
-  <div class="iv-wrap">
-    <h2 class="iv-center">How it works</h2>
-    <div class="iv-g3" style="margin-top:44px">
-      <div class="iv-step"><span class="iv-num">1</span><h3>Browse like normal</h3><p>Shop wherever you already shop. IMPULSE VAULT quietly notices when you’re about to buy.</p></div>
-      <div class="iv-step"><span class="iv-num">2</span><h3>Get a calm pause</h3><p>A gentle scorecard shows the real cost — in hours of your time — and a moment to breathe.</p></div>
-      <div class="iv-step"><span class="iv-num">3</span><h3>Decide on purpose</h3><p>Buy it, skip it, or vault it to cool off. Either way, it was your choice — not an impulse.</p></div>
-    </div>
+<!-- MOMENTUM (dashboard illustration) -->
+<section class="iv-sec" id="iv-how"><div class="iv-wrap iv-center">
+  <h2>Turn resisting into a habit</h2>
+  <p class="iv-lead" style="margin:14px auto 0">Streaks, a savings goal, and badges keep you going.</p>
+  <div class="iv-shot" style="margin-top:36px"><svg class="iv-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg_3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="btn_3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head_3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+<linearGradient id="bar_3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg_3)"/>
+<!-- sidebar -->
+<rect x="0" y="0" width="220" height="800" fill="#0e141d" stroke="rgba(255,255,255,0.08)"/>
+<g transform="translate(28,40)">
+  <rect x="0" y="0" width="16" height="16" rx="5" fill="url(#btn_3)" transform="rotate(45 8 8)"/>
+  <text x="30" y="13" fill="#eaf1fb" font-size="12" font-weight="700" letter-spacing="2">IMPULSE VAULT</text>
+</g>
+<g font-size="14" fill="#9fb0c6" transform="translate(28,110)">
+  <rect x="-8" y="-18" width="180" height="34" rx="9" fill="rgba(110,168,255,0.12)" stroke="rgba(110,168,255,0.35)"/>
+  <text x="6" y="4" fill="#eaf1fb">Overview</text>
+  <text x="6" y="50">Momentum</text>
+  <text x="6" y="92">Impulse profile</text>
+  <text x="6" y="134">Vault</text>
+  <text x="6" y="176">Settings</text>
+  <text x="6" y="218">Pro Membership</text>
+</g>
+<!-- content -->
+<text x="260" y="70" fill="url(#head_3)" font-size="34" font-weight="700">Momentum</text>
+<text x="260" y="100" fill="#9fb0c6" font-size="15" font-family="'Inter',sans-serif">Turn resisting into a habit — streaks, a goal, and badges.</text>
+<!-- streak card -->
+<g transform="translate(260,130)">
+  <rect width="340" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="28" y="64" font-size="40">🔥</text>
+  <text x="28" y="128" fill="#ffb454" font-size="52" font-weight="700">12</text>
+  <text x="28" y="156" fill="#9fb0c6" font-size="15">resists in a row</text>
+  <text x="28" y="184" fill="#6c7c93" font-size="12">Best: 18</text>
+</g>
+<!-- goal card -->
+<g transform="translate(620,130)">
+  <rect width="400" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="28" y="44" fill="#868d99" font-size="12" letter-spacing="1">SAVINGS GOAL</text>
+  <text x="372" y="44" fill="#6ea8ff" font-size="20" font-weight="700" text-anchor="end">61%</text>
+  <text x="28" y="80" fill="#eaf1fb" font-size="20" font-weight="700">Trip to Japan</text>
+  <rect x="28" y="100" width="344" height="12" rx="6" fill="#1b1d22"/>
+  <rect x="28" y="100" width="210" height="12" rx="6" fill="url(#bar_3)"/>
+  <text x="28" y="138" fill="#9fb0c6" font-size="13">$1,220 of $2,000 saved</text>
+</g>
+<!-- big saved stat -->
+<g transform="translate(1040,130)">
+  <rect width="172" height="200" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="22" y="44" fill="#868d99" font-size="11" letter-spacing="1">TOTAL SAVED</text>
+  <text x="22" y="92" fill="#6ea8ff" font-size="30" font-weight="700">$1,220</text>
+  <text x="22" y="128" fill="#9fb0c6" font-size="13">38 resisted</text>
+  <text x="22" y="150" fill="#9fb0c6" font-size="13">73% resist rate</text>
+</g>
+<!-- badges -->
+<text x="260" y="392" fill="#eaf1fb" font-size="18" font-weight="700">Badges</text>
+<g transform="translate(260,410)">
+  <g transform="translate(0,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🌱</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">First save</text>
+  </g>
+  <g transform="translate(162,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🛡️</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Guarded</text>
+  </g>
+  <g transform="translate(324,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🏅</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Disciplined</text>
+  </g>
+  <g transform="translate(486,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🔥</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">On a roll</text>
+  </g>
+  <g transform="translate(648,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">⚡</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Unstoppable</text>
+  </g>
+  <g transform="translate(810,0)">
+    <rect width="150" height="150" rx="18" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.35)"/>
+    <text x="75" y="74" font-size="34" text-anchor="middle">🧊</text>
+    <text x="75" y="108" fill="#eaf1fb" font-size="14" font-weight="600" text-anchor="middle">Cooled off</text>
+  </g>
+</g>
+</svg>
+</div>
+</div></section>
+
+<!-- VAULT (illustration) -->
+<section class="iv-sec"><div class="iv-wrap iv-split">
+  <div class="iv-shot"><svg class="iv-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg_4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<linearGradient id="head_4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+<linearGradient id="ring_4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg_4)"/>
+<text x="120" y="110" fill="url(#head_4)" font-size="40" font-weight="700">Cool-off Vault</text>
+<text x="120" y="146" fill="#9fb0c6" font-size="17" font-family="'Inter',sans-serif">Not sure? Drop it in. Let the urge cool down — then decide with a clear head.</text>
+  <g transform="translate(120,210)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring_4)" stroke-width="9" stroke-linecap="round" stroke-dasharray="156 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">⏳</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Mechanical Keyboard</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">59</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">6h 12m left</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+  <g transform="translate(120,384)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring_4)" stroke-width="9" stroke-linecap="round" stroke-dasharray="211 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">⏳</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Designer Sneakers</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">40</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">2h 03m left</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+  <g transform="translate(120,558)">
+    <rect width="1040" height="150" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="#1b1d22" stroke-width="9"/>
+    <circle cx="95" cy="75" r="40" fill="none" stroke="url(#ring_4)" stroke-width="9" stroke-linecap="round" stroke-dasharray="251 251" transform="rotate(-90 95 75)"/>
+    <text x="95" y="84" fill="#eaf1fb" font-size="22" font-weight="700" text-anchor="middle">✓</text>
+    <text x="170" y="68" fill="#eaf1fb" font-size="22" font-weight="700">Cooled off — decide now</text>
+    <text x="170" y="100" fill="#9fb0c6" font-size="16">99</text>
+    <text x="300" y="100" fill="#6ea8ff" font-size="15" font-weight="600">Ready ✓</text>
+    <rect x="770" y="50" width="110" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+    <text x="825" y="81" fill="#a9cbff" font-size="15" font-weight="600" text-anchor="middle">Let go</text>
+    <rect x="894" y="50" width="110" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+    <text x="949" y="81" fill="#9fb0c6" font-size="15" font-weight="600" text-anchor="middle">Buy it</text>
+  </g>
+<text x="120" y="770" fill="#6c7c93" font-size="14" font-family="'Inter',sans-serif">Items released without buying are banked as savings toward your goal.</text>
+</svg>
+</div>
+  <div>
+    <span class="iv-eyebrow"><span class="iv-dot"></span> Cool-off vault</span>
+    <h2>Not sure? Let it cool down.</h2>
+    <p class="iv-lead" style="margin-top:14px">Drop a tempting item into the vault and decide later with a clear head. Items you let go are banked as savings toward your goal.</p>
   </div>
-</section>
+</div></section>
 
-<section class="iv-sec">
-  <div class="iv-wrap">
-    <h2 class="iv-center">Free to start. Smarter with Pro.</h2>
-    <div class="iv-g2">
-      <div class="iv-tier">
-        <h4>Free</h4>
-        <div class="iv-price">$0</div>
-        <ul>
-          <li>Rules-based purchase scorecard</li>
-          <li>Cool-off vault &amp; impulse profile</li>
-          <li>Bring your own AI key (BYOK)</li>
-          <li>100% local — forever</li>
-        </ul>
-      </div>
-      <div class="iv-tier pro">
-        <h4>Pro</h4>
-        <div class="iv-price">$2.99 <small>/ month · or $24.99 / yr</small></div>
-        <ul>
-          <li>Managed AI analysis — no API key needed</li>
-          <li>Deeper, personalized purchase reads</li>
-          <li>Everything in Free</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <div class="iv-cta">
-          <a class="iv-btn iv-btn-primary" href="https://www.paypal.com/ncp/payment/EMNBNM7WZHRNC" target="_blank" rel="noopener">Get Pro — $2.99/mo</a>
-          <a class="iv-btn iv-btn-ghost" href="https://www.paypal.com/ncp/payment/FUKRBYYZZSJPN" target="_blank" rel="noopener">Yearly — $24.99</a>
-        </div>
-      </div>
-    </div>
+<!-- PRICING -->
+<section class="iv-sec"><div class="iv-wrap iv-center">
+  <h2>Free to start. Smarter with Pro.</h2>
+  <div class="iv-shot" style="max-width:760px;margin:30px auto 0"><svg class="iv-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg_5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<radialGradient id="glow_5" cx="0.5" cy="0" r="0.7"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.16"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="btn_5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head_5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4d6f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg_5)"/>
+<rect width="1280" height="800" fill="url(#glow_5)"/>
+<text x="640" y="100" fill="url(#head_5)" font-size="42" font-weight="700" text-anchor="middle">Free to start. Smarter with Pro.</text>
+<text x="640" y="140" fill="#9fb0c6" font-size="18" font-family="'Inter',sans-serif" text-anchor="middle">The core is free forever. Pro adds managed AI — no key, no setup.</text>
+<!-- FREE -->
+<g transform="translate(220,200)">
+  <rect width="380" height="480" rx="22" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="36" y="64" fill="#a9cbff" font-size="14" font-weight="700" letter-spacing="2">FREE</text>
+  <text x="36" y="128" fill="#ffffff" font-size="56" font-weight="700">$0</text>
+  <text x="160" y="128" fill="#6c7c93" font-size="16">forever</text>
+  <g fill="#9fb0c6" font-size="16" font-family="'Inter',sans-serif">
+    <text x="60" y="200">Rules-based purchase scorecard</text>
+    <text x="60" y="244">Cool-off vault &amp; impulse profile</text>
+    <text x="60" y="288">Real cost in hours of your time</text>
+    <text x="60" y="332">Bring your own AI key (BYOK)</text>
+    <text x="60" y="376">100% local — no account</text>
+  </g>
+  <g fill="#6ea8ff" font-size="16" font-weight="700"><text x="36" y="200">✓</text><text x="36" y="244">✓</text><text x="36" y="288">✓</text><text x="36" y="332">✓</text><text x="36" y="376">✓</text></g>
+  <rect x="36" y="408" width="308" height="50" rx="13" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="190" y="439" fill="#eaf1fb" font-size="16" font-weight="600" text-anchor="middle">Get started — free</text>
+</g>
+<!-- PRO -->
+<g transform="translate(680,200)">
+  <rect width="380" height="480" rx="22" fill="rgba(110,168,255,0.10)" stroke="rgba(110,168,255,0.5)"/>
+  <text x="36" y="64" fill="#a9cbff" font-size="14" font-weight="700" letter-spacing="2">PRO</text>
+  <text x="36" y="124" fill="#ffffff" font-size="50" font-weight="700">$2.99</text>
+  <text x="178" y="124" fill="#6c7c93" font-size="16">/mo · or $24.99/yr</text>
+  <g fill="#9fb0c6" font-size="16" font-family="'Inter',sans-serif">
+    <text x="60" y="196">Managed AI analysis — no API key</text>
+    <text x="60" y="240">Deeper, personalized reads</text>
+    <text x="60" y="284">Smarter "wait or buy" guidance</text>
+    <text x="60" y="328">Everything in Free</text>
+    <text x="60" y="372">Cancel anytime</text>
+  </g>
+  <g fill="#6ea8ff" font-size="16" font-weight="700"><text x="36" y="196">✓</text><text x="36" y="240">✓</text><text x="36" y="284">✓</text><text x="36" y="328">✓</text><text x="36" y="372">✓</text></g>
+  <rect x="36" y="408" width="308" height="50" rx="13" fill="url(#btn_5)"/>
+  <text x="190" y="439" fill="#06101f" font-size="16" font-weight="700" text-anchor="middle">Get Pro with PayPal</text>
+</g>
+<text x="640" y="730" fill="#6c7c93" font-size="14" font-family="'Inter',sans-serif" text-anchor="middle">🔒 Payments via PayPal · license keys verified locally · no card details stored</text>
+</svg>
+</div>
+  <div class="iv-g2" style="max-width:760px;margin:24px auto 0;text-align:left">
+    <div class="iv-tier"><h4>Free</h4><div class="iv-price">$0</div><ul><li>Rules-based scorecard</li><li>Cool-off vault &amp; profile</li><li>Bring your own AI key</li><li>100% local — forever</li></ul><div class="iv-cta"><a class="iv-btn iv-btn-ghost" href="#iv-get">Get started — free</a></div></div>
+    <div class="iv-tier pro"><h4>Pro</h4><div class="iv-price">$2.99 <small>/mo · $24.99/yr</small></div><ul><li>Managed AI — no key needed</li><li>Deeper, personalized reads</li><li>Everything in Free</li><li>Cancel anytime</li></ul><div class="iv-cta"><a class="iv-btn iv-btn-primary" href="https://www.paypal.com/ncp/payment/EMNBNM7WZHRNC" target="_blank" rel="noopener">Get Pro — $2.99/mo</a><a class="iv-btn iv-btn-ghost" href="https://www.paypal.com/ncp/payment/FUKRBYYZZSJPN" target="_blank" rel="noopener">Yearly — $24.99</a></div></div>
   </div>
-</section>
+</div></section>
 
-<!-- ============ BIG "WHERE TO GET IT" BANNER ============ -->
-<section class="iv-sec iv-center" id="iv-get">
-  <div class="iv-wrap">
-    <span class="iv-eyebrow"><span class="iv-dot"></span> Free · 100% local · 30-second setup</span>
-    <h2>Get IMPULSE VAULT</h2>
-    <p class="iv-lead" style="margin:0 auto 6px">Open your browser and head to:</p>
-    <!-- SET YOUR ADDRESS HERE (text + link) -->
-    <div><a class="iv-address" href="https://impursivevault.com" target="_blank" rel="noopener">impursivevault.com</a></div>
-    <p class="iv-note">Download &amp; add it to Chrome, Edge, Brave, Whale, Opera or Vivaldi in about 30 seconds.</p>
-  </div>
-</section>
+<!-- PRIVACY -->
+<section class="iv-sec" style="padding-top:0"><div class="iv-wrap">
+  <div class="iv-privacy"><b>No tracking. No accounts. No data collection.</b><br>IMPULSE VAULT is a small tool that respects you — built to help you spend intentionally.</div>
+</div></section>
 
-<section class="iv-sec" style="padding-top:0">
-  <div class="iv-wrap">
-    <div class="iv-privacy"><b>No tracking. No accounts. No data collection.</b><br>IMPULSE VAULT is a small tool that respects you — built to help you spend intentionally.</div>
-  </div>
-</section>
-
-<section class="iv-sec" style="padding-top:0">
-  <div class="iv-wrap">
-    <h2 class="iv-center">FAQ</h2>
-    <div class="iv-faq">
-      <details open><summary>Is my data really private?</summary><p>Yes. All analysis happens locally in your browser. Your searches, products, and purchase history are never sent to any server.</p></details>
-      <details><summary>Do I need an account?</summary><p>No. There are no accounts and no sign-up. Just install and go.</p></details>
-      <details><summary>What’s the difference between Free and Pro?</summary><p>Free gives you the rules-based scorecard and lets you bring your own AI key. Pro adds managed AI analysis with no key to set up.</p></details>
-      <details><summary>How do I get my license key after paying?</summary><p>You’ll receive it by email after your PayPal payment. Paste it into the IMPULSE VAULT dashboard → Pro Membership to activate.</p></details>
-    </div>
-  </div>
-</section>
-
-<section class="iv-wrap iv-sec iv-center">
-  <h2>Spend on purpose.</h2>
+<!-- GET IT (big address) -->
+<section class="iv-sec iv-center" id="iv-get"><div class="iv-wrap">
+  <span class="iv-eyebrow"><span class="iv-dot"></span> Free · 30-second setup</span>
+  <h2>Get IMPULSE VAULT</h2>
+  <p class="iv-lead" style="margin:0 auto 4px">Open your browser and head to:</p>
   <div><a class="iv-address" href="https://impursivevault.com" target="_blank" rel="noopener">impursivevault.com</a></div>
-</section>
+  <p class="iv-note">Add it to Chrome, Edge, Brave, Whale, Opera or Vivaldi in about 30 seconds.</p>
+</div></section>
+
+<!-- CLOSING poster (cover illustration) -->
+<section class="iv-sec" style="padding-top:0"><div class="iv-wrap">
+  <div class="iv-shot"><svg class="iv-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg_1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0e141d"/></linearGradient>
+<radialGradient id="glow_1" cx="0.82" cy="0.05" r="0.7"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.22"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="btn_1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head_1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+</defs>
+<rect width="1280" height="800" fill="url(#bg_1)"/>
+<rect width="1280" height="800" fill="url(#glow_1)"/>
+<!-- brand -->
+<g transform="translate(80,64)">
+  <rect x="0" y="0" width="20" height="20" rx="6" fill="url(#btn_1)" transform="rotate(45 10 10)"/>
+  <text x="34" y="16" fill="#eaf1fb" font-size="18" font-weight="700" letter-spacing="3">IMPULSE VAULT</text>
+</g>
+<!-- left copy -->
+<g transform="translate(80,210)">
+  <rect x="0" y="0" width="320" height="38" rx="19" fill="rgba(255,255,255,0.05)" stroke="rgba(110,168,255,0.4)"/>
+  <circle cx="24" cy="19" r="4" fill="#6ea8ff"/>
+  <text x="40" y="24" fill="#a9cbff" font-size="13" font-weight="600" letter-spacing="2">PRIVACY-FIRST · 100% LOCAL</text>
+  <text x="0" y="118" fill="url(#head_1)" font-size="60" font-weight="700" letter-spacing="-1">Before you buy,</text>
+  <text x="0" y="182" fill="url(#head_1)" font-size="60" font-weight="700" letter-spacing="-1">just one more moment.</text>
+  <text x="0" y="244" fill="#9fb0c6" font-size="21" font-family="'Inter',system-ui,sans-serif">A calm, smart pause at the exact moment of an</text>
+  <text x="0" y="274" fill="#9fb0c6" font-size="21" font-family="'Inter',system-ui,sans-serif">impulse buy. Pros, cons, real cost — 100% local.</text>
+  <rect x="0" y="320" width="240" height="56" rx="14" fill="url(#btn_1)"/>
+  <text x="120" y="355" fill="#06101f" font-size="17" font-weight="700" text-anchor="middle">Add to your browser</text>
+  <rect x="256" y="320" width="170" height="56" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="341" y="355" fill="#eaf1fb" font-size="17" font-weight="600" text-anchor="middle">See how</text>
+</g>
+<!-- pause card -->
+<g transform="translate(770,200)">
+  <rect x="0" y="0" width="430" height="400" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="32" y="52" fill="#ffb454" font-size="13" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="32" y="96" fill="#eaf1fb" font-size="24" font-weight="700">Wireless Headphones</text>
+  <text x="32" y="142" fill="#ffffff" font-size="38" font-weight="700">$199</text>
+  <rect x="32" y="168" width="366" height="80" rx="14" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="52" y="202" fill="#ffd9a8" font-size="15">⏳ That is about 13 hours of your work time.</text>
+  <text x="52" y="226" fill="#ffd9a8" font-size="15" font-weight="700">Still worth it?</text>
+  <rect x="32" y="280" width="178" height="58" rx="13" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="121" y="316" fill="#a9cbff" font-size="16" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="220" y="280" width="178" height="58" rx="13" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="309" y="316" fill="#6c7c93" font-size="16" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+</svg>
+</div>
+</div></section>
+</div>

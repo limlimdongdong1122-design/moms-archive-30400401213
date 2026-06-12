@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<radialGradient id="pbg" cx="0.5" cy="0.4" r="0.75"><stop offset="0" stop-color="#10192a"/><stop offset="1" stop-color="#080b11"/></radialGradient>
+<linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<radialGradient id="pglow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.5"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="500" height="500" fill="url(#pbg)"/>
+<circle cx="250" cy="250" r="220" fill="url(#pglow)"/>
+<!-- vault tile -->
+<g transform="translate(250,250)">
+  <rect x="-130" y="-130" width="260" height="260" rx="60" fill="url(#tile)"/>
+  <rect x="-130" y="-130" width="260" height="260" rx="60" fill="#06101f" opacity="0.04"/>
+  <!-- vault dial -->
+  <circle cx="0" cy="0" r="92" fill="#0a1424"/>
+  <circle cx="0" cy="0" r="92" fill="none" stroke="#06101f" stroke-width="10"/>
+  <circle cx="0" cy="0" r="70" fill="none" stroke="#7fb0ff" stroke-width="6" opacity="0.85"/>
+  <!-- ticks -->
+  <g stroke="#9cc2ff" stroke-width="6" stroke-linecap="round">
+    <line x1="0" y1="-84" x2="0" y2="-66"/>
+    <line x1="0" y1="84" x2="0" y2="66"/>
+    <line x1="-84" y1="0" x2="-66" y2="0"/>
+    <line x1="84" y1="0" x2="66" y2="0"/>
+  </g>
+  <!-- handle -->
+  <line x1="0" y1="0" x2="46" y2="-46" stroke="#a9cbff" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="0" cy="0" r="14" fill="#a9cbff"/>
+</g>
+</svg>

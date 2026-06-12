@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 624" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080b11"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="o1" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.45"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="ctile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="chead" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+</defs>
+<rect width="1640" height="624" fill="url(#cbg)"/>
+<circle cx="1430" cy="120" r="380" fill="url(#o1)"/>
+<circle cx="240" cy="560" r="320" fill="url(#o1)" opacity="0.7"/>
+<!-- centered content (safe zone ~ x 320..1320) -->
+<g transform="translate(820,312)" text-anchor="middle">
+  <!-- eyebrow pill -->
+  <g transform="translate(0,-168)">
+    <rect x="-180" y="-22" width="360" height="44" rx="22" fill="rgba(110,168,255,0.08)" stroke="rgba(110,168,255,0.4)"/>
+    <circle cx="-150" cy="0" r="5" fill="#6ea8ff"/>
+    <text x="6" y="6" fill="#a9cbff" font-size="16" font-weight="600" letter-spacing="3">PRIVACY-FIRST · 100% LOCAL</text>
+  </g>
+  <text x="0" y="-78" fill="url(#chead)" font-size="76" font-weight="700" letter-spacing="-1">Buy on purpose,</text>
+  <text x="0" y="2" fill="url(#chead)" font-size="76" font-weight="700" letter-spacing="-1">not on impulse.</text>
+  <text x="0" y="58" fill="#9fb0c6" font-size="25" font-family="'Inter',system-ui,sans-serif">A calm pause before every impulse buy — 100% local, free.</text>
+  <!-- website pill -->
+  <g transform="translate(0,120)">
+    <rect x="-180" y="-30" width="360" height="60" rx="16" fill="rgba(110,168,255,0.14)" stroke="rgba(110,168,255,0.5)"/>
+    <text x="0" y="10" fill="#eaf3ff" font-size="28" font-weight="700">impursivevault.com</text>
+  </g>
+</g>
+<!-- small brand mark right -->
+<g transform="translate(1410,300)">
+  <rect x="-70" y="-70" width="140" height="140" rx="34" fill="url(#ctile)"/>
+  <circle cx="0" cy="0" r="48" fill="#0a1424"/>
+  <circle cx="0" cy="0" r="36" fill="none" stroke="#7fb0ff" stroke-width="4"/>
+  <line x1="0" y1="0" x2="24" y2="-24" stroke="#a9cbff" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="0" cy="0" r="7" fill="#a9cbff"/>
+</g>
+</svg>

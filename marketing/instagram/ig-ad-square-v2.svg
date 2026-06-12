@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0c10"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="amber" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffb454" stop-opacity="0.30"/><stop offset="1" stop-color="#ffb454" stop-opacity="0"/></radialGradient>
+<radialGradient id="blue" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.40"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="hours" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8"/><stop offset="1" stop-color="#ffb454"/></linearGradient>
+</defs>
+<rect width="1080" height="1080" fill="url(#bg)"/>
+<circle cx="540" cy="430" r="520" fill="url(#amber)"/>
+<circle cx="540" cy="1020" r="420" fill="url(#blue)"/>
+<!-- brand -->
+<g transform="translate(540,108)" text-anchor="middle">
+  <rect x="-150" y="-16" width="30" height="30" rx="9" fill="url(#tile)" transform="rotate(45 -135 -1)"/>
+  <text x="14" y="8" fill="#eaf1fb" font-size="27" font-weight="700" letter-spacing="4">IMPULSE VAULT</text>
+</g>
+<!-- eyebrow -->
+<text x="540" y="244" fill="#ffb454" font-size="22" font-weight="600" letter-spacing="4" text-anchor="middle">THE REAL PRICE OF THAT "TREAT"</text>
+<!-- struck price -->
+<g text-anchor="middle">
+  <text x="540" y="392" fill="#9fb0c6" font-size="84" font-weight="700">$199</text>
+  <line x1="408" y1="366" x2="672" y2="366" stroke="#ff6b6b" stroke-width="9" stroke-linecap="round"/>
+</g>
+<!-- hero hours -->
+<text x="540" y="600" fill="url(#hours)" font-size="180" font-weight="700" letter-spacing="-3" text-anchor="middle">13 HOURS</text>
+<text x="540" y="690" fill="#eaf1fb" font-size="60" font-weight="700" text-anchor="middle">of your life. ⏳</text>
+<!-- sub -->
+<text x="540" y="788" fill="#9fb0c6" font-size="31" font-family="'Inter',sans-serif" text-anchor="middle">IMPULSE VAULT shows the true cost —</text>
+<text x="540" y="830" fill="#9fb0c6" font-size="31" font-family="'Inter',sans-serif" text-anchor="middle">the moment you hit <tspan fill="#eaf1fb" font-weight="600">Buy</tspan>.</text>
+<!-- CTA -->
+<g transform="translate(540,952)" text-anchor="middle">
+  <rect x="-275" y="-40" width="550" height="80" rx="20" fill="url(#tile)"/>
+  <text x="0" y="10" fill="#06101f" font-size="26" font-weight="700">Add to your browser — Free</text>
+  <text x="0" y="80" fill="#9fb0c6" font-size="21" font-family="'Inter',sans-serif">impursivevault.com · 100% local · no account</text>
+</g>
+</svg>

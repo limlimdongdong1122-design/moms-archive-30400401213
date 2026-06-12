@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080b11"/><stop offset="0.5" stop-color="#0c121b"/><stop offset="1" stop-color="#080b11"/></linearGradient>
+<radialGradient id="orb2" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.4"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="tile2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg2)"/>
+<circle cx="880" cy="380" r="420" fill="url(#orb2)"/>
+<circle cx="180" cy="1500" r="360" fill="url(#orb2)" opacity="0.7"/>
+<!-- brand (safe: y>270) -->
+<g transform="translate(540,360)" text-anchor="middle">
+  <rect x="-15" y="-15" width="30" height="30" rx="9" fill="url(#tile2)" transform="rotate(45 0 0)"/>
+  <text x="0" y="68" fill="#eaf1fb" font-size="28" font-weight="700" letter-spacing="5">IMPULSE VAULT</text>
+</g>
+<!-- hook -->
+<g transform="translate(540,560)" text-anchor="middle">
+  <rect x="-215" y="-28" width="430" height="50" rx="25" fill="rgba(110,168,255,0.08)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="0" y="6" fill="#a9cbff" font-size="18" font-weight="600" letter-spacing="3">PAUSE BEFORE YOU BUY</text>
+  <text x="0" y="116" fill="url(#head2)" font-size="76" font-weight="700" letter-spacing="-1">Buy on purpose,</text>
+  <text x="0" y="200" fill="url(#head2)" font-size="76" font-weight="700" letter-spacing="-1">not on impulse.</text>
+  <text x="0" y="262" fill="#9fb0c6" font-size="27" font-family="'Inter',sans-serif">A calm pause at the exact moment of checkout.</text>
+</g>
+<!-- pause card (center) -->
+<g transform="translate(190,940)">
+  <rect x="0" y="0" width="700" height="430" rx="28" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="44" y="70" fill="#ffb454" font-size="20" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="44" y="132" fill="#eaf1fb" font-size="34" font-weight="700">Wireless Headphones</text>
+  <text x="44" y="196" fill="#ffffff" font-size="52" font-weight="700">$199</text>
+  <rect x="44" y="226" width="612" height="74" rx="15" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="70" y="271" fill="#ffd9a8" font-size="23">⏳ That’s ≈ 13 hours of your work time. Worth it?</text>
+  <rect x="44" y="324" width="296" height="66" rx="14" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="192" y="365" fill="#a9cbff" font-size="22" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="360" y="324" width="296" height="66" rx="14" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="508" y="365" fill="#6c7c93" font-size="22" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+<!-- feature chips -->
+<g transform="translate(540,1470)" text-anchor="middle" font-family="'Inter',sans-serif" font-size="23" fill="#9fb0c6">
+  <text x="0" y="0">🔒 100% local   ·   🧊 Cool-off vault   ·   🆓 Free</text>
+</g>
+<!-- CTA (above IG button safe zone) -->
+<g transform="translate(540,1600)" text-anchor="middle">
+  <rect x="-280" y="-44" width="560" height="88" rx="22" fill="url(#tile2)"/>
+  <text x="0" y="11" fill="#06101f" font-size="30" font-weight="700">Add to your browser — Free</text>
+  <text x="0" y="92" fill="#a9cbff" font-size="26" font-weight="600">impursivevault.com</text>
+</g>
+</svg>

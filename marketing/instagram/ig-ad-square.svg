@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080b11"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="orb" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.45"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+</defs>
+<rect width="1080" height="1080" fill="url(#bg)"/>
+<circle cx="900" cy="120" r="360" fill="url(#orb)"/>
+<circle cx="170" cy="980" r="280" fill="url(#orb)" opacity="0.7"/>
+<!-- brand -->
+<g transform="translate(540,120)" text-anchor="middle">
+  <g transform="translate(-118,-14)"><rect x="0" y="0" width="28" height="28" rx="9" fill="url(#tile)" transform="rotate(45 14 14)"/></g>
+  <text x="14" y="10" fill="#eaf1fb" font-size="26" font-weight="700" letter-spacing="4">IMPULSE VAULT</text>
+</g>
+<!-- hook -->
+<g transform="translate(540,300)" text-anchor="middle">
+  <rect x="-205" y="-26" width="410" height="46" rx="23" fill="rgba(110,168,255,0.08)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="0" y="6" fill="#a9cbff" font-size="17" font-weight="600" letter-spacing="3">PAUSE BEFORE YOU BUY</text>
+  <text x="0" y="92" fill="url(#head)" font-size="62" font-weight="700" letter-spacing="-1">Buy on purpose,</text>
+  <text x="0" y="162" fill="url(#head)" font-size="62" font-weight="700" letter-spacing="-1">not on impulse.</text>
+</g>
+<!-- pause card -->
+<g transform="translate(290,540)">
+  <rect x="0" y="0" width="500" height="318" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="34" y="52" fill="#ffb454" font-size="15" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="34" y="100" fill="#eaf1fb" font-size="26" font-weight="700">Wireless Headphones</text>
+  <text x="34" y="150" fill="#ffffff" font-size="40" font-weight="700">$199</text>
+  <rect x="34" y="172" width="432" height="56" rx="13" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="54" y="207" fill="#ffd9a8" font-size="17">⏳ That’s ≈ 13 hours of your work time.</text>
+  <rect x="34" y="248" width="210" height="50" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="139" y="280" fill="#a9cbff" font-size="17" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="256" y="248" width="210" height="50" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="361" y="280" fill="#6c7c93" font-size="17" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+<!-- CTA -->
+<g transform="translate(540,960)" text-anchor="middle">
+  <rect x="-260" y="-38" width="520" height="76" rx="20" fill="url(#tile)"/>
+  <text x="0" y="9" fill="#06101f" font-size="24" font-weight="700">Add to your browser — Free</text>
+  <text x="0" y="78" fill="#9fb0c6" font-size="20" font-family="'Inter',sans-serif">impursivevault.com · 100% local · Chrome · Edge · Brave</text>
+</g>
+</svg>

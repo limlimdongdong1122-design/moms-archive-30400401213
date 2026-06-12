@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<linearGradient id="buy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9d5c"/><stop offset="1" stop-color="#ff7a3c"/></linearGradient>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<!-- faint product page mock -->
+<g opacity="0.25" fill="#9fb0c6">
+  <rect x="140" y="430" width="800" height="500" rx="24"/>
+  <rect x="140" y="970" width="520" height="34" rx="10"/>
+  <rect x="140" y="1024" width="380" height="26" rx="9"/>
+</g>
+<text x="140" y="1130" fill="#eaf1fb" font-size="64" font-weight="700">$199.00</text>
+<!-- big BUY NOW button -->
+<rect x="140" y="1190" width="800" height="120" rx="26" fill="url(#buy)"/>
+<text x="540" y="1268" fill="#2a1304" font-size="48" font-weight="700" text-anchor="middle">BUY NOW</text>
+<!-- cursor approaching -->
+<g transform="translate(760,1296)"><path d="M0 0 L0 64 L17 49 L29 74 L41 68 L29 44 L51 44 Z" fill="#ffffff" stroke="#06101f" stroke-width="3"/></g>
+<!-- caption -->
+<text x="540" y="1560" fill="#9fb0c6" font-size="40" font-family="'Inter',sans-serif" text-anchor="middle">That moment before you click…</text>
+</svg>

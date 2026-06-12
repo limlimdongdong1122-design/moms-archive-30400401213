@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="blue" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.3"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<circle cx="540" cy="900" r="560" fill="url(#blue)"/>
+<!-- pause card -->
+<g transform="translate(150,620)">
+  <rect x="0" y="0" width="780" height="520" rx="32" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.14)"/>
+  <text x="50" y="80" fill="#ffb454" font-size="24" font-weight="600" letter-spacing="3">⏸ HOLD ON A SECOND</text>
+  <text x="50" y="152" fill="#eaf1fb" font-size="42" font-weight="700">Wireless Headphones</text>
+  <text x="50" y="232" fill="#ffffff" font-size="64" font-weight="700">$199</text>
+  <rect x="50" y="268" width="680" height="86" rx="18" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="80" y="322" fill="#ffd9a8" font-size="28">⏳ ≈ 13 hours of your work. Still worth it?</text>
+  <rect x="50" y="384" width="330" height="84" rx="18" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.45)" stroke-width="2"/>
+  <text x="215" y="437" fill="#a9cbff" font-size="30" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="400" y="384" width="330" height="84" rx="18" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+  <text x="565" y="437" fill="#6c7c93" font-size="30" font-weight="600" text-anchor="middle">Buy anyway</text>
+</g>
+<text x="540" y="1310" fill="#cdd9ee" font-size="46" font-weight="600" text-anchor="middle">IMPULSE VAULT pauses you —</text>
+<text x="540" y="1376" fill="#cdd9ee" font-size="46" font-weight="600" text-anchor="middle">right at checkout.</text>
+</svg>

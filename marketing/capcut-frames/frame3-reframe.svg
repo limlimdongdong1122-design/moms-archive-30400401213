@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0c10"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="amber" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffb454" stop-opacity="0.25"/><stop offset="1" stop-color="#ffb454" stop-opacity="0"/></radialGradient>
+<linearGradient id="hours" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8"/><stop offset="1" stop-color="#ffb454"/></linearGradient>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<circle cx="540" cy="900" r="600" fill="url(#amber)"/>
+<g text-anchor="middle">
+  <text x="540" y="700" fill="#9fb0c6" font-size="110" font-weight="700">$199</text>
+  <line x1="368" y1="666" x2="712" y2="666" stroke="#ff6b6b" stroke-width="12" stroke-linecap="round"/>
+</g>
+<text x="540" y="990" fill="url(#hours)" font-size="200" font-weight="700" letter-spacing="-4" text-anchor="middle">13 HOURS</text>
+<text x="540" y="1110" fill="#eaf1fb" font-size="76" font-weight="700" text-anchor="middle">of your life. ⏳</text>
+</svg>

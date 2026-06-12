@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080b11"/><stop offset="0.5" stop-color="#0c121b"/><stop offset="1" stop-color="#080b11"/></linearGradient>
+<radialGradient id="orb2" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.4"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="tile2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+<linearGradient id="coin2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8"/><stop offset="1" stop-color="#ffb454"/></linearGradient>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg2)"/>
+<circle cx="880" cy="480" r="460" fill="url(#orb2)"/>
+<circle cx="180" cy="1520" r="380" fill="url(#orb2)" opacity="0.7"/>
+<!-- decorations -->
+<g>
+  <g transform="translate(170,560) rotate(-12)"><circle r="42" fill="url(#coin2)"/><text y="14" text-anchor="middle" font-size="42" font-weight="700" fill="#7a4a14">$</text></g>
+  <g transform="translate(920,640) rotate(14)" opacity="0.85"><circle r="32" fill="url(#coin2)"/><text y="11" text-anchor="middle" font-size="32" font-weight="700" fill="#7a4a14">$</text></g>
+  <g fill="#a9cbff">
+    <path d="M905 470 l9 25 25 9 -25 9 -9 25 -9 -25 -25 -9 25 -9 z"/>
+    <path d="M150 1280 l7 20 20 7 -20 7 -7 20 -7 -20 -20 -7 20 -7 z" opacity="0.8"/>
+  </g>
+  <g transform="translate(905,1300)" opacity="0.85" stroke="#9cc2ff" fill="none" stroke-width="5"><circle r="32"/><line x1="0" y1="0" x2="0" y2="-18" stroke-linecap="round"/><line x1="0" y1="0" x2="15" y2="8" stroke-linecap="round"/></g>
+</g>
+<!-- brand -->
+<g transform="translate(540,360)" text-anchor="middle">
+  <rect x="-15" y="-15" width="30" height="30" rx="9" fill="url(#tile2)" transform="rotate(45 0 0)"/>
+  <text x="0" y="68" fill="#eaf1fb" font-size="30" font-weight="700" letter-spacing="5">IMPULSE VAULT</text>
+</g>
+<text x="540" y="540" fill="#ffb454" font-size="24" font-weight="600" letter-spacing="4" text-anchor="middle">STOP — BEFORE YOU HIT "BUY"</text>
+<text x="540" y="650" fill="url(#head2)" font-size="78" font-weight="700" letter-spacing="-1" text-anchor="middle">Buy on purpose,</text>
+<text x="540" y="736" fill="url(#head2)" font-size="78" font-weight="700" letter-spacing="-1" text-anchor="middle">not on impulse.</text>
+<text x="540" y="804" fill="#cdd9ee" font-size="30" font-family="'Inter',sans-serif" text-anchor="middle"><tspan fill="#ffb454" font-weight="700">70%</tspan> of impulse buys end in regret. Beat the moment.</text>
+<!-- pause card -->
+<g transform="translate(190,900)">
+  <rect x="0" y="0" width="700" height="430" rx="28" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="44" y="68" fill="#ffb454" font-size="19" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="44" y="128" fill="#eaf1fb" font-size="33" font-weight="700">Wireless Headphones</text>
+  <text x="44" y="192" fill="#ffffff" font-size="50" font-weight="700">$199</text>
+  <g transform="translate(456,150)"><rect x="0" y="0" width="200" height="42" rx="21" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.45)"/><text x="100" y="28" fill="#a9cbff" font-size="18" font-weight="600" text-anchor="middle">✓ Cheaper found</text></g>
+  <rect x="44" y="222" width="612" height="72" rx="15" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="70" y="266" fill="#ffd9a8" font-size="22">⏳ ≈ 13 hours of your work. Still worth it?</text>
+  <rect x="44" y="320" width="296" height="64" rx="14" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="192" y="360" fill="#a9cbff" font-size="22" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="360" y="320" width="296" height="64" rx="14" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="508" y="360" fill="#6c7c93" font-size="22" font-weight="600" text-anchor="middle">Buy anyway</text>
+  <g transform="translate(500,384)"><path d="M0 0 L0 34 L9 26 L16 39 L22 36 L15 24 L27 24 Z" fill="#fff" stroke="#06101f" stroke-width="2"/></g>
+</g>
+<text x="540" y="1430" fill="#9fb0c6" font-size="25" font-family="'Inter',sans-serif" text-anchor="middle">🔒 No account   ·   🧊 Cool-off vault   ·   🆓 Free</text>
+<g transform="translate(540,1600)" text-anchor="middle">
+  <rect x="-290" y="-46" width="580" height="92" rx="22" fill="url(#tile2)"/>
+  <text x="0" y="11" fill="#06101f" font-size="31" font-weight="700">Beat the impulse — Free</text>
+  <text x="0" y="96" fill="#a9cbff" font-size="27" font-weight="600">impursivevault.com</text>
+</g>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080b11"/><stop offset="1" stop-color="#0c121b"/></linearGradient>
+<radialGradient id="orb" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.42"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9cbff"/><stop offset="1" stop-color="#6ea8ff"/></linearGradient>
+<linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd2f3"/></linearGradient>
+<linearGradient id="coin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8"/><stop offset="1" stop-color="#ffb454"/></linearGradient>
+</defs>
+<rect width="1080" height="1080" fill="url(#bg)"/>
+<circle cx="900" cy="120" r="360" fill="url(#orb)"/>
+<circle cx="150" cy="980" r="300" fill="url(#orb)" opacity="0.7"/>
+<!-- decorative illustrations -->
+<g opacity="0.9">
+  <!-- coin top-left -->
+  <g transform="translate(120,250) rotate(-12)"><circle r="34" fill="url(#coin)"/><circle r="34" fill="none" stroke="#fff3e0" stroke-width="2" opacity="0.5"/><text y="11" text-anchor="middle" font-size="34" font-weight="700" fill="#7a4a14">$</text></g>
+  <!-- coin bottom-right -->
+  <g transform="translate(965,830) rotate(14)" opacity="0.85"><circle r="26" fill="url(#coin)"/><text y="9" text-anchor="middle" font-size="26" font-weight="700" fill="#7a4a14">$</text></g>
+  <!-- sparkles -->
+  <g fill="#a9cbff">
+    <path d="M980 250 l8 22 22 8 -22 8 -8 22 -8 -22 -22 -8 22 -8 z"/>
+    <path d="M95 700 l6 17 17 6 -17 6 -6 17 -6 -17 -17 -6 17 -6 z" opacity="0.8"/>
+    <path d="M150 470 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5 z" opacity="0.7"/>
+  </g>
+  <!-- mini clock -->
+  <g transform="translate(960,470)" opacity="0.85" stroke="#9cc2ff" fill="none" stroke-width="4"><circle r="26"/><line x1="0" y1="0" x2="0" y2="-15" stroke-linecap="round"/><line x1="0" y1="0" x2="12" y2="6" stroke-linecap="round"/></g>
+</g>
+<!-- brand -->
+<g transform="translate(540,118)" text-anchor="middle">
+  <rect x="-150" y="-16" width="30" height="30" rx="9" fill="url(#tile)" transform="rotate(45 -135 -1)"/>
+  <text x="14" y="8" fill="#eaf1fb" font-size="27" font-weight="700" letter-spacing="4">IMPULSE VAULT</text>
+</g>
+<!-- eyebrow (stronger) -->
+<text x="540" y="234" fill="#ffb454" font-size="20" font-weight="600" letter-spacing="4" text-anchor="middle">STOP — BEFORE YOU HIT "BUY"</text>
+<!-- headline -->
+<text x="540" y="316" fill="url(#head)" font-size="64" font-weight="700" letter-spacing="-1" text-anchor="middle">Buy on purpose,</text>
+<text x="540" y="384" fill="url(#head)" font-size="64" font-weight="700" letter-spacing="-1" text-anchor="middle">not on impulse.</text>
+<!-- strong sub -->
+<text x="540" y="446" fill="#cdd9ee" font-size="28" font-family="'Inter',sans-serif" text-anchor="middle"><tspan fill="#ffb454" font-weight="700">70%</tspan> of impulse buys end in regret. Beat the moment.</text>
+<!-- pause card -->
+<g transform="translate(300,500)">
+  <rect x="0" y="0" width="480" height="330" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="32" y="50" fill="#ffb454" font-size="14" font-weight="600" letter-spacing="2">⏸ HOLD ON A SECOND</text>
+  <text x="32" y="96" fill="#eaf1fb" font-size="25" font-weight="700">Wireless Headphones</text>
+  <text x="32" y="142" fill="#ffffff" font-size="38" font-weight="700">$199</text>
+  <!-- cheaper alt badge -->
+  <g transform="translate(300,116)"><rect x="0" y="0" width="148" height="34" rx="17" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.45)"/><text x="74" y="23" fill="#a9cbff" font-size="14" font-weight="600" text-anchor="middle">✓ Cheaper found</text></g>
+  <rect x="32" y="166" width="416" height="56" rx="13" fill="rgba(255,180,84,0.10)" stroke="rgba(255,180,84,0.25)"/>
+  <text x="52" y="201" fill="#ffd9a8" font-size="16.5">⏳ ≈ 13 hours of your work. Still worth it?</text>
+  <rect x="32" y="244" width="200" height="52" rx="12" fill="rgba(110,168,255,0.16)" stroke="rgba(110,168,255,0.4)"/>
+  <text x="132" y="277" fill="#a9cbff" font-size="17" font-weight="600" text-anchor="middle">🧊 Vault it</text>
+  <rect x="248" y="244" width="200" height="52" rx="12" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text x="348" y="277" fill="#6c7c93" font-size="17" font-weight="600" text-anchor="middle">Buy anyway</text>
+  <!-- click cursor -->
+  <g transform="translate(330,300)"><path d="M0 0 L0 26 L7 20 L12 30 L17 28 L12 18 L21 18 Z" fill="#fff" stroke="#06101f" stroke-width="1.5"/></g>
+</g>
+<!-- chips -->
+<text x="540" y="892" fill="#9fb0c6" font-size="20" font-family="'Inter',sans-serif" text-anchor="middle">🔒 100% local   ·   🧊 Cool-off vault   ·   🆓 Free</text>
+<!-- CTA (stronger) -->
+<g transform="translate(540,978)" text-anchor="middle">
+  <rect x="-265" y="-40" width="530" height="80" rx="20" fill="url(#tile)"/>
+  <text x="0" y="9" fill="#06101f" font-size="25" font-weight="700">Beat the impulse — Free</text>
+  <text x="0" y="78" fill="#9fb0c6" font-size="20" font-family="'Inter',sans-serif">impursivevault.com · no account · Chrome · Edge · Brave</text>
+</g>
+</svg>

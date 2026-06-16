@@ -1,0 +1,7 @@
+{
+  "name": "math-tutor",
+  "version": "1.0.0",
+  "description": "중3-1 수학 풀이 튜터 (모바일 웹앱 + Node 테스트 가능 엔진)",
+  "type": "commonjs",
+  "private": true
+}

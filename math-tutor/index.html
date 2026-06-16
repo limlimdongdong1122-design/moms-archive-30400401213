@@ -58,11 +58,12 @@
   .result.show{display:block}
   .badge{display:inline-block;background:#312e81;color:var(--brand2);font-size:12px;
     padding:3px 10px;border-radius:999px;margin-bottom:10px;font-weight:600}
-  .answer{font-size:22px;font-weight:800;color:#fff;margin:2px 0 14px;word-break:break-word}
-  .answer .lbl{color:var(--ok);font-size:13px;display:block;font-weight:600;margin-bottom:2px}
-  .steps{border-top:1px dashed var(--line);padding-top:12px}
-  .steps h3{font-size:13px;color:var(--sub);margin:0 0 8px;font-weight:600}
-  .step{background:var(--card2);border-radius:10px;padding:10px 12px;margin-bottom:7px;font-size:15px;white-space:pre-wrap;word-break:break-word}
+  .answer{font-size:19px;font-weight:800;color:#fff;margin:2px 0 14px;word-break:break-word}
+  .answer .lbl{color:var(--ok);font-size:12px;display:block;font-weight:600;margin-bottom:2px}
+  .steps{border-top:2px solid var(--brand);padding-top:14px}
+  .steps h3{font-size:15px;color:var(--brand2);margin:0 0 10px;font-weight:700}
+  .step{background:var(--card2);border-left:3px solid var(--brand);border-radius:10px;
+    padding:12px 14px;margin-bottom:9px;font-size:16px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
 
   .examples{margin-top:6px}
   .examples h3{font-size:13px;color:var(--sub);margin:0 0 8px}
@@ -117,7 +118,7 @@
     <span class="badge" id="badge">결과</span>
     <div class="answer"><span class="lbl">✅ 정답</span><span id="answer"></span></div>
     <div class="steps">
-      <h3>단계별 풀이</h3>
+      <h3>✍️ 자세한 풀이</h3>
       <div id="steps"></div>
     </div>
   </div>

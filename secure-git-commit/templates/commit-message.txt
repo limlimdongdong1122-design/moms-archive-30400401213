@@ -1,0 +1,8 @@
+# <type>(<scope>): <subject>
+# 예: feat(git-security): add secure commit project
+#
+# <body> (선택)
+#
+# <footer> (선택)
+# BREAKING CHANGE: ...
+# Closes #123

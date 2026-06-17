@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" font-family="'Pretendard','Noto Sans KR',sans-serif">
+  <defs>
+    <!-- 배경: 비 내리는 밤하늘 그라데이션 -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#0a0e23"/>
+      <stop offset="45%" stop-color="#15123a"/>
+      <stop offset="100%" stop-color="#241038"/>
+    </linearGradient>
+    <!-- 푸른 역광(Rim light) -->
+    <radialGradient id="rim" cx="30%" cy="28%" r="60%">
+      <stop offset="0%"  stop-color="#39d6ff" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#1f6bff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#1f6bff" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 붉은 네온 보조광 -->
+    <radialGradient id="redglow" cx="78%" cy="60%" r="45%">
+      <stop offset="0%"  stop-color="#ff3b6b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ff3b6b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c1f2e"/>
+      <stop offset="100%" stop-color="#0a0b12"/>
+    </linearGradient>
+    <linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1b24"/>
+      <stop offset="100%" stop-color="#05060a"/>
+    </linearGradient>
+    <linearGradient id="neonsign" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff4d9d"/>
+      <stop offset="100%" stop-color="#ff2d6f"/>
+    </linearGradient>
+    <filter id="blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="softblur"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <!-- ===== 배경 (아웃포커싱) ===== -->
+  <rect width="900" height="1200" fill="url(#sky)"/>
+
+  <!-- 흐릿한 빌딩 실루엣 -->
+  <g filter="url(#blur)" opacity="0.9">
+    <rect x="40"  y="240" width="150" height="700" fill="#161a33"/>
+    <rect x="210" y="160" width="120" height="780" fill="#11142a"/>
+    <rect x="700" y="200" width="160" height="740" fill="#161a33"/>
+    <rect x="600" y="300" width="90"  height="640" fill="#0e1126"/>
+  </g>
+
+  <!-- 흐릿한 네온사인 보케 -->
+  <g filter="url(#blur)">
+    <rect x="60"  y="300" width="110" height="26" rx="13" fill="url(#neonsign)" opacity="0.85"/>
+    <rect x="730" y="360" width="100" height="22" rx="11" fill="#39d6ff" opacity="0.8"/>
+    <rect x="240" y="250" width="70"  height="20" rx="10" fill="#9d4dff" opacity="0.8"/>
+    <circle cx="760" cy="520" r="30" fill="#ffcf3b" opacity="0.6"/>
+    <circle cx="120" cy="560" r="24" fill="#ff3b6b" opacity="0.6"/>
+  </g>
+
+  <!-- 빛 무드 오버레이 -->
+  <rect width="900" height="1200" fill="url(#rim)"/>
+  <rect width="900" height="1200" fill="url(#redglow)"/>
+
+  <!-- 빗줄기 -->
+  <g stroke="#9fd8ff" stroke-width="1.4" opacity="0.25">
+    <line x1="120" y1="0" x2="80"  y2="120"/>
+    <line x1="300" y1="40" x2="262" y2="170"/>
+    <line x1="500" y1="0" x2="466" y2="130"/>
+    <line x1="680" y1="60" x2="648" y2="190"/>
+    <line x1="820" y1="20" x2="788" y2="150"/>
+    <line x1="220" y1="200" x2="190" y2="320"/>
+    <line x1="760" y1="240" x2="730" y2="360"/>
+  </g>
+
+  <!-- ===== 캐릭터 (바스트 샷 / 로우 앵글) ===== -->
+  <g transform="translate(450,720)">
+    <!-- 어깨/가죽 재킷 -->
+    <path d="M -250 480 C -240 250 -150 150 -70 130 L 70 130 C 150 150 240 250 250 480 Z" fill="url(#jacket)"/>
+    <!-- 옷깃 하이라이트(역광) -->
+    <path d="M -250 480 C -244 270 -160 165 -78 138 L -70 130 C -120 200 -150 330 -150 480 Z" fill="#39d6ff" opacity="0.22"/>
+    <path d="M  250 480 C  244 270  160 165  78 138 L  70 130 C  120 200  150 330  150 480 Z" fill="#ff3b6b" opacity="0.18"/>
+    <!-- 칼라 라인 -->
+    <path d="M -78 138 L -10 250 L 10 250 L 78 138" fill="none" stroke="#3a3d52" stroke-width="3"/>
+    <!-- 목 -->
+    <path d="M -34 60 L -34 150 C -34 175 34 175 34 150 L 34 60 Z" fill="#e9c8b0"/>
+    <path d="M -34 90 L 34 90 L 34 150 C 34 175 -34 175 -34 150 Z" fill="#c79a86" opacity="0.5"/>
+
+    <!-- 얼굴 -->
+    <path d="M -70 -120 C -78 -40 -64 40 0 70 C 64 40 78 -40 70 -120 C 60 -185 -60 -185 -70 -120 Z" fill="#f3d3bb"/>
+    <!-- 얼굴 측면 붉은 네온 -->
+    <path d="M 70 -120 C 78 -40 64 40 0 70 C 40 30 56 -40 50 -120 Z" fill="#ff3b6b" opacity="0.16"/>
+    <!-- 얼굴 측면 푸른 역광 -->
+    <path d="M -70 -120 C -78 -40 -64 40 0 70 C -40 30 -56 -40 -50 -120 Z" fill="#39d6ff" opacity="0.16"/>
+
+    <!-- 흑발 쉼표(comma) 머리 -->
+    <path d="M -84 -90 C -110 -210 -40 -250 0 -248 C 60 -250 116 -200 86 -86
+             C 80 -150 40 -176 30 -150 C 50 -120 40 -96 24 -110
+             C 30 -150 -2 -168 -16 -140 C -10 -120 -22 -104 -40 -120
+             C -34 -160 -70 -158 -84 -90 Z" fill="url(#hair)"/>
+    <!-- 앞머리 쉼표 컬 -->
+    <path d="M -30 -150 C -56 -120 -52 -70 -20 -78 C -44 -92 -40 -128 -12 -132 Z" fill="#0a0b12"/>
+    <path d="M 28 -156 C 56 -126 50 -78 18 -84 C 44 -98 40 -132 12 -136 Z" fill="#0a0b12"/>
+    <!-- 머리 림라이트 -->
+    <path d="M -84 -90 C -110 -210 -40 -250 0 -248 C -30 -236 -68 -200 -78 -120 Z" fill="#39d6ff" opacity="0.3"/>
+
+    <!-- 날카로운 고양이상 눈매 -->
+    <path d="M -52 -86 C -36 -98 -16 -96 -6 -84 C -22 -82 -40 -80 -52 -86 Z" fill="#1a1a22"/>
+    <path d="M  52 -86 C  36 -98  16 -96  6 -84 C  22 -82  40 -80  52 -86 Z" fill="#1a1a22"/>
+    <!-- 눈동자 하이라이트 -->
+    <circle cx="-28" cy="-86" r="4" fill="#7fe9ff"/>
+    <circle cx="28"  cy="-86" r="4" fill="#7fe9ff"/>
+    <!-- 눈썹 -->
+    <path d="M -54 -104 L -10 -100" stroke="#15151c" stroke-width="5" stroke-linecap="round"/>
+    <path d="M  54 -104 L  10 -100" stroke="#15151c" stroke-width="5" stroke-linecap="round"/>
+    <!-- 코 -->
+    <path d="M 0 -78 L -6 -52 L 4 -50" fill="none" stroke="#c79a86" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- 한쪽 입꼬리 올린 미소(smirk) -->
+    <path d="M -22 -28 C 0 -16 22 -22 34 -40" fill="none" stroke="#9c5a4d" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- 은색 피어싱 -->
+    <circle cx="-62" cy="-44" r="5" fill="none" stroke="#d8d8e0" stroke-width="3"/>
+    <circle cx="-62" cy="-30" r="3" fill="#eef0f6"/>
+
+    <!-- 집중선(액션 효과선) -->
+    <g stroke="#ffffff" stroke-width="2" opacity="0.12">
+      <line x1="-230" y1="-260" x2="-60" y2="-120"/>
+      <line x1="240"  y1="-260" x2="70"  y2="-120"/>
+      <line x1="-300" y1="-40"  x2="-90" y2="-30"/>
+      <line x1="300"  y1="-40"  x2="90"  y2="-30"/>
+    </g>
+  </g>
+
+  <!-- ===== 식자 / 말풍선 가이드 ===== -->
+  <!-- 효과음 -->
+  <text x="700" y="220" font-size="92" font-weight="900" fill="#ffffff"
+        transform="rotate(-8 700 220)" opacity="0.95"
+        style="paint-order:stroke;stroke:#ff2d6f;stroke-width:6px">촤아—</text>
+  <!-- 대사 말풍선 (좌상단, 시선 흐름 진입점) -->
+  <g transform="translate(120,120)">
+    <rect x="0" y="0" width="300" height="120" rx="22" fill="#ffffff" opacity="0.96"/>
+    <path d="M 60 118 L 90 160 L 110 118 Z" fill="#ffffff" opacity="0.96"/>
+    <text x="150" y="55" font-size="30" font-weight="700" fill="#16182b" text-anchor="middle">늦었네,</text>
+    <text x="150" y="95" font-size="30" font-weight="700" fill="#16182b" text-anchor="middle">기다렸잖아.</text>
+  </g>
+</svg>

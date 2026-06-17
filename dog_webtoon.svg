@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750" font-family="'Pretendard','Noto Sans KR',sans-serif">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e7ddcb"/>
+      <stop offset="100%" stop-color="#d8ccb4"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e3b277"/>
+      <stop offset="100%" stop-color="#cf9a5c"/>
+    </linearGradient>
+    <radialGradient id="bodyshade" cx="45%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e4e7ee"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <!-- ===== 배경 ===== -->
+  <rect width="1000" height="750" fill="url(#wall)"/>
+  <!-- 박스 윗면(접힌 뚜껑) -->
+  <path d="M 0 0 L 520 0 L 470 70 L 0 95 Z" fill="#d6c3a0"/>
+  <line x1="0" y1="96" x2="470" y2="71" stroke="#b9a47e" stroke-width="3"/>
+  <!-- 박스 결 텍스처 라인 -->
+  <g stroke="#c9b99c" stroke-width="2" opacity="0.6">
+    <line x1="0" y1="220" x2="1000" y2="208"/>
+    <line x1="0" y1="360" x2="640" y2="352"/>
+  </g>
+  <!-- 원목 바닥 -->
+  <path d="M 0 560 L 1000 520 L 1000 750 L 0 750 Z" fill="url(#floor)"/>
+  <g stroke="#b9863f" stroke-width="2.5" opacity="0.55">
+    <line x1="0" y1="610" x2="1000" y2="572"/>
+    <line x1="0" y1="675" x2="1000" y2="640"/>
+    <line x1="0" y1="735" x2="1000" y2="702"/>
+  </g>
+  <line x1="0" y1="560" x2="1000" y2="520" stroke="#a9acc3" stroke-width="3" opacity="0.5"/>
+
+  <!-- 매달린 크록스 신발 (귀여운 디테일) -->
+  <g transform="translate(800,40) rotate(8)">
+    <path d="M 0 40 C -10 0 120 -8 150 25 C 165 45 160 90 120 100 C 60 115 -5 95 0 40 Z" fill="#8d8f96"/>
+    <path d="M 8 48 C 0 18 120 12 142 36 C 152 50 148 82 118 90 C 64 102 4 86 8 48 Z" fill="#9fa1a8"/>
+    <g fill="#7a7c83"><circle cx="55" cy="40" r="5"/><circle cx="80" cy="38" r="5"/><circle cx="105" cy="40" r="5"/><circle cx="68" cy="58" r="5"/><circle cx="93" cy="56" r="5"/></g>
+    <path d="M 150 25 C 175 22 178 60 158 70" fill="none" stroke="#7a7c83" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== 강아지 (벌러덩 배 까고 누운 포즈) ===== -->
+  <g transform="translate(0,20)">
+    <!-- 바닥 그림자 -->
+    <ellipse cx="540" cy="640" rx="320" ry="46" fill="#9b6f37" opacity="0.28" filter="url(#soft)"/>
+
+    <!-- 길게 늘어진 꼬리털 (오른쪽) -->
+    <path d="M 760 560 C 880 540 970 560 985 600 C 998 632 960 660 900 650 C 860 644 820 600 760 600 Z" fill="url(#bodyshade)"/>
+    <path d="M 800 575 C 880 562 940 575 950 600" fill="none" stroke="#d2d6e0" stroke-width="3" opacity="0.8"/>
+
+    <!-- 뒷다리 (만세, 오른쪽 위로) -->
+    <path d="M 690 470 C 760 380 820 320 880 300 C 915 290 935 320 915 350 C 880 400 800 470 740 520 Z" fill="url(#bodyshade)"/>
+    <!-- 뒷발 패드 -->
+    <ellipse cx="888" cy="306" rx="20" ry="15" transform="rotate(-30 888 306)" fill="#f3d9d0"/>
+    <path d="M 690 470 C 760 380 815 330 870 305" fill="none" stroke="#d2d6e0" stroke-width="3" opacity="0.7"/>
+
+    <!-- 몸통 (둥글둥글한 솜뭉치 배) -->
+    <path d="M 360 470
+             C 330 400 360 330 470 320
+             C 600 308 720 360 740 470
+             C 752 545 690 600 560 605
+             C 430 610 380 545 360 470 Z" fill="url(#bodyshade)"/>
+    <!-- 배 곱슬 털 결 -->
+    <g stroke="#dfe3ec" stroke-width="3.5" fill="none" opacity="0.85" stroke-linecap="round">
+      <path d="M 470 380 q 18 25 -2 50"/>
+      <path d="M 540 365 q 20 28 0 56"/>
+      <path d="M 610 380 q 18 26 -2 52"/>
+      <path d="M 670 420 q 16 24 -4 48"/>
+    </g>
+
+    <!-- 앞다리 (가슴 쪽으로 모은 만세) -->
+    <path d="M 470 440 C 430 360 430 320 470 305 C 500 296 515 330 505 370 C 498 400 500 440 510 470 Z" fill="url(#bodyshade)"/>
+    <ellipse cx="478" cy="312" rx="17" ry="13" fill="#f3d9d0"/>
+    <path d="M 540 450 C 520 380 528 338 565 330 C 595 324 602 360 588 396 C 578 422 575 450 580 478 Z" fill="url(#bodyshade)"/>
+
+    <!-- 머리 (왼쪽, 살짝 기울임) -->
+    <g transform="translate(380,440) rotate(-12)">
+      <!-- 머리 솜털 -->
+      <path d="M -110 -10
+               C -135 -85 -80 -150 0 -148
+               C 85 -146 130 -80 118 -8
+               C 130 60 70 110 -8 108
+               C -90 106 -125 55 -110 -10 Z" fill="url(#bodyshade)"/>
+      <!-- 귀 (양쪽 늘어진 곱슬) -->
+      <path d="M -108 -30 C -160 -40 -180 30 -150 80 C -120 120 -90 80 -95 30 Z" fill="#f2f4f9"/>
+      <path d="M 116 -30 C 168 -38 188 28 160 78 C 132 116 100 78 104 30 Z" fill="#f2f4f9"/>
+      <path d="M -108 -30 C -150 -36 -168 26 -146 70" fill="none" stroke="#d8dce6" stroke-width="3" opacity="0.7"/>
+
+      <!-- 얼굴 음영 -->
+      <path d="M -70 -50 C -90 20 -50 70 0 72 C 60 74 95 25 80 -45 C 60 5 -40 5 -70 -50 Z" fill="#f0f2f7" opacity="0.6"/>
+
+      <!-- 나른한 행복 눈 (^ ^) -->
+      <path d="M -52 -8 C -42 -22 -22 -22 -12 -8" fill="none" stroke="#3a3a44" stroke-width="6" stroke-linecap="round"/>
+      <path d="M  18 -8 C  28 -22  48 -22  58 -8" fill="none" stroke="#3a3a44" stroke-width="6" stroke-linecap="round"/>
+      <!-- 발그레 볼터치 -->
+      <ellipse cx="-58" cy="22" rx="16" ry="10" fill="#ffc2c9" opacity="0.6"/>
+      <ellipse cx="62" cy="22" rx="16" ry="10" fill="#ffc2c9" opacity="0.6"/>
+      <!-- 까만 코 -->
+      <ellipse cx="6" cy="20" rx="16" ry="12" fill="#2c2c33"/>
+      <ellipse cx="1" cy="15" rx="5" ry="3.5" fill="#6c6c78"/>
+      <!-- 입 / 살짝 내민 혀 -->
+      <path d="M 6 32 C 6 46 -10 52 -22 46" fill="none" stroke="#3a3a44" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 6 32 C 6 46 22 52 34 46" fill="none" stroke="#3a3a44" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 2 44 C -8 60 16 62 12 44 Z" fill="#ff9aa6"/>
+    </g>
+  </g>
+
+  <!-- ===== 식자 / 효과음 ===== -->
+  <text x="150" y="200" font-size="64" font-weight="900" fill="#8a6a3a"
+        transform="rotate(-6 150 200)" opacity="0.92"
+        style="paint-order:stroke;stroke:#fff;stroke-width:8px">느~긋</text>
+  <!-- Zzz 작은 식자 -->
+  <g fill="#9aa0b3" font-weight="800" opacity="0.85">
+    <text x="250" y="330" font-size="34">z</text>
+    <text x="285" y="305" font-size="26">z</text>
+    <text x="312" y="288" font-size="20">z</text>
+  </g>
+  <!-- 하트 -->
+  <path d="M 700 200 c -14 -22 -48 -8 -30 18 c 8 12 30 26 30 26 c 0 0 22 -14 30 -26 c 18 -26 -16 -40 -30 -18 Z" fill="#ff7d97" opacity="0.9"/>
+</svg>
